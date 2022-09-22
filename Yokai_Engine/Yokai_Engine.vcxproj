@@ -51,6 +51,7 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\Source Code\External Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -58,6 +59,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Source Code\External Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,6 +88,15 @@
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\Light.h" />
@@ -103,6 +114,13 @@
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />

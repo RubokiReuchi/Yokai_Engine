@@ -16,6 +16,9 @@
     <Filter Include="Sources\Helpers">
       <UniqueIdentifier>{121f8e6b-df36-4ab0-be0d-601ddfc9e503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGui">
+      <UniqueIdentifier>{c33297f8-00a9-4194-b256-6463989c124e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -63,6 +66,33 @@
     <ClInclude Include="Source Code\p2Point.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_rectpack.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_textedit.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -100,6 +130,27 @@
     </ClCompile>
     <ClCompile Include="Source Code\glmath.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp">
+      <Filter>Sources\Tools\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
