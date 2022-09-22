@@ -10,48 +10,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source Code\Application.cpp" />
-    <ClCompile Include="Source Code\Color.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Source Code\glmath.cpp" />
-    <ClCompile Include="Source Code\Light.cpp" />
-    <ClCompile Include="Source Code\Main.cpp" />
-    <ClCompile Include="Source Code\ModuleCamera3D.cpp" />
-    <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
-    <ClCompile Include="Source Code\ModuleWindow.cpp" />
-    <ClCompile Include="Source Code\Primitive.cpp" />
-    <ClCompile Include="Source Code\Timer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source Code\Application.h" />
-    <ClInclude Include="Source Code\Color.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_textedit.h" />
-    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Source Code\glmath.h" />
-    <ClInclude Include="Source Code\Globals.h" />
-    <ClInclude Include="Source Code\Light.h" />
-    <ClInclude Include="Source Code\Module.h" />
-    <ClInclude Include="Source Code\ModuleCamera3D.h" />
-    <ClInclude Include="Source Code\ModuleRenderer3D.h" />
-    <ClInclude Include="Source Code\ModuleWindow.h" />
-    <ClInclude Include="Source Code\p2List.h" />
-    <ClInclude Include="Source Code\Primitive.h" />
-    <ClInclude Include="Source Code\Timer.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
     <RootNamespace>SDLGame</RootNamespace>
@@ -93,15 +51,12 @@
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)\Source Code\External Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <StructMemberAlignment>Default</StructMemberAlignment>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(SolutionDir)\Source Code\External Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -128,6 +83,37 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Source Code\Application.h" />
+    <ClInclude Include="Source Code\Color.h" />
+    <ClInclude Include="Source Code\glmath.h" />
+    <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\Light.h" />
+    <ClInclude Include="Source Code\Module.h" />
+    <ClInclude Include="Source Code\ModuleCamera3D.h" />
+    <ClInclude Include="Source Code\ModuleInput.h" />
+    <ClInclude Include="Source Code\ModuleRenderer3D.h" />
+    <ClInclude Include="Source Code\ModuleWindow.h" />
+    <ClInclude Include="Source Code\p2DynArray.h" />
+    <ClInclude Include="Source Code\p2List.h" />
+    <ClInclude Include="Source Code\p2Point.h" />
+    <ClInclude Include="Source Code\Primitive.h" />
+    <ClInclude Include="Source Code\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source Code\Application.cpp" />
+    <ClCompile Include="Source Code\Color.cpp" />
+    <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\Light.cpp" />
+    <ClCompile Include="Source Code\log.cpp" />
+    <ClCompile Include="Source Code\Main.cpp" />
+    <ClCompile Include="Source Code\ModuleCamera3D.cpp" />
+    <ClCompile Include="Source Code\ModuleInput.cpp" />
+    <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
+    <ClCompile Include="Source Code\ModuleWindow.cpp" />
+    <ClCompile Include="Source Code\Primitive.cpp" />
+    <ClCompile Include="Source Code\Timer.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

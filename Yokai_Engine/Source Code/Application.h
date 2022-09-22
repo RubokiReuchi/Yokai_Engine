@@ -5,15 +5,17 @@
 #include "Timer.h"
 #include "Module.h"
 #include "ModuleWindow.h"
-#include "ModuleCamera3D.h"
+#include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleCamera3D.h"
 
 class Application
 {
 public:
 	ModuleWindow* window;
-	ModuleCamera3D* camera;
+	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
+	ModuleCamera3D* camera;
 
 private:
 
