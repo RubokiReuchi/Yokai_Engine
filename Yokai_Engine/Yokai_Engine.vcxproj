@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{746CC4C3-787F-4B0E-AA66-E388FE3FF4F6}</ProjectGuid>
+    <RootNamespace>SDLGame</RootNamespace>
+    <ProjectName>Engine</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Source Code\External Libraries;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="p2List.h" />
+    <ClInclude Include="Source Code\Application.h" />
+    <ClInclude Include="Source Code\Color.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imgui_internal.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source Code\glmath.h" />
+    <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\Light.h" />
+    <ClInclude Include="Source Code\Module.h" />
+    <ClInclude Include="Source Code\ModuleCamera3D.h" />
+    <ClInclude Include="Source Code\ModuleRenderer3D.h" />
+    <ClInclude Include="Source Code\ModuleWindow.h" />
+    <ClInclude Include="Source Code\p2List.h" />
+    <ClInclude Include="Source Code\Primitive.h" />
+    <ClInclude Include="Source Code\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source Code\Color.cpp" />
+    <ClCompile Include="Source Code\Application.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source Code\glmath.cpp" />
+    <ClCompile Include="Source Code\Light.cpp" />
+    <ClCompile Include="Source Code\Main.cpp" />
+    <ClCompile Include="Source Code\ModuleCamera3D.cpp" />
+    <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
+    <ClCompile Include="Source Code\ModuleWindow.cpp" />
+    <ClCompile Include="Source Code\Primitive.cpp" />
+    <ClCompile Include="Source Code\Timer.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
