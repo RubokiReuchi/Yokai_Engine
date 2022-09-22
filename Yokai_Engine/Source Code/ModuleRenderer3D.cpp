@@ -1,13 +1,13 @@
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
-
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -103,12 +103,9 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
+	// init ImGui
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
-	ImGui_ImplOpenGL3_Init();
+	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
 	return ret;
 }
@@ -134,38 +131,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
-	ImGui::NewFrame();
-
-	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_MenuBar);
-	if (ImGui::BeginMenuBar())
-	{
-		if (ImGui::MenuItem("File"))
-		{
-
-		}
-		if (ImGui::MenuItem("Edit"))
-		{
-
-		}
-		if (ImGui::MenuItem("Settings"))
-		{
-
-		}
-		if (ImGui::MenuItem("Exit"))
-		{
-			return UPDATE_STOP;
-		}
-		ImGui::EndMenuBar();
-	}
-	ImGui::End();
-
-	ImGui::ShowDemoWindow(); //demo window
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -174,10 +139,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
-
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
 
 	SDL_GL_DeleteContext(context);
 
