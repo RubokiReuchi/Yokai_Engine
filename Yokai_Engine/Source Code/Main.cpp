@@ -6,8 +6,8 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
-#pragma comment( lib, "Source Code/External Libraries/SDL/libx86/SDL2.lib" )
-#pragma comment( lib, "Source Code/External Libraries/SDL/libx86/SDL2main.lib" )
+#pragma comment( lib, "SDL/libx86/SDL2.lib" )
+#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
 enum main_states
 {
