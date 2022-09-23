@@ -29,6 +29,8 @@ private:
 
 public:
 
+	int fpsCap;
+
 	Application();
 	~Application();
 

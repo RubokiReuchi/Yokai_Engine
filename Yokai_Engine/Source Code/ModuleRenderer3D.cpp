@@ -15,7 +15,7 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(true)
 {
 }
 
@@ -40,7 +40,7 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
+		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 
 		//Initialize Projection Matrix

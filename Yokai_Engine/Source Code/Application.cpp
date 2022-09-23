@@ -1,6 +1,6 @@
 #include "Application.h"
 
-Application::Application()
+Application::Application() : fpsCap(60)
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
@@ -67,6 +67,12 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	if (renderer3D->vsync)
+	{
+		Uint32 last_frame_ms = ms_timer.Read();
+		float wait_time = (1000.f / (float)fpsCap) - (float)last_frame_ms;
+		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
+	}
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

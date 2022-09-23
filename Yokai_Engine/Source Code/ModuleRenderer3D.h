@@ -24,6 +24,8 @@ public:
 
 public:
 
+	bool vsync;
+
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;

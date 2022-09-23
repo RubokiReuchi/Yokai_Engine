@@ -16,6 +16,11 @@ public:
 
 	bool SetMenuBar();
 
+	// bools
+	bool show_about = false;
+
+	void OsOpenInShell(const char* path);
+
 };
 
 #endif
