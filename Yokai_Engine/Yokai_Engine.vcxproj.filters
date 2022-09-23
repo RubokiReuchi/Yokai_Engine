@@ -81,9 +81,6 @@
     <ClInclude Include="Source Code\p2List.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\p2Point.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h">
       <Filter>Sources\Tools\ImGui</Filter>
     </ClInclude>

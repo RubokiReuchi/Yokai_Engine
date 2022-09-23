@@ -21,11 +21,12 @@ public:
 	ModuleCamera3D* camera;
 	ModuleEditor* editor;
 
+	std::vector<Module*> list_modules;
+
 private:
 
 	Timer	ms_timer;
 	float	dt;
-	p2List<Module*> list_modules;
 
 public:
 
