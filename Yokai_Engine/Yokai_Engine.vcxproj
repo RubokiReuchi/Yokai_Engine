@@ -97,6 +97,7 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_textedit.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source Code\External Libraries\Json\json.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Geometry\AABB.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Geometry\AABB2D.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source Code\External Libraries\Json\json.c" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Geometry\AABB.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Geometry\Capsule.cpp" />

@@ -37,6 +37,9 @@
     <Filter Include="Sources\Tools\MathGeoLib\Algorithm\Random">
       <UniqueIdentifier>{cfba5db4-316b-4e0f-8107-f8dc01ed01ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\Json">
+      <UniqueIdentifier>{d1a59a36-7b67-42eb-8254-ba79e38be56b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -285,6 +288,9 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.h">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\Json\json.h">
+      <Filter>Sources\Tools\Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -442,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp">
       <Filter>Sources\Tools\MathGeoLib\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\Json\json.c">
+      <Filter>Sources\Tools\Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
