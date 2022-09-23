@@ -4,6 +4,9 @@
 #include "glmath.h"
 #include "Light.h"
 
+#include"MathGeoLib/include/Geometry/AABB.h"
+#include"MathGeoLib/include/Geometry/OBB.h"
+
 #define MAX_LIGHTS 8
 
 class ModuleRenderer3D : public Module

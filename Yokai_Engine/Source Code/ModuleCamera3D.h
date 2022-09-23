@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "glmath.h"
 
+#include"MathGeoLib/include/Geometry/Frustum.h"
+
 class ModuleCamera3D : public Module
 {
 public:

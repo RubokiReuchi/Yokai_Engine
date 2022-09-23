@@ -9,6 +9,9 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include"MathGeoLib/include/Geometry/Frustum.h"
+#include"MathGeoLib/include/Geometry/Plane.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -25,7 +28,7 @@ bool ModuleRenderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
-	
+
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
