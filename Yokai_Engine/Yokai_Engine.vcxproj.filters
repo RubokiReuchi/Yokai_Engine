@@ -291,6 +291,9 @@
     <ClInclude Include="Source Code\External Libraries\Json\json.h">
       <Filter>Sources\Tools\Json</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\OpenGL.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">

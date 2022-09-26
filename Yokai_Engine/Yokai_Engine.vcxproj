@@ -222,6 +222,7 @@
     <ClCompile Include="Source Code\ModuleInput.cpp" />
     <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
+    <ClInclude Include="Source Code\OpenGL.h" />
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

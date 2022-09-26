@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "OpenGL.h"
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -80,7 +81,31 @@ bool ModuleEditor::SetMenuBar()
 		}
 		if (ImGui::BeginMenu("Edit"))
 		{
+			
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) {}
+				// wireframe
 
+			if (ImGui::Checkbox("Multi Sample", &App->renderer3D->multi_sample))
+				(App->renderer3D->multi_sample) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
+
+			if (ImGui::Checkbox("Depth Test", &App->renderer3D->depth_test))
+				(App->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+
+			if (ImGui::Checkbox("Cull Face", &App->renderer3D->cull_face))
+				(App->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+
+			if (ImGui::Checkbox("Lighting", &App->renderer3D->lighting))
+				(App->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+
+			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_material))
+				(App->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+
+			if (ImGui::Checkbox("Texture 2D", &App->renderer3D->texture_2d))
+				(App->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Settings"))

@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
 #include "Light.h"
 
 #include"MathGeoLib/include/Geometry/AABB.h"
@@ -24,7 +23,7 @@ public:
 
 public:
 
-	bool vsync;
+	bool vsync, wireframe, multi_sample, depth_test, cull_face, lighting, color_material, texture_2d;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
