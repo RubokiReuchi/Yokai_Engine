@@ -14,8 +14,10 @@
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled), vsync(true)
+ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled),
+vsync(true), wireframe(false)
 {
+	multi_sample = depth_test = cull_face = lighting = color_material = texture_2d = true;
 }
 
 // Destructor
@@ -158,6 +160,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	// third draw editor
 	//App->editor->Draw();
+
+	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
