@@ -203,17 +203,30 @@ update_status ModuleRenderer3D::Update(float dt)
 	glVertex3f(1.0f, -1.0f, 0.0f);
 	glEnd();*/
 
-	uint num_vertices = 36;
+	uint num_vertices = 8;
 	uint my_id = 0;
 	glGenBuffers(1, (GLuint*)&(my_id));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, cube_vertices, GL_STATIC_DRAW);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
-	glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+	//glDrawArrays(GL_TRIANGLES, 0, num_vertices);
+	
+
+
+
+	uint num_indices = 36;
+	uint my_indices = 0;
+	glGenBuffers(1, (GLuint*)&(my_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, cube_indices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return UPDATE_CONTINUE;
