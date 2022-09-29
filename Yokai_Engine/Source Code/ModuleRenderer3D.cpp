@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "OpenGL.h"
+#include "GeometricForms.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -203,7 +204,7 @@ update_status ModuleRenderer3D::Update(float dt)
 	glVertex3f(1.0f, -1.0f, 0.0f);
 	glEnd();*/
 
-	uint num_vertices = 8;
+	/*uint num_vertices = 8;
 	uint my_id = 0;
 	glGenBuffers(1, (GLuint*)&(my_id));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
@@ -227,7 +228,9 @@ update_status ModuleRenderer3D::Update(float dt)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
 
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);*/
+
+	CreateCube();
 
 	return UPDATE_CONTINUE;
 }
