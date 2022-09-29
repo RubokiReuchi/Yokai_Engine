@@ -150,9 +150,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	//sphere.DrawSphere();
-	//cube.DrawCube();
-	pyramid.DrawPyramid();
+	sphere.DrawSphere();
+	cube.DrawCube();
+	//pyramid.DrawPyramid();
 
 	return UPDATE_CONTINUE;
 }

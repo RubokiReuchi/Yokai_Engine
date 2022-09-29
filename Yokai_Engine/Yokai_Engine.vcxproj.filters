@@ -297,6 +297,9 @@
     <ClInclude Include="Source Code\GeometricForms.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\FrameBuffer.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -457,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\Json\json.c">
       <Filter>Sources\Tools\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\FrameBuffer.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
