@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "OpenGL.h"
-#include "GeometricForms.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -124,6 +123,10 @@ bool ModuleRenderer3D::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
+	sphere.CreateSphere(1.0f, 12, 24);
+	cube.CreateCube();
+	pyramid.CreatePyramid();
+
 	return ret;
 }
 
@@ -147,90 +150,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	/* Direct Mode
-	glBegin(GL_TRIANGLES);
-	// front face
-	glVertex3f(1.0f, 1.0f, 0.0f); // v0-v1-v2
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-
-	glVertex3f(-1.0f, -1.0f, 0.0f); // v2-v3-v0
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-
-	// right face
-	glVertex3f(1.0f, 1.0f, 0.0f); // v0-v3-v4
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glVertex3f(1.0f, -1.0f, -2.0f);
-
-	glVertex3f(1.0f, -1.0f, -2.0f); // v4-v5-v0
-	glVertex3f(1.0f, 1.0f, -2.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-
-	// top face
-	glVertex3f(1.0f, 1.0f, 0.0f); // v0-v5-v6
-	glVertex3f(1.0f, 1.0f, -2.0f);
-	glVertex3f(-1.0f, 1.0f, -2.0f);
-
-	glVertex3f(-1.0f, 1.0f, -2.0f); // v6-v1-v0
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 0.0f);
-
-	// left face
-	glVertex3f(-1.0f, 1.0f, 0.0f); // v1-v6-v7
-	glVertex3f(-1.0f, 1.0f, -2.0f);
-	glVertex3f(-1.0f, -1.0f, -2.0f);
-
-	glVertex3f(-1.0f, -1.0f, -2.0f); // v7-v2-v1
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glVertex3f(-1.0f, 1.0f, 0.0f);
-
-	// back face
-	glVertex3f(-1.0f, 1.0f, -2.0f); // v6-v5-v4
-	glVertex3f(1.0f, 1.0f, -2.0f);
-	glVertex3f(1.0f, -1.0f, -2.0f);
-
-	glVertex3f(1.0f, -1.0f, -2.0f); // v4-v7-v6
-	glVertex3f(-1.0f, -1.0f, -2.0f);
-	glVertex3f(-1.0f, 1.0f, -2.0f);
-
-	// down face
-	glVertex3f(1.0f, -1.0f, 0.0f); // v3-v2-v7
-	glVertex3f(-1.0f, -1.0f, 0.0f);
-	glVertex3f(-1.0f, -1.0f, -2.0f);
-
-	glVertex3f(-1.0f, -1.0f, -2.0f); // v7-v4-v3
-	glVertex3f(1.0f, -1.0f, -2.0f);
-	glVertex3f(1.0f, -1.0f, 0.0f);
-	glEnd();*/
-
-	/*uint num_vertices = 8;
-	uint my_id = 0;
-	glGenBuffers(1, (GLuint*)&(my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, cube_vertices, GL_STATIC_DRAW);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	//glDrawArrays(GL_TRIANGLES, 0, num_vertices);
-	
-
-
-
-	uint num_indices = 36;
-	uint my_indices = 0;
-	glGenBuffers(1, (GLuint*)&(my_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, cube_indices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
-
-	glDisableClientState(GL_VERTEX_ARRAY);*/
-
-	CreateCube();
+	//sphere.DrawSphere();
+	//cube.DrawCube();
+	pyramid.DrawPyramid();
 
 	return UPDATE_CONTINUE;
 }
