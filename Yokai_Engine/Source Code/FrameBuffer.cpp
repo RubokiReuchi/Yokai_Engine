@@ -38,7 +38,5 @@ void FrameBuffer::CreateBuffer()
 
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rboDepthStencil);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -40,6 +40,9 @@
     <Filter Include="Sources\Tools\Json">
       <UniqueIdentifier>{d1a59a36-7b67-42eb-8254-ba79e38be56b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Importers">
+      <UniqueIdentifier>{a96418f7-2149-4094-a9bd-126a6648edf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -300,6 +303,9 @@
     <ClInclude Include="Source Code\FrameBuffer.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\MeshImporter.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -463,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\FrameBuffer.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MeshImporter.cpp">
+      <Filter>Sources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
