@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
+#include "ModuleFile.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
@@ -14,6 +15,7 @@
 class Application
 {
 public:
+	ModuleFile* file;
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;

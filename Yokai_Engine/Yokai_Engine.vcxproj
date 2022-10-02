@@ -163,6 +163,7 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="Source Code\FileSystem.h" />
     <ClInclude Include="Source Code\FrameBuffer.h" />
     <ClInclude Include="Source Code\GeometricForms.h" />
     <ClInclude Include="Source Code\glmath.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />
     <ClInclude Include="Source Code\ModuleEditor.h" />
+    <ClInclude Include="Source Code\ModuleFile.h" />
     <ClInclude Include="Source Code\ModuleInput.h" />
     <ClInclude Include="Source Code\ModuleRenderer3D.h" />
     <ClInclude Include="Source Code\ModuleWindow.h" />
@@ -221,6 +223,7 @@
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Math\SSEMath.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp" />
+    <ClCompile Include="Source Code\FileSystem.cpp" />
     <ClCompile Include="Source Code\FrameBuffer.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
@@ -229,6 +232,7 @@
     <ClCompile Include="Source Code\MeshImporter.cpp" />
     <ClCompile Include="Source Code\ModuleCamera3D.cpp" />
     <ClCompile Include="Source Code\ModuleEditor.cpp" />
+    <ClCompile Include="Source Code\ModuleFile.cpp" />
     <ClCompile Include="Source Code\ModuleInput.cpp" />
     <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source Code\ModuleWindow.cpp" />

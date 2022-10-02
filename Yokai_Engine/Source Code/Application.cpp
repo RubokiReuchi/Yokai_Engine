@@ -2,6 +2,7 @@
 
 Application::Application() : fpsCap(60)
 {
+	file = new ModuleFile(this);
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	renderer3D = new ModuleRenderer3D(this);
@@ -13,6 +14,7 @@ Application::Application() : fpsCap(60)
 	// They will CleanUp() in reverse order
 
 	// Main Modules
+	AddModule(file);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);

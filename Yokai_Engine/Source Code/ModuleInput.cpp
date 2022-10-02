@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "FileSystem.h"
+
 #include "ImGui/imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
@@ -30,6 +32,8 @@ bool ModuleInput::Init()
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+	SDL_EventState(SDL_DROPFILE, SDL_ENABLE);
 
 	return ret;
 }
@@ -104,6 +108,14 @@ update_status ModuleInput::PreUpdate(float dt)
 			mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
 			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
 			break;
+
+			case (SDL_DROPFILE):
+			{
+				//TODO: Change method name to duplicate on drop or something
+				FileSystem::LoadDroppedFile(e.drop.file);
+				SDL_free(e.drop.file);    // Free dropped_filedir memory
+				break;
+			}
 
 			case SDL_QUIT:
 			quit = true;

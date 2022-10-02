@@ -306,6 +306,12 @@
     <ClInclude Include="Source Code\MeshImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\FileSystem.h">
+      <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ModuleFile.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -472,6 +478,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\MeshImporter.cpp">
       <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\FileSystem.cpp">
+      <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ModuleFile.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
