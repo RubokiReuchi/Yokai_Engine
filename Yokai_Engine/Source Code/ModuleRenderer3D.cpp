@@ -123,9 +123,9 @@ bool ModuleRenderer3D::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
-	sphere.CreateSphere(1.0f, 12, 24);
-	cube.CreateCube();
-	pyramid.CreatePyramid();
+	//sphere.CreateSphere(1.0f, 12, 24);
+	//cube.CreateCube();
+	//pyramid.CreatePyramid();
 
 	return ret;
 }
@@ -150,8 +150,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	sphere.DrawSphere();
-	cube.DrawCube();
+	//sphere.DrawSphere();
+	//cube.DrawCube();
 	//pyramid.DrawPyramid();
 
 	return UPDATE_CONTINUE;

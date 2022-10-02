@@ -4,6 +4,8 @@
 #include "Light.h"
 #include "GeometricForms.h"
 
+#include "MeshImporter.h"
+
 #include"MathGeoLib/include/Geometry/AABB.h"
 #include"MathGeoLib/include/Geometry/OBB.h"
 
@@ -32,7 +34,7 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	SphereForm sphere;
-	CubeForm cube;
-	PyramidForm pyramid;
+	//SphereForm sphere;
+	//CubeForm cube;
+	//PyramidForm pyramid;
 };
