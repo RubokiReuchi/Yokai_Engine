@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "FrameBuffer.h"
 
 class ModuleEditor : public Module
 {
@@ -21,8 +20,6 @@ public:
 	bool show_about = false;
 
 	void OsOpenInShell(const char* path);
-
-	FrameBuffer frameBuffer;
 
 };
 

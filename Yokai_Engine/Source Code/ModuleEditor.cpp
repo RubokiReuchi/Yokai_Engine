@@ -127,10 +127,6 @@ bool ModuleEditor::SetMenuBar()
 		}
 		ImGui::EndMenuBar();
 	}
-	
-	//frameBuffer.CreateBuffer();
-	//ImGui::Image((ImTextureID)frameBuffer.GetTextureBuffer(), ImVec2(800, 600));
-
 	ImGui::End();
 
 	if (show_about)

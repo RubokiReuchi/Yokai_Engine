@@ -47,28 +47,37 @@ protected:
 	uint num_vertices = 8;
 	uint num_indices = 36;
 
+	uint my_id = 0;
+	uint my_indices = 0;
+
 public:
 	void CreateCube()
 	{
-		uint my_id = 0;
 		glGenBuffers(1, (GLuint*)&(my_id));
 		glBindBuffer(GL_ARRAY_BUFFER, my_id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, cube_vertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		uint my_indices = 0;
 		glGenBuffers(1, (GLuint*)&(my_indices));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, cube_indices, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	void DrawCube()
 	{
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+		glPushMatrix();
+		glTranslatef(2.0f, 0.0f, 0.0f);
+
 		glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
+
+		glPopMatrix();
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
@@ -79,7 +88,7 @@ static const float pyramid_vertices[] =
 	1.0f, -1.0f, 0.0f, // v0
 	-1.0f, -1.0f, 0.0f, // v1
 	0.0f, -1.0f, -2.0f, // v2
-	0.0f, 1.0f, -1.0f, // v3
+	0.0f, 2.0f, -1.0f, // v3
 };
 
 static const uint pyramid_indices[] =
@@ -97,28 +106,37 @@ protected:
 	uint num_vertices = 4;
 	uint num_indices = 12;
 
+	uint my_id = 0;
+	uint my_indices = 0;
+
 public:
 	void CreatePyramid()
 	{
-		uint my_id = 0;
 		glGenBuffers(1, (GLuint*)&(my_id));
 		glBindBuffer(GL_ARRAY_BUFFER, my_id);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, pyramid_vertices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		uint my_indices = 0;
 		glGenBuffers(1, (GLuint*)&(my_indices));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, pyramid_indices, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	void DrawPyramid()
 	{
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, NULL);
 
+		glPushMatrix();
+		glTranslatef(-2.0f, 0.0f, 0.0f);
+
 		glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
+
+		glPopMatrix();
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
@@ -129,6 +147,9 @@ class SphereForm
 protected:
 	std::vector<GLfloat> sphere_vertices;
 	std::vector<GLushort> sphere_indices;
+
+	uint my_id = 0;
+	uint my_indices = 0;
 
 public:
 	void CreateSphere(float radius, unsigned int rings, unsigned int sectors)
@@ -159,14 +180,27 @@ public:
 			*i++ = (r + 1) * sectors + (s + 1);
 			*i++ = (r + 1) * sectors + s;
 		}
+
+		glGenBuffers(1, (GLuint*)&(my_id));
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sphere_vertices.size(), sphere_vertices.data(), GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+		glGenBuffers(1, (GLuint*)&(my_indices));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * sphere_indices.size(), sphere_indices.data(), GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	void DrawSphere()
 	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, 0, &sphere_vertices[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, my_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 
-		glDrawElements(GL_QUADS, sphere_indices.size(), GL_UNSIGNED_SHORT, &sphere_indices[0]);
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+		glDrawElements(GL_QUADS, sphere_indices.size(), GL_UNSIGNED_SHORT, NULL);
 
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}

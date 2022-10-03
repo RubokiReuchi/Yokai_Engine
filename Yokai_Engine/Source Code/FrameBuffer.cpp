@@ -11,9 +11,14 @@ FrameBuffer::~FrameBuffer()
 
 void FrameBuffer::Clear()
 {
-	glDeleteFramebuffers(1, (GLuint*)&frameBuffer);
-	glDeleteTextures(1, (GLuint*)&texColorBuffer);
-	glDeleteRenderbuffers(1, (GLuint*)&rboDepthStencil);
+	if (frameBuffer != 0)
+		glDeleteFramebuffers(1, (GLuint*)&frameBuffer);
+
+	if (texColorBuffer != 0)
+		glDeleteTextures(1, (GLuint*)&texColorBuffer);
+
+	if (rboDepthStencil != 0)
+		glDeleteRenderbuffers(1, (GLuint*)&rboDepthStencil);
 }
 
 void FrameBuffer::CreateBuffer()
@@ -38,5 +43,5 @@ void FrameBuffer::CreateBuffer()
 
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rboDepthStencil);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -123,9 +123,9 @@ bool ModuleRenderer3D::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
-	//sphere.CreateSphere(1.0f, 12, 24);
-	//cube.CreateCube();
-	//pyramid.CreatePyramid();
+	sphere.CreateSphere(1.0f, 12, 24);
+	cube.CreateCube();
+	pyramid.CreatePyramid();
 
 	return ret;
 }
@@ -150,9 +150,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	//sphere.DrawSphere();
-	//cube.DrawCube();
-	//pyramid.DrawPyramid();
+	sphere.DrawSphere();
+	cube.DrawCube();
+	pyramid.DrawPyramid();
 
 	return UPDATE_CONTINUE;
 }
@@ -160,6 +160,7 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	//ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), ImVec2(800, 600), ImVec2(0, 1), ImVec2(1, 0));
 	// first draw level
 	//App->level->Draw();
 
@@ -195,6 +196,8 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
+
+	//frameBuffer.CreateBuffer();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

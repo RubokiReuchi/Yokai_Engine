@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
+#include "FrameBuffer.h"
 #include "GeometricForms.h"
 
 #include "MeshImporter.h"
@@ -34,7 +35,9 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	//SphereForm sphere;
-	//CubeForm cube;
-	//PyramidForm pyramid;
+	FrameBuffer frameBuffer;
+
+	SphereForm sphere;
+	CubeForm cube;
+	PyramidForm pyramid;
 };
