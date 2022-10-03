@@ -12,6 +12,9 @@
 
 #define MAX_LIGHTS 8
 
+#define TEXTURE_CHECKER_WIDTH 256
+#define TEXTURE_CHECKER_HEIGHT 256
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -29,6 +32,9 @@ public:
 public:
 
 	bool vsync, wireframe, multi_sample, depth_test, cull_face, lighting, color_material, texture_2d;
+
+	GLuint textureID;
+	GLubyte checkerImage[TEXTURE_CHECKER_WIDTH][TEXTURE_CHECKER_HEIGHT][4];
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
