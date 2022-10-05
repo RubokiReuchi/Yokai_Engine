@@ -60,6 +60,13 @@ bool ModuleEditor::CleanUp()
 
 bool ModuleEditor::SetMenuBar()
 {
+	ImGui::Begin("Game_Render", NULL, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus);
+	ImGui::BeginChild("Game_Render", ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+	ImVec2 size = ImGui::GetWindowSize();
+	ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), size, ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::EndChild();
+	ImGui::End();
+
 	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar())
 	{
