@@ -14,9 +14,9 @@ public:
 
 	void CreateBuffer();
 
-	inline unsigned int GetFrameBuffer() { return frameBuffer; }
-	inline unsigned int GetTextureBuffer() { return texColorBuffer; }
-	inline unsigned int GetRBO() { return rboDepthStencil; }
+	uint GetFrameBuffer() { return frameBuffer; }
+	uint GetTextureBuffer() { return texColorBuffer; }
+	uint GetRBO() { return rboDepthStencil; }
 
 private:
 

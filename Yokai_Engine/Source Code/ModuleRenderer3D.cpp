@@ -115,7 +115,7 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 	}
-
+	/*
 	//Generate texture
 	for (int i = 0; i < TEXTURE_CHECKER_WIDTH; i++) {
 		for (int j = 0; j < TEXTURE_CHECKER_HEIGHT; j++) {
@@ -136,7 +136,7 @@ bool ModuleRenderer3D::Init()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXTURE_CHECKER_WIDTH, TEXTURE_CHECKER_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
+	*/
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -168,7 +168,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	glBindBuffer(GL_ARRAY_BUFFER, frameBuffer.GetTextureBuffer());
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer.GetTextureBuffer());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
