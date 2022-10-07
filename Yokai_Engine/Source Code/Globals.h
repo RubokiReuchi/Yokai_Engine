@@ -56,4 +56,4 @@ enum update_status
 #define WIN_BORDERLESS true
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "3D Physics Playground"
+#define TITLE "Yokai Engine"

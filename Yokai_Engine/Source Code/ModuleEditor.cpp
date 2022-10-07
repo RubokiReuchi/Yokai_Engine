@@ -60,14 +60,9 @@ bool ModuleEditor::CleanUp()
 
 bool ModuleEditor::SetMenuBar()
 {
-	ImGui::Begin("Game_Render", NULL, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoBringToFrontOnFocus);
-	ImGui::BeginChild("Game_Render", ImVec2(SCREEN_WIDTH, SCREEN_HEIGHT));
-	ImVec2 size = ImGui::GetWindowSize();
-	ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), size, ImVec2(0, 1), ImVec2(1, 0));
-	ImGui::EndChild();
-	ImGui::End();
-
-	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_MenuBar);
+	// Top Bar
+	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -136,9 +131,32 @@ bool ModuleEditor::SetMenuBar()
 	}
 	ImGui::End();
 
+	// Hierarchy
+	ImGui::Begin(("Hierarchy"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::End();
+
+	// Screen
+	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImVec2 size = ImGui::GetWindowSize();
+	ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), size, ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::End();
+
+	// Inspector
+	ImGui::Begin(("Inspector"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::Text("test");
+	ImGui::End();
+
+
 	if (show_about)
 	{
-		if (ImGui::Begin("About"), 0, ImGuiWindowFlags_AlwaysAutoResize);
+		if (ImGui::Begin("About"), NULL, ImGuiWindowFlags_AlwaysAutoResize);
 		{
 			ImGui::TextColored({ 240, 138, 0, 255 }, "Yokai Engine");
 			ImGui::Text("A 3D Game Engine");
