@@ -336,14 +336,17 @@
     <ClInclude Include="Source Code\Resource.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Re_Material.h">
-      <Filter>Sources\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Re_Mesh.h">
       <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Re_Texture.h">
       <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Rect.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\TextureImporter.h">
+      <Filter>Sources\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -536,14 +539,17 @@
     <ClCompile Include="Source Code\Resource.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Re_Material.cpp">
-      <Filter>Sources\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\Re_Mesh.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Re_Texture.cpp">
       <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Rect.cpp">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\TextureImporter.cpp">
+      <Filter>Sources\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

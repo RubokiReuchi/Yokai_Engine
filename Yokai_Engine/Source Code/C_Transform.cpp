@@ -1,11 +1,11 @@
 #include "C_Transform.h"
 #include "ImGui/imgui.h"
-#include"ImGui/imgui_internal.h"
+#include "ImGui/imgui_internal.h"
 #include "Globals.h"
 #include <vector>
-#include"GameObject.h"
+#include "GameObject.h"
 
-#include"C_MeshRenderer.h"
+#include "C_MeshRenderer.h"
 
 C_Transform::C_Transform() : Component(nullptr), updateTransform(false)
 {

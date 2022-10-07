@@ -4,6 +4,9 @@
 #include "DevIL\include\ilu.h"
 #include "DevIL\include\ilut.h"
 
+#include"Re_Texture.h"
+//#include"DE_Cubemap.h"
+
 #pragma comment( lib, "DevIL/libx86/DevIL.lib" )
 #pragma comment( lib, "DevIL/libx86/ILU.lib" )
 #pragma comment( lib, "DevIL/libx86/ILUT.lib" )
@@ -76,10 +79,10 @@ void TextureImporter::SaveDDS(char* buffer, int size, const char* fileName)
 }
 
 // not now
-/*void TextureImporter::Import(char* buffer, int bSize, Resource* res)
+void TextureImporter::Import(char* buffer, int bSize, Resource* res)
 {
 	SaveDDS(buffer, bSize, res->GetLibraryPath());
-}*/
+}
 
 /*Take a screenshot*/
 void TextureImporter::TakeScreenshot(int frameBuffer)
