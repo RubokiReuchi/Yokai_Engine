@@ -191,6 +191,10 @@
     <ClInclude Include="Source Code\ModuleRenderer3D.h" />
     <ClInclude Include="Source Code\ModuleWindow.h" />
     <ClInclude Include="Source Code\Primitive.h" />
+    <ClInclude Include="Source Code\Resource.h" />
+    <ClInclude Include="Source Code\Re_Material.h" />
+    <ClInclude Include="Source Code\Re_Mesh.h" />
+    <ClInclude Include="Source Code\Re_Texture.h" />
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +260,10 @@
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
     <ClInclude Include="Source Code\OpenGL.h" />
     <ClCompile Include="Source Code\Primitive.cpp" />
+    <ClCompile Include="Source Code\Resource.cpp" />
+    <ClCompile Include="Source Code\Re_Material.cpp" />
+    <ClCompile Include="Source Code\Re_Mesh.cpp" />
+    <ClCompile Include="Source Code\Re_Texture.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
