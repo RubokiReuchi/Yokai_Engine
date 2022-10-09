@@ -68,16 +68,19 @@ void MeshImporter::CreateMesh(StoredMesh myMesh)
 	glGenBuffers(1, (GLuint*)&(myMesh.id_vertex));
 	glBindBuffer(GL_ARRAY_BUFFER, myMesh.id_vertex);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * myMesh.num_vertex * 3, myMesh.vertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glGenBuffers(1, (GLuint*)&(myMesh.id_index));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myMesh.id_index);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * myMesh.num_index, myMesh.index, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myMesh.id_index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void MeshImporter::RenderMesh(StoredMesh myMesh)
 {
+	//glBindBuffer(GL_ARRAY_BUFFER, myMesh.id_vertex);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myMesh.id_index);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 

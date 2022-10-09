@@ -150,6 +150,9 @@ bool ModuleRenderer3D::Init()
 	cube.CreateCube();
 	pyramid.CreatePyramid();
 
+	MeshImporter::LoadMesh("Library/Meshes/untitled.fbx", &mesh);
+	MeshImporter::CreateMesh(mesh);
+
 	return ret;
 }
 
@@ -180,6 +183,7 @@ update_status ModuleRenderer3D::Update(float dt)
 	sphere.DrawSphere();
 	cube.DrawCube();
 	pyramid.DrawPyramid();
+	MeshImporter::RenderMesh(mesh);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

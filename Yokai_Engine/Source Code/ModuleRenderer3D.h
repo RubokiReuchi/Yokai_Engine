@@ -46,4 +46,6 @@ public:
 	SphereForm sphere;
 	CubeForm cube;
 	PyramidForm pyramid;
+
+	StoredMesh mesh;
 };
