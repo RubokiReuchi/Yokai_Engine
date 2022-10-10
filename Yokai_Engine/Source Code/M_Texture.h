@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "OpenGL.h"
 #include "Re_Texture.h"
 
 #include <map>

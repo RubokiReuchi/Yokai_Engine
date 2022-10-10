@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "PhysFS/include/physfs.h"
 
-ModuleFile::ModuleFile(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 {
 	PHYSFS_init(0);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "Globals.h"
 #include "GameObject.h"
 #include "EO_Base.h"
 
@@ -18,13 +19,14 @@ enum class EO_NUM
 class ModuleEO : public Module
 {
 public:
-	ModuleEO(Application* app, bool start_enabled = true);
+	ModuleEO(bool start_enabled = true);
 	~ModuleEO();
 
 	bool Start();
 
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
+	update_status PostUpdate(float dt);
 
 	void DrawEO();
 	void DrawEO_Editor();

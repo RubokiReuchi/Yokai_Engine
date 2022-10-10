@@ -31,7 +31,7 @@ uint TextureImporter::ImportTexture(std::string path)
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	ilDeleteImages(1, &ImgId);
+	//ilDeleteImages(1, &ImgId);
 
 	Re_Texture engineTexture;
 	engineTexture.OpenGL_id = texture;

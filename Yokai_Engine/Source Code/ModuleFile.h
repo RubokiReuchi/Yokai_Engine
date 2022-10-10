@@ -8,7 +8,7 @@
 class ModuleFile : public Module
 {
 public:
-	ModuleFile(Application* app, bool start_enabled = true);
+	ModuleFile(bool start_enabled = true);
 
 	~ModuleFile();
 

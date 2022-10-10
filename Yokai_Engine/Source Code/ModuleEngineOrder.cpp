@@ -4,7 +4,7 @@
 #include "TextureImporter.h"
 #include "C_MeshRenderer.h"
 
-ModuleEO::ModuleEO(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleEO::ModuleEO(bool start_enabled) : Module(start_enabled)
 {
 }
 
@@ -60,6 +60,11 @@ update_status ModuleEO::Update(float dt)
             engine_order[i]->Update();
         }
     }
+    return UPDATE_CONTINUE;
+}
+
+update_status ModuleEO::PostUpdate(float dt)
+{
     return UPDATE_CONTINUE;
 }
 

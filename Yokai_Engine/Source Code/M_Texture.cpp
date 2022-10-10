@@ -3,11 +3,11 @@
 #include "DevIL/include/ilut.h"
 #include "TextureImporter.h"
 
-std::map<uint, Re_Texture> TextureManager::loaded_textures;
-std::map<std::string, uint> TextureManager::usedPaths;
-uint TextureManager::bindedTextures = 0;
+std::map<uint, Re_Texture> M_Texture::loaded_textures;
+std::map<std::string, uint> M_Texture::usedPaths;
+uint M_Texture::bindedTextures = 0;
 
-float TextureManager::BindTexture(uint texture)
+float M_Texture::BindTexture(uint texture)
 {
 	if (GL_TEXTURE0 + bindedTextures == GL_TEXTURE31) // If we loaded 32 textures already
 		return -1;
@@ -18,7 +18,7 @@ float TextureManager::BindTexture(uint texture)
 	return bindedTextures++;
 }
 
-void TextureManager::UnBindTextures()
+void M_Texture::UnBindTextures()
 {
 	bindedTextures = 0;
 

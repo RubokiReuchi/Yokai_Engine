@@ -18,7 +18,6 @@ Application::Application() : fpsCap(60)
 	//AddModule(file);
 	AddModule(camera);
 	AddModule(input);
-
 	AddModule(engine_order);
 
 	// Renderer last!

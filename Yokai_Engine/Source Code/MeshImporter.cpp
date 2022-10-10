@@ -1,10 +1,8 @@
 #include "MeshImporter.h"
 #include "Re_Mesh.h"
-#include "ModuleRenderer3D.h"
 #include "Application.h"
 #include "M_ModelRender.h"
 #include "C_MeshRenderer.h"
-#include "GameObject.h"
 
 std::map<std::string, MeshInfo> MeshImporter::loadedMeshes;
 Assimp::Importer MeshImporter::importer;

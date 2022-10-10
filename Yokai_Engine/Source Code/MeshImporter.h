@@ -1,8 +1,8 @@
 #pragma once
 
+#include "OpenGL.h"
 #include "GameObject.h"
 #include "Globals.h"
-#include "OpenGL.h"
 
 #include "Assimp/include/Importer.hpp"
 #include "Assimp/include/scene.h"

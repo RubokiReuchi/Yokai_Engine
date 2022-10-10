@@ -1,14 +1,13 @@
 #pragma once
 
+#include "Globals.h"
+
 class Application;
 
 class Module
 {
-private :
-	bool enabled;
-
 public:
-	Module(Application* parent, bool start_enabled = true)
+	Module(bool start_enabled = true)
 	{
 		enabled = start_enabled;
 	}
@@ -45,4 +44,6 @@ public:
 	{ 
 		return true; 
 	}
+
+	bool enabled;
 };
