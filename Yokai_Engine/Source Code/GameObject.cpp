@@ -4,7 +4,6 @@
 GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : name(name), tag(tag)
 {
 	if (parent != nullptr) parent->AddChild(this);
-
 }
 
 GameObject::GameObject(GameObject* parent, std::string& name, std::string& tag) : name(name), tag(tag)

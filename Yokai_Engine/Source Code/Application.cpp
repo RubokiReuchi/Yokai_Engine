@@ -1,27 +1,9 @@
 #include "Application.h"
 
+Application* app = NULL;
+
 Application::Application() : fpsCap(60)
 {
-	window = new ModuleWindow(this);
-	//file = new ModuleFile(this);
-	input = new ModuleInput(this);
-	camera = new ModuleCamera3D(this);
-	renderer3D = new ModuleRenderer3D(this);
-	engine_order = new ModuleEO(this);
-
-	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
-	// They will CleanUp() in reverse order
-
-	// Main Modules
-	AddModule(window);
-	//AddModule(file);
-	AddModule(camera);
-	AddModule(input);
-	AddModule(engine_order);
-
-	// Renderer last!
-	AddModule(renderer3D);
 }
 
 Application::~Application()
@@ -37,6 +19,27 @@ Application::~Application()
 
 bool Application::Init()
 {
+	window = new ModuleWindow(true);
+	//file = new ModuleFile(true);
+	input = new ModuleInput(true);
+	camera = new ModuleCamera3D(true);
+	renderer3D = new ModuleRenderer3D(true);
+	engine_order = new ModuleEO(true);
+
+	// The order of calls is very important!
+	// Modules will Init() Start() and Update in this order
+	// They will CleanUp() in reverse order
+
+	// Main Modules
+	AddModule(window);
+	//AddModule(file);
+	AddModule(camera);
+	AddModule(input);
+	AddModule(engine_order);
+
+	// Renderer last!
+	AddModule(renderer3D);
+
 	bool ret = true;
 
 	// Call Init() in all modules

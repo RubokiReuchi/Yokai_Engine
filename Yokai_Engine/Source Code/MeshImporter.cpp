@@ -4,6 +4,8 @@
 #include "M_ModelRender.h"
 #include "C_MeshRenderer.h"
 
+#pragma comment (lib, "Assimp/libx86/assimp.lib")
+
 std::map<std::string, MeshInfo> MeshImporter::loadedMeshes;
 Assimp::Importer MeshImporter::importer;
 

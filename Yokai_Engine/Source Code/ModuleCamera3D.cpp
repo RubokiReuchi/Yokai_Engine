@@ -1,10 +1,9 @@
-#include "Globals.h"
-#include "Application.h"
 #include "ModuleCamera3D.h"
+#include "Application.h"
 
-#include"MathGeoLib/include/Math/float3.h"
-#include"MathGeoLib/include/Geometry/Plane.h"
-#include"MathGeoLib/include/Geometry/AABB.h"
+#include "MathGeoLib/include/Math/float3.h"
+#include "MathGeoLib/include/Geometry/Plane.h"
+#include "MathGeoLib/include/Geometry/AABB.h"
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
@@ -68,7 +67,7 @@ update_status ModuleCamera3D::Update(float dt)
 
 	// Mouse motion ----------------
 
-	if(app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		int dx = -app->input->GetMouseXMotion();
 		int dy = -app->input->GetMouseYMotion();

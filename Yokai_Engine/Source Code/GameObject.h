@@ -3,8 +3,8 @@
 #include "Component.h"
 #include "Globals.h"
 
-#include<vector>
-#include<string>
+#include <vector>
+#include <string>
 
 class GameObject
 {

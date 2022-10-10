@@ -156,10 +156,10 @@ void M_Render::CreateBuffers()
     glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 3));
 
     // Set instancing interval
-    glVertexAttribDivisor(1, 1);
+    /*glVertexAttribDivisor(1, 1);
     glVertexAttribDivisor(2, 1);
     glVertexAttribDivisor(3, 1);
-    glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(4, 1);*/
 
     // Create TextureID buffer object
     glGenBuffers(1, &TBO);
@@ -170,7 +170,7 @@ void M_Render::CreateBuffers()
     glEnableVertexAttribArray(7);
     glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(int), (void*)0);
 
-    glVertexAttribDivisor(7, 1);
+    //glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
 }

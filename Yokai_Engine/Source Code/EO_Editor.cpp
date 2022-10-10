@@ -71,6 +71,8 @@ void EO_Editor::CleanUp()
 
 bool EO_Editor::SetMenuBar()
 {
+	bool exit = false;
+
 	// Top Bar
 	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
 		ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_MenuBar);
@@ -136,7 +138,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Exit"))
 		{
-			return false; // close window
+			exit = true; // close window
 		}
 		ImGui::EndMenuBar();
 	}
@@ -174,7 +176,6 @@ bool EO_Editor::SetMenuBar()
 	ImGui::Text("test");
 	ImGui::End();
 
-
 	if (show_about)
 	{
 		if (ImGui::Begin("About"), NULL, ImGuiWindowFlags_AlwaysAutoResize)
@@ -194,7 +195,7 @@ bool EO_Editor::SetMenuBar()
 		}
 	}
 
-	return true;
+	return !exit;
 }
 
 void EO_Editor::OsOpenInShell(const char* path)

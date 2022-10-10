@@ -2,6 +2,10 @@
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilut.h"
 
+#pragma comment (lib, "DevIL/libx86/DevIL.lib")
+#pragma comment (lib, "DevIL/libx86/ILU.lib")
+#pragma comment (lib, "DevIL/libx86/ILUT.lib")
+
 M_ModelRender::M_ModelRender()
 {
 }
