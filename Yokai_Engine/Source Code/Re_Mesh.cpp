@@ -96,7 +96,7 @@ void Mesh::InitAsSphere(float3 position, float3 scale)
 
 void Mesh::Update()
 {
-	if (M_Texture::loadedTextures.find(texture_id) != M_Texture::loadedTextures.end())
+	if (M_Texture::loaded_textures.find(texture_id) != M_Texture::loaded_textures.end())
 	{
 		OpenGL_texture_id = M_Texture::BindTexture(texture_id);
 	}

@@ -15,7 +15,7 @@
 #pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled),
-vsync(true), wireframe(false)
+vsync(true), wireframe(false), exit(false)
 {
 	multi_sample = depth_test = cull_face = lighting = color_material = texture_2d = true;
 }
@@ -31,7 +31,7 @@ bool ModuleRenderer3D::Init()
 	bool ret = true;
 
 	//Create context
-	context = SDL_GL_CreateContext(App->window->window);
+	context = SDL_GL_CreateContext(app->window->window);
 	if(context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -115,34 +115,9 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 	}
-	/*
-	//Generate texture
-	for (int i = 0; i < TEXTURE_CHECKER_WIDTH; i++) {
-		for (int j = 0; j < TEXTURE_CHECKER_HEIGHT; j++) {
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkerImage[i][j][0] = (GLubyte)c;
-			checkerImage[i][j][1] = (GLubyte)c;
-			checkerImage[i][j][2] = (GLubyte)c;
-			checkerImage[i][j][3] = (GLubyte)255;
-		}
-	}
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &textureID);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TEXTURE_CHECKER_WIDTH, TEXTURE_CHECKER_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	*/
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	// init ImGui
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
-	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
 	frameBuffer.SetBufferInfo();
 
@@ -156,50 +131,49 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadMatrixf(app->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(app->camera->Position.x, app->camera->Position.y, app->camera->Position.z);
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	frameBuffer.Bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 	return UPDATE_CONTINUE;
 }
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	//ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), ImVec2(800, 600), ImVec2(0, 1), ImVec2(1, 0));
-	// first draw level
-	//App->level->Draw();
+	frameBuffer.Bind();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-	// second draw debug
-	/*if (debug_draw == true)
-	{
-		BeginDebugDraw();
-		App->DebugDraw();
-		EndDebugDraw();
-	}*/
+	app->engine_order->DrawEO();
+	model_render.Draw();
 
-	// third draw editor
-	//App->editor->Draw();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+	app->engine_order->DrawEO_Editor();
 
 	// sets wireframe mode on/off
 	(wireframe) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(app->window->window);
+
+	if (exit)
+	{
+		return UPDATE_STOP;
+	}
 	return UPDATE_CONTINUE;
 }
 

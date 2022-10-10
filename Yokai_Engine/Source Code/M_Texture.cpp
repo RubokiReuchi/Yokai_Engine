@@ -3,7 +3,7 @@
 #include "DevIL/include/ilut.h"
 #include "TextureImporter.h"
 
-std::map<uint, Re_Texture> TextureManager::loadedTextures;
+std::map<uint, Re_Texture> TextureManager::loaded_textures;
 std::map<std::string, uint> TextureManager::usedPaths;
 uint TextureManager::bindedTextures = 0;
 

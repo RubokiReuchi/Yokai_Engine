@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "FileSystem.h"
 
 #include "ImGui/imgui_impl_sdl.h"
 
@@ -109,14 +108,6 @@ update_status ModuleInput::PreUpdate(float dt)
 			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
 			break;
 
-			case (SDL_DROPFILE):
-			{
-				//TODO: Change method name to duplicate on drop or something
-				FileSystem::LoadDroppedFile(e.drop.file);
-				SDL_free(e.drop.file);    // Free dropped_filedir memory
-				break;
-			}
-
 			case SDL_QUIT:
 			quit = true;
 			break;
@@ -124,7 +115,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_WINDOWEVENT:
 			{
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
-					App->renderer3D->OnResize(e.window.data1, e.window.data2);
+					app->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
 		}
 	}

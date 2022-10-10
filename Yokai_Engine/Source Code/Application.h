@@ -8,26 +8,26 @@
 #include "ModuleInput.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-#include "ModuleEditor.h"
+#include "ModuleEngineOrder.h"
 
 #include"MathGeoLib/include/Algorithm/Random/LCG.h"
 
 class Application
 {
 public:
-	ModuleFile* file;
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModuleEditor* editor;
+	ModuleEO* engine_order;
+	//ModuleFile* file;
 
 	std::vector<Module*> list_modules;
 
 private:
 
-	Timer	ms_timer;
-	float	dt;
+	Timer ms_timer;
+	float dt;
 
 public:
 

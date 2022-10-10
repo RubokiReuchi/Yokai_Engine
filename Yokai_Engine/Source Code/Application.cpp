@@ -2,24 +2,24 @@
 
 Application::Application() : fpsCap(60)
 {
-	file = new ModuleFile(this);
 	window = new ModuleWindow(this);
+	//file = new ModuleFile(this);
 	input = new ModuleInput(this);
-	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	editor = new ModuleEditor(this);
+	renderer3D = new ModuleRenderer3D(this);
+	engine_order = new ModuleEO(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
 
 	// Main Modules
-	AddModule(file);
 	AddModule(window);
+	//AddModule(file);
 	AddModule(camera);
 	AddModule(input);
 
-	AddModule(editor);
+	AddModule(engine_order);
 
 	// Renderer last!
 	AddModule(renderer3D);

@@ -1,64 +1,75 @@
+#include "EO_Editor.h"
+#include "ModuleEngineOrder.h"
+#include "Application.h"
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-#include "Globals.h"
-#include "Application.h"
-#include "ModuleEditor.h"
-#include "OpenGL.h"
+//#include "ModuleFile.h"
 
-ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, start_enabled)
+EO_Editor::EO_Editor()
 {
 }
 
-// Destructor
-ModuleEditor::~ModuleEditor()
-{}
-
-// Called before render is available
-bool ModuleEditor::Init()
+EO_Editor::~EO_Editor()
 {
-	bool ret = true;
+}
 
+void EO_Editor::Start()
+{
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui::StyleColorsDark();
 
 	io.IniFilename = "Config/settings.ini";
 
-	return ret;
+	// Setup ImGui style
+	
+
+	// Setup font
+
+
+	// Init OpenGL
+	const char* glsl_version = "#version 130";
+	ImGui_ImplSDL2_InitForOpenGL(app->window->window, app->renderer3D->context);
+	ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
-// PostUpdate present buffer to screen
-update_status ModuleEditor::PostUpdate(float dt)
+void EO_Editor::PreUpdate()
+{}
+
+void EO_Editor::Update()
+{}
+
+
+void EO_Editor::PostUpdate()
 {
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
+	ImGui_ImplSDL2_NewFrame(app->window->window);
 	ImGui::NewFrame();
 
-	if (!SetMenuBar()) return UPDATE_STOP;
+	if (!SetMenuBar())
+	{
+		app->renderer3D->exit = true;
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
-bool ModuleEditor::CleanUp()
+void EO_Editor::CleanUp()
 {
-	LOG("Destroying Editor");
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
-
-	return true;
 }
 
-bool ModuleEditor::SetMenuBar()
+bool EO_Editor::SetMenuBar()
 {
 	// Top Bar
 	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
@@ -83,36 +94,36 @@ bool ModuleEditor::SetMenuBar()
 		}
 		if (ImGui::BeginMenu("Edit"))
 		{
-			
+
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) {}
-				// wireframe
+			if (ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe)) {}
+			// wireframe
 
-			if (ImGui::Checkbox("Multi Sample", &App->renderer3D->multi_sample))
-				(App->renderer3D->multi_sample) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
+			if (ImGui::Checkbox("Multi Sample", &app->renderer3D->multi_sample))
+				(app->renderer3D->multi_sample) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
 
-			if (ImGui::Checkbox("Depth Test", &App->renderer3D->depth_test))
-				(App->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+			if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
+				(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 
-			if (ImGui::Checkbox("Cull Face", &App->renderer3D->cull_face))
-				(App->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+			if (ImGui::Checkbox("Cull Face", &app->renderer3D->cull_face))
+				(app->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
 
-			if (ImGui::Checkbox("Lighting", &App->renderer3D->lighting))
-				(App->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+			if (ImGui::Checkbox("Lighting", &app->renderer3D->lighting))
+				(app->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
 
-			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_material))
-				(App->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+			if (ImGui::Checkbox("Color Material", &app->renderer3D->color_material))
+				(app->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
 
-			if (ImGui::Checkbox("Texture 2D", &App->renderer3D->texture_2d))
-				(App->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
+			if (ImGui::Checkbox("Texture 2D", &app->renderer3D->texture_2d))
+				(app->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Settings"))
 		{
-			ImGui::Checkbox("Vsync", &App->renderer3D->vsync);
+			ImGui::Checkbox("Vsync", &app->renderer3D->vsync);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -143,13 +154,13 @@ bool ModuleEditor::SetMenuBar()
 	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 
-	if (gameDimensions.x != gameWidth || gameDimensions.y != gameHeight)
+	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
 	{
 		// If the size of this imgui window is different from the one stored.
-		gameWidth = gameDimensions.x;
-		gameHeight = gameDimensions.y;
+		game_width = gameDimensions.x;
+		game_height = gameDimensions.y;
 
-		app->renderer3D->frameBuffer.SetDimensions(gameWidth, gameHeight);
+		app->renderer3D->frameBuffer.SetDimensions(game_width, game_height);
 	}
 
 	ImGui::Image((ImTextureID)app->renderer3D->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
@@ -166,7 +177,7 @@ bool ModuleEditor::SetMenuBar()
 
 	if (show_about)
 	{
-		if (ImGui::Begin("About"), NULL, ImGuiWindowFlags_AlwaysAutoResize);
+		if (ImGui::Begin("About"), NULL, ImGuiWindowFlags_AlwaysAutoResize)
 		{
 			ImGui::TextColored({ 240, 138, 0, 255 }, "Yokai Engine");
 			ImGui::Text("A 3D Game Engine");
@@ -186,7 +197,7 @@ bool ModuleEditor::SetMenuBar()
 	return true;
 }
 
-void ModuleEditor::OsOpenInShell(const char* path)
+void EO_Editor::OsOpenInShell(const char* path)
 {
 #ifdef _WIN32
 	// Note: executable path must use backslashes!

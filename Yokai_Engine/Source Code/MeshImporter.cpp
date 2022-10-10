@@ -50,7 +50,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	// Create empty Gameobject 
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->layers->rootGameObject, "Mesh");
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "Mesh");
 	else newParent = new GameObject(parent, "Mesh");
 
 	loadedMeshes[path].numOfMeshes += node->mNumMeshes; // Increase the number of meshes for every mesh inside this node.
@@ -143,7 +143,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint fi
 	// Create an empty GameObject that represents the Node
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->layers->rootGameObject, "Mesh");
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "Mesh");
 	else newParent = new GameObject(parent, "Mesh");
 
 	M_ModelRender* render_manager = &app->renderer3D->model_render;
@@ -152,7 +152,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint fi
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		// Create a GameObject with a MeshRenderComponent that represents the Mesh
-		GameObject* newGameObject = new GameObject(app->layers->rootGameObject, "Mesh");
+		GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, "Mesh");
 		newGameObject->AddComponent<C_MeshRenderer>()->InitAsLoadedMesh(meshID++);
 	}
 

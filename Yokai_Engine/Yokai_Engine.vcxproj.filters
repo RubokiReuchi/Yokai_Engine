@@ -52,6 +52,9 @@
     <Filter Include="Sources\Managers">
       <UniqueIdentifier>{cd830a69-f8ec-4b8f-a940-cf632df1597a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\EngineOrder">
+      <UniqueIdentifier>{0293de1f-d365-400d-93ad-2c10c28771eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -116,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h">
       <Filter>Sources\Tools\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\ModuleEditor.h">
-      <Filter>Sources\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\MathBuildConfig.h">
       <Filter>Sources\Tools\MathGeoLib</Filter>
@@ -312,9 +312,6 @@
     <ClInclude Include="Source Code\MeshImporter.h">
       <Filter>Sources\Importers</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\FileSystem.h">
-      <Filter>Sources\Importers</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\ModuleFile.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -350,6 +347,15 @@
     </ClInclude>
     <ClInclude Include="Source Code\M_Texture.h">
       <Filter>Sources\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EO_Base.h">
+      <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EO_Editor.h">
+      <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ModuleEngineOrder.h">
+      <Filter>Sources\Modules\EngineOrder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -409,9 +415,6 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp">
       <Filter>Sources\Tools\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\ModuleEditor.cpp">
-      <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.cpp">
       <Filter>Sources\Tools\MathGeoLib\Algorithm\Random</Filter>
@@ -518,9 +521,6 @@
     <ClCompile Include="Source Code\MeshImporter.cpp">
       <Filter>Sources\Importers</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\FileSystem.cpp">
-      <Filter>Sources\Importers</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\ModuleFile.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
@@ -556,6 +556,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\M_Texture.cpp">
       <Filter>Sources\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EO_Base.cpp">
+      <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EO_Editor.cpp">
+      <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ModuleEngineOrder.cpp">
+      <Filter>Sources\Modules\EngineOrder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -67,14 +67,14 @@ void M_Render::Draw()
     basic_shader->SetMatFloat4v("projection", app->renderer3D->GetProjectionMatrix());
 
     //glActiveTexture(GL_TEXTURE0);
-    //uint id = TextureManager::loadedTextures[meshes.begin()->second.textureID].OpenGLID;
+    //uint id = TextureManager::loaded_textures[meshes.begin()->second.textureID].OpenGLID;
     //glBindTexture(GL_TEXTURE_2D, id);
     //glUniform1i(glGetUniformLocation(basicShader->programID, "testTexture"), 0);
 
     for (int i = 0; i < M_Texture::bindedTextures; i++)
     {
         /*     glActiveTexture(GL_TEXTURE0 + i);
-             uint id = TextureManager::loadedTextures[meshes.begin()->second.textureID].OpenGLID;
+             uint id = TextureManager::loaded_textures[meshes.begin()->second.textureID].OpenGLID;
              glBindTexture(GL_TEXTURE_2D, id);*/
         uint location = glGetUniformLocation(basic_shader->program_id, "testTexture");
         glUniform1i(glGetUniformLocation(basic_shader->program_id, "testTexture"), i);

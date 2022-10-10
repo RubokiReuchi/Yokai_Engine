@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
@@ -45,4 +46,7 @@ public:
 
 	FrameBuffer frameBuffer;
 	M_ModelRender model_render;
+
+	// trigger exit
+	bool exit;
 };

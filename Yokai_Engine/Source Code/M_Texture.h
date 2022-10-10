@@ -13,6 +13,6 @@ public:
 	static void UnBindTextures();
 
 	static uint bindedTextures;
-	static std::map<uint, Re_Texture> loadedTextures;
+	static std::map<uint, Re_Texture> loaded_textures;
 	static std::map<std::string, uint> usedPaths;
 };
