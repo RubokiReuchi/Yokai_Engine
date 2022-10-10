@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "Light.h"
 #include "FrameBuffer.h"
-#include "GeometricForms.h"
+#include "M_ModelRender.h"
 
 #include "MeshImporter.h"
 
@@ -29,6 +29,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	float* GetProjectionMatrix() { return &ProjectionMatrix; };
+
 public:
 
 	bool vsync, wireframe, multi_sample, depth_test, cull_face, lighting, color_material, texture_2d;
@@ -42,10 +44,5 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	FrameBuffer frameBuffer;
-
-	SphereForm sphere;
-	CubeForm cube;
-	PyramidForm pyramid;
-
-	StoredMesh mesh;
+	M_ModelRender model_render;
 };

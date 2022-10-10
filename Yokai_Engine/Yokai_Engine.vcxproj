@@ -102,9 +102,7 @@
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
-    <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
-    <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui_impl_opengl3.h" />
@@ -178,7 +176,6 @@
     <ClInclude Include="Source Code\FileSystem.h" />
     <ClInclude Include="Source Code\FrameBuffer.h" />
     <ClInclude Include="Source Code\GameObject.h" />
-    <ClInclude Include="Source Code\GeometricForms.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\Light.h" />
@@ -190,10 +187,13 @@
     <ClInclude Include="Source Code\ModuleInput.h" />
     <ClInclude Include="Source Code\ModuleRenderer3D.h" />
     <ClInclude Include="Source Code\ModuleWindow.h" />
+    <ClInclude Include="Source Code\M_ModelRender.h" />
+    <ClInclude Include="Source Code\M_Render.h" />
+    <ClInclude Include="Source Code\M_Texture.h" />
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\Rect.h" />
-    <ClInclude Include="Source Code\Resource.h" />
     <ClInclude Include="Source Code\Re_Mesh.h" />
+    <ClInclude Include="Source Code\Re_Shader.h" />
     <ClInclude Include="Source Code\Re_Texture.h" />
     <ClInclude Include="Source Code\TextureImporter.h" />
     <ClInclude Include="Source Code\Timer.h" />
@@ -202,9 +202,7 @@
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
-    <ClCompile Include="Source Code\C_Material.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
-    <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_draw.cpp" />
@@ -260,10 +258,13 @@
     <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
     <ClInclude Include="Source Code\OpenGL.h" />
+    <ClCompile Include="Source Code\M_ModelRender.cpp" />
+    <ClCompile Include="Source Code\M_Render.cpp" />
+    <ClCompile Include="Source Code\M_Texture.cpp" />
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Rect.cpp" />
-    <ClCompile Include="Source Code\Resource.cpp" />
     <ClCompile Include="Source Code\Re_Mesh.cpp" />
+    <ClCompile Include="Source Code\Re_Shader.cpp" />
     <ClCompile Include="Source Code\Re_Texture.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />

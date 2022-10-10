@@ -1,73 +1,57 @@
 #pragma once
 
+#include "Component.h"
+#include "Globals.h"
+
 #include<vector>
 #include<string>
-
-#include "Component.h"
-
-class C_Transform;
-struct SerializedField;
 
 class GameObject
 {
 public:
+	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default");
+	GameObject(GameObject* parent, std::string& name, std::string& tag);
+	~GameObject();
 
-	GameObject(const char*, GameObject* parent, int _uid = -1);
-	virtual ~GameObject();
-
-	void Update();
-
-	Component* AddComponent(Component::Type type, const char* params = nullptr);
-	Component* GetComponent(Component::Type type, const char* scriptName = nullptr);
-
-	//void RecursiveUIDRegeneration();
-
-	bool isActive() const;
-
-	void Enable();
-	void Disable();
-	bool IsRoot();
-
-	void Destroy();
-
-	//void SaveToJson(JSON_Array*);
-	//void LoadFromJson(JSON_Object*);
-
-	//void LoadComponents(JSON_Array* componentArray);
-	void RemoveComponent(Component* ptr);
-
-	void ChangeParent(GameObject*);
-	bool IsChild(GameObject*);
-
-	void RemoveChild(GameObject*);
-
-
-	template<typename A>
-	A* GetComponent()
+	//TODO: Could do with an array of functions that creates a specific component
+	template <class T>
+	T* AddComponent()
 	{
-		return (A*)GetComponent(A::GetType());
+		T* newComponent = new T(this);
+		components.push_back(newComponent);
+		return newComponent;
 	}
 
-	GameObject* parent;
-	C_Transform* transform;
+	template<class T>
+	T* GetComponent(uint index = 0)
+	{
+		uint counter = 0;
+		for (const auto& component : components)
+		{
+			if (typeid(*component) != typeid(T)) continue;
+	
+			if (counter == index) return (T*)component;
+			else counter++;
+		}
+	}
 
-	std::vector<GameObject*> children;
+	bool AddChild(GameObject* child);
 
-	std::vector<Component*> components;
-
-	std::vector<SerializedField*> csReferences;
+	bool SetParent(GameObject* parent);
 
 public:
 	std::string name;
-	bool active, isStatic;
-
-	//TODO: Temporal tree display bool
-	bool showChildren;
-	bool toDelete;
-
-	int UID;
+	std::string tag;
 
 private:
-	Component* dumpComponent;
+	void RemoveChild(GameObject* child);
 
+private:
+	std::vector<Component*> components;
+	std::vector<GameObject*> children;
+
+	GameObject* parent = nullptr;
+
+	bool active = true;
+	bool destroyed = false;
 };

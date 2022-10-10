@@ -10,17 +10,21 @@ public:
 	FrameBuffer();
 	~FrameBuffer();
 
-	void Clear();
+	void Bind();
 
-	void CreateBuffer();
+	void SetDimensions(int width, int height);
+	void SetBufferInfo();
 
-	uint GetFrameBuffer() { return frameBuffer; }
-	uint GetTextureBuffer() { return texColorBuffer; }
-	uint GetRBO() { return rboDepthStencil; }
+	uint GetTexture() { return texture_color_buffer; }
 
 private:
 
-	uint frameBuffer;
-	uint texColorBuffer;
-	uint rboDepthStencil;
+	void RegenerateBuffer();
+private:
+	uint FBO = 0; // Frame Buffer Object
+	uint texture_color_buffer = 0;
+	uint RBO = 0;
+
+	int width;
+	int height;
 };

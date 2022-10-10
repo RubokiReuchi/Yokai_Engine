@@ -1,38 +1,22 @@
 #pragma once
+
+#include "Re_Mesh.h"
 #include "Component.h"
-
-#include"MathGeoLib/include/Geometry/AABB.h"
-#include"MathGeoLib/include/Geometry/OBB.h"
-
-class ResourceMesh;
 
 class C_MeshRenderer : public Component
 {
 public:
-	C_MeshRenderer(GameObject* _gm);
-	virtual ~C_MeshRenderer();
+	C_MeshRenderer(GameObject* gameObject);
+	virtual ~C_MeshRenderer() override;
 
-	void Update() override;
+	void InitAsDefaultCube(float3 position = { 0.0f,0.0f,0.0f }, float3 scale = { 1.0f,1.0f,1.0f });
+	void InitAsDefaultSphere(float3 position = { 0.0f,0.0f,0.0f }, float3 scale = { 1.0f,1.0f,1.0f });
+	void InitAsLoadedMesh(uint mesh_id);
+	void InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices);
 
-	void RenderMesh(bool rTex = false);
-
-	//void SaveData(JSON_Object* nObj) override;
-	//void LoadData(DEConfig& nObj) override;
-
-#ifndef STANDALONE
-	bool OnEditor() override;
-#endif // !STANDALONE
-
-	static inline Type GetType() { return Type::MeshRenderer; }; //This will allow us to get the type from a template
-
-	void SetRenderMesh(ResourceMesh* mesh);
-	ResourceMesh* GetRenderMesh();
-
-	OBB globalOBB;
-	AABB globalAABB;
-	bool faceNormals, vertexNormals, showAABB, showOBB;
+	Mesh& GetMesh();
 
 private:
-	ResourceMesh* _mesh;
-	float3 alternColor;
+	uint mesh_id;
+	uint instance_id;
 };

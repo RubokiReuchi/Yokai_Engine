@@ -1,37 +1,25 @@
-#include"TextureImporter.h"
-#include"FileSystem.h"
+#include "TextureImporter.h"
+#include "DevIL/include/il.h"
+#include "DevIL/include/ilut.h"
+#include "Re_Texture.h"
+#include "M_Texture.h"
 
-#include "DevIL\include\ilu.h"
-#include "DevIL\include\ilut.h"
-
-#include"Re_Texture.h"
-//#include"DE_Cubemap.h"
-
-#pragma comment( lib, "DevIL/libx86/DevIL.lib" )
-#pragma comment( lib, "DevIL/libx86/ILU.lib" )
-#pragma comment( lib, "DevIL/libx86/ILUT.lib" )
-
-GLuint TextureImporter::LoadToMemory(char* buffer, int size, int* w, int* h)
+uint TextureImporter::ImportTexture(std::string path)
 {
-	ILuint imageID;
-	ilGenImages(1, &imageID);
-	ilBindImage(imageID);
-
-	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	//Check if the given texture has been already loaded
+	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
 	{
-		LOG("Image not loaded");
+		return M_Texture::usedPaths[path]; // If this texture path was already loaded, return the loaded texture.
 	}
 
-	if (w)
-		*w = ilGetInteger(IL_IMAGE_WIDTH);
-	if (h)
-		*h = ilGetInteger(IL_IMAGE_HEIGHT);
+	ILuint ImgId = 0;
+	ilGenImages(1, &ImgId);
+	ilBindImage(ImgId);
+	ilLoadImage(path.c_str());
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	GLuint glID = ilutGLBindTexImage();
+	GLuint texture = ilutGLBindTexImage();
 
-	//TODO: Generate mipmaps and use best settings
-	glBindTexture(GL_TEXTURE_2D, glID);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -39,62 +27,14 @@ GLuint TextureImporter::LoadToMemory(char* buffer, int size, int* w, int* h)
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	ilDeleteImages(1, &imageID);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	ilDeleteImages(1, &ImgId);
 
-	return glID;
-}
+	Re_Texture engineTexture;
+	engineTexture.OpenGL_id = texture;
+	engineTexture.name = path;
 
-void TextureImporter::SaveDDS(char* buffer, int size, const char* fileName)
-{
-	ILuint imageID;
-	ilGenImages(1, &imageID);
-	ilBindImage(imageID);
+	M_Texture::loadedTextures[texture] = engineTexture; // Add loaded texture inside TextureManager.
+	M_Texture::usedPaths[path] = texture;
 
-	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
-	{
-		LOG("Image not loaded");
-	}
-
-	//TODO: Move this to function
-	ILuint _size = 0;
-	ILubyte* data = nullptr;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-	_size = ilSaveL(IL_DDS, nullptr, 0);
-	if (_size > 0)
-	{
-		data = new ILubyte[_size];
-		ilSaveL(IL_DDS, data, _size);
-
-		std::string path(fileName);
-		//path += ".dds";
-
-		FileSystem::Save(path.c_str(), (char*)data, _size, false);
-
-		delete[] data;
-		data = nullptr;
-	}
-
-	ilDeleteImages(1, &imageID);
-}
-
-// not now
-void TextureImporter::Import(char* buffer, int bSize, Resource* res)
-{
-	SaveDDS(buffer, bSize, res->GetLibraryPath());
-}
-
-/*Take a screenshot*/
-void TextureImporter::TakeScreenshot(int frameBuffer)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-	ILuint imageID = ilGenImage();
-	ilBindImage(imageID);
-	ilutGLScreen();
-	ilEnable(IL_FILE_OVERWRITE);
-	ilSaveImage("Screenshots/Screenshot.png");
-	ilDeleteImage(imageID);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	return texture;
 }

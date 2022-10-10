@@ -1,27 +1,37 @@
 #pragma once
+
+#include "GameObject.h"
 #include "Globals.h"
 #include "OpenGL.h"
 
-class aiMesh;
+#include "Assimp/include/Importer.hpp"
+#include "Assimp/include/scene.h"
+#include "Assimp/include/postprocess.h"
 
-struct StoredMesh
+#include <map>
+
+struct MeshInfo
 {
-	uint id_index = 0; // index in VRAM
-	uint num_index = 0;
-	uint* index = nullptr;
-
-	uint id_vertex = 0; // unique vertex in VRAM
-	uint num_vertex = 0;
-	float* vertex = nullptr;
+	uint numOfMeshes;
+	uint initialID;
 };
 
-namespace MeshImporter
+class MeshImporter
 {
-	void EnableDebugMode();
-	void DisableDebugMode();
+public:
 
-	void LoadMesh(char* path_file, StoredMesh* myMesh);
+	static void LoadMesh(std::string path); // This function loads all the information in the mesh and creates all necessary Gameobjects in the process
 
-	void CreateMesh(StoredMesh myMesh);
-	void RenderMesh(StoredMesh myMesh);
-}
+private:
+	static const aiScene* GetAiScene(std::string path);
+
+	// ProcessNew creates a new RenderManger for each Mesh
+	static void ProcessNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
+	static void ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent);
+
+	//ProcessLoaded creates a new Instance inside a RenderManager for each Mesh
+	static void ProcessLoadedNode(aiNode* node, const aiScene* scene, uint firstMeshID, GameObject* parent = nullptr);
+
+	static std::map<std::string, MeshInfo> loadedMeshes;
+	static Assimp::Importer importer;
+};

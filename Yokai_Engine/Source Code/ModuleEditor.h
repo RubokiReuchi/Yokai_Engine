@@ -21,6 +21,8 @@ public:
 
 	void OsOpenInShell(const char* path);
 
+	int gameWidth, gameHeight;
+
 };
 
 #endif

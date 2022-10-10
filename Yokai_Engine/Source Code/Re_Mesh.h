@@ -1,54 +1,55 @@
 #pragma once
 
-#include "glmath.h" //Move to MathGeoLib
+#include "Globals.h"
+#include "Color.h"
+#include "MathGeoLib/include/MathGeoLib.h"
+
 #include <vector>
-#include<string>
 
-#include"MathGeoLib/include/Geometry/AABB.h"
-#include"Resource.h"
-
-typedef unsigned int GLuint;
-typedef unsigned int uint;
-class ResourceMaterial;
-class C_Transform;
-
-#define VERTEX_ATTRIBUTES 11
-
-class ResourceMesh : public Resource
+struct Vertex
 {
+	Vertex() {}
+	Vertex(float3 pos, float3 norm, float2 texC) : position(pos), normals(norm), tex_coords(texC) {}
+	float3 position;
+	float3 normals;
+	float2 tex_coords;
+	float texture_id;
+};
 
+class Mesh
+{
 public:
-	ResourceMesh(unsigned int uid);
-	~ResourceMesh();
+	Mesh();
+	~Mesh();
 
-	bool LoadToMemory() override;
-	bool UnloadFromMemory() override;
+	void InitAsMeshInformation(float3 position, float3 scale);
+	void InitAsCube(float3 position, float3 scale);
+	void InitAsSphere(float3 position, float3 scale);
 
-	void RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float*);
-	void RenderMesh(GLuint textureID, float3 color, bool renderTexture = false, ResourceMaterial* shader = nullptr, C_Transform* _transform = nullptr);
-	void OGL_GPU_Render();
+	void InitAsMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices, float3 pos, float3 scale);
 
-	vec3 GetVectorFromIndex(float* startValue);
+	void Update();
 
-public:
+	void CleanUp();
 
-	uint indices_id = 0; // index in VRAM
-	uint indices_count = 0;
-	uint* indices = nullptr;
+	void SetPosition(float3 pos);
+	void SetScale(float3 s);
+	void SetRotation(float3 rot);
 
-	//Vertices is a 1 dimension array that contains floats representing a vertex every 3 elements, vertices_count is the number of 3 pairs (0, 0, 1) would be
-	//a 3 element array but vertices_count would be 1.
-	uint vertices_id = 0; // unique vertex in VRAM
-	uint vertices_count = 0;
-	float* vertices = nullptr;
+	void SetTransform(float3 pos, float3 s, float3 rot);
 
-	AABB localAABB;
+	void SetUpdateTrue() { update_matrix = true; } // Debugging function! Should be deleted.
 
-	uint VBO;
-	uint VAO;
-	uint EBO;
+	float3 rotation;
+	float3 scale;
+	float3 position;
 
-	//TODO: Move this to file system
-	const char* SaveCustomFormat(uint& retSize);
-	void LoadCustomFormat(const char*);
+	std::vector<Vertex>* vertices = nullptr;
+	std::vector<uint>* indices = nullptr;
+	float4x4 model_matrix = model_matrix.identity;
+
+	float OpenGL_texture_id = -1;
+	float texture_id = -1;
+private:
+	bool update_matrix = false;
 };

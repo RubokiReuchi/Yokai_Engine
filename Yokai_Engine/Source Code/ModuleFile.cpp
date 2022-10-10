@@ -16,10 +16,6 @@ bool ModuleFile::Init()
 {
 	FileSystem::FSInit();
 
-#ifndef STANDALONE
-	MeshImporter::EnableDebugMode();
-#endif // !STANDALONE
-
 	return true;
 }
 
@@ -33,10 +29,6 @@ bool ModuleFile::Start()
 bool ModuleFile::CleanUp()
 {
 	FileSystem::FSDeInit();
-
-#ifndef STANDALONE
-	MeshImporter::DisableDebugMode();
-#endif // !STANDALONE
 
 	return true;
 }

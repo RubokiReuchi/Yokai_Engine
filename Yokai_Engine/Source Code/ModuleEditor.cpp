@@ -141,8 +141,18 @@ bool ModuleEditor::SetMenuBar()
 
 	// Screen
 	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImVec2 size = ImGui::GetWindowSize();
-	ImGui::Image((ImTextureID)App->renderer3D->frameBuffer.GetTextureBuffer(), size, ImVec2(0, 1), ImVec2(1, 0));
+	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
+
+	if (gameDimensions.x != gameWidth || gameDimensions.y != gameHeight)
+	{
+		// If the size of this imgui window is different from the one stored.
+		gameWidth = gameDimensions.x;
+		gameHeight = gameDimensions.y;
+
+		app->renderer3D->frameBuffer.SetDimensions(gameWidth, gameHeight);
+	}
+
+	ImGui::Image((ImTextureID)app->renderer3D->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 
 	// Inspector

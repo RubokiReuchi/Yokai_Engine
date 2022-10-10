@@ -1,298 +1,162 @@
 #include "Re_Mesh.h"
-#include "OpenGL.h"
-//#include "MeshArrays.h"
-#include "FileSystem.h"
-#include "Globals.h"
-//#include "RE_Shader.h"
-//#include "Re_Material.h"
+#include "M_Texture.h"
 
-#include "Application.h"
-//#include"MO_Scene.h" //This can be removed
-//#include"MO_Camera3D.h" //This can be deleted
-#include "C_Transform.h"
-//#include"DETime.h"
-#include "GameObject.h"
-//#include"CO_DirectionalLight.h"
+#define _USE_MATH_DEFINES
 
-ResourceMesh::ResourceMesh(unsigned int _uid) : Resource(_uid, Resource::Type::MESH), indices_id(0), vertices_id(0),
-EBO(0), VAO(0), VBO(0)
+#include <math.h>
+
+inline void push_indices(std::vector<uint>& indices, int sectors, int r, int s)
 {
+	int curRow = r * sectors;
+	int nextRow = (r + 1) * sectors;
+	int nextS = (s + 1) % sectors;
 
+	indices.push_back(curRow + s);
+	indices.push_back(nextRow + s);
+	indices.push_back(nextRow + nextS);
+
+	indices.push_back(curRow + s);
+	indices.push_back(nextRow + nextS);
+	indices.push_back(curRow + nextS);
 }
 
-ResourceMesh::~ResourceMesh()
-{}
 
-bool ResourceMesh::LoadToMemory()
+Mesh::Mesh()
 {
-	LOG("Mesh loaded to memory"); //UNCOMMENT
-	LoadCustomFormat(GetLibraryPath());
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, (GLuint*)&(VBO));
-	glGenBuffers(1, (GLuint*)&(EBO));
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * VERTEX_ATTRIBUTES * vertices_count, vertices, GL_STATIC_DRAW);
-
-	//indices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * indices_count, indices, GL_STATIC_DRAW);
-
-	//position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	//texcoords attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-
-	//normals attribute
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(5 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(2);
-
-	//tangents attribute
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, VERTEX_ATTRIBUTES * sizeof(float), (GLvoid*)(8 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(3);
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	return true;
+	model_matrix.SetIdentity();
 }
 
-bool ResourceMesh::UnloadFromMemory()
+Mesh::~Mesh()
 {
-	glDeleteVertexArrays(1, &VAO);
-	VAO = 0u;
-	glDeleteBuffers(1, &VBO);
-	VBO = 0u;
-	glDeleteBuffers(1, &EBO);
-	EBO = 0u;
-
-	//Clear buffers
-	if (indices != nullptr)
-		delete[] indices;
-
-	if (vertices != nullptr)
-		delete[] vertices;
-
-	//Restart to nullptr
-	indices = nullptr;
-	vertices = nullptr;
-
-	return true;
 }
 
-void ResourceMesh::RenderMesh(GLuint textureID, float3 color, bool renderTexture, ResourceMaterial* material, C_Transform* _transform)
+void Mesh::InitAsMeshInformation(float3 position, float3 scale)
 {
-	//ASK: glDrawElementsInstanced()?
-	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
-		//glBindTexture(GL_TEXTURE_2D, textureID);
+	this->position = position;
+	this->scale = scale;
+}
 
-	/*if (material->shader)
+void Mesh::InitAsCube(float3 position, float3 scale)
+{
+	this->position = position;
+	this->scale = scale;
+
+	vertices = new std::vector<Vertex>(8);
+
+	vertices->at(0).position = float3(-0.5, 0.5, 0.5);
+	vertices->at(1).position = float3(-0.5, -0.5, 0.5);
+	vertices->at(2).position = float3(0.5, 0.5, 0.5);
+	vertices->at(3).position = float3(0.5, -0.5, 0.5);
+	vertices->at(4).position = float3(-0.5, 0.5, -0.5);
+	vertices->at(5).position = float3(-0.5, -0.5, -0.5);
+	vertices->at(6).position = float3(0.5, 0.5, -0.5);
+	vertices->at(7).position = float3(0.5, -0.5, -0.5);
+
+	indices = new std::vector<uint>
 	{
-		material->shader->Bind();
-		material->PushUniforms();
+	  0, 2, 3, 0, 3, 1,
+	  2, 6, 7, 2, 7, 3,
+	  6, 4, 5, 6, 5, 7,
+	  4, 0, 1, 4, 1, 5,
+	  0, 4, 6, 0, 6, 2,
+	  1, 5, 7, 1, 7, 3,
+	};
+}
 
-		if (textureID != 0)
-			glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, "hasTexture"), 1);
-		else
-			glUniform1i(glGetUniformLocation(material->shader->shaderProgramID, "hasTexture"), 0);
+void Mesh::InitAsSphere(float3 position, float3 scale)
+{
+	this->position = position;
+	this->scale = scale;
 
-		GLint modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "model_matrix");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, _transform->GetGlobalTransposed());
+	int rings = 12;
+	int sectors = 24;
+	int radius = 1;
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "view");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ViewMatrixOpenGL().ptr());
+	float const R = 1. / (float)(rings - 1);
+	float const S = 1. / (float)(sectors - 1);
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "projection");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, EngineExternal->moduleRenderer3D->activeRenderCamera->ProjectionMatrixOpenGL().ptr());
+	vertices = new std::vector<Vertex>(rings * sectors);
+	indices = new std::vector<uint>(rings * sectors * 4);
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "normalMatrix");
-		float3x3 normalMatrix = _transform->globalTransform.Float3x3Part().Transposed();
-		normalMatrix.Inverse();
-		normalMatrix.Transpose();
-		glUniformMatrix3fv(modelLoc, 1, GL_FALSE, normalMatrix.ptr());
+	int counter = 0;
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "time");
-		glUniform1f(modelLoc, DETime::realTimeSinceStartup);
+	for (int r = 0; r < rings; r++) for (int s = 0; s < sectors; s++)
+	{
+		float const y = sin(-M_PI_2 + M_PI * r * R);
+		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
+		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "cameraPosition");
-		float3 cameraPosition = EngineExternal->moduleRenderer3D->activeRenderCamera->GetPosition();
-		glUniform3fv(modelLoc, 1, &cameraPosition.x);
+		vertices->at(counter).position.x = x * radius;
+		vertices->at(counter).position.y = y * radius;
+		vertices->at(counter).position.z = z * radius;
+		counter++;
+		if (r < rings - 1) push_indices(*indices, sectors, r, s);
+	}
+}
 
-		modelLoc = glGetUniformLocation(material->shader->shaderProgramID, "altColor");
-		glUniform3fv(modelLoc, 1, &color.x);
-
-		if (EngineExternal->moduleRenderer3D->directLight)
-			EngineExternal->moduleRenderer3D->directLight->PushLightUniforms(material);
+void Mesh::Update()
+{
+	if (M_Texture::loadedTextures.find(texture_id) != M_Texture::loadedTextures.end())
+	{
+		OpenGL_texture_id = M_Texture::BindTexture(texture_id);
 	}
 
-	OGL_GPU_Render();
+	if (!update_matrix) return;
 
-	//if (textureID != 0 && (renderTexture || (generalWireframe != nullptr && *generalWireframe == false)))
-	//{
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	//}
+	// Update Model matrix. This information will be used later by the RenderManager.
+	model_matrix.SetIdentity();
+	model_matrix = model_matrix.Scale(scale.x, scale.y, scale.z).ToFloat4x4() * model_matrix;
 
-	if (material->shader)
-		material->shader->Unbind();*/
+	float3 tempRotation = rotation;
+
+	math::Quat rot;
+	rot = rot.FromEulerZYX(math::DegToRad(tempRotation.z), math::DegToRad(tempRotation.y), math::DegToRad(tempRotation.x));
+
+	model_matrix = rot * model_matrix;
+	model_matrix = model_matrix.Translate(position.x, position.y, position.z).ToFloat4x4() * model_matrix;
+	model_matrix.Transpose();
+
+	update_matrix = false;
 }
 
-void ResourceMesh::OGL_GPU_Render()
+void Mesh::InitAsMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices, float3 pos, float3 scale)
 {
-	//vertices
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, indices_count, GL_UNSIGNED_INT, NULL);
-	glBindVertexArray(0);
+	this->position = position;
+	this->scale = scale;
+
+	this->vertices = new std::vector<Vertex>(vertices);
+	this->indices = new std::vector<uint>(indices);
+
 }
 
-void ResourceMesh::RenderMeshDebug(bool* vertexNormals, bool* faceNormals, const float* globalTransform)
+void Mesh::CleanUp()
 {
-	glPushMatrix();
-	glMultMatrixf(globalTransform);
-
-	if (*vertexNormals == true)
-	{
-		float normalLenght = 0.25f;
-		glPointSize(3.0f);
-		glColor3f(1, 0, 0);
-		glBegin(GL_POINTS);
-		for (unsigned int i = 0; i < vertices_count; i++)
-		{
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
-		}
-		glEnd();
-		glColor3f(0, 1, 0);
-		glPointSize(1.0f);
-
-		//Vertex normals
-		glColor3f(0, 1, 0);
-		glBegin(GL_LINES);
-		for (unsigned int i = 0; i < vertices_count; i++)
-		{
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES], vertices[i * VERTEX_ATTRIBUTES + 1], vertices[i * VERTEX_ATTRIBUTES + 2]);
-			glVertex3f(vertices[i * VERTEX_ATTRIBUTES] + vertices[i * VERTEX_ATTRIBUTES + 5] * normalLenght,
-				vertices[i * VERTEX_ATTRIBUTES + 1] + vertices[i * VERTEX_ATTRIBUTES + 6] * normalLenght,
-				vertices[i * VERTEX_ATTRIBUTES + 2] + vertices[i * VERTEX_ATTRIBUTES + 7] * normalLenght);
-		}
-		glEnd();
-		glColor3f(1, 1, 1);
-	}
-
-	if (*faceNormals == true)
-	{
-		float normalLenght = 0.25f;
-		//Face normals
-		glColor3f(1, 0, 0);
-		glBegin(GL_LINES);
-		for (int i = 0; i < indices_count; i += 3)
-		{
-			/*vec3 A = GetVectorFromIndex(&vertices[indices[i] * 3]);
-			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * 3]);
-			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * 3]);*/
-
-			vec3 A = GetVectorFromIndex(&vertices[indices[i] * VERTEX_ATTRIBUTES]);
-			vec3 B = GetVectorFromIndex(&vertices[indices[i + 1] * VERTEX_ATTRIBUTES]);
-			vec3 C = GetVectorFromIndex(&vertices[indices[i + 2] * VERTEX_ATTRIBUTES]);
-
-			vec3 middle((A.x + B.x + C.x) / 3.f, (A.y + B.y + C.y) / 3.f, (A.z + B.z + C.z) / 3.f);
-
-			vec3 crossVec = cross((B - A), (C - A));
-			vec3 normalDirection = normalize(crossVec);
-
-			glVertex3f(middle.x, middle.y, middle.z);
-			glVertex3f(middle.x + normalDirection.x * normalLenght, middle.y + normalDirection.y * normalLenght, middle.z + normalDirection.z * normalLenght);
-		}
-		glEnd();
-		glPointSize(1.f);
-		glColor3f(1, 1, 1);
-	}
-
-	glPopMatrix();
+	RELEASE(vertices);
+	RELEASE(indices);
 }
 
-vec3 ResourceMesh::GetVectorFromIndex(float* startValue)
+void Mesh::SetPosition(float3 pos)
 {
-	float x = *startValue;
-	++startValue;
-	float y = *startValue;
-	++startValue;
-	float z = *startValue;
-
-	return vec3(x, y, z);
+	this->position = pos;
+	update_matrix = true;
 }
 
-const char* ResourceMesh::SaveCustomFormat(uint& retSize)
+void Mesh::SetScale(float3 s)
 {
-	uint aCounts[2] = { indices_count, vertices_count };
-	retSize = sizeof(aCounts) + (sizeof(uint) * indices_count) + (sizeof(float) * vertices_count * VERTEX_ATTRIBUTES);
-
-	char* fileBuffer = new char[retSize];
-	char* cursor = fileBuffer;
-
-	uint bytes = sizeof(aCounts);
-	memcpy(cursor, aCounts, bytes);
-	cursor += bytes;
-
-	bytes = sizeof(uint) * indices_count;
-	memcpy(cursor, indices, bytes);
-	cursor += bytes;
-
-	bytes = sizeof(float) * vertices_count * VERTEX_ATTRIBUTES;
-	memcpy(cursor, vertices, bytes);
-	cursor += bytes;
-
-	return fileBuffer;
+	this->scale = s;
+	update_matrix = true;
 }
 
-void ResourceMesh::LoadCustomFormat(const char* path)
+void Mesh::SetRotation(float3 rot)
 {
-	char* fileBuffer = nullptr;
+	this->rotation = rot;
+	update_matrix = true;
+}
 
-	uint size = FileSystem::LoadToBuffer(path, &fileBuffer);
-
-	if (size == 0)
-		return;
-
-	char* cursor = fileBuffer;
-	uint variables[2];
-
-	uint bytes = sizeof(variables);
-	memcpy(variables, cursor, bytes);
-	indices_count = variables[0];
-	vertices_count = variables[1];
-	cursor += bytes;
-
-	bytes = sizeof(uint) * indices_count;
-
-	indices = new uint[indices_count];
-	memcpy(indices, cursor, bytes);
-	cursor += bytes;
-
-	vertices = new float[vertices_count * VERTEX_ATTRIBUTES];
-	bytes = sizeof(float) * vertices_count * VERTEX_ATTRIBUTES;
-	memcpy(vertices, cursor, bytes);
-	cursor += bytes;
-
-	//TODO: Should this be here?
-	float* vertices_positions = new float[vertices_count * 3];
-	for (size_t i = 0; i < vertices_count; i++)
-	{
-		vertices_positions[i * 3] = vertices[i * VERTEX_ATTRIBUTES];
-		vertices_positions[i * 3 + 1] = vertices[i * VERTEX_ATTRIBUTES + 1];
-		vertices_positions[i * 3 + 2] = vertices[i * VERTEX_ATTRIBUTES + 2];
-	}
-
-	localAABB.SetNegativeInfinity();
-	localAABB.Enclose((float3*)vertices_positions, vertices_count);
-	delete[] vertices_positions;
-
-	delete[] fileBuffer;
-	fileBuffer = nullptr;
+void Mesh::SetTransform(float3 pos, float3 s, float3 rot)
+{
+	this->position = pos;
+	this->scale = s;
+	this->rotation = rot;
+	update_matrix = true;
 }

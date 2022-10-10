@@ -49,6 +49,9 @@
     <Filter Include="Sources\Resources">
       <UniqueIdentifier>{9d19593e-6c06-4905-96f5-d3c0b12892b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Managers">
+      <UniqueIdentifier>{cd830a69-f8ec-4b8f-a940-cf632df1597a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -303,9 +306,6 @@
     <ClInclude Include="Source Code\OpenGL.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\GeometricForms.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\FrameBuffer.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
@@ -324,17 +324,8 @@
     <ClInclude Include="Source Code\GameObject.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\C_Transform.h">
-      <Filter>Sources\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\C_Material.h">
-      <Filter>Sources\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\C_MeshRenderer.h">
       <Filter>Sources\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Resource.h">
-      <Filter>Sources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Re_Mesh.h">
       <Filter>Sources\Resources</Filter>
@@ -347,6 +338,18 @@
     </ClInclude>
     <ClInclude Include="Source Code\TextureImporter.h">
       <Filter>Sources\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\M_ModelRender.h">
+      <Filter>Sources\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\M_Render.h">
+      <Filter>Sources\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Re_Shader.h">
+      <Filter>Sources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\M_Texture.h">
+      <Filter>Sources\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -527,17 +530,8 @@
     <ClCompile Include="Source Code\GameObject.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\C_Transform.cpp">
-      <Filter>Sources\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\C_Material.cpp">
-      <Filter>Sources\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\C_MeshRenderer.cpp">
       <Filter>Sources\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Resource.cpp">
-      <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Re_Mesh.cpp">
       <Filter>Sources\Resources</Filter>
@@ -550,6 +544,18 @@
     </ClCompile>
     <ClCompile Include="Source Code\TextureImporter.cpp">
       <Filter>Sources\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_ModelRender.cpp">
+      <Filter>Sources\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_Render.cpp">
+      <Filter>Sources\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Re_Shader.cpp">
+      <Filter>Sources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\M_Texture.cpp">
+      <Filter>Sources\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

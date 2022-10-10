@@ -2,15 +2,13 @@
 
 #include "Globals.h"
 #include "OpenGL.h"
-#include"Resource.h"
 
-namespace TextureImporter
+#include <string>
+
+class TextureImporter
 {
+public:
 
-	GLuint LoadToMemory(char* buffer, int size, int* w = nullptr, int* h = nullptr);
-	void SaveDDS(char* buffer, int size, const char* fileName);
+	static uint ImportTexture(std::string path);
 
-	void Import(char* buffer, int bSize, Resource* res);
-
-	void TakeScreenshot(int frameBuffer);
-}
+};

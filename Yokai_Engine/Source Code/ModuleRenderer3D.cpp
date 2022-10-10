@@ -144,14 +144,7 @@ bool ModuleRenderer3D::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
 	ImGui_ImplOpenGL3_Init(); //crash in ModuleEditor
 
-	frameBuffer.CreateBuffer();
-
-	sphere.CreateSphere(1.0f, 12, 24);
-	cube.CreateCube();
-	pyramid.CreatePyramid();
-
-	MeshImporter::LoadMesh("Library/Meshes/untitled.fbx", &mesh);
-	MeshImporter::CreateMesh(mesh);
+	frameBuffer.SetBufferInfo();
 
 	return ret;
 }
@@ -171,20 +164,15 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer.GetTextureBuffer());
+	frameBuffer.Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	sphere.DrawSphere();
-	cube.DrawCube();
-	pyramid.DrawPyramid();
-	MeshImporter::RenderMesh(mesh);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	return UPDATE_CONTINUE;
