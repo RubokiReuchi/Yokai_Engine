@@ -1,5 +1,5 @@
 #pragma once
-/*
+
 #include "Module.h"
 #include "Globals.h"
 
@@ -48,4 +48,4 @@ public:
 	/// <param name="getExtention">: If you want to get the extension</param>
 	/// <returns></returns>
 	static std::string GetFileName(const std::string file, bool getExtension = true);
-};*/
+};

@@ -8,7 +8,7 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
-//#include "ModuleFile.h"
+#include "ModuleFile.h"
 
 EO_Editor::EO_Editor()
 {

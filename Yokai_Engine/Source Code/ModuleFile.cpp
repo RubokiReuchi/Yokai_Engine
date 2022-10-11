@@ -1,6 +1,8 @@
-#include "ModuleFile.h"/*
+#include "ModuleFile.h"
 #include "Application.h"
 #include "PhysFS/include/physfs.h"
+
+#pragma comment (lib, "PhysFS/libx86/physfs.lib")
 
 ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 {
@@ -205,4 +207,4 @@ std::string ModuleFile::GetFileName(const std::string file, bool getExtension)
 	}
 
 	return name;
-}*/
+}

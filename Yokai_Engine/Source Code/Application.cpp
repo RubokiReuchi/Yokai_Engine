@@ -20,7 +20,7 @@ Application::~Application()
 bool Application::Init()
 {
 	window = new ModuleWindow(true);
-	//file = new ModuleFile(true);
+	file = new ModuleFile(true);
 	input = new ModuleInput(true);
 	camera = new ModuleCamera3D(true);
 	renderer3D = new ModuleRenderer3D(true);
@@ -32,7 +32,7 @@ bool Application::Init()
 
 	// Main Modules
 	AddModule(window);
-	//AddModule(file);
+	AddModule(file);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(engine_order);

@@ -20,7 +20,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleEO* engine_order;
-	//ModuleFile* file;
+	ModuleFile* file;
 
 	std::vector<Module*> list_modules;
 
