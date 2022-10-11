@@ -17,13 +17,13 @@ public:
 	M_Render();
 	~M_Render();
 
-	uint SetMeshInformation(Mesh& mesh);
+	uint SetMeshInformation(Re_Mesh& mesh);
 
 	void Draw();
 
-	uint AddMesh(Mesh& mesh);
+	uint AddMesh(Re_Mesh& mesh);
 
-	std::map<uint, Mesh>& GetMap() { return meshes; };
+	std::map<uint, Re_Mesh>& GetMap() { return meshes; };
 
 public:
 	bool initialized = false;
@@ -32,7 +32,7 @@ private:
 	Re_Shader* basic_shader = nullptr;
 
 private:
-	std::map<uint, Mesh> meshes;
+	std::map<uint, Re_Mesh> meshes;
 	std::vector<Vertex> total_vertices;
 	std::vector<uint> total_indices;
 	std::vector<float4x4> model_matrices;

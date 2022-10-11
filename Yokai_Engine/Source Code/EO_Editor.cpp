@@ -104,9 +104,6 @@ bool EO_Editor::SetMenuBar()
 			if (ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe)) {}
 			// wireframe
 
-			if (ImGui::Checkbox("Multi Sample", &app->renderer3D->multi_sample))
-				(app->renderer3D->multi_sample) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
-
 			if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
 				(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 

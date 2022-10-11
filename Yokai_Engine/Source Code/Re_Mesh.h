@@ -16,11 +16,11 @@ struct Vertex
 	float texture_id;
 };
 
-class Mesh
+class Re_Mesh
 {
 public:
-	Mesh();
-	~Mesh();
+	Re_Mesh();
+	~Re_Mesh();
 
 	void InitAsMeshInformation(float3 position, float3 scale);
 	void InitAsCube(float3 position, float3 scale);

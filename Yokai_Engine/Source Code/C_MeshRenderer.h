@@ -14,7 +14,7 @@ public:
 	void InitAsLoadedMesh(uint mesh_id);
 	void InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices);
 
-	Mesh& GetMesh();
+	Re_Mesh& GetMesh();
 
 private:
 	uint mesh_id;

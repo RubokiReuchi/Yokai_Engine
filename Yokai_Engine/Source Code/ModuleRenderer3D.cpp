@@ -17,7 +17,7 @@
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled),
 vsync(true), wireframe(false), exit(false)
 {
-	multi_sample = depth_test = cull_face = lighting = color_material = texture_2d = true;
+	depth_test = cull_face = lighting = /*color_material =*/ texture_2d = true;
 }
 
 // Destructor
@@ -109,7 +109,6 @@ bool ModuleRenderer3D::Init()
 		GLfloat MaterialDiffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
-		glEnable(GL_MULTISAMPLE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);

@@ -21,13 +21,13 @@ void C_MeshRenderer::InitAsDefaultCube(float3 position, float3 scale)
 
 	if (!manager->initialized)
 	{
-		Mesh cube;
+		Re_Mesh cube;
 		cube.InitAsCube(position, scale);
 		instance_id = manager->SetMeshInformation(cube);
 	}
 	else
 	{
-		Mesh meshInfo;
+		Re_Mesh meshInfo;
 		meshInfo.InitAsMeshInformation(position, scale);
 		instance_id = manager->AddMesh(meshInfo);
 	}
@@ -41,13 +41,13 @@ void C_MeshRenderer::InitAsDefaultSphere(float3 position, float3 scale)
 
 	if (!manager->initialized)
 	{
-		Mesh sphere;
+		Re_Mesh sphere;
 		sphere.InitAsSphere(position, scale);
 		instance_id = manager->SetMeshInformation(sphere);
 	}
 	else
 	{
-		Mesh meshInfo;
+		Re_Mesh meshInfo;
 		meshInfo.InitAsMeshInformation(position, scale);
 		instance_id = manager->AddMesh(meshInfo);
 	}
@@ -59,7 +59,7 @@ void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(this->mesh_id);
 
-	Mesh instanceMesh;
+	Re_Mesh instanceMesh;
 	instanceMesh.InitAsMeshInformation({ 0.0f,0.0,0.0f }, { 1.0f,1.0f,1.0f });
 
 	instance_id = manager->AddMesh(instanceMesh);
@@ -73,7 +73,7 @@ void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 
 void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices)
 {
-	Mesh newMesh;
+	Re_Mesh newMesh;
 	newMesh.InitAsMesh(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	mesh_id = app->renderer3D->model_render.GetMapSize() + 2;
@@ -83,11 +83,11 @@ void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<ui
 
 }
 
-Mesh& C_MeshRenderer::GetMesh()
+Re_Mesh& C_MeshRenderer::GetMesh()
 {
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
 
-	Mesh& meshReference = manager->GetMap()[instance_id];
+	Re_Mesh& meshReference = manager->GetMap()[instance_id];
 
 	return meshReference;
 }

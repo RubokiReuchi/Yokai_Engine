@@ -5,7 +5,7 @@
 
 M_Render::M_Render()
 {
-    basic_shader = new Re_Shader("../Source/shaders/basic.vertex.shader", "../Source/shaders/basic.fragment.shader");
+    basic_shader = new Re_Shader("Source Code/shaders/basic.vertex.shader", "Source Code/shaders/basic.fragment.shader");
 }
 
 M_Render::~M_Render()
@@ -13,7 +13,7 @@ M_Render::~M_Render()
     RELEASE(basic_shader);
 }
 
-uint M_Render::SetMeshInformation(Mesh& mesh)
+uint M_Render::SetMeshInformation(Re_Mesh& mesh)
 {
     if (initialized) LOG("Tried to call RenderManager::SetMeshInformation more than once in a single Render Manager instnace.");
     // Set this RenderManager Mesh information.
@@ -22,7 +22,7 @@ uint M_Render::SetMeshInformation(Mesh& mesh)
 
     CreateBuffers();
 
-    Mesh firstMesh;
+    Re_Mesh firstMesh;
     firstMesh.InitAsMeshInformation(mesh.position, mesh.scale);
 
     mesh.CleanUp(); // Destroy the original vertex and index data (now it is stored inside this render manager).
@@ -46,6 +46,14 @@ void M_Render::Draw()
         texture_ids.push_back((int)mesh.second.OpenGL_texture_id);
     }
 
+    // Update View and Projection matrices
+    basic_shader->Bind();
+    basic_shader->SetMatFloat4v("view", app->camera->GetViewMatrix());
+    basic_shader->SetMatFloat4v("projection", app->renderer3D->GetProjectionMatrix());
+    basic_shader->SetInt("testTexture", 5);
+    glActiveTexture(GL_TEXTURE5);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 2);
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);
 
@@ -61,28 +69,6 @@ void M_Render::Draw()
     memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(int));
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    // Update View and Projection matrices
-    basic_shader->Bind();
-    basic_shader->SetMatFloat4v("view", app->camera->GetViewMatrix());
-    basic_shader->SetMatFloat4v("projection", app->renderer3D->GetProjectionMatrix());
-
-    //glActiveTexture(GL_TEXTURE0);
-    //uint id = TextureManager::loaded_textures[meshes.begin()->second.textureID].OpenGLID;
-    //glBindTexture(GL_TEXTURE_2D, id);
-    //glUniform1i(glGetUniformLocation(basicShader->programID, "testTexture"), 0);
-
-    for (int i = 0; i < M_Texture::bindedTextures; i++)
-    {
-        /*     glActiveTexture(GL_TEXTURE0 + i);
-             uint id = TextureManager::loaded_textures[meshes.begin()->second.textureID].OpenGLID;
-             glBindTexture(GL_TEXTURE_2D, id);*/
-        uint location = glGetUniformLocation(basic_shader->program_id, "testTexture");
-        glUniform1i(glGetUniformLocation(basic_shader->program_id, "testTexture"), i);
-
-        //uint location = glGetUniformLocation(basicShader->programID, ("textures[" + std::to_string(i) + "]").c_str());
-        //glUniform1i(location, i);
-    }
-
     // Draw
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
 
@@ -91,10 +77,10 @@ void M_Render::Draw()
     // Reset model matrices.
     model_matrices.clear();
     texture_ids.clear();
-    M_Texture::UnBindTextures();
+    //TextureManager::UnBindTextures();
 }
 
-uint M_Render::AddMesh(Mesh& mesh)
+uint M_Render::AddMesh(Re_Mesh& mesh)
 {
     if (!initialized)
     {
@@ -156,10 +142,10 @@ void M_Render::CreateBuffers()
     glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 3));
 
     // Set instancing interval
-    /*glVertexAttribDivisor(1, 1);
+    glVertexAttribDivisor(1, 1);
     glVertexAttribDivisor(2, 1);
     glVertexAttribDivisor(3, 1);
-    glVertexAttribDivisor(4, 1);*/
+    glVertexAttribDivisor(4, 1);
 
     // Create TextureID buffer object
     glGenBuffers(1, &TBO);
@@ -170,7 +156,7 @@ void M_Render::CreateBuffers()
     glEnableVertexAttribArray(7);
     glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(int), (void*)0);
 
-    //glVertexAttribDivisor(7, 1);
+    glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
 }

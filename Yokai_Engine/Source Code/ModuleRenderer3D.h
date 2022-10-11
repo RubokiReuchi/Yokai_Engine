@@ -34,7 +34,7 @@ public:
 
 public:
 
-	bool vsync, wireframe, multi_sample, depth_test, cull_face, lighting, color_material, texture_2d;
+	bool vsync, wireframe, depth_test, cull_face, lighting, color_material, texture_2d;
 
 	GLuint textureID;
 	GLubyte checkerImage[TEXTURE_CHECKER_WIDTH][TEXTURE_CHECKER_HEIGHT][4];
