@@ -30,16 +30,6 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 
-	// Set Up OpenGL Attributes
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
 	//Create context
 	context = SDL_GL_CreateContext(app->window->window);
 	if(context == NULL)
@@ -124,7 +114,7 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_CULL_FACE);
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
+		//glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
 		// Enable opacity
@@ -172,14 +162,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	frameBuffer.Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	app->engine_order->DrawEO();
 	model_render.Draw();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	app->engine_order->DrawEO_Editor();
 

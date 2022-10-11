@@ -74,7 +74,7 @@ void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices)
 {
 	Mesh newMesh;
-	newMesh.InitAsMesh(vertices, indices, { 1.0f,1.0f,1.0f }, { 1.0f,1.0f,1.0f });
+	newMesh.InitAsMesh(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	mesh_id = app->renderer3D->model_render.GetMapSize() + 2;
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id); // Create a renderManager.
