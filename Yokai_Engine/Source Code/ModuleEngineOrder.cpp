@@ -17,13 +17,18 @@ bool ModuleEO::Start()
     rootGameObject = new GameObject(nullptr, "Root", "None");
 
     MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
+    MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
     uint bakerTexture = TextureImporter::ImportTextureSTBI("Assets/Baker_house.png");
 
     for (auto& gameObject : game_objects)
     {
         C_MeshRenderer* rc = nullptr;
         rc = gameObject.second->GetComponent<C_MeshRenderer>();
-        if (rc != nullptr) rc->GetMesh().texture_id = bakerTexture;
+        if (rc != nullptr)
+        {
+            rc->GetMesh().SetPosition({ (float)(rand() % 10), 1.0f, 1.0f });
+            rc->GetMesh().texture_id = bakerTexture;
+        }
     }
 
     engine_order[(uint)EO_NUM::EDITOR] = new EO_Editor();

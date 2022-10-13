@@ -55,7 +55,7 @@ void C_MeshRenderer::InitAsDefaultSphere(float3 position, float3 scale)
 
 void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 {
-	this->mesh_id = mesh_id;
+	this->mesh_id = mesh_id + 2;
 
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(this->mesh_id);
 

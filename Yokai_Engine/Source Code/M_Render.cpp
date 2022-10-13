@@ -43,17 +43,14 @@ void M_Render::Draw()
     {
         mesh.second.Update();
         model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
-        texture_ids.push_back((int)mesh.second.OpenGL_texture_id);
+        texture_ids.push_back(mesh.second.OpenGL_texture_id);
     }
 
     // Update View and Projection matrices
     basic_shader->Bind();
     basic_shader->SetMatFloat4v("view", app->camera->GetViewMatrix());
     basic_shader->SetMatFloat4v("projection", app->renderer3D->GetProjectionMatrix());
-    basic_shader->SetInt("testTexture", 5);
-    glActiveTexture(GL_TEXTURE5);
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 2);
+
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);
 
@@ -66,8 +63,13 @@ void M_Render::Draw()
     // Update TextureIDs
     glBindBuffer(GL_ARRAY_BUFFER, TBO);
     void* ptr2 = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(int));
+    memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(float));
     glUnmapBuffer(GL_ARRAY_BUFFER);
+
+    for (int i = 0; i < M_Texture::bindedTextures; i++)
+    {
+        basic_shader->SetInt(("textures[" + std::to_string(i) + "]").c_str(), i);
+    }
 
     // Draw
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
@@ -77,7 +79,7 @@ void M_Render::Draw()
     // Reset model matrices.
     model_matrices.clear();
     texture_ids.clear();
-    //TextureManager::UnBindTextures();
+    M_Texture::UnBindTextures();
 }
 
 uint M_Render::AddMesh(Re_Mesh& mesh)
@@ -142,10 +144,10 @@ void M_Render::CreateBuffers()
     glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 3));
 
     // Set instancing interval
-    glVertexAttribDivisor(1, 1);
-    glVertexAttribDivisor(2, 1);
-    glVertexAttribDivisor(3, 1);
-    glVertexAttribDivisor(4, 1);
+    //glVertexAttribDivisor(1, 1);
+    //glVertexAttribDivisor(2, 1);
+    //glVertexAttribDivisor(3, 1);
+    //glVertexAttribDivisor(4, 1);
 
     // Create TextureID buffer object
     glGenBuffers(1, &TBO);
@@ -156,7 +158,7 @@ void M_Render::CreateBuffers()
     glEnableVertexAttribArray(7);
     glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(int), (void*)0);
 
-    glVertexAttribDivisor(7, 1);
+    //glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
 }

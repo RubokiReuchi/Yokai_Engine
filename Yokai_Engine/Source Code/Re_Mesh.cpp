@@ -98,7 +98,7 @@ void Re_Mesh::Update()
 {
 	if (M_Texture::loaded_textures.find(texture_id) != M_Texture::loaded_textures.end())
 	{
-		//OpenGL_texture_id = M_Texture::BindTexture(texture_id);
+		OpenGL_texture_id = M_Texture::BindTexture(texture_id);
 	}
 
 	if (!update_matrix) return;
