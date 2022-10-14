@@ -4,7 +4,7 @@
 #include "M_ModelRender.h"
 #include "Re_Mesh.h"
 
-C_MeshRenderer::C_MeshRenderer(GameObject* gameObject) : Component(gameObject)
+C_MeshRenderer::C_MeshRenderer(GameObject* gameObject) : Component(gameObject, TYPE::MESH_RENDERER)
 {
 }
 
@@ -60,7 +60,7 @@ void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(this->mesh_id);
 
 	Re_Mesh instanceMesh;
-	instanceMesh.InitAsMeshInformation({ 0.0f,0.0,0.0f }, { 1.0f,1.0f,1.0f });
+	instanceMesh.InitAsMeshInformation({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	instance_id = manager->AddMesh(instanceMesh);
 

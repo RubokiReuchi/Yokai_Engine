@@ -6,10 +6,6 @@
 
 #include <map>
 
-/// <summary>
-/// This class contains a colletion of RenderManagers. It dynamically creates and destroys Render Managers tu fullfill the task of having one per Unique mesh.
-/// Every Render Manager updates and draws their corresponding Models.
-/// </summary>
 class M_ModelRender
 {
 public:

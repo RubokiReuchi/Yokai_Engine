@@ -6,7 +6,7 @@ class Component
 {
 public:
 
-	enum class Type
+	enum class TYPE
 	{
 		NONE,
 		TRANSFORM,
@@ -14,16 +14,16 @@ public:
 		MATERIAL,
 	};
 
-	Component(GameObject* game_object);
+	Component(GameObject* game_object, TYPE type);
 	virtual ~Component();
 
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }
-	Type GetType() { return type; }
+	TYPE GetType() { return type; }
 
 private:
 	bool enabled = true;
 	GameObject* go = nullptr;
-	Type type = Type::NONE;
+	TYPE type = TYPE::NONE;
 
 };

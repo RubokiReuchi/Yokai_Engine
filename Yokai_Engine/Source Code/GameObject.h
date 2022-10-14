@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "C_MeshRenderer.h"
 #include "Globals.h"
 
 #include <vector>
@@ -10,29 +11,39 @@ class GameObject
 {
 public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default");
-	GameObject(GameObject* parent, std::string& name, std::string& tag);
 	~GameObject();
 
 	//TODO: Could do with an array of functions that creates a specific component
-	template <class T>
-	T* AddComponent()
+	Component* AddComponent(Component::TYPE type)
 	{
-		T* newComponent = new T(this);
-		components.push_back(newComponent);
-		return newComponent;
+		Component* new_component;
+		switch (type)
+		{
+		case Component::TYPE::TRANSFORM:
+			break;
+		case Component::TYPE::MESH_RENDERER:
+			new_component = new C_MeshRenderer(this);
+			break;
+		case Component::TYPE::MATERIAL:
+			break;
+		default:
+			LOG("component type error");
+			break;
+		}
+		components.push_back(new_component);
+		return new_component;
 	}
 
-	template<class T>
-	T* GetComponent(uint index = 0)
+	Component* GetComponent(Component::TYPE type)
 	{
-		uint counter = 0;
-		for (const auto& component : components)
+		for (auto component : components) // check all components
 		{
-			if (typeid(*component) != typeid(T)) continue;
-	
-			if (counter == index) return (T*)component;
-			else counter++;
+			if (component->GetType() == type)
+			{
+				return component;
+			}
 		}
+		return NULL; // component not find
 	}
 
 	bool AddChild(GameObject* child);

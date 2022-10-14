@@ -17,17 +17,14 @@ bool ModuleEO::Start()
     rootGameObject = new GameObject(nullptr, "Root", "None");
 
     MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
-    MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
     uint bakerTexture = TextureImporter::ImportTextureSTBI("Assets/Baker_house.png");
 
-    for (auto& gameObject : game_objects)
+    for (auto gameObject : game_objects)
     {
-        C_MeshRenderer* rc = nullptr;
-        rc = gameObject.second->GetComponent<C_MeshRenderer>();
-        if (rc != nullptr)
+        C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
+        if (c_mr != nullptr)
         {
-            rc->GetMesh().SetPosition({ (float)(rand() % 10), 1.0f, 1.0f });
-            rc->GetMesh().texture_id = bakerTexture;
+            c_mr->GetMesh().texture_id = bakerTexture;
         }
     }
 
