@@ -39,7 +39,7 @@ void M_Render::Draw()
         LOG("A Render Manager is being updated without any meshes!");
         return;
     }
-    for (auto mesh : meshes)
+    for (auto &mesh : meshes)
     {
         mesh.second.Update();
         model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices

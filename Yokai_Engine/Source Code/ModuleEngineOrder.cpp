@@ -19,7 +19,7 @@ bool ModuleEO::Start()
     MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
     uint bakerTexture = TextureImporter::ImportTextureSTBI("Assets/Baker_house.png");
 
-    for (auto gameObject : game_objects)
+    for (auto& gameObject : game_objects)
     {
         C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
         if (c_mr != nullptr)
