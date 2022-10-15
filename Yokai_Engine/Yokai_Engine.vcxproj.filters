@@ -369,6 +369,9 @@
     <ClInclude Include="Source Code\EW_Hierarchy.h">
       <Filter>Sources\EditorWindows</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\EW_Inspector.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -585,6 +588,9 @@
       <Filter>Sources\Tools\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\EW_Hierarchy.cpp">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EW_Inspector.cpp">
       <Filter>Sources\EditorWindows</Filter>
     </ClCompile>
   </ItemGroup>

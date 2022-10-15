@@ -107,6 +107,7 @@
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
     <ClInclude Include="Source Code\EW_Hierarchy.h" />
+    <ClInclude Include="Source Code\EW_Inspector.h" />
     <ClInclude Include="Source Code\EW_Scene.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />
     <ClCompile Include="Source Code\EW_Hierarchy.cpp" />
+    <ClCompile Include="Source Code\EW_Inspector.cpp" />
     <ClCompile Include="Source Code\EW_Scene.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />

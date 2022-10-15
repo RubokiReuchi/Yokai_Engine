@@ -4,8 +4,9 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
-#include "EW_Scene.h"
 #include "EW_Hierarchy.h"
+#include "EW_Scene.h"
+#include "EW_Inspector.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -55,6 +56,7 @@ void EO_Editor::Start()
 	// Create Editor Windows
 	editor_windows[(uint)EW_TYPE::HIERARCHY] = new EW_Hierarchy();
 	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
+	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
 }
 
 void EO_Editor::PreUpdate()
@@ -171,14 +173,6 @@ bool EO_Editor::SetMenuBar()
 		}
 		ImGui::EndMenuBar();
 	}
-	ImGui::End();
-
-	// Inspector
-	ImGui::Begin(("Inspector"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImGui::Text("test");
-	ImGui::Text("test");
-	ImGui::Text("test");
-	ImGui::Text("test");
 	ImGui::End();
 
 	if (show_about)
