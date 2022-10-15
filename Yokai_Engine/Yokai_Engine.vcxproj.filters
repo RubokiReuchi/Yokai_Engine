@@ -55,6 +55,9 @@
     <Filter Include="Sources\Modules\EngineOrder">
       <UniqueIdentifier>{0293de1f-d365-400d-93ad-2c10c28771eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\EditorWindows">
+      <UniqueIdentifier>{38828756-097a-475d-a9cd-4b28c1375c48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -357,6 +360,12 @@
     <ClInclude Include="Source Code\ModuleEngineOrder.h">
       <Filter>Sources\Modules\EngineOrder</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\EditorWindow.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EW_Scene.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -565,6 +574,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\ModuleEngineOrder.cpp">
       <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EditorWindow.cpp">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EW_Scene.cpp">
+      <Filter>Sources\EditorWindows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

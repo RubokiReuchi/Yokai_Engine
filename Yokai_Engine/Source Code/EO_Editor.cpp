@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
+#include "EW_Scene.h"
+
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
@@ -38,6 +40,9 @@ void EO_Editor::Start()
 	const char* glsl_version = "#version 130";
 	ImGui_ImplSDL2_InitForOpenGL(app->window->window, app->renderer3D->context);
 	ImGui_ImplOpenGL3_Init(glsl_version);
+
+	// Create Editor Windows
+	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 }
 
 void EO_Editor::PreUpdate()
@@ -64,6 +69,11 @@ void EO_Editor::PostUpdate()
 
 void EO_Editor::CleanUp()
 {
+	for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
+	{
+		RELEASE(editor_windows[i]);
+	}
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -120,6 +130,17 @@ bool EO_Editor::SetMenuBar()
 				(app->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Windows"))
+		{
+			for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
+			{
+				if (ImGui::MenuItem(editor_windows[i]->window_name.c_str()))
+				{
+					editor_windows[i]->enabled = !editor_windows[i]->enabled;
+				}
+			}
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("Settings"))
 		{
 			ImGui::Checkbox("Vsync", &app->renderer3D->vsync);
@@ -150,7 +171,7 @@ bool EO_Editor::SetMenuBar()
 	ImGui::End();
 
 	// Screen
-	ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	/*ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 
 	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
@@ -163,7 +184,7 @@ bool EO_Editor::SetMenuBar()
 	}
 
 	ImGui::Image((ImTextureID)app->renderer3D->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-	ImGui::End();
+	ImGui::End();*/
 
 	// Inspector
 	ImGui::Begin(("Inspector"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
@@ -190,6 +211,12 @@ bool EO_Editor::SetMenuBar()
 			ImGui::Text("MIT License\n\nCopyright(c) 2022 RubokiReuchi\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this softwareand associated documentation files(the 'Software'), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and /or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions :\nThe above copyright noticeand this permission notice shall be included in all\ncopies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.");
 			ImGui::End();
 		}
+	}
+
+	// update enabled windows
+	for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
+	{
+		if (editor_windows[i]->enabled) editor_windows[i]->Update();
 	}
 
 	return !exit;

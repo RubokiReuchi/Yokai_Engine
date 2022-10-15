@@ -1,6 +1,13 @@
 #pragma once
 
 #include "EO_Base.h"
+#include "EditorWindow.h"
+
+enum class EW_TYPE
+{
+	SCENE,
+	NUM_EW_TYPE, // number of EditorWindows types
+};
 
 class EO_Editor :public EO_Base
 {
@@ -18,10 +25,12 @@ public:
 
 private:
 
+	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };
+
 	bool SetMenuBar();
 
 	bool show_about = false;
-	int game_width, game_height;
+	//int game_width, game_height;
 
 	void OsOpenInShell(const char* path);
 };
