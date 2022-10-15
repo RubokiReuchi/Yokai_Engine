@@ -13,12 +13,10 @@ EW_Inspector::~EW_Inspector()
 void EW_Inspector::Update()
 {
 	// Inspector
-	if (ImGui::Begin(window_name.c_str(), &enabled))
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	if (selectGameobject)
 	{
-		if (selectGameobject)
-		{
 
-		}
-		ImGui::End();
 	}
+	ImGui::End();
 }

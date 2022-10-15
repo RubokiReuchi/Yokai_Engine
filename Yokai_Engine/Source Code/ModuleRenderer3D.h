@@ -32,6 +32,8 @@ public:
 
 	float* GetProjectionMatrix() { return &ProjectionMatrix; };
 
+	void ToggleVSync(bool is_on);
+
 public:
 
 	bool vsync, wireframe, depth_test, cull_face, lighting, color_material, texture_2d;

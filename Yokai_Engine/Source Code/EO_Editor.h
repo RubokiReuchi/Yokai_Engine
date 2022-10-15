@@ -7,7 +7,11 @@ enum class EW_TYPE
 {
 	HIERARCHY,
 	SCENE,
+	ABOUT,
 	INSPECTOR,
+	PERFORMANCE,
+	PROJECT,
+	CONSOLE,
 	NUM_EW_TYPE, // number of EditorWindows types
 };
 
@@ -30,8 +34,4 @@ private:
 	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };
 
 	bool SetMenuBar();
-
-	bool show_about = false;
-
-	void OsOpenInShell(const char* path);
 };

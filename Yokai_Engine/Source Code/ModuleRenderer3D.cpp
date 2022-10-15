@@ -210,3 +210,9 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	app->window->width = width;
 	app->window->height = height;
 }
+
+void ModuleRenderer3D::ToggleVSync(bool is_on)
+{
+	vsync = is_on;
+	SDL_GL_SetSwapInterval(vsync);
+}
