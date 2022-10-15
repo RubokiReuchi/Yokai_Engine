@@ -217,6 +217,7 @@
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source Code\External Libraries\ImGui\main.cpp" />
     <ClCompile Include="Source Code\External Libraries\Json\json.c" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Geometry\AABB.cpp" />
@@ -282,6 +283,9 @@
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_CPP.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source Code\External Libraries\ImGui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

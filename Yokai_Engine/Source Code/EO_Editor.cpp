@@ -26,7 +26,17 @@ void EO_Editor::Start()
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui::StyleColorsDark();
+
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	ImGuiStyle& style = ImGui::GetStyle();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 10.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 0.0f;
+		style.Colors[ImGuiCol_Border] = ImVec4(255, 1, 1, 255);
+	}
 
 	io.IniFilename = "Config/settings.ini";
 
@@ -57,6 +67,8 @@ void EO_Editor::PostUpdate()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(app->window->window);
 	ImGui::NewFrame();
+
+	//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
 	if (!SetMenuBar())
 	{
