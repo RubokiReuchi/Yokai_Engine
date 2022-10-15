@@ -5,6 +5,7 @@
 
 enum class EW_TYPE
 {
+	HIERARCHY,
 	SCENE,
 	NUM_EW_TYPE, // number of EditorWindows types
 };
@@ -30,7 +31,6 @@ private:
 	bool SetMenuBar();
 
 	bool show_about = false;
-	//int game_width, game_height;
 
 	void OsOpenInShell(const char* path);
 };

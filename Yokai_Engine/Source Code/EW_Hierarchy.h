@@ -2,12 +2,14 @@
 
 #include "EditorWindow.h"
 
-class EW_Scene : public EditorWindow
+class GameObject;
+
+class EW_Hierarchy : public EditorWindow
 {
 public:
-	EW_Scene();
+	EW_Hierarchy();
 
-	~EW_Scene();
+	~EW_Hierarchy();
 
 	void Update() override;
 

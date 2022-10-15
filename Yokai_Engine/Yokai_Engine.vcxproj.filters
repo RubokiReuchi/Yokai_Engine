@@ -366,6 +366,9 @@
     <ClInclude Include="Source Code\External Libraries\ImGui\imstb_truetype.h">
       <Filter>Sources\Tools\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\EW_Hierarchy.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -581,8 +584,8 @@
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp">
       <Filter>Sources\Tools\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\External Libraries\ImGui\main.cpp">
-      <Filter>Sources\Tools\ImGui</Filter>
+    <ClCompile Include="Source Code\EW_Hierarchy.cpp">
+      <Filter>Sources\EditorWindows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

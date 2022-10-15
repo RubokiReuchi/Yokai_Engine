@@ -106,6 +106,7 @@
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
+    <ClInclude Include="Source Code\EW_Hierarchy.h" />
     <ClInclude Include="Source Code\EW_Scene.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imconfig.h" />
     <ClInclude Include="Source Code\External Libraries\ImGui\imgui.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />
+    <ClCompile Include="Source Code\EW_Hierarchy.cpp" />
     <ClCompile Include="Source Code\EW_Scene.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_demo.cpp" />
@@ -217,7 +219,6 @@
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Source Code\External Libraries\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Source Code\External Libraries\ImGui\main.cpp" />
     <ClCompile Include="Source Code\External Libraries\Json\json.c" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Algorithm\Random\LCG.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Geometry\AABB.cpp" />

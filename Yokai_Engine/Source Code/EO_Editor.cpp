@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 
 #include "EW_Scene.h"
+#include "EW_Hierarchy.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -52,6 +53,7 @@ void EO_Editor::Start()
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	// Create Editor Windows
+	editor_windows[(uint)EW_TYPE::HIERARCHY] = new EW_Hierarchy();
 	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 }
 
@@ -146,10 +148,7 @@ bool EO_Editor::SetMenuBar()
 		{
 			for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
 			{
-				if (ImGui::MenuItem(editor_windows[i]->window_name.c_str()))
-				{
-					editor_windows[i]->enabled = !editor_windows[i]->enabled;
-				}
+				ImGui::Checkbox(editor_windows[i]->window_name.c_str(), &editor_windows[i]->enabled);
 			}
 			ImGui::EndMenu();
 		}
@@ -173,30 +172,6 @@ bool EO_Editor::SetMenuBar()
 		ImGui::EndMenuBar();
 	}
 	ImGui::End();
-
-	// Hierarchy
-	ImGui::Begin(("Hierarchy"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImGui::Text("test");
-	ImGui::Text("test");
-	ImGui::Text("test");
-	ImGui::Text("test");
-	ImGui::End();
-
-	// Screen
-	/*ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
-
-	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
-	{
-		// If the size of this imgui window is different from the one stored.
-		game_width = gameDimensions.x;
-		game_height = gameDimensions.y;
-
-		app->renderer3D->frameBuffer.SetDimensions(game_width, game_height);
-	}
-
-	ImGui::Image((ImTextureID)app->renderer3D->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-	ImGui::End();*/
 
 	// Inspector
 	ImGui::Begin(("Inspector"), NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
