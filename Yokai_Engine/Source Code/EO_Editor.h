@@ -10,8 +10,8 @@ enum class EW_TYPE
 	SCENE,
 	PERFORMANCE,
 	INSPECTOR,
-	PROJECT,
 	CONSOLE,
+	PROJECT,
 	NUM_EW_TYPE, // number of EditorWindows types
 };
 

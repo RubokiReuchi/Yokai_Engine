@@ -63,8 +63,8 @@ void EO_Editor::Start()
 	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 	editor_windows[(uint)EW_TYPE::PERFORMANCE] = new EW_Performance();
 	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
-	editor_windows[(uint)EW_TYPE::PROJECT] = new EW_Project();
 	editor_windows[(uint)EW_TYPE::CONSOLE] = new EW_Console();
+	editor_windows[(uint)EW_TYPE::PROJECT] = new EW_Project();
 }
 
 void EO_Editor::PreUpdate()
@@ -79,8 +79,6 @@ void EO_Editor::PostUpdate()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(app->window->window);
 	ImGui::NewFrame();
-
-	//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
 	if (!SetMenuBar())
 	{
