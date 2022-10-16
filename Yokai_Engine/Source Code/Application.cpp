@@ -40,6 +40,9 @@ bool Application::Init()
 	// Renderer last!
 	AddModule(renderer3D);
 
+	fpsCap = 60;
+	SetFPS(fpsCap);
+
 	bool ret = true;
 
 	// Call Init() in all modules
@@ -57,26 +60,24 @@ bool Application::Init()
 		ret = list_modules[i]->Start();
 	}
 	
-	ms_timer.Start();
 	return ret;
 }
 
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	dt = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
+	
 }
 
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	if (renderer3D->vsync)
+	/*if (renderer3D->vsync)
 	{
 		Uint32 last_frame_ms = ms_timer.Read();
 		float wait_time = (1000.f / (float)fpsCap) - (float)last_frame_ms;
 		SDL_Delay(static_cast<Uint32>(fabs(wait_time)));
-	}
+	}*/
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
@@ -97,6 +98,16 @@ update_status Application::Update()
 	{
 		ret = list_modules[i]->PostUpdate(dt);
 	}
+
+	dt = ms_timer.getDeltaTime();
+
+	if (dt < fps)
+	{
+		float sleepTime = (fps - dt) * 1000;
+		Sleep(sleepTime);
+	}
+
+	ms_timer.Reset();
 
 	FinishUpdate();
 	return ret;

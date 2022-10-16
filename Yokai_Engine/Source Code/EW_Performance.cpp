@@ -44,32 +44,20 @@ void EW_Performance::Update()
 		ImGui::PlotHistogram("##Framerate", frames->front(), frames->size(), 0, framerate.c_str(), 0.0f, 160.0f, ImVec2(300, 160));
 		if (ImGui::SliderInt("FPS Limit", frameLimit, 30, 120))
 		{
-			app->fpsCap = *frameLimit;
+			app->SetFPS(*frameLimit);
 		}
 	}
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::TextWrapped("Window Size: ");
-		ImGui::TextWrapped("Width:"); ImGui::SameLine();
+		ImGui::TextWrapped("Window Width:"); ImGui::SameLine();
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), std::to_string(*windowWidth).c_str());
 
-		ImGui::TextWrapped("Height:"); ImGui::SameLine();
+		ImGui::TextWrapped("Window Height:"); ImGui::SameLine();
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), std::to_string(*windowHeight).c_str()); ImGui::SameLine();
-
+		ImGui::Spacing();
 		ImGui::Checkbox("VSync", isVSyncOn);
 		app->renderer3D->ToggleVSync(*isVSyncOn);
 	}
-	/*
-	if (ImGui::CollapsingHeader("Input", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::TextWrapped("\tMouse Input\t");
-
-		ImGui::TextWrapped("Mouse Position: x = "); ImGui::SameLine();
-		ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", app->input->GetMouseX()); ImGui::SameLine();
-		ImGui::TextWrapped(" y = "); ImGui::SameLine();
-		ImGui::TextColored(ImVec4(255, 255, 0, 255), "%d", app->input->GetMouseY());
-	}
-
 	if (ImGui::CollapsingHeader("Hardware", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextWrapped("CPU Count: "); ImGui::SameLine();
@@ -79,10 +67,10 @@ void EW_Performance::Update()
 		ImGui::TextColored(ImVec4(255, 255, 0, 255), std::to_string(systemRAM).c_str());
 
 		ImGui::TextWrapped("--------OpenGL-------- ");
-		ImGui::TextWrapped("Vendor %s", glGetString(GL_VENDOR));
+		ImGui::TextWrapped("Vendor: %s", glGetString(GL_VENDOR));
 		ImGui::TextWrapped("Renderer: %s", glGetString(GL_RENDERER));
-		ImGui::TextWrapped("OpenGL version supported %s", glGetString(GL_VERSION));
+		ImGui::TextWrapped("OpenGL version supported: %s", glGetString(GL_VERSION));
 		ImGui::TextWrapped("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	}*/
+	}
 	ImGui::End();
 }

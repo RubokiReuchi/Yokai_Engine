@@ -59,10 +59,10 @@ void EO_Editor::Start()
 
 	// Create Editor Windows
 	editor_windows[(uint)EW_TYPE::HIERARCHY] = new EW_Hierarchy();
-	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 	editor_windows[(uint)EW_TYPE::ABOUT] = new EW_About();
-	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
+	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 	editor_windows[(uint)EW_TYPE::PERFORMANCE] = new EW_Performance();
+	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
 	editor_windows[(uint)EW_TYPE::PROJECT] = new EW_Project();
 	editor_windows[(uint)EW_TYPE::CONSOLE] = new EW_Console();
 }

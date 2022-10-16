@@ -6,10 +6,10 @@
 enum class EW_TYPE
 {
 	HIERARCHY,
-	SCENE,
 	ABOUT,
-	INSPECTOR,
+	SCENE,
 	PERFORMANCE,
+	INSPECTOR,
 	PROJECT,
 	CONSOLE,
 	NUM_EW_TYPE, // number of EditorWindows types

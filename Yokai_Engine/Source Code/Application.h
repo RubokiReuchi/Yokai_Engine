@@ -31,7 +31,12 @@ private:
 
 public:
 
+	float fps = 1.0f / 60.0f;
 	int fpsCap;
+	void SetFPS(int mFPS)
+	{
+		fps = 1.0f / (float)mFPS;
+	}
 
 	Application();
 	~Application();
