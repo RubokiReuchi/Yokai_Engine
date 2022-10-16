@@ -31,7 +31,7 @@ void EW_Project::Update()
 
     width2 = (windowSize.x - width1 - 20);
 
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.16f, 0.16f, 0.16f, 1));
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.05f, 0.05f, 0.05f, 1.0f));
 
     ImGui::BeginChild("ChildL", ImVec2(width1, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
     if (ImGui::TreeNode("Assets"))

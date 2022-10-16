@@ -10,4 +10,8 @@ public:
 	~EW_Console();
 
 	void Update() override;
+
+private:
+
+	bool resume = false;
 };

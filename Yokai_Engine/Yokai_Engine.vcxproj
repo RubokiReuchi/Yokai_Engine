@@ -102,6 +102,7 @@
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
+    <ClInclude Include="Source Code\Console.h" />
     <ClInclude Include="Source Code\CycleArray.hpp" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
+    <ClCompile Include="Source Code\Console.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
