@@ -36,11 +36,8 @@ public:
 	virtual void OnTransformUpdate(float3 position, float3 scale, float3 rotation) {}
 
 private:
-	//bool enabled = true;
+	bool enabled = true;
 	GameObject* go = nullptr;
 	TYPE type = TYPE::NONE;
-
-protected:
-	bool enabled = true;
 
 };
