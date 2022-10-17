@@ -15,7 +15,7 @@ EW_Performance::EW_Performance()
 
 	countCPU = SDL_GetCPUCount();
 
-	systemRAM = SDL_GetSystemRAM();
+	systemRAM = (float)SDL_GetSystemRAM();
 
 	windowWidth = &app->window->width;
 

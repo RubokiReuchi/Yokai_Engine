@@ -19,8 +19,8 @@ void EW_Scene::Update()
 	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
 	{
 		// If the size of this imgui window is different from the one stored.
-		game_width = gameDimensions.x;
-		game_height = gameDimensions.y;
+		game_width = (int)gameDimensions.x;
+		game_height = (int)gameDimensions.y;
 
 		app->renderer3D->frameBuffer.SetDimensions(game_width, game_height);
 	}

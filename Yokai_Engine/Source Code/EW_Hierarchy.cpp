@@ -35,7 +35,7 @@ void EW_Hierarchy::Update()
 
 void EW_Hierarchy::DrawGameObjectChildren(GameObject* gameObject, int layer)
 {
-    for (int i = 0; i < gameObject->GetChilds().size(); i++)
+    for (size_t i = 0; i < gameObject->GetChilds().size(); i++)
     {
         if (i == 0)  ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 

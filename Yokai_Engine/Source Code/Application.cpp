@@ -104,7 +104,7 @@ update_status Application::Update()
 	if (dt < fps)
 	{
 		float sleepTime = (fps - dt) * 1000;
-		Sleep(sleepTime);
+		Sleep((DWORD)sleepTime);
 	}
 
 	ms_timer.Reset();

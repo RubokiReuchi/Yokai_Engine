@@ -66,7 +66,7 @@ void M_Render::Draw()
     memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(float));
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    for (int i = 0; i < M_Texture::bindedTextures; i++)
+    for (uint i = 0; i < M_Texture::bindedTextures; i++)
     {
         basic_shader->SetInt(("textures[" + std::to_string(i) + "]").c_str(), i);
     }

@@ -80,7 +80,7 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 			break;
 		}
 
-		*buffer = new char[size + 1];
+		*buffer = new char[(uint)size + 1];
 
 		byteCount = (uint)PHYSFS_readBytes(fsFile, *buffer, size);
 
@@ -120,7 +120,7 @@ uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, boo
 			break;
 		}
 
-		byteCount = PHYSFS_writeBytes(des, (const void*)buffer, size);
+		byteCount = (uint)PHYSFS_writeBytes(des, (const void*)buffer, size);
 
 		if (byteCount != size)
 		{

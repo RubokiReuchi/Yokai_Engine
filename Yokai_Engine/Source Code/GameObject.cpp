@@ -10,13 +10,13 @@ GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : 
 
 GameObject::~GameObject()
 {
-	for (int i = 0; i < components.size(); i++)
+	for (size_t i = 0; i < components.size(); i++)
 	{
 		RELEASE(components[i]);
 	}
 	components.clear();
 
-	for (int i = 0; i < children.size(); i++)
+	for (size_t i = 0; i < children.size(); i++)
 	{
 		RELEASE(children[i]);
 	}
@@ -53,7 +53,7 @@ void GameObject::RemoveChild(GameObject* child)
 {
 	if (!child) return;
 
-	for (int i = 0; i < children.size(); ++i)
+	for (size_t i = 0; i < children.size(); ++i)
 	{
 		if (children[i] == child) children.erase(children.begin() + i);
 	}

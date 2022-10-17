@@ -56,7 +56,7 @@ public:
 			return  (SDL_GetTicks() - (SDL_GetTicks() % 1000)) * 0.001f;
 		}
 
-		return SDL_GetTicks();
+		return (float)SDL_GetTicks();
 	}
 
 	float Update()
@@ -64,7 +64,7 @@ public:
 		// frame2frame = tiempo que tarda entre ultimo frame hasta este frame en ms
 		float frameTime = SDL_GetTicks() - lastTime;
 		// Reseteamos el ultimo frame para que sea este
-		lastTime = SDL_GetTicks();
+		lastTime = (float)SDL_GetTicks();
 		// mElapsedTicks = tiempo que ha pasado desde ultimo reset en ms
 		mElapsedTicks = SDL_GetTicks() - mStartTicks;
 		// mElapsedTicks = tiempo que ha pasado desde ultimo reset en segundo
