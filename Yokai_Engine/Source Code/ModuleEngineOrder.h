@@ -43,7 +43,4 @@ public:
 	GameObject* rootGameObject = nullptr;
 
 	std::map<uint, GameObject*> game_objects;
-
-	//temporal
-	GameObject* sgo = nullptr;
 };
