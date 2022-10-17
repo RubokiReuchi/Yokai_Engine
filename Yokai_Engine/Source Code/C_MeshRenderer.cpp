@@ -83,6 +83,26 @@ void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<ui
 
 }
 
+void C_MeshRenderer::OnPositionUpdate(float3 position)
+{
+	GetMesh().SetPosition(position);
+}
+
+void C_MeshRenderer::OnScaleUpdate(float3 scale)
+{
+	GetMesh().SetScale(scale);
+}
+
+void C_MeshRenderer::OnRotationUpdate(float3 rotation)
+{
+	GetMesh().SetRotation(rotation);
+}
+
+void C_MeshRenderer::OnTransformUpdate(float3 position, float3 scale, float3 rotation)
+{
+	GetMesh().SetTransform(position, scale, rotation);
+}
+
 Re_Mesh& C_MeshRenderer::GetMesh()
 {
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);

@@ -33,7 +33,6 @@ public:
 		components.push_back(new_component);
 		return new_component;
 	}
-
 	Component* GetComponent(Component::TYPE type)
 	{
 		for (auto component : components) // check all components
@@ -45,19 +44,29 @@ public:
 		}
 		return NULL; // component not find
 	}
+	std::vector<Component*> GetComponentList()
+	{
+		return components;
+	}
 
 	bool AddChild(GameObject* child);
+	std::vector<GameObject*> GetChilds()
+	{
+		return children;
+	}
 
 	bool SetParent(GameObject* parent);
+	GameObject* GetParent()
+	{
+		return parent;
+	}
 
-public:
 	std::string name;
 	std::string tag;
 
 private:
 	void RemoveChild(GameObject* child);
 
-private:
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
 

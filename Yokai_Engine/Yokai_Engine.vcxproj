@@ -105,6 +105,7 @@
     <ClInclude Include="Source Code\Console.h" />
     <ClInclude Include="Source Code\CycleArray.hpp" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
+    <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\Console.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
+    <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />
