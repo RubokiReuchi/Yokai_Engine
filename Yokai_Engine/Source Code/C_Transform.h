@@ -42,5 +42,5 @@ private:
 private:
 	Transform parentGlobalTransform;
 
-	friend class GameObject;
+	//friend class GameObject;
 };

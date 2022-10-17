@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "C_Transform.h"
 #include "C_MeshRenderer.h"
 #include "Globals.h"
 
@@ -20,6 +21,7 @@ public:
 		switch (type)
 		{
 		case Component::TYPE::TRANSFORM:
+			new_component = new C_Transform(this);
 			break;
 		case Component::TYPE::MESH_RENDERER:
 			new_component = new C_MeshRenderer(this);
@@ -74,4 +76,6 @@ private:
 
 	bool active = true;
 	bool destroyed = false;
+
+	//friend class C_Transform;
 };
