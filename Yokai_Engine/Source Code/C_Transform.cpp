@@ -9,11 +9,6 @@ C_Transform::C_Transform(GameObject* gameObject) : Component(gameObject, TYPE::T
 		C_Transform* parentTransform = dynamic_cast<C_Transform*>(gameObject->GetParent()->GetComponent(Component::TYPE::TRANSFORM));
 		parentGlobalTransform = parentTransform->GetGlobalTransform();
 	}
-
-	float3 pos(0.0f, 0.0f, 0.0f);
-	float3 scl(1.0f, 1.0f, 1.0f);
-	float3 rot(0.0f, 0.0f, 0.0f);
-	SetTransform(pos, scl, rot);
 }
 
 C_Transform::~C_Transform()

@@ -4,9 +4,9 @@
 
 struct Transform
 {
-	float3 position;
-	float3 scale;
-	float3 rotation;
+	float3 position = float3(0.0f, 0.0f, 0.0f);
+	float3 scale = float3(0.0f, 0.0f, 0.0f);
+	float3 rotation = float3(0.0f, 0.0f, 0.0f);
 };
 
 class C_Transform : public Component
@@ -43,6 +43,5 @@ private:
 
 private:
 	Transform parentGlobalTransform;
-
-	//friend class GameObject;
+	friend class GameObject;
 };

@@ -4,10 +4,11 @@
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
 #include "Globals.h"
-//#include "EW_Hierarchy.h"
 
 #include <vector>
 #include <string>
+
+class C_Transform;
 
 class GameObject
 {
@@ -66,6 +67,7 @@ public:
 
 	std::string name;
 	std::string tag;
+	C_Transform* transform = nullptr;
 
 private:
 	void RemoveChild(GameObject* child);

@@ -4,8 +4,8 @@
 GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : name(name), tag(tag)
 {
 	id = app->engine_order->AddGameObject(this);
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
 	if (parent != nullptr) parent->AddChild(this);
-	AddComponent(Component::TYPE::TRANSFORM);
 }
 
 GameObject::~GameObject()
@@ -26,6 +26,7 @@ GameObject::~GameObject()
 bool GameObject::AddChild(GameObject* child)
 {
 	if (!child) return false;
+	if (child->parent == this) return false;
 
 	GameObject* p = parent;
 
@@ -41,6 +42,9 @@ bool GameObject::AddChild(GameObject* child)
 	if (child->parent) child->parent->RemoveChild(child);
 
 	child->parent = this;
+
+	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
+
 	return true;
 }
 
