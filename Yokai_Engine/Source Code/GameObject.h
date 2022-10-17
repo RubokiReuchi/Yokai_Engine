@@ -4,6 +4,7 @@
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
 #include "Globals.h"
+//#include "EW_Hierarchy.h"
 
 #include <vector>
 #include <string>
@@ -77,5 +78,8 @@ private:
 	bool active = true;
 	bool destroyed = false;
 
+	uint id = 0; // ID =  0 is an invalid ID. First ID is 1
+
 	//friend class C_Transform;
+	//friend class EW_Hierarchy;
 };

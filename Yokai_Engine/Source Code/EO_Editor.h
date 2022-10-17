@@ -3,6 +3,8 @@
 #include "EO_Base.h"
 #include "EditorWindow.h"
 
+class GameObject;
+
 enum class EW_TYPE
 {
 	HIERARCHY,
@@ -29,9 +31,20 @@ public:
 
 	void CleanUp();
 
+	void SetSelectedGameObject(GameObject* go)
+	{
+		selected_go = go;
+	}
+	GameObject* GetSelectedGameObject()
+	{
+		return selected_go;
+	}
+
 private:
 
 	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };
+
+	GameObject* selected_go = nullptr;
 
 	bool SetMenuBar();
 };

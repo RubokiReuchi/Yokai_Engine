@@ -3,6 +3,7 @@
 #include "EditorWindow.h"
 
 class GameObject;
+class EO_Editor;
 
 class EW_Hierarchy : public EditorWindow
 {
@@ -13,7 +14,13 @@ public:
 
 	void Update() override;
 
-private:
+	void DrawGameObjectChildren(GameObject* gameObject, int layer);
 
-	int game_width, game_height;
+private:
+	std::map<uint, GameObject*>* gameObjectsReference = nullptr;
+	EO_Editor* editor = nullptr;
+
+	GameObject* draggingGameObject = nullptr;
+
+	ImGuiTreeNodeFlags base_flags;
 };
