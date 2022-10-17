@@ -26,9 +26,11 @@ bool ModuleEO::Start()
         {
             c_mr->GetMesh().texture_id = bakerTexture;
         }
+        sgo = gameObject.second;
     }
 
     engine_order[(uint)EO_NUM::EDITOR] = new EO_Editor();
+    dynamic_cast<EO_Editor*>(engine_order[(uint)EO_NUM::EDITOR])->SetSelectedGameObject(sgo);
 
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {
@@ -37,6 +39,7 @@ bool ModuleEO::Start()
             engine_order[i]->Start();
         }
     }
+
     return true;
 }
 

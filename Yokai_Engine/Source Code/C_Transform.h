@@ -15,6 +15,8 @@ public:
 	C_Transform(GameObject* gameObject);
 	~C_Transform();
 
+	void OnEditor();
+
 	void SetPosition(float3 pos);
 	void SetScale(float3 scl);
 	void SetRotation(float3 rot);

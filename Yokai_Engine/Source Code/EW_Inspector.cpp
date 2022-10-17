@@ -1,9 +1,15 @@
 #include "EW_Inspector.h"
+#include "Application.h"
+#include "EO_Editor.h"
+#include "C_Transform.h"
+#include "C_MeshRenderer.h"
 
 EW_Inspector::EW_Inspector()
 {
 	window_name = "Inspector";
 	enabled = true;
+
+	editor = dynamic_cast<EO_Editor*>(app->engine_order->engine_order[(uint)EO_NUM::EDITOR]);
 }
 
 EW_Inspector::~EW_Inspector()
@@ -14,9 +20,13 @@ void EW_Inspector::Update()
 {
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	if (selectGameobject)
+	if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM) != NULL)
 	{
-
+		dynamic_cast<C_Transform*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM))->OnEditor();
+	}
+	if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER) != NULL)
+	{
+		dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
 	}
 	ImGui::End();
 }

@@ -2,6 +2,10 @@
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+
 class GameObject;
 
 class Component
@@ -23,6 +27,8 @@ public:
 	GameObject* GetGameObject() { return go; }
 	TYPE GetType() { return type; }
 
+	virtual void OnEditor() {}
+
 	// c_transform
 	virtual void OnPositionUpdate(float3 position) {}
 	virtual void OnScaleUpdate(float3 scale) {}
@@ -30,8 +36,11 @@ public:
 	virtual void OnTransformUpdate(float3 position, float3 scale, float3 rotation) {}
 
 private:
-	bool enabled = true;
+	//bool enabled = true;
 	GameObject* go = nullptr;
 	TYPE type = TYPE::NONE;
+
+protected:
+	bool enabled = true;
 
 };

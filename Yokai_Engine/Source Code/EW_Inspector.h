@@ -3,6 +3,7 @@
 #include "EditorWindow.h"
 
 class GameObject;
+class EO_Editor;
 
 class EW_Inspector : public EditorWindow
 {
@@ -15,5 +16,6 @@ public:
 
 private:
 
+	EO_Editor* editor = nullptr;
 	GameObject* selectGameobject = nullptr;
 };

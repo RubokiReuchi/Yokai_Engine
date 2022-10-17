@@ -14,6 +14,14 @@ C_MeshRenderer::~C_MeshRenderer()
 	manager->GetMap().erase(instance_id);
 }
 
+void C_MeshRenderer::OnEditor()
+{
+	if (ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Checkbox("enabled", &enabled);
+	}
+}
+
 void C_MeshRenderer::InitAsDefaultCube(float3 position, float3 scale)
 {
 	mesh_id = 0;

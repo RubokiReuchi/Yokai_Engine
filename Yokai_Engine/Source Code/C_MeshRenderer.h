@@ -9,6 +9,8 @@ public:
 	C_MeshRenderer(GameObject* gameObject);
 	virtual ~C_MeshRenderer() override;
 
+	void OnEditor();
+
 	void InitAsDefaultCube(float3 position = { 0.0f,0.0f,0.0f }, float3 scale = { 1.0f,1.0f,1.0f });
 	void InitAsDefaultSphere(float3 position = { 0.0f,0.0f,0.0f }, float3 scale = { 1.0f,1.0f,1.0f });
 	void InitAsLoadedMesh(uint mesh_id);

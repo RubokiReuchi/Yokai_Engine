@@ -4,8 +4,8 @@
 GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : name(name), tag(tag)
 {
 	id = app->engine_order->AddGameObject(this);
-	AddComponent(Component::TYPE::TRANSFORM);
 	if (parent != nullptr) parent->AddChild(this);
+	AddComponent(Component::TYPE::TRANSFORM);
 }
 
 GameObject::~GameObject()

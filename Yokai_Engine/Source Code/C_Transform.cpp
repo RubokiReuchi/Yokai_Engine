@@ -9,10 +9,38 @@ C_Transform::C_Transform(GameObject* gameObject) : Component(gameObject, TYPE::T
 		C_Transform* parentTransform = dynamic_cast<C_Transform*>(gameObject->GetParent()->GetComponent(Component::TYPE::TRANSFORM));
 		parentGlobalTransform = parentTransform->GetGlobalTransform();
 	}
+
+	float3 pos(0.0f, 0.0f, 0.0f);
+	float3 scl(1.0f, 1.0f, 1.0f);
+	float3 rot(0.0f, 0.0f, 0.0f);
+	SetTransform(pos, scl, rot);
 }
 
 C_Transform::~C_Transform()
 {
+}
+
+void C_Transform::OnEditor()
+{
+	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		int offset = ImGui::CalcTextSize("Local Position: ").x + 16;
+		ImGui::Text("Local Position: ");
+		ImGui::SameLine();
+		if (ImGui::DragFloat3("##lPos", &localTransform.position[0], 0.1f)) UpdatePosition();
+
+
+		ImGui::Text("Rotation: ");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::DragFloat3("##lRot", &localTransform.rotation[0], 0.1f)) UpdateRotation();
+
+
+		ImGui::Text("Scale: ");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(offset);
+		if (ImGui::DragFloat3("##lScale", &localTransform.scale[0], 0.1f)) UpdateScale();
+	}
 }
 
 void C_Transform::SetPosition(float3 pos)
