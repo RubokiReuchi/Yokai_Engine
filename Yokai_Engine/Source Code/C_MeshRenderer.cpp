@@ -18,7 +18,7 @@ void C_MeshRenderer::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Checkbox("Visible", &visible);
+		ImGui::Checkbox("Visible", &GetMesh().visible);
 	}
 }
 

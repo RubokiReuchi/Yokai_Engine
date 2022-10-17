@@ -48,6 +48,8 @@ public:
 
 	float OpenGL_texture_id = -1;
 	float texture_id = -1;
+
+	bool visible = true;
 private:
 	bool update_matrix = false;
 };

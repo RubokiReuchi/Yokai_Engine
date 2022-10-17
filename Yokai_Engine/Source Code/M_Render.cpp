@@ -41,6 +41,10 @@ void M_Render::Draw()
     }
     for (auto &mesh : meshes)
     {
+        if (!mesh.second.visible) // mesh renderer with visibility set to false
+        {
+            return;
+        }
         mesh.second.Update();
         model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
         texture_ids.push_back(mesh.second.OpenGL_texture_id);

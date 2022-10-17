@@ -105,15 +105,12 @@ void Re_Mesh::Update()
 
 	// Update Model matrix. This information will be used later by the RenderManager.
 	model_matrix.SetIdentity();
-	model_matrix = model_matrix.Scale(scale.x, scale.y, scale.z).ToFloat4x4() * model_matrix;
 
-	float3 tempRotation = rotation;
+	math::Quat rot = rot.FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
+	rot.Normalize();
 
-	math::Quat rot;
-	rot = rot.FromEulerZYX(math::DegToRad(tempRotation.z), math::DegToRad(tempRotation.y), math::DegToRad(tempRotation.x));
+	model_matrix = float4x4::FromTRS(position, rot, scale);
 
-	model_matrix = rot * model_matrix;
-	model_matrix = model_matrix.Translate(position.x, position.y, position.z).ToFloat4x4() * model_matrix;
 	model_matrix.Transpose();
 
 	update_matrix = false;
