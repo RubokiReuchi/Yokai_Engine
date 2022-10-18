@@ -126,6 +126,12 @@ bool ModuleRenderer3D::Init()
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(app->camera->sceneCamera.GetProjectionMatrix());
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(app->camera->sceneCamera.GetViewMatrix());
 
 	// light 0 on cam pos
 	lights[0].SetPos(app->camera->sceneCamera.Position.x, app->camera->sceneCamera.Position.y, app->camera->sceneCamera.Position.z);

@@ -153,14 +153,18 @@ void M_Render::CreateBuffers()
     //glVertexAttribDivisor(3, 1);
     //glVertexAttribDivisor(4, 1);
 
+    glBindVertexArray(0);
+
     // Create TextureID buffer object
     glGenBuffers(1, &TBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, TBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(int) * 100, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 10000, nullptr, GL_DYNAMIC_DRAW);
+
+    glBindVertexArray(VAO);
 
     glEnableVertexAttribArray(7);
-    glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(int), (void*)0);
+    glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
 
     //glVertexAttribDivisor(7, 1);
 
