@@ -25,6 +25,7 @@ private:
 	uint texture_color_buffer = 0;
 	uint RBO = 0;
 
-	int width;
-	int height;
+	int width = SCREEN_WIDTH;
+	int height = SCREEN_HEIGHT;
+	friend class Camera;
 };

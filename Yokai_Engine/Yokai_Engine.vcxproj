@@ -100,6 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h" />
+    <ClInclude Include="Source Code\Camera.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\Console.h" />
@@ -212,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp" />
+    <ClCompile Include="Source Code\Camera.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\Console.cpp" />

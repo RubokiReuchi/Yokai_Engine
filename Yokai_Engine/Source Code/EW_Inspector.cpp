@@ -20,13 +20,16 @@ void EW_Inspector::Update()
 {
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM) != NULL)
+	if (editor->GetSelectedGameObject() != NULL)
 	{
-		dynamic_cast<C_Transform*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM))->OnEditor();
-	}
-	if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER) != NULL)
-	{
-		dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
+		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM) != NULL)
+		{
+			dynamic_cast<C_Transform*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM))->OnEditor();
+		}
+		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER) != NULL)
+		{
+			dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
+		}
 	}
 	ImGui::End();
 }

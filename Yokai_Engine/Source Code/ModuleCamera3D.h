@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Module.h"
-#include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
+#include "Camera.h"
 
 #include"MathGeoLib/include/Geometry/Frustum.h"
 
@@ -17,20 +17,19 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
-	float* GetViewMatrix();
-
-private:
-
-	void CalculateViewMatrix();
+	void RequestFrameBufferRegen(Camera* camera, int width, int height);
 
 public:
-	
-	vec3 X, Y, Z, Position, Reference;
+	std::vector<Camera> game_cameras;
+	Camera* activeGameCamera = nullptr;
+	Camera sceneCamera;
+
+	Camera* currentDrawingCamera = nullptr;
+
+	bool updateSceneCamera = false;
+	bool updateGameCamera = false;
 
 private:
-
-	mat4x4 ViewMatrix, ViewMatrixInverse;
+	Camera* frameBufferRegenCamera = nullptr;
+	int newBufferWidth, newBufferHeight;
 };

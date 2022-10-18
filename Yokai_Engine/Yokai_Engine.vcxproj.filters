@@ -393,6 +393,9 @@
     <ClInclude Include="Source Code\C_Transform.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Camera.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -631,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\C_Transform.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Camera.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

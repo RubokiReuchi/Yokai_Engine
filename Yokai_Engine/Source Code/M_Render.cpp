@@ -52,8 +52,8 @@ void M_Render::Draw()
 
     // Update View and Projection matrices
     basic_shader->Bind();
-    basic_shader->SetMatFloat4v("view", app->camera->GetViewMatrix());
-    basic_shader->SetMatFloat4v("projection", app->renderer3D->GetProjectionMatrix());
+    basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
+    basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
 
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);

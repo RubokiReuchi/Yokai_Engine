@@ -14,6 +14,8 @@ void EW_Scene::Update()
 {
 	// Screen
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	
+	app->camera->updateSceneCamera = (bool)ImGui::IsWindowHovered();
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 
 	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
@@ -22,9 +24,9 @@ void EW_Scene::Update()
 		game_width = (int)gameDimensions.x;
 		game_height = (int)gameDimensions.y;
 
-		app->renderer3D->frameBuffer.SetDimensions(game_width, game_height);
+		app->camera->sceneCamera.ChangeAspectRatio((float)game_width / (float)game_height);
 	}
 
-	ImGui::Image((ImTextureID)app->renderer3D->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((ImTextureID)app->camera->sceneCamera.frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 }

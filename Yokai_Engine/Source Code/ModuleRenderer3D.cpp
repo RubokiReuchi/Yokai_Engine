@@ -90,12 +90,6 @@ bool ModuleRenderer3D::Init()
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 		
-		lights[0].ref = GL_LIGHT0;
-		lights[0].ambient.Set(0.25f, 0.25f, 0.25f, 1.0f);
-		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
-		lights[0].SetPos(0.0f, 0.0f, 2.5f);
-		lights[0].Init();
-		
 		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
 
@@ -104,7 +98,6 @@ bool ModuleRenderer3D::Init()
 		
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
-		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		//glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
@@ -119,8 +112,6 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	frameBuffer.SetBufferInfo();
-
 	return ret;
 }
 
@@ -128,18 +119,6 @@ bool ModuleRenderer3D::Init()
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(app->camera->GetViewMatrix());
-
-	// light 0 on cam pos
-	lights[0].SetPos(app->camera->Position.x, app->camera->Position.y, app->camera->Position.z);
-
-	for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
-
-	
 
 	return UPDATE_CONTINUE;
 }
@@ -152,9 +131,11 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	frameBuffer.Bind();
+	app->camera->sceneCamera.frameBuffer.Bind();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+	app->camera->currentDrawingCamera = &app->camera->sceneCamera;
 
 	app->engine_order->DrawEO();
 	model_render.Draw();
@@ -192,13 +173,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	glLoadMatrixf(&ProjectionMatrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	app->camera->RequestFrameBufferRegen(&app->camera->sceneCamera, width, height);
 
 	app->window->width = width;
 	app->window->height = height;
