@@ -118,7 +118,7 @@ void Re_Mesh::Update()
 
 void Re_Mesh::InitAsMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices, float3 pos, float3 scale)
 {
-	this->position = position;
+	this->position = pos;
 	this->scale = scale;
 
 	this->vertices = new std::vector<Vertex>(vertices);
