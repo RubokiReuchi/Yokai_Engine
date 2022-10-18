@@ -32,6 +32,7 @@ public:
 
 	bool vsync, wireframe, depth_test, cull_face, lighting, color_material, texture_2d;
 
+	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix;
