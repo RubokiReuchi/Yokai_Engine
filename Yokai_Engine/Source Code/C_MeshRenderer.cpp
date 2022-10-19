@@ -18,7 +18,18 @@ void C_MeshRenderer::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Checkbox("Visible", &GetMesh().visible);
+		if (ImGui::Checkbox("Visible", &visible))
+		{
+			GetMesh().visible = this->visible;
+			for (auto& childs : GetGameObject()->GetChilds())
+			{
+				C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
+				if (mr->visible)
+				{
+					mr->GetMesh().visible = this->visible;
+				}
+			}
+		}
 	}
 }
 

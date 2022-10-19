@@ -5,6 +5,7 @@ GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : 
 {
 	id = app->engine_order->AddGameObject(this);
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
+	dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER));
 	if (parent != nullptr) parent->AddChild(this);
 }
 
