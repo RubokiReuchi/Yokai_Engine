@@ -38,16 +38,16 @@ public:
 
 	void SetTransform(float3 pos, float3 s, float3 rot);
 
+	float3 position;
 	float3 rotation;
 	float3 scale;
-	float3 position;
 
 	std::vector<Vertex>* vertices = nullptr;
 	std::vector<uint>* indices = nullptr;
 	float4x4 model_matrix = model_matrix.identity;
 
 	float OpenGL_texture_id = -1;
-	float texture_id = -1;
+	uint texture_id = -1;
 
 	bool visible = true;
 private:

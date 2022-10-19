@@ -33,6 +33,7 @@ Re_Mesh::~Re_Mesh()
 void Re_Mesh::InitAsMeshInformation(float3 position, float3 scale)
 {
 	this->position = position;
+	this->rotation = float3(0.0f, 0.0f, 0.0f);
 	this->scale = scale;
 }
 
