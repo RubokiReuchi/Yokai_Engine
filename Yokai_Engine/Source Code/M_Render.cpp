@@ -33,6 +33,7 @@ uint M_Render::SetMeshInformation(Re_Mesh& mesh)
 
 void M_Render::Draw()
 {
+    float3 npos, nrot, nscl;
     if (!initialized) return; // This is placed here for security reasons. No RenderManager should be created without being initialized.
     if (meshes.empty())
     {
@@ -48,12 +49,16 @@ void M_Render::Draw()
         mesh.second.Update();
         model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
         texture_ids.push_back(mesh.second.OpenGL_texture_id);
+        npos = mesh.second.position;
+        nrot = mesh.second.rotation;
+        nscl = mesh.second.scale;
     }
 
     // Update View and Projection matrices
     basic_shader->Bind();
     basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
     basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+
 
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);
@@ -75,8 +80,17 @@ void M_Render::Draw()
         basic_shader->SetInt(("textures[" + std::to_string(i) + "]").c_str(), i);
     }
 
+    glPushMatrix();
+    glTranslatef(npos.x, npos.y, npos.z);
+    glRotatef(nrot.x, 1.0f, 0.0f, 0.0f);
+    glRotatef(nrot.y, 0.0f, 1.0f, 0.0f);
+    glRotatef(nrot.z, 0.0f, 0.0f, 1.0f);
+    glScalef(nscl.x, nscl.y, nscl.z);
+
     // Draw
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
+
+    glPopMatrix();
 
     glBindVertexArray(0);
 
