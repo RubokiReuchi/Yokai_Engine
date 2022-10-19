@@ -49,8 +49,8 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	// Create empty Gameobject 
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "Mesh");
-	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, "Mesh");
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
 	else newParent = parent;
 
 	// Set new GameObject position with node Transform.
@@ -142,8 +142,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 	}
 
 	// Load into a Mesh object
-	GameObject* newGameObject = new GameObject(parent, "Mesh");
-	//dynamic_cast<C_MeshRenderer*>(newGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+	GameObject* newGameObject = new GameObject(parent, mesh->mName.C_Str());
 	dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 }
 
@@ -152,8 +151,8 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	// Create an empty GameObject that represents the Node
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "Mesh");
-	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, "Mesh");
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
 	else newParent = parent;
 
 	// Set new GameObject position with node Transform.
@@ -176,8 +175,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
 		// Create a GameObject with a MeshRenderComponent that represents the Mesh
-		GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, "Mesh");
-		//dynamic_cast<C_MeshRenderer*>(newGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
+		GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
 		dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
 	}
 

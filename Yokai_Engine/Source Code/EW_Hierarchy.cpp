@@ -25,7 +25,7 @@ void EW_Hierarchy::Update()
 	// Hierarchy
     ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
     // example
-    if (ImGui::TreeNode("Root"))
+    if (ImGui::TreeNode("World"))
     {
         DrawGameObjectChildren(gameObjectsReference->at(1), 1);
         ImGui::TreePop();
