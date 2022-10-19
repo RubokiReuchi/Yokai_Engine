@@ -15,7 +15,7 @@ void MeshImporter::LoadMesh(std::string path)
 	const aiScene* scene = GetAiScene(path);
 
 	// Check if this file path has already been loaded.
-	if (loadedMeshes.find(path) != loadedMeshes.end())
+	if (false/*loadedMeshes.find(path) != loadedMeshes.end()*/)
 	{
 		uint first_id = loadedMeshes[path].initialID;
 		ProcessLoadedNode(scene->mRootNode, scene, first_id);
@@ -49,7 +49,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	// Create empty Gameobject 
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
 	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
 	else newParent = parent;
 
@@ -71,7 +71,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	{
 		// Process mesh and create a GameObject with a MeshRenderComponent that is child to the epmty game object
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		ProcessNewMesh(mesh, scene, newParent);
+		ProcessNewMesh(mesh, scene, newParent, node->mName);
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)
@@ -81,7 +81,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	}
 }
 
-void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent)
+void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name)
 {
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
@@ -142,7 +142,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 	}
 
 	// Load into a Mesh object
-	GameObject* newGameObject = new GameObject(parent, mesh->mName.C_Str());
+	GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
 	dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 }
 
@@ -151,7 +151,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	// Create an empty GameObject that represents the Node
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
 	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
 	else newParent = parent;
 

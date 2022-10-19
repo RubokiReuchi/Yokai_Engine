@@ -20,60 +20,72 @@ EW_Hierarchy::~EW_Hierarchy()
 
 void EW_Hierarchy::Update()
 {
-    ImGui::ShowDemoWindow();
-
-	// Hierarchy
+    // Hierarchy
     ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-    // example
-    if (ImGui::TreeNode("World"))
-    {
-        DrawGameObjectChildren(gameObjectsReference->at(1), 1);
-        ImGui::TreePop();
-    }
+    DrawGameObjectChildren(gameObjectsReference->at(1), 1);
     ImGui::End();
 }
 
-void EW_Hierarchy::DrawGameObjectChildren(GameObject* gameObject, int layer)
+void EW_Hierarchy::DrawGameObjectChildren(GameObject* gameObject, bool onlyChildren)
 {
-    for (size_t i = 0; i < gameObject->GetChilds().size(); i++)
+    if (!onlyChildren) ProcessGameObject(gameObject, 0);
+    else
     {
-        if (i == 0)  ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-
-        ImGuiTreeNodeFlags node_flags = base_flags;
-
-        if (gameObject->GetChilds().at(i) == editor->GetSelectedGameObject()) node_flags |= ImGuiTreeNodeFlags_Selected;
-
-        bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, gameObject->GetChilds().at(i)->name.c_str(), i);
-
-        if (ImGui::BeginDragDropSource())
+        for (size_t i = 0; i < gameObject->children.size(); i++)
         {
-            ImGui::SetDragDropPayload("GameObject", gameObject->GetChilds().at(i), sizeof(GameObject*));
-
-            draggingGameObject = gameObject->GetChilds().at(i);
-
-            ImGui::Text("Change game object parent");
-            ImGui::EndDragDropSource();
+            ProcessGameObject(gameObject->children[i], i);
         }
+    }
 
-        if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left))
+}
+
+void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
+{
+    ImGuiTreeNodeFlags node_flags = base_flags;
+
+    if (gameObject == editor->GetSelectedGameObject()) node_flags |= ImGuiTreeNodeFlags_Selected;
+
+    bool node_open;
+
+    if (gameObject->children.empty())
+    {
+        node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration);
+        node_open = false;
+    }
+    else
+    {
+        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration);
+    }
+
+    if (ImGui::BeginDragDropSource())
+    {
+        ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
+
+        draggingGameObject = gameObject;
+
+        ImGui::Text("Change game object parent");
+        ImGui::EndDragDropSource();
+    }
+
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
+    {
+        editor->SetSelectedGameObject(gameObject);
+    }
+
+    if (ImGui::BeginDragDropTarget())
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject"))
         {
-            editor->SetSelectedGameObject(gameObject->GetChilds().at(i));
+            draggingGameObject->SetParent(gameObject);
+            draggingGameObject = nullptr;
         }
+        ImGui::EndDragDropTarget();
+    }
 
-        if (ImGui::BeginDragDropTarget())
-        {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject"))
-            {
-                draggingGameObject->SetParent(gameObject->GetChilds().at(i));
-                draggingGameObject = nullptr;
-            }
-            ImGui::EndDragDropTarget();
-        }
-
-        if (node_open)
-        {
-            DrawGameObjectChildren(gameObject->GetChilds().at(i), layer++);
-            ImGui::TreePop();
-        }
+    if (node_open)
+    {
+        if (!gameObject->children.empty()) DrawGameObjectChildren(gameObject, true);
+        ImGui::TreePop();
     }
 }

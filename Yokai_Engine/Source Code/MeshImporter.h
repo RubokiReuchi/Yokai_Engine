@@ -27,7 +27,7 @@ private:
 
 	// ProcessNew creates a new RenderManger for each Mesh
 	static void ProcessNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
-	static void ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent);
+	static void ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name);
 
 	//ProcessLoaded creates a new Instance inside a RenderManager for each Mesh
 	static void ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr);
