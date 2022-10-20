@@ -31,44 +31,22 @@ Camera::~Camera()
 {
 }
 
-void Camera::Look(const float3& Position, const float3& Reference, bool RotateAroundReference)
-{
-	this->Position = Position;
-	this->Reference = Reference;
-
-	Z = (Position - Reference).Normalized();
-	X = (float3(0.0f, 1.0f, 0.0f).Cross(Z)).Normalized();
-	Y = Cross(Z, X);
-
-	if (!RotateAroundReference)
-	{
-		this->Reference = this->Position;
-		this->Position += Z * 0.05f;
-	}
-
-	CalculateViewMatrix();
-}
-
 void Camera::LookAt(const float3& Spot)
 {
-	Reference = Spot;
-	Z = (Position - Reference).Normalized();
-	X = (float3(0.0f, 1.0f, 0.0f).Cross(Z)).Normalized();
-	Y = Cross(Z, X);
-
-	CalculateViewMatrix();
+	cameraFrustum.front = (Spot - cameraFrustum.pos).Normalized();
+	float3 X = float3(0, 1, 0).Cross(cameraFrustum.front).Normalized();
+	cameraFrustum.up = cameraFrustum.front.Cross(X);
 }
 
 void Camera::Move(const float3& Movement)
 {
-	Position += Movement;
-	Reference += Movement;
-
-	CalculateViewMatrix();
+	cameraFrustum.pos += Movement;
 }
 
 float* Camera::GetViewMatrix()
 {
+	ViewMatrix = cameraFrustum.ViewMatrix();
+	ViewMatrix.Transpose();
 	return &ViewMatrix.v[0][0];
 }
 
@@ -104,9 +82,9 @@ void Camera::SetFOV(float fov)
 
 void Camera::CalculateViewMatrix()
 {
-	ViewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -Dot(X, Position), -Dot(Y, Position), -Dot(Z, Position), 1.0f);
+	/*ViewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -Dot(X, Position), -Dot(Y, Position), -Dot(Z, Position), 1.0f);
 	ViewMatrixInverse = ViewMatrix.Inverted();
 	cameraFrustum.pos = Position;
 	cameraFrustum.front = Z;
-	cameraFrustum.up = Y;
+	cameraFrustum.up = Y;*/
 }
