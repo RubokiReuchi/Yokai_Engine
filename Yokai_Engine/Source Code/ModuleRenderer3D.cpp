@@ -143,11 +143,9 @@ update_status ModuleRenderer3D::Update(float dt)
 
 	glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
-	//glLoadMatrixf(app->camera->sceneCamera.GetProjectionMatrix());
 	glLoadMatrixf((GLfloat*)app->camera->sceneCamera.cameraFrustum.ProjectionMatrix().Transposed().v);
 
 	glMatrixMode(GL_MODELVIEW);
-	//glLoadMatrixf(app->camera->sceneCamera.GetViewMatrix());
 	math::float4x4 mat = app->camera->sceneCamera.cameraFrustum.ViewMatrix();
 	glLoadMatrixf((GLfloat*)mat.Transposed().v);
 
@@ -157,14 +155,28 @@ update_status ModuleRenderer3D::Update(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	app->camera->sceneCamera.frameBuffer.Bind();
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	if (app->camera->sceneCamera.active)
+	{
+		app->camera->sceneCamera.frameBuffer.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	app->camera->currentDrawingCamera = &app->camera->sceneCamera;
+		app->camera->currentDrawingCamera = &app->camera->sceneCamera;
 
-	app->engine_order->DrawEO();
-	model_render.Draw();
+		app->engine_order->DrawEO();
+		model_render.Draw();
+	}
+	if (app->camera->activeGameCamera->active)
+	{
+		app->camera->activeGameCamera->frameBuffer.Bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+		app->camera->currentDrawingCamera = app->camera->activeGameCamera;
+
+		app->engine_order->DrawEO();
+		model_render.Draw();
+	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

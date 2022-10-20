@@ -16,7 +16,10 @@ void C_Camera::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		
+		ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
+
+		float aspect_ratio = 1.0f / app->camera->activeGameCamera->GetAspectRatio();
+		ImGui::Image((ImTextureID)app->camera->activeGameCamera->frameBuffer.GetTexture(), ImVec2(gameDimensions.x, gameDimensions.x * aspect_ratio), ImVec2(0, 1), ImVec2(1, 0));
 	}
 }
 

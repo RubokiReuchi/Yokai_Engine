@@ -27,7 +27,7 @@ void EW_Game::Update()
 		game_width = (int)gameDimensions.x;
 		game_height = (int)gameDimensions.y;
 
-		app->camera->sceneCamera.ChangeAspectRatio((float)game_width / (float)game_height);
+		currentGameCamera->ChangeAspectRatio((float)game_width / (float)game_height);
 	}
 
 	ImGui::Image((ImTextureID)currentGameCamera->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
