@@ -55,7 +55,6 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	if (updateSceneCamera) sceneCamera.UpdateCameraInput(dt);
-	if (updateGameCamera) activeGameCamera->UpdateCameraInput(dt);
 
 	return UPDATE_CONTINUE;
 }

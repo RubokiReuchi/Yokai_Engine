@@ -10,7 +10,7 @@ public:
 	SceneCamera();
 	~SceneCamera();
 
-	void UpdateInput();
+	void UpdateCameraInput(float dt);
 
 public:
 	EO_Editor* editor = nullptr;
