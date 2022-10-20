@@ -22,6 +22,9 @@ private:
 	EO_Editor* editor = nullptr;
 
 	GameObject* draggingGameObject = nullptr;
+	GameObject* rightClickedGameObject = nullptr;
 
 	ImGuiTreeNodeFlags base_flags;
+
+	bool popUpOpen = false;
 };

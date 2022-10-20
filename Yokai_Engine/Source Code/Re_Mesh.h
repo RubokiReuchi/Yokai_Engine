@@ -51,5 +51,5 @@ public:
 
 	bool visible = true;
 private:
-	bool update_matrix = false;
+	bool update_matrix = true;
 };

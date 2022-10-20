@@ -4,6 +4,8 @@ EW_Scene::EW_Scene()
 {
 	window_name = "Scene";
 	enabled = true;
+
+	scene_camera = &app->camera->sceneCamera;
 }
 
 EW_Scene::~EW_Scene()
@@ -15,16 +17,17 @@ void EW_Scene::Update()
 	// Screen
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 	
+	scene_camera->active = true;
 	app->camera->updateSceneCamera = (bool)ImGui::IsWindowHovered();
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 
-	if (gameDimensions.x != game_width || gameDimensions.y != game_height)
+	if (gameDimensions.x != scene_width || gameDimensions.y != scene_height)
 	{
 		// If the size of this imgui window is different from the one stored.
-		game_width = (int)gameDimensions.x;
-		game_height = (int)gameDimensions.y;
+		scene_width = (int)gameDimensions.x;
+		scene_height = (int)gameDimensions.y;
 
-		app->camera->sceneCamera.ChangeAspectRatio((float)game_width / (float)game_height);
+		app->camera->sceneCamera.ChangeAspectRatio((float)scene_width / (float)scene_height);
 	}
 
 	ImGui::Image((ImTextureID)app->camera->sceneCamera.frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));

@@ -125,6 +125,24 @@ Transform C_Transform::GetGlobalTransform()
 	return global_transform;
 }
 
+float3 C_Transform::GetForward()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(2).Normalized();
+}
+
+float3 C_Transform::GetRight()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(0).Normalized();
+}
+
+float3 C_Transform::GetUp()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(1).Normalized();
+}
+
 void C_Transform::UpdatePosition()
 {
 	float3 globalPosition = parentGlobalTransform.position + localTransform.position;
@@ -191,4 +209,13 @@ void C_Transform::UpdateTransform()
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
 	}
+}
+
+void C_Transform::CalculateGlobalMatrix()
+{
+	Transform globalTransform = GetGlobalTransform();
+
+	math::Quat rotation = Quat::FromEulerXYZ(math::DegToRad(globalTransform.rotation.x), math::DegToRad(globalTransform.rotation.y), math::DegToRad(globalTransform.rotation.z));
+
+	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, float3(1.0f, 1.0f, 1.0f));
 }

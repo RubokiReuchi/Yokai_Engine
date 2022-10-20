@@ -1,5 +1,6 @@
 #include "ModuleCamera3D.h"
 #include "Application.h"
+#include "C_Camera.h"
 
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Geometry/Plane.h"
@@ -7,8 +8,6 @@
 
 ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 {
-	game_cameras.emplace_back();
-	currentDrawingCamera = activeGameCamera = &game_cameras[0];
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -18,20 +17,24 @@ ModuleCamera3D::~ModuleCamera3D()
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
-	bool ret = true;
+
+	// Create Empty GameObject with camera component.
+	GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera");
+	C_Camera* camera = dynamic_cast<C_Camera*>(main_camera->AddComponent(Component::TYPE::CAMERA));
+	currentDrawingCamera = activeGameCamera = camera->GetCamera();
 
 	sceneCamera.frameBuffer.SetBufferInfo();
 	sceneCamera.frameBuffer.SetDimensions(app->window->width, app->window->height);
 	sceneCamera.changeFOVWithBufferSize = true;
 
-	for (size_t i = 0; i < game_cameras.size(); i++)
+	for (auto& camera : game_cameras)
 	{
-		game_cameras[i].frameBuffer.SetBufferInfo();
-		game_cameras[i].frameBuffer.SetDimensions(app->window->width, app->window->height);
-		game_cameras[i].changeFOVWithBufferSize = false;
+		camera.second.frameBuffer.SetBufferInfo();
+		camera.second.frameBuffer.SetDimensions(app->window->width, app->window->height);
+		camera.second.changeFOVWithBufferSize = false;
 	}
 
-	return ret;
+	return true;
 }
 
 // -----------------------------------------------------------------

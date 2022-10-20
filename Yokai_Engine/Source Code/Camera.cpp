@@ -15,8 +15,9 @@ Camera::Camera()
 	Reference = float3(0.0f, 0.0f, 0.0f);
 
 	cameraFrustum.type = math::FrustumType::PerspectiveFrustum;
-	cameraFrustum.verticalFov = math::DegToRad(60.0f);
-	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * 1.7f);
+	cameraFrustum.verticalFov = FOV = math::DegToRad(60.0f);
+	aspectRatio = 1.7f;
+	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
 
 	cameraFrustum.nearPlaneDistance = 0.01f;
 	cameraFrustum.farPlaneDistance = 1000.0f;
@@ -158,7 +159,14 @@ void Camera::RegenerateFrameBuffer(int width, int height)
 
 void Camera::ChangeAspectRatio(float aspectRatio)
 {
+	this->aspectRatio = aspectRatio;
 	cameraFrustum.horizontalFov = 2.f * atanf(tanf(cameraFrustum.verticalFov * 0.5f) * aspectRatio);
+}
+
+void Camera::SetFOV(float fov)
+{
+	cameraFrustum.verticalFov = FOV = math::DegToRad(fov);
+	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
 }
 
 void Camera::CalculateViewMatrix()

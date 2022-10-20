@@ -45,6 +45,7 @@ bool GameObject::AddChild(GameObject* child)
 	child->parent = this;
 
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
+	child->transform->UpdateTransform();
 
 	return true;
 }

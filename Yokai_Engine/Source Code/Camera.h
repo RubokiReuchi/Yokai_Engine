@@ -23,6 +23,10 @@ public:
 	void RegenerateFrameBuffer(int width, int height);
 
 	void ChangeAspectRatio(float aspectRatio);
+	float GetAspectRatio() { return aspectRatio; }
+
+	void SetFOV(float fov);
+	float GetFOV() { return FOV; };
 
 public:
 	float3 X, Y, Z, Position, Reference;
@@ -33,9 +37,14 @@ private:
 
 private:
 	float4x4 ViewMatrix, ViewMatrixInverse, ProjectionMatrix;
-	Frustum cameraFrustum;
 	float3 offset;
 	bool changeFOVWithBufferSize;
+	float aspectRatio = 0.0f;
+	float FOV = 60.0f;
+
+protected:
+	Frustum cameraFrustum;
 
 	friend class ModuleCamera3D;
+	friend class C_Camera;
 };

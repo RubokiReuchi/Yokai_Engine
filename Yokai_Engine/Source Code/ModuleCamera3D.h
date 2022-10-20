@@ -4,8 +4,11 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Camera.h"
+#include "SceneCamera.h"
 
 #include"MathGeoLib/include/Geometry/Frustum.h"
+
+#include <map>
 
 class ModuleCamera3D : public Module
 {
@@ -20,9 +23,9 @@ public:
 	void RequestFrameBufferRegen(Camera* camera, int width, int height);
 
 public:
-	std::vector<Camera> game_cameras;
+	std::map<uint, Camera> game_cameras;
 	Camera* activeGameCamera = nullptr;
-	Camera sceneCamera;
+	SceneCamera sceneCamera;
 
 	Camera* currentDrawingCamera = nullptr;
 

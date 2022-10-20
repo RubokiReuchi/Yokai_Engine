@@ -12,9 +12,26 @@ ModuleEO::~ModuleEO()
 {
 }
 
-bool ModuleEO::Start()
+bool ModuleEO::Init()
 {
     rootGameObject = new GameObject(nullptr, "Root", "None");
+    return true;
+}
+
+bool ModuleEO::Start()
+{
+    engine_order[(uint)EO_NUM::EDITOR] = editor = new EO_Editor();
+    dynamic_cast<EO_Editor*>(engine_order[(uint)EO_NUM::EDITOR])->SetSelectedGameObject(game_objects[2]);
+    //layers[(uint)LayersID::GAME] = new LayerGame();
+
+    for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
+    {
+        if (engine_order[i] && engine_order[i]->IsEnabled())
+        {
+            engine_order[i]->Start();
+        }
+    }
+
 
     MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
     MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
@@ -26,17 +43,6 @@ bool ModuleEO::Start()
         if (c_mr != nullptr)
         {
             c_mr->GetMesh().texture_id = bakerTexture;
-        }
-    }
-
-    engine_order[(uint)EO_NUM::EDITOR] = new EO_Editor();
-    dynamic_cast<EO_Editor*>(engine_order[(uint)EO_NUM::EDITOR])->SetSelectedGameObject(game_objects[2]);
-
-    for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
-    {
-        if (engine_order[i] && engine_order[i]->IsEnabled())
-        {
-            engine_order[i]->Start();
         }
     }
 

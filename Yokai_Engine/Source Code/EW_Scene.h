@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorWindow.h"
+#include "SceneCamera.h"
 
 class EW_Scene : public EditorWindow
 {
@@ -11,7 +12,13 @@ public:
 
 	void Update() override;
 
+	void SetSceneCamera(bool active)
+	{
+		scene_camera->active = active;
+	}
+
 private:
 
-	int game_width, game_height;
+	SceneCamera* scene_camera = nullptr;
+	int scene_width, scene_height;
 };

@@ -18,6 +18,7 @@ public:
 		TRANSFORM,
 		MESH_RENDERER,
 		MATERIAL,
+		CAMERA,
 	};
 
 	Component(GameObject* game_object, TYPE type);

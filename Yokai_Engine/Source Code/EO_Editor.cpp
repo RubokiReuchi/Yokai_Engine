@@ -184,7 +184,14 @@ bool EO_Editor::SetMenuBar()
 	// update enabled windows
 	for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
 	{
-		if (editor_windows[i]->enabled) editor_windows[i]->Update();
+		if (editor_windows[i]->enabled)
+		{
+			editor_windows[i]->Update();
+		}
+		else if (i == (uint)EW_TYPE::SCENE)
+		{
+			dynamic_cast<EW_Scene*>(editor_windows[(uint)EW_TYPE::SCENE])->SetSceneCamera(false);
+		}
 	}
 
 	return !exit;

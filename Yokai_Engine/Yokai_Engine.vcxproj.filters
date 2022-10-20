@@ -399,6 +399,15 @@
     <ClInclude Include="Source Code\ImGuiHelpers.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\C_Camera.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EW_Game.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\SceneCamera.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -643,6 +652,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\ImGuiHelpers.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\C_Camera.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EW_Game.cpp">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\SceneCamera.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

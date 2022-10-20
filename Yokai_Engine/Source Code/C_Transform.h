@@ -33,6 +33,10 @@ public:
 
 	Transform GetGlobalTransform();
 
+	float3 GetForward();
+	float3 GetRight();
+	float3 GetUp();
+
 private:
 	Transform localTransform;
 
@@ -41,7 +45,11 @@ private:
 	void UpdateScale();
 	void UpdateTransform();
 
+	void CalculateGlobalMatrix();
+
 private:
+	float4x4 globalMatrix;
+
 	Transform parentGlobalTransform;
 	friend class GameObject;
 };

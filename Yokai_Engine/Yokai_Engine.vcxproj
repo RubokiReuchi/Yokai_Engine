@@ -105,6 +105,7 @@
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\Console.h" />
     <ClInclude Include="Source Code\CycleArray.hpp" />
+    <ClInclude Include="Source Code\C_Camera.h" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
     <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Source Code\EO_Editor.h" />
     <ClInclude Include="Source Code\EW_About.h" />
     <ClInclude Include="Source Code\EW_Console.h" />
+    <ClInclude Include="Source Code\EW_Game.h" />
     <ClInclude Include="Source Code\EW_Hierarchy.h" />
     <ClInclude Include="Source Code\EW_Inspector.h" />
     <ClInclude Include="Source Code\EW_Performance.h" />
@@ -209,6 +211,7 @@
     <ClInclude Include="Source Code\Re_Mesh.h" />
     <ClInclude Include="Source Code\Re_Shader.h" />
     <ClInclude Include="Source Code\Re_Texture.h" />
+    <ClInclude Include="Source Code\SceneCamera.h" />
     <ClInclude Include="Source Code\TextureImporter.h" />
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
@@ -218,6 +221,7 @@
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\Console.cpp" />
+    <ClCompile Include="Source Code\C_Camera.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
@@ -225,6 +229,7 @@
     <ClCompile Include="Source Code\EO_Editor.cpp" />
     <ClCompile Include="Source Code\EW_About.cpp" />
     <ClCompile Include="Source Code\EW_Console.cpp" />
+    <ClCompile Include="Source Code\EW_Game.cpp" />
     <ClCompile Include="Source Code\EW_Hierarchy.cpp" />
     <ClCompile Include="Source Code\EW_Inspector.cpp" />
     <ClCompile Include="Source Code\EW_Performance.cpp" />
@@ -293,6 +298,7 @@
     <ClCompile Include="Source Code\Re_Mesh.cpp" />
     <ClCompile Include="Source Code\Re_Shader.cpp" />
     <ClCompile Include="Source Code\Re_Texture.cpp" />
+    <ClCompile Include="Source Code\SceneCamera.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

@@ -7,6 +7,8 @@
 
 #include <map>
 
+class EO_Editor;
+
 enum class EO_NUM
 {
 	GAME,
@@ -22,6 +24,7 @@ public:
 	ModuleEO(bool start_enabled = true);
 	~ModuleEO();
 
+	bool Init();
 	bool Start();
 
 	update_status PreUpdate(float dt);
@@ -37,6 +40,7 @@ public:
 
 public:
 	EO_Base* engine_order[(uint)EO_NUM::NUM_EO_TYPE] = { nullptr };
+	EO_Editor* editor = nullptr;
 
 	uint id_counter = 1;
 

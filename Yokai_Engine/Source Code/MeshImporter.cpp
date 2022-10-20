@@ -61,7 +61,10 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
-	float3 eulerRot = rot.ToEulerZYX();	// TODO: Transform should save rotation as Quaternion?
+	float3 eulerRot = rot.ToEulerZYX();
+	eulerRot.x = math::RadToDeg(eulerRot.x);
+	eulerRot.y = math::RadToDeg(eulerRot.y);
+	eulerRot.z = math::RadToDeg(eulerRot.z);
 
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 

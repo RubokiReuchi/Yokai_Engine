@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
+#include "C_Camera.h"
 #include "Globals.h"
 
 #include <vector>
@@ -29,6 +30,9 @@ public:
 			new_component = new C_MeshRenderer(this);
 			break;
 		case Component::TYPE::MATERIAL:
+			break;
+		case Component::TYPE::CAMERA:
+			new_component = new C_Camera(this);
 			break;
 		default:
 			LOG("component type error");
