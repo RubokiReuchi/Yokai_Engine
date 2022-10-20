@@ -61,7 +61,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
-	float3 eulerRot = rot.ToEulerZYX();
+	float3 eulerRot = rot.ToEulerXYZ();
 	eulerRot.x = math::RadToDeg(eulerRot.x);
 	eulerRot.y = math::RadToDeg(eulerRot.y);
 	eulerRot.z = math::RadToDeg(eulerRot.z);
@@ -82,6 +82,9 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 		// Creates an empty Gameobject that is children to the empty gameObject created here.
 		ProcessNewNode(node->mChildren[i], scene, path, newParent);
 	}
+
+	// set transform after al child have been added
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
 
 void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name)
@@ -166,7 +169,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
-	float3 eulerRot = rot.ToEulerZYX();	// TODO: Transform should save rotation as Quaternion?
+	float3 eulerRot = rot.ToEulerXYZ();
 	eulerRot.x = math::RadToDeg(eulerRot.x);
 	eulerRot.y = math::RadToDeg(eulerRot.y);
 	eulerRot.z = math::RadToDeg(eulerRot.z);
