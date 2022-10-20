@@ -25,7 +25,7 @@ bool ModuleEO::Start()
         C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
         if (c_mr != nullptr)
         {
-            c_mr->GetMesh().texture_id = (float)bakerTexture;
+            c_mr->GetMesh().texture_id = bakerTexture;
         }
     }
 

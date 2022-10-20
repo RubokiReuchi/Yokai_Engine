@@ -18,4 +18,5 @@ private:
 
 	EO_Editor* editor = nullptr;
 	GameObject* selectGameobject = nullptr;
+	friend class EO_Editor;
 };

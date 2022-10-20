@@ -73,8 +73,8 @@ void Re_Mesh::InitAsSphere(float3 position, float3 scale)
 	int sectors = 24;
 	int radius = 1;
 
-	float const R = 1. / (float)(rings - 1);
-	float const S = 1. / (float)(sectors - 1);
+	float const R = (float)1. / (float)(rings - 1);
+	float const S = (float)1. / (float)(sectors - 1);
 
 	vertices = new std::vector<Vertex>(rings * sectors);
 	indices = new std::vector<uint>(rings * sectors * 4);
@@ -83,9 +83,9 @@ void Re_Mesh::InitAsSphere(float3 position, float3 scale)
 
 	for (int r = 0; r < rings; r++) for (int s = 0; s < sectors; s++)
 	{
-		float const y = sin(-M_PI_2 + M_PI * r * R);
-		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-		float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
+		float const y = (float)sin(-M_PI_2 + M_PI * r * R);
+		float const x = (float)cos(2 * M_PI * s * S) * (float)sin(M_PI * r * R);
+		float const z = (float)sin(2 * M_PI * s * S) * (float)sin(M_PI * r * R);
 
 		vertices->at(counter).position.x = x * radius;
 		vertices->at(counter).position.y = y * radius;

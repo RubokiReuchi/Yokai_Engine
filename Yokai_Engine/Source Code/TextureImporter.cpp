@@ -9,6 +9,65 @@
 #pragma comment (lib, "DevIL/libx86/ILU.lib")
 #pragma comment (lib, "DevIL/libx86/ILUT.lib")
 
+void TextureImporter::ImportImage(const char* fileName, char* buffer, int size)
+{
+	ILuint ImgId = 0;
+	ilGenImages(1, &ImgId);
+	ilBindImage(ImgId);
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	{
+		LOG("Error loading image: %s", ilutGetString(ilGetError()));
+	}
+
+	ILuint imgSize;
+	ILubyte* data;
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	imgSize = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+
+	if (imgSize > 0)
+	{
+		data = new ILubyte[imgSize]; // allocate data buffer
+		if (ilSaveL(IL_DDS, data, imgSize) > 0) // Save to buffer with the ilSaveIL function
+			buffer = (char*)data;
+
+		RELEASE_ARRAY(data);
+	}
+
+	ilDeleteImages(1, &ImgId);
+}
+
+uint TextureImporter::Load(char* buffer, int size, int* width, int* heigth)
+{
+	ILuint ImgId = 0;
+	ilGenImages(1, &ImgId);
+	ilBindImage(ImgId);
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	{
+		LOG("Error loading image: %s", ilutGetString(ilGetError()));
+	}
+
+	Re_Texture engineTexture;
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	engineTexture.OpenGL_id = ilutGLBindTexImage();
+
+	//TODO: Generate mipmaps and use best settings
+	glBindTexture(GL_TEXTURE_2D, engineTexture.OpenGL_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	*width = ilGetInteger(IL_IMAGE_WIDTH);
+	*heigth = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	M_Texture::loaded_textures[engineTexture.OpenGL_id] = engineTexture; // Add loaded texture inside TextureManager.
+
+	return engineTexture.OpenGL_id;
+}
+
 uint TextureImporter::ImportTexture(std::string path)
 {
 	//Check if the given texture has been already loaded

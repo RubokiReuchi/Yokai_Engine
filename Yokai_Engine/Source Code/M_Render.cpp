@@ -15,7 +15,7 @@ M_Render::~M_Render()
 
 uint M_Render::SetMeshInformation(Re_Mesh& mesh)
 {
-    if (initialized) LOG("Tried to call RenderManager::SetMeshInformation more than once in a single Render Manager instnace.");
+    if (initialized) LOG("Tried to call M_Render::SetMeshInformation more than once in a single Render Manager instance");
     // Set this RenderManager Mesh information.
     this->total_vertices.insert(total_vertices.begin(), mesh.vertices->begin(), mesh.vertices->end());
     this->total_indices.insert(total_indices.begin(), mesh.indices->begin(), mesh.indices->end());

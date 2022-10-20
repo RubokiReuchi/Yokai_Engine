@@ -3,6 +3,7 @@
 #include "EO_Editor.h"
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
+#include "ImGuiHelpers.h"
 
 EW_Inspector::EW_Inspector()
 {
@@ -18,8 +19,11 @@ EW_Inspector::~EW_Inspector()
 
 void EW_Inspector::Update()
 {
+	selectGameobject = editor->GetSelectedGameObject();
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGuiH::InputText("Name", &selectGameobject->name);
+
 	if (editor->GetSelectedGameObject() != NULL)
 	{
 		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM) != NULL)
