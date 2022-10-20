@@ -408,6 +408,9 @@
     <ClInclude Include="Source Code\SceneCamera.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\EO_Game.h">
+      <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -661,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\SceneCamera.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EO_Game.cpp">
+      <Filter>Sources\Modules\EngineOrder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

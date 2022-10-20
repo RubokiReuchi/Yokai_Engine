@@ -111,6 +111,7 @@
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
+    <ClInclude Include="Source Code\EO_Game.h" />
     <ClInclude Include="Source Code\EW_About.h" />
     <ClInclude Include="Source Code\EW_Console.h" />
     <ClInclude Include="Source Code\EW_Game.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />
+    <ClCompile Include="Source Code\EO_Game.cpp" />
     <ClCompile Include="Source Code\EW_About.cpp" />
     <ClCompile Include="Source Code\EW_Console.cpp" />
     <ClCompile Include="Source Code\EW_Game.cpp" />

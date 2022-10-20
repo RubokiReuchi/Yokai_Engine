@@ -1,6 +1,7 @@
 #include "EW_Inspector.h"
 #include "Application.h"
 #include "EO_Editor.h"
+#include "C_Camera.h"
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
 #include "ImGuiHelpers.h"
@@ -26,6 +27,10 @@ void EW_Inspector::Update()
 
 	if (editor->GetSelectedGameObject() != NULL)
 	{
+		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::CAMERA) != NULL)
+		{
+			dynamic_cast<C_Camera*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::CAMERA))->OnEditor();
+		}
 		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM) != NULL)
 		{
 			dynamic_cast<C_Transform*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM))->OnEditor();

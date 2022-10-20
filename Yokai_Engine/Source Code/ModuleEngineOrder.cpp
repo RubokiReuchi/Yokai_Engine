@@ -1,5 +1,6 @@
 #include "ModuleEngineOrder.h"
 #include "EO_Editor.h"
+#include "EO_Game.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 #include "C_MeshRenderer.h"
@@ -22,7 +23,7 @@ bool ModuleEO::Start()
 {
     engine_order[(uint)EO_NUM::EDITOR] = editor = new EO_Editor();
     dynamic_cast<EO_Editor*>(engine_order[(uint)EO_NUM::EDITOR])->SetSelectedGameObject(game_objects[2]);
-    //layers[(uint)LayersID::GAME] = new LayerGame();
+    engine_order[(uint)EO_NUM::GAME] = new EO_Game();
 
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {

@@ -30,6 +30,6 @@ void EW_Scene::Update()
 		app->camera->sceneCamera.ChangeAspectRatio((float)scene_width / (float)scene_height);
 	}
 
-	ImGui::Image((ImTextureID)app->camera->sceneCamera.frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((ImTextureID)scene_camera->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 }

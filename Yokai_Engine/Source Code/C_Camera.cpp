@@ -12,6 +12,14 @@ C_Camera::~C_Camera()
 {
 }
 
+void C_Camera::OnEditor()
+{
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		
+	}
+}
+
 void C_Camera::OnPositionUpdate(float3 pos)
 {
 	app->camera->game_cameras[cameraID].cameraFrustum.pos = pos;

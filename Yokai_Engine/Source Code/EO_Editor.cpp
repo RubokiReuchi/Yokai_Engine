@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 
 #include "EW_Hierarchy.h"
+#include "EW_Game.h"
 #include "EW_Scene.h"
 #include "EW_About.h"
 #include "EW_Inspector.h"
@@ -60,6 +61,7 @@ void EO_Editor::Start()
 	// Create Editor Windows
 	editor_windows[(uint)EW_TYPE::HIERARCHY] = new EW_Hierarchy();
 	editor_windows[(uint)EW_TYPE::ABOUT] = new EW_About();
+	editor_windows[(uint)EW_TYPE::GAME] = new EW_Game();
 	editor_windows[(uint)EW_TYPE::SCENE] = new EW_Scene();
 	editor_windows[(uint)EW_TYPE::PERFORMANCE] = new EW_Performance();
 	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
@@ -191,6 +193,10 @@ bool EO_Editor::SetMenuBar()
 		else if (i == (uint)EW_TYPE::SCENE)
 		{
 			dynamic_cast<EW_Scene*>(editor_windows[(uint)EW_TYPE::SCENE])->SetSceneCamera(false);
+		}
+		else if (i == (uint)EW_TYPE::GAME)
+		{
+			dynamic_cast<EW_Game*>(editor_windows[(uint)EW_TYPE::GAME])->SetCurrentGameCamera(false);
 		}
 	}
 
