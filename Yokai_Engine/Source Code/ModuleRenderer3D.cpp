@@ -141,13 +141,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::Update(float dt)
 {
 
-	glLoadIdentity();
+	/*glLoadIdentity();
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf((GLfloat*)app->camera->sceneCamera.cameraFrustum.ProjectionMatrix().Transposed().v);
 
 	glMatrixMode(GL_MODELVIEW);
 	math::float4x4 mat = app->camera->sceneCamera.cameraFrustum.ViewMatrix();
-	glLoadMatrixf((GLfloat*)mat.Transposed().v);
+	glLoadMatrixf((GLfloat*)mat.Transposed().v);*/
 
 	return UPDATE_CONTINUE;
 }
@@ -157,6 +157,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	if (app->camera->sceneCamera.active)
 	{
+		glLoadIdentity();
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.cameraFrustum.ProjectionMatrix().Transposed().v);
+
+		glMatrixMode(GL_MODELVIEW);
+		math::float4x4 mat = app->camera->sceneCamera.cameraFrustum.ViewMatrix();
+		glLoadMatrixf((GLfloat*)mat.Transposed().v);
+
 		app->camera->sceneCamera.frameBuffer.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -168,6 +176,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 	if (app->camera->activeGameCamera->active)
 	{
+		glLoadIdentity();
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->cameraFrustum.ProjectionMatrix().Transposed().v);
+
+		glMatrixMode(GL_MODELVIEW);
+		math::float4x4 mat = app->camera->activeGameCamera->cameraFrustum.ViewMatrix();
+		glLoadMatrixf((GLfloat*)mat.Transposed().v);
+
 		app->camera->activeGameCamera->frameBuffer.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -176,6 +192,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		app->engine_order->DrawEO();
 		model_render.Draw();
+
+		app->camera->activeGameCamera->LookAt(app->engine_order->editor->GetSelectedGameObject()->transform->GetGlobalTransform().position);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

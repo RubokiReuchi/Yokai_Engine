@@ -52,7 +52,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 			float DeltaY = math::DegToRad((float)dy * Sensitivity * 0.75f);
 
 			math::Quat rotation = Quat::identity;
-			rotation.SetFromAxisAngle(float3(1, 0, 0), DeltaY);
+			rotation.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, DeltaY);
 
 			lookingDir = lookingDir * rotation;
 		}
