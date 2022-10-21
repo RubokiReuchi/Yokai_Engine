@@ -55,25 +55,25 @@ void M_Render::Draw()
     }
 
     // Update View and Projection matrices
-    basic_shader->Bind();
-    basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
-    basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+    //basic_shader->Bind();
+    //basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
+    //basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
 
 
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);
 
     // Update Model matrices
-    glBindBuffer(GL_ARRAY_BUFFER, MBO);
+    /*glBindBuffer(GL_ARRAY_BUFFER, MBO);
     void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr, &model_matrices.front(), model_matrices.size() * sizeof(float4x4));
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+    glUnmapBuffer(GL_ARRAY_BUFFER);*/
 
     // Update TextureIDs
-    glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    /*glBindBuffer(GL_ARRAY_BUFFER, TBO);
     void* ptr2 = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(float));
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+    glUnmapBuffer(GL_ARRAY_BUFFER);*/
 
     for (uint i = 0; i < M_Texture::bindedTextures; i++)
     {

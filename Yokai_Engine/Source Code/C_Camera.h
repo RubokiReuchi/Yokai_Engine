@@ -19,4 +19,6 @@ public:
 
 private:
 	uint cameraID = 0;
+	Quat original_lookingDir;
+	Quat lookingDir;
 };

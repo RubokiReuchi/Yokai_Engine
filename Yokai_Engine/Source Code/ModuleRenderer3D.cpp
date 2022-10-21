@@ -140,15 +140,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-
-	/*glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf((GLfloat*)app->camera->sceneCamera.cameraFrustum.ProjectionMatrix().Transposed().v);
-
-	glMatrixMode(GL_MODELVIEW);
-	math::float4x4 mat = app->camera->sceneCamera.cameraFrustum.ViewMatrix();
-	glLoadMatrixf((GLfloat*)mat.Transposed().v);*/
-
 	return UPDATE_CONTINUE;
 }
 
@@ -159,11 +150,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		glLoadIdentity();
 		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.cameraFrustum.ProjectionMatrix().Transposed().v);
+		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.GetProjectionMatrix());
 
 		glMatrixMode(GL_MODELVIEW);
-		math::float4x4 mat = app->camera->sceneCamera.cameraFrustum.ViewMatrix();
-		glLoadMatrixf((GLfloat*)mat.Transposed().v);
+		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.GetViewMatrix());
 
 		app->camera->sceneCamera.frameBuffer.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -178,11 +168,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		glLoadIdentity();
 		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->cameraFrustum.ProjectionMatrix().Transposed().v);
+		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->GetProjectionMatrix());
 
 		glMatrixMode(GL_MODELVIEW);
-		math::float4x4 mat = app->camera->activeGameCamera->cameraFrustum.ViewMatrix();
-		glLoadMatrixf((GLfloat*)mat.Transposed().v);
+		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->GetViewMatrix());
 
 		app->camera->activeGameCamera->frameBuffer.Bind();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -193,7 +182,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		app->engine_order->DrawEO();
 		model_render.Draw();
 
-		app->camera->activeGameCamera->LookAt(app->engine_order->editor->GetSelectedGameObject()->transform->GetGlobalTransform().position);
+		//app->camera->activeGameCamera->LookAt(app->engine_order->editor->GetSelectedGameObject()->transform->GetGlobalTransform().position);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
