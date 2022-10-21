@@ -108,7 +108,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 		}
 
 
-		if (mesh->mTextureCoords[0])
+		if (mesh->HasTextureCoords(0))
 		{
 			vertex.tex_coords.x = mesh->mTextureCoords[0][i].x;
 			vertex.tex_coords.y = mesh->mTextureCoords[0][i].y;

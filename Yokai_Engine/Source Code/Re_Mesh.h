@@ -10,9 +10,9 @@ struct Vertex
 {
 	Vertex() {}
 	Vertex(float3 pos, float3 norm, float2 texC) : position(pos), normals(norm), tex_coords(texC) {}
-	float3 position;
-	float3 normals;
-	float2 tex_coords;
+	float3 position; // 0, 1, 2
+	float3 normals; // 3, 4, 5
+	float2 tex_coords; // 6, 7
 	float texture_id;
 };
 
