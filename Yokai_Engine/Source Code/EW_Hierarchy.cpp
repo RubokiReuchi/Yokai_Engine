@@ -28,7 +28,7 @@ void EW_Hierarchy::Update()
     {
         popUpOpen = true;
         int selectedShape = 0;
-        std::string shapeNames[2] = { "Cube", "Sphere" };
+        std::string shapeNames[5] = { "Plane", "Cube", "Sphere", "Cylinder", "Cone" };
 
         ImGui::OpenPopup("basicShapes");
 
@@ -41,11 +41,11 @@ void EW_Hierarchy::Update()
         {
             ImGui::Text("Select Shape");
             ImGui::Separator();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
                 if (ImGui::Selectable(shapeNames[i].c_str()))
                 {
                     selectedShape = i;
-                    //app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
+                    app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
                     popUpOpen = false;
                     rightClickedGameObject = nullptr;
                 }

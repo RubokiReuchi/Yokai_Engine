@@ -19,8 +19,8 @@ void SceneCamera::UpdateCameraInput(float dt)
 	if (editor == nullptr) editor = app->engine_order->editor;
 	GameObject* selectedGO = editor->GetSelectedGameObject();
 
-	float dx = -app->input->GetMouseXMotion();
-	float dy = -app->input->GetMouseYMotion();
+	float dx = -(float)app->input->GetMouseXMotion();
+	float dy = -(float)app->input->GetMouseYMotion();
 	float Sensitivity = 0.25f;
 
 	float3 empty = { 0,0,0 };

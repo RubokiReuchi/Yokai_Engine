@@ -8,9 +8,11 @@
 
 std::map<std::string, MeshInfo> MeshImporter::loadedMeshes;
 Assimp::Importer MeshImporter::importer;
+GameObject* MeshImporter::returnGameObject = nullptr;
 
-void MeshImporter::LoadMesh(std::string path)
+GameObject* MeshImporter::LoadMesh(std::string path)
 {
+	returnGameObject = nullptr;
 	// Load AiScene
 	const aiScene* scene = GetAiScene(path);
 
@@ -30,7 +32,7 @@ void MeshImporter::LoadMesh(std::string path)
 
 	// Create a new RenderManager or add Mesh information as an instance
 	// Create a MeshRenderComponent inside a GameObject for every Mesh, following the assimp hierachy structure.
-
+	return returnGameObject;
 }
 
 const aiScene* MeshImporter::GetAiScene(std::string path)
@@ -46,12 +48,19 @@ const aiScene* MeshImporter::GetAiScene(std::string path)
 
 void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent)
 {
+	if (node->mNumMeshes == 0 && node->mNumChildren == 1)
+	{
+		ProcessNewNode(node->mChildren[0], scene, path, parent);
+		return;
+	}
+
 	// Create empty Gameobject 
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
-	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
-	else newParent = parent;
+	bool necessaryNode = node->mNumChildren > 1;
+
+	if (parent == nullptr) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	else newParent = new GameObject(parent, node->mName.C_Str());
 
 	// Set new GameObject position with node Transform.
 	aiVector3D translation, scaling;
@@ -68,13 +77,15 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 
-	loadedMeshes[path].numOfMeshes += node->mNumMeshes; // Increase the number of meshes for every mesh inside this node.
+	uint meshNum = node->mNumMeshes;
 
-	for (uint i = 0; i < node->mNumMeshes; i++)
+	loadedMeshes[path].numOfMeshes += meshNum; // Increase the number of meshes for every mesh inside this node.
+
+	for (uint i = 0; i < meshNum; i++)
 	{
 		// Process mesh and create a GameObject with a MeshRenderComponent that is child to the epmty game object
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		ProcessNewMesh(mesh, scene, newParent, node->mName);
+		ProcessNewMesh(mesh, scene, newParent, node->mName, (meshNum > 1 || necessaryNode));
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)
@@ -87,7 +98,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
 
-void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name)
+void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go)
 {
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
@@ -129,14 +140,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 	{
 		for (uint i = 0; i < mesh->mNumFaces; ++i)
 		{
-			if (mesh->mFaces[i].mNumIndices != 3)
-			{
-				LOG("WARNING, geometry face with != 3 indices!");
-			}
-			else
-			{
-				memcpy(&indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
-			}
+			memcpy(&indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(uint));
 		}
 	}
 
@@ -148,18 +152,25 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 	}
 
 	// Load into a Mesh object
-	GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
-	dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+	if (create_go) GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
+	else dynamic_cast<C_MeshRenderer*>(parent->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 }
 
 void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)
 {
+	if (node->mNumMeshes == 0 && node->mNumChildren == 1)
+	{
+		ProcessLoadedNode(node->mChildren[0], scene, firstMeshID, parent);
+		return;
+	}
+
 	// Create an empty GameObject that represents the Node
 	GameObject* newParent = nullptr;
 
-	if (parent == nullptr) newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
-	else if (node->mNumMeshes > 1) newParent = new GameObject(parent, node->mName.C_Str());
-	else newParent = parent;
+	bool necessaryNode = node->mNumChildren > 1;
+
+	if (parent == nullptr) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	else newParent = new GameObject(parent, node->mName.C_Str());
 
 	// Set new GameObject position with node Transform.
 	aiVector3D translation, scaling;
@@ -178,14 +189,25 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 
 	M_ModelRender* renderManager = &app->renderer3D->model_render;
 
-	for (uint i = 0; i < node->mNumMeshes; i++)
+	uint meshNum = node->mNumMeshes;
+
+	if ((meshNum > 1 || necessaryNode))
 	{
-		// Create a GameObject with a MeshRenderComponent that represents the Mesh
-		GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
-		dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
+		for (unsigned int i = 0; i < meshNum; i++)
+		{
+			// Create a GameObject with a MeshRenderComponent that represents the Mesh
+			GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+			dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
+		}
+	}
+	else if (meshNum != 0)
+	{
+
+		dynamic_cast<C_MeshRenderer*>(newParent->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
 	}
 
-	for (uint i = 0; i < node->mNumChildren; i++)
+
+	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		// Creates an empty Gameobject that is children to the empty gameObject created here.
 		ProcessLoadedNode(node->mChildren[i], scene, firstMeshID, newParent);

@@ -5,7 +5,7 @@
 
 M_Render::M_Render()
 {
-    basic_shader = new Re_Shader("Source Code/shaders/basic.vertex.shader", "Source Code/shaders/basic.fragment.shader");
+    basic_shader = new Re_Shader("../Source Code/shaders/basic.vertex.shader", "../Source Code/shaders/basic.fragment.shader");
 }
 
 M_Render::~M_Render()
