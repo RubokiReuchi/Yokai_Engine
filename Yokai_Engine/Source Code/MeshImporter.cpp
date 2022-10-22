@@ -17,7 +17,7 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	const aiScene* scene = GetAiScene(path);
 
 	// Check if this file path has already been loaded.
-	if (false/*loadedMeshes.find(path) != loadedMeshes.end()*/)
+	if (loadedMeshes.find(path) != loadedMeshes.end())
 	{
 		uint first_id = loadedMeshes[path].initialID;
 		ProcessLoadedNode(scene->mRootNode, scene, first_id);
