@@ -20,7 +20,11 @@ void C_MeshRenderer::OnEditor()
 	{
 		if (ImGui::Checkbox("Visible", &visible))
 		{
-			GetMesh().visible = this->visible;
+			C_MeshRenderer* p_mr = dynamic_cast<C_MeshRenderer*>(GetGameObject()->GetParent()->GetComponent(Component::TYPE::MESH_RENDERER));
+			if (p_mr->visible)
+			{
+				GetMesh().visible = this->visible;
+			}
 			for (auto& childs : GetGameObject()->GetChilds())
 			{
 				C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
