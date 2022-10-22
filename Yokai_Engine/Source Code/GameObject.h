@@ -69,6 +69,7 @@ public:
 		return parent;
 	}
 
+	bool enabled = true;
 	std::string name;
 	std::string tag;
 	C_Transform* transform = nullptr;

@@ -23,7 +23,8 @@ void EW_Inspector::Update()
 	selectGameobject = editor->GetSelectedGameObject();
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImGuiH::InputText("Name", &selectGameobject->name);
+	ImGui::Checkbox("##Enable", &selectGameobject->enabled); ImGui::SameLine();
+	ImGuiH::InputText("##Name", &selectGameobject->name);
 
 	if (editor->GetSelectedGameObject() != NULL)
 	{
