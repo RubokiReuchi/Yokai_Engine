@@ -18,6 +18,8 @@ public:
 	void ProcessGameObject(GameObject* gameObject, int iteration);
 
 private:
+	static const int numPrimitives = 5;
+
 	std::map<uint, GameObject*>* gameObjectsReference = nullptr;
 	EO_Editor* editor = nullptr;
 
@@ -27,4 +29,7 @@ private:
 	ImGuiTreeNodeFlags base_flags;
 
 	bool popUpOpen = false;
+
+	void CheckMouseInPopUp();
+	ImVec2 ori;
 };

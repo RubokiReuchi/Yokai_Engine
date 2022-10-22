@@ -194,6 +194,7 @@
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
+    <ClInclude Include="Source Code\IconsFontAwesome.h" />
     <ClInclude Include="Source Code\ImGuiHelpers.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\MeshImporter.h" />

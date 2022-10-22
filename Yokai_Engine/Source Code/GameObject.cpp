@@ -1,11 +1,11 @@
 #include "GameObject.h"
 #include "Application.h"
 
-GameObject::GameObject(GameObject* parent, std::string name, std::string tag) : name(name), tag(tag)
+GameObject::GameObject(GameObject* parent, std::string name, std::string tag, bool is_camera) : name(name), tag(tag)
 {
 	id = app->engine_order->AddGameObject(this);
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
-	dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER));
+	if (!is_camera) dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER)); // add mesh render if is not a camera
 	if (parent != nullptr) parent->AddChild(this);
 }
 

@@ -17,6 +17,8 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "IconsFontAwesome.h"
+
 #include "ModuleFile.h"
 
 EO_Editor::EO_Editor()
@@ -51,7 +53,10 @@ void EO_Editor::Start()
 	
 
 	// Setup font
-
+	io.Fonts->AddFontDefault();
+	static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
+	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+	io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 16.0f, &icons_config, icons_ranges);
 
 	// Init OpenGL
 	const char* glsl_version = "#version 130";

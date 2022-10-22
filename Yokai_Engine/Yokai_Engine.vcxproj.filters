@@ -411,6 +411,9 @@
     <ClInclude Include="Source Code\EO_Game.h">
       <Filter>Sources\Modules\EngineOrder</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\IconsFontAwesome.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">

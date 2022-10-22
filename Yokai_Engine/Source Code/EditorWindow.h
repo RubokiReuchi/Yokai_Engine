@@ -7,6 +7,8 @@
 #include "ImGui/imgui_impl_sdl.h"
 #include "ImGui/imgui_impl_opengl3.h"
 
+#include "IconsFontAwesome.h"
+
 #include <string>
 
 class EditorWindow
