@@ -34,6 +34,7 @@ uint M_Render::SetMeshInformation(Re_Mesh& mesh)
 void M_Render::Draw()
 {
     float3 npos, nrot, nscl;
+    size_t num_meshes = meshes.size();
     if (!initialized) return; // This is placed here for security reasons. No RenderManager should be created without being initialized.
     if (meshes.empty())
     {
@@ -44,14 +45,21 @@ void M_Render::Draw()
     {
         if (!mesh.second.visible) // mesh renderer with visibility set to false
         {
-            return;
+            num_meshes--;
         }
-        mesh.second.Update();
-        model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
-        texture_ids.push_back(mesh.second.OpenGL_texture_id);
-        npos = mesh.second.position;
-        nrot = mesh.second.rotation;
-        nscl = mesh.second.scale;
+        else
+        {
+            mesh.second.Update();
+            model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
+            texture_ids.push_back(mesh.second.OpenGL_texture_id);
+            npos = mesh.second.position;
+            nrot = mesh.second.rotation;
+            nscl = mesh.second.scale;
+        }
+    }
+    if (num_meshes == 0)
+    {
+        return;
     }
 
     // Update View and Projection matrices
