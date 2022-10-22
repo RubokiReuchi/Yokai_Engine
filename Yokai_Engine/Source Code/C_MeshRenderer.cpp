@@ -6,6 +6,8 @@
 
 C_MeshRenderer::C_MeshRenderer(GameObject* gameObject) : Component(gameObject, TYPE::MESH_RENDERER)
 {
+	mesh_id = 0;
+	instance_id = 0;
 }
 
 C_MeshRenderer::~C_MeshRenderer()
@@ -18,7 +20,7 @@ void C_MeshRenderer::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		if (ImGui::Checkbox("Visible", &visible))
+		/*if (ImGui::Checkbox("Visible", &visible))
 		{
 			C_MeshRenderer* p_mr = dynamic_cast<C_MeshRenderer*>(GetGameObject()->GetParent()->GetComponent(Component::TYPE::MESH_RENDERER));
 			if (p_mr->visible)
@@ -33,7 +35,7 @@ void C_MeshRenderer::OnEditor()
 					mr->GetMesh().visible = this->visible;
 				}
 			}
-		}
+		}*/
 	}
 }
 

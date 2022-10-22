@@ -153,7 +153,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 
 	// Load into a Mesh object
 	if (create_go) GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
-	else dynamic_cast<C_MeshRenderer*>(parent->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+	else dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 }
 
 void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)
@@ -197,13 +197,12 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 		{
 			// Create a GameObject with a MeshRenderComponent that represents the Mesh
 			GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
-			dynamic_cast<C_MeshRenderer*>(newGameObject->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
+			dynamic_cast<C_MeshRenderer*>(newGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
 		}
 	}
 	else if (meshNum != 0)
 	{
-
-		dynamic_cast<C_MeshRenderer*>(newParent->GetComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
+		dynamic_cast<C_MeshRenderer*>(newParent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsLoadedMesh(firstMeshID++);
 	}
 
 
