@@ -23,8 +23,28 @@ void EW_Inspector::Update()
 	selectGameobject = editor->GetSelectedGameObject();
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
-	ImGui::Checkbox("##Enable", &selectGameobject->enabled); ImGui::SameLine();
-	ImGuiH::InputText("##Name", &selectGameobject->name);
+	ImGui::Checkbox("##Enable", &selectGameobject->enabled);
+	ImGui::SameLine();  ImGuiH::InputText("##Name", &selectGameobject->name);
+	if (!selectGameobject->is_camera)
+	{
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Visible", &selectGameobject->visible))
+		{
+			C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(selectGameobject->GetComponent(Component::TYPE::MESH_RENDERER));
+			if (mr != NULL && selectGameobject->GetParent()->visible)
+			{
+				mr->GetMesh().visible = selectGameobject->visible;
+			}
+			for (auto& childs : selectGameobject->GetChilds())
+			{
+				C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
+				if (childs->visible)
+				{
+					c_mr->GetMesh().visible = selectGameobject->visible;
+				}
+			}
+		}
+	}
 
 	if (editor->GetSelectedGameObject() != NULL)
 	{

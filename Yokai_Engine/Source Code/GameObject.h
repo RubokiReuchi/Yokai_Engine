@@ -70,9 +70,12 @@ public:
 	}
 
 	bool enabled = true;
+	bool visible = true;
 	std::string name;
 	std::string tag;
 	C_Transform* transform = nullptr;
+
+	bool is_camera;
 
 private:
 	void RemoveChild(GameObject* child);

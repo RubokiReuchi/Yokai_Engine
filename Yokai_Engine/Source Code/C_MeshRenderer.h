@@ -23,8 +23,6 @@ public:
 
 	Re_Mesh& GetMesh();
 
-	bool visible = true;
-
 private:
 	uint mesh_id;
 	uint instance_id;
