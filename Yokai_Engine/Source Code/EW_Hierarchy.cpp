@@ -24,7 +24,7 @@ void EW_Hierarchy::Update()
     // Hierarchy
     ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
     
-    if (ImGui::Button(ICON_FA_FILE, ImVec2(25, 25)))
+    if (ImGui::Button(ICON_FA_FILE "  Create new Game Object", ImVec2(ImGui::GetWindowWidth(), 25)))
     {
         popUpOpen = !popUpOpen;
         if (popUpOpen)
@@ -37,7 +37,7 @@ void EW_Hierarchy::Update()
             ImGui::CloseCurrentPopup();
         }
     }
-    ImGui::SameLine(); DrawGameObjectChildren(gameObjectsReference->at(1));
+    DrawGameObjectChildren(gameObjectsReference->at(1), true);
 
     if (popUpOpen)
     {
