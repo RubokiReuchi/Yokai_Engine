@@ -36,7 +36,6 @@ void EW_Scene::Update()
 
 	if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
-		LOG("%0.2f", ImGui::GetMousePos().y);
 		if (ImGui::GetMousePos().x - 2 < ImGui::GetWindowPos().x)
 		{
 			app->input->SetMousePos(ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - 5, ImGui::GetMousePos().y);
