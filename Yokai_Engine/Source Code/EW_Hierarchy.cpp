@@ -94,14 +94,14 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             if (ImGui::Button(ICON_FA_EYE))
             {
-                UpdateVisibeOnEditor(gameObject, false);
+                UpdateVisibleOnEditor(gameObject, false);
             }
         }
         else
         {
             if (ImGui::Button(ICON_FA_EYE_SLASH))
             {
-                UpdateVisibeOnEditor(gameObject, true);
+                UpdateVisibleOnEditor(gameObject, true);
             }
         }
         //ImGui::PopFont();
@@ -117,14 +117,14 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             if (ImGui::Button(ICON_FA_EYE))
             {
-                UpdateVisibeOnEditor(gameObject, false);
+                UpdateVisibleOnEditor(gameObject, false);
             }
         }
         else
         {
             if (ImGui::Button(ICON_FA_EYE_SLASH))
             {
-                UpdateVisibeOnEditor(gameObject, true);
+                UpdateVisibleOnEditor(gameObject, true);
             }
         }
         //ImGui::PopFont();
@@ -174,7 +174,7 @@ void EW_Hierarchy::CheckMouseInPopUp()
     }
 }
 
-void EW_Hierarchy::UpdateVisibeOnEditor(GameObject* gameObject, bool visible_on_editor)
+void EW_Hierarchy::UpdateVisibleOnEditor(GameObject* gameObject, bool visible_on_editor)
 {
     gameObject->visible_on_editor = visible_on_editor;
     C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::TYPE::MESH_RENDERER));

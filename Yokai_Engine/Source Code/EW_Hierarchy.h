@@ -33,5 +33,5 @@ private:
 	void CheckMouseInPopUp();
 	ImVec2 ori;
 
-	void UpdateVisibeOnEditor(GameObject* gameObject, bool visible_on_editor);
+	void UpdateVisibleOnEditor(GameObject* gameObject, bool visible_on_editor);
 };
