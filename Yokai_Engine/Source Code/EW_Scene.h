@@ -21,4 +21,5 @@ private:
 
 	SceneCamera* scene_camera = nullptr;
 	int scene_width, scene_height;
+
 };

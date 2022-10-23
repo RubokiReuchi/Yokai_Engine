@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
+#include <math.h>
+
 EW_Scene::EW_Scene()
 {
 	window_name = "Scene";
@@ -34,21 +36,29 @@ void EW_Scene::Update()
 
 	ImGui::Image((ImTextureID)scene_camera->frameBuffer.GetTexture(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
-	if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN) scene_camera->confine_move = true;
+	else if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP) scene_camera->confine_move = false;
+	if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_DOWN) scene_camera->confine_pan = true;
+	else if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_UP) scene_camera->confine_pan = false;
+
+	if ((scene_camera->confine_move && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		|| scene_camera->confine_pan && app->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 	{
-		if (ImGui::GetMousePos().x - 2 < ImGui::GetWindowPos().x)
+		uint dx = math::Abs(app->input->GetMouseXMotion());
+		uint dy = math::Abs(app->input->GetMouseYMotion());
+		if (ImGui::GetMousePos().x - 2 - dx < ImGui::GetWindowPos().x)
 		{
 			app->input->SetMousePos(ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - 5, ImGui::GetMousePos().y);
 		}
-		else if (ImGui::GetMousePos().x + 4 > ImGui::GetWindowPos().x + ImGui::GetWindowWidth())
+		else if (ImGui::GetMousePos().x + 4 + dx > ImGui::GetWindowPos().x + ImGui::GetWindowWidth())
 		{
 			app->input->SetMousePos(ImGui::GetWindowPos().x + 3, ImGui::GetMousePos().y);
 		}
-		else if (ImGui::GetMousePos().y - 22 < ImGui::GetWindowPos().y)
+		else if (ImGui::GetMousePos().y - 22 - dy < ImGui::GetWindowPos().y)
 		{
 			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + ImGui::GetWindowHeight() - 12);
 		}
-		else if (ImGui::GetMousePos().y + 11 > ImGui::GetWindowPos().y + ImGui::GetWindowHeight())
+		else if (ImGui::GetMousePos().y + 11 + dy > ImGui::GetWindowPos().y + ImGui::GetWindowHeight())
 		{
 			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + 23);
 		}

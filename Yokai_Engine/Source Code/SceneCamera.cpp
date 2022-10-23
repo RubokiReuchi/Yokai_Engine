@@ -33,7 +33,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 		speed = 50.0f * dt;
 
 	// Mouse motion ----------------
-	if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if (confine_move && app->input->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos += cameraFrustum.up * speed;
 		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos -= cameraFrustum.up * speed;
@@ -73,7 +73,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 	}
 
 	// pan
-	if (app->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
+	if (confine_pan && app->input->GetMouseButton(SDL_BUTTON_MIDDLE) == KEY_REPEAT)
 	{
 		if (dx != 0 || dy != 0)
 		{
@@ -83,7 +83,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 	}
 
 	// rotate arround the selected game object
-	if (app->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
+	if (confine_move && app->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		float3 rotationCenter = { 0.0f, 0.0f, 0.0f };
 
