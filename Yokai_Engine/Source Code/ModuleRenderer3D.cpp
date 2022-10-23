@@ -32,6 +32,16 @@ bool ModuleRenderer3D::Init()
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 
+	// Set Up OpenGL Attributes
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
 	//Create context
 	context = SDL_GL_CreateContext(app->window->window);
 	if(context == NULL)
@@ -47,47 +57,13 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Use Vsync
-		if(VSYNC && SDL_GL_SetSwapInterval(static_cast<int>(vsync)) < 0)
-			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+		ToggleVSync(vsync);
 
-		//Initialize Projection Matrix
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		//Check for error
-		GLenum error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-
-		//Initialize Modelview Matrix
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
-		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
+
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		//Check for error
-		error = glGetError();
-		if(error != GL_NO_ERROR)
-		{
-			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
-			ret = false;
-		}
 		
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
@@ -108,7 +84,7 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_LIGHTING);
 		lights[0].Active(true);
-		//glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_COLOR_MATERIAL);
 		glEnable(GL_TEXTURE_2D);
 
 		// Enable opacity
@@ -148,15 +124,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 	if (app->camera->sceneCamera.active)
 	{
-		glLoadIdentity();
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.GetProjectionMatrix());
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf((GLfloat*)app->camera->sceneCamera.GetViewMatrix());
-
 		app->camera->sceneCamera.frameBuffer.Bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 		app->camera->currentDrawingCamera = &app->camera->sceneCamera;
@@ -166,28 +135,17 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 	if (app->camera->activeGameCamera->active)
 	{
-		glLoadIdentity();
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->GetProjectionMatrix());
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf((GLfloat*)app->camera->activeGameCamera->GetViewMatrix());
-
 		app->camera->activeGameCamera->frameBuffer.Bind();
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 		app->camera->currentDrawingCamera = app->camera->activeGameCamera;
 
 		app->engine_order->DrawEO();
 		model_render.Draw();
-
-		//app->camera->activeGameCamera->LookAt(app->engine_order->editor->GetSelectedGameObject()->transform->GetGlobalTransform().position);
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	app->engine_order->DrawEO_Editor();
 

@@ -34,7 +34,6 @@ public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix;
 
 	M_ModelRender model_render;

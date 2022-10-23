@@ -63,43 +63,33 @@ void M_Render::Draw()
     }
 
     // Update View and Projection matrices
-    //basic_shader->Bind();
-    //basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
-    //basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+    basic_shader->Bind();
+    basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
+    basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
 
 
     // Draw using Dynamic Geometry
     glBindVertexArray(VAO);
 
     // Update Model matrices
-    /*glBindBuffer(GL_ARRAY_BUFFER, MBO);
+    glBindBuffer(GL_ARRAY_BUFFER, MBO);
     void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr, &model_matrices.front(), model_matrices.size() * sizeof(float4x4));
-    glUnmapBuffer(GL_ARRAY_BUFFER);*/
+    glUnmapBuffer(GL_ARRAY_BUFFER);
 
     // Update TextureIDs
-    /*glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
     void* ptr2 = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(float));
-    glUnmapBuffer(GL_ARRAY_BUFFER);*/
+    glUnmapBuffer(GL_ARRAY_BUFFER);
 
     for (uint i = 0; i < M_Texture::bindedTextures; i++)
     {
         basic_shader->SetInt(("textures[" + std::to_string(i) + "]").c_str(), i);
     }
 
-    glPushMatrix();
-    glTranslatef(npos.x, npos.y, npos.z);
-    glRotatef(nrot.x, 1.0f, 0.0f, 0.0f);
-    glRotatef(nrot.y, 0.0f, 1.0f, 0.0f);
-    glRotatef(nrot.z, 0.0f, 0.0f, 1.0f);
-    glScalef(nscl.x, nscl.y, nscl.z);
-
     // Draw
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
-
-    glPopMatrix();
-
     glBindVertexArray(0);
 
     // Reset model matrices.
@@ -170,10 +160,10 @@ void M_Render::CreateBuffers()
     glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 3));
 
     // Set instancing interval
-    //glVertexAttribDivisor(1, 1);
-    //glVertexAttribDivisor(2, 1);
-    //glVertexAttribDivisor(3, 1);
-    //glVertexAttribDivisor(4, 1);
+    glVertexAttribDivisor(1, 1);
+    glVertexAttribDivisor(2, 1);
+    glVertexAttribDivisor(3, 1);
+    glVertexAttribDivisor(4, 1);
 
     glBindVertexArray(0);
 
@@ -188,7 +178,7 @@ void M_Render::CreateBuffers()
     glEnableVertexAttribArray(7);
     glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
 
-    //glVertexAttribDivisor(7, 1);
+    glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
 }

@@ -105,7 +105,6 @@ void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<ui
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id); // Create a M_Render
 
 	instance_id = manager->SetMeshInformation(newMesh);
-
 }
 
 void C_MeshRenderer::OnPositionUpdate(float3 position)

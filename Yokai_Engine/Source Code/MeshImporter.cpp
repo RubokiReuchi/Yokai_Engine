@@ -17,7 +17,7 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	const aiScene* scene = GetAiScene(path);
 
 	// Check if this file path has already been loaded.
-	if (false/*loadedMeshes.find(path) != loadedMeshes.end()*/)
+	if (loadedMeshes.find(path) != loadedMeshes.end())
 	{
 		uint first_id = loadedMeshes[path].initialID;
 		ProcessLoadedNode(scene->mRootNode, scene, first_id);
@@ -193,7 +193,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 
 	if ((meshNum > 1 || necessaryNode))
 	{
-		for (unsigned int i = 0; i < meshNum; i++)
+		for (uint i = 0; i < meshNum; i++)
 		{
 			// Create a GameObject with a MeshRenderComponent that represents the Mesh
 			GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
@@ -206,9 +206,12 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	}
 
 
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	for (uint i = 0; i < node->mNumChildren; i++)
 	{
 		// Creates an empty Gameobject that is children to the empty gameObject created here.
 		ProcessLoadedNode(node->mChildren[i], scene, firstMeshID, newParent);
 	}
+
+	// set transform after al child have been added
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }

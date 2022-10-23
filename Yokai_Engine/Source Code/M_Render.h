@@ -6,11 +6,6 @@
 
 #include <map>
 
-/// <summary>
-/// This class manages the rendering process of a single MeshObject.
-/// A MeshObject is a colection of Meshes that follow the same vertices/indices pattern.
-/// TLDR: This class instance renders a MeshObject.
-/// </summary>
 class M_Render
 {
 public:
