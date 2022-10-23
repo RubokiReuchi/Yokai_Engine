@@ -30,19 +30,7 @@ void EW_Inspector::Update()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("Visible", &selectGameobject->visible))
 		{
-			C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(selectGameobject->GetComponent(Component::TYPE::MESH_RENDERER));
-			if (mr != NULL && selectGameobject->GetParent()->visible)
-			{
-				mr->GetMesh().visible = selectGameobject->visible;
-			}
-			for (auto& childs : selectGameobject->GetChilds())
-			{
-				C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
-				if (c_mr != NULL && childs->visible)
-				{
-					c_mr->GetMesh().visible = selectGameobject->visible;
-				}
-			}
+			SetVisible(selectGameobject, selectGameobject, selectGameobject->visible, true);
 		}
 	}
 
@@ -62,4 +50,17 @@ void EW_Inspector::Update()
 		}
 	}
 	ImGui::End();
+}
+
+void EW_Inspector::SetVisible(GameObject* selected_game_object, GameObject* game_object, bool visible, bool it_one)
+{
+	C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(game_object->GetComponent(Component::TYPE::MESH_RENDERER));
+	if (mr != NULL && selected_game_object->GetParent()->visible)
+	{
+		if (game_object->visible || it_one) mr->GetMesh().visible = visible;
+	}
+	for (auto& childs : game_object->GetChilds())
+	{
+		SetVisible(selected_game_object, childs, visible, false);
+	}
 }

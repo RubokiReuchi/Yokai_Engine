@@ -19,4 +19,6 @@ private:
 	EO_Editor* editor = nullptr;
 	GameObject* selectGameobject = nullptr;
 	friend class EO_Editor;
+
+	void SetVisible(GameObject* selected_game_object, GameObject* game_object,  bool visible, bool it_one);
 };
