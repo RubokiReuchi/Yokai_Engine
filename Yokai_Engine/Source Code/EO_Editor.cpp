@@ -140,8 +140,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::BeginMenu("View"))
 		{
-			if (ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe)) {}
-			// wireframe
+			ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe);
 
 			if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
 				(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
