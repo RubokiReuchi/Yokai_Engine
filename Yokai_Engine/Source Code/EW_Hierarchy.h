@@ -32,8 +32,6 @@ private:
 	ImGuiTreeNodeFlags base_flags;
 
 	bool popUpOpen = false;
-
-	void CheckMouseInPopUp();
 	ImVec2 ori;
 
 	void UpdateVisibleOnEditor(GameObject* gameObject, bool visible_on_editor);

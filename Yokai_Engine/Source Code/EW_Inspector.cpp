@@ -4,7 +4,6 @@
 #include "C_Camera.h"
 #include "C_Transform.h"
 #include "C_MeshRenderer.h"
-#include "ImGuiHelpers.h"
 
 EW_Inspector::EW_Inspector()
 {
@@ -47,6 +46,36 @@ void EW_Inspector::Update()
 		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER) != NULL)
 		{
 			dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
+		}
+
+		ImGui::Separator();
+		if (ImGuiH::ButtonAlignOnLine("Add Component"))
+		{
+			popUpOpen = !popUpOpen;
+			if (popUpOpen)
+			{
+				ImGui::OpenPopup("New Component");
+				ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+			}
+			else
+			{
+				ImGui::CloseCurrentPopup();
+			}
+		}
+
+		if (popUpOpen)
+		{
+			ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+			if (ImGui::BeginPopup("New Component"))
+			{
+				
+				ImGui::EndPopup();
+			}
+			if (!ImGuiH::CheckMouseInPopUp(ori))
+			{
+				popUpOpen = false;
+				ImGui::CloseCurrentPopup();
+			}
 		}
 	}
 	ImGui::End();

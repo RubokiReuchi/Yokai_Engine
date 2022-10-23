@@ -21,4 +21,7 @@ private:
 	friend class EO_Editor;
 
 	void SetVisible(GameObject* selected_game_object, GameObject* game_object,  bool visible, bool it_one);
+
+	bool popUpOpen = false;
+	ImVec2 ori;
 };

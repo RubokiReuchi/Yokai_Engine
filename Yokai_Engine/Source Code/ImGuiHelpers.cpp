@@ -139,3 +139,24 @@ bool ImGuiH::InputTextWithHint(const char* label, const char* hint, std::string*
 	cb_user_data.ChainCallbackUserData = user_data;
 	return ImGui::InputTextWithHint(label, hint, (char*)str->c_str(), str->capacity() + 1, flags, InputTextCallback, &cb_user_data);
 }
+
+bool ImGuiH::CheckMouseInPopUp(ImVec2 ori)
+{
+	ImVec2 act = ImVec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+
+	if (act.x > ori.x + 200 || act.x < ori.x || act.y < ori.y || act.y > ori.y + 250) return false;
+	else return true;
+}
+
+bool ImGuiH::ButtonAlignOnLine(const char* label, float alignment)
+{
+	ImGuiStyle& style = ImGui::GetStyle();
+
+	float size = ImGui::CalcTextSize(label).x + style.FramePadding.x * 2.0f;
+	float avail = ImGui::GetContentRegionAvail().x;
+
+	float off = (avail - size) * alignment;
+	if (off > 0.0f) ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
+
+	return ImGui::Button(label);
+}

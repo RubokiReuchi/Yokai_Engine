@@ -2,7 +2,6 @@
 #include "ModuleEngineOrder.h"
 #include "EO_Editor.h"
 #include "GameObject.h"
-#include "IconsFontAwesome.h"
 
 EW_Hierarchy::EW_Hierarchy()
 {
@@ -81,8 +80,12 @@ void EW_Hierarchy::Update()
             }
             ImGui::EndPopup();
         }
+        if (!ImGuiH::CheckMouseInPopUp(ori))
+        {
+            popUpOpen = false;
+            ImGui::CloseCurrentPopup();
+        }
     }
-    CheckMouseInPopUp();
 
     ImGui::End();
 }
@@ -180,17 +183,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
     {
         if (!gameObject->children.empty()) DrawGameObjectChildren(gameObject, true);
         ImGui::TreePop();
-    }
-}
-
-void EW_Hierarchy::CheckMouseInPopUp()
-{
-    ImVec2 act = ImVec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-    
-    if (act.x > ori.x + 200 || act.x < ori.x || act.y < ori.y || act.y > ori.y + 250)
-    {
-        popUpOpen = false;
-        ImGui::CloseCurrentPopup();
     }
 }
 
