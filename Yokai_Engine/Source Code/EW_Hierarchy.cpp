@@ -29,7 +29,7 @@ void EW_Hierarchy::Update()
         popUpOpen = !popUpOpen;
         if (popUpOpen)
         {
-            ImGui::OpenPopup("Primitives");
+            ImGui::OpenPopup("New GameObject");
             ori = ImGui::GetMousePosOnOpeningCurrentPopup();
         }
         else
@@ -41,24 +41,48 @@ void EW_Hierarchy::Update()
 
     if (popUpOpen)
     {
-        int selectedShape = 0;
-        std::string shapeNames[numPrimitives] = { "Plane", "Cube", "Sphere", "Cylinder", "Cone" };
+        int selectedSubmenu = 0;
+        std::string submenuNames[numSubmenus] = { "Primitives", "Lights" };
 
-        if (ImGui::BeginPopup("Primitives"))
+        ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+        if (ImGui::BeginPopup("New GameObject"))
         {
-            ImGui::Text("Select Shape");
-            ImGui::Separator();
-            for (int i = 0; i < numPrimitives; i++)
-                if (ImGui::Selectable(shapeNames[i].c_str(), false, 0, ImVec2(100, 15)))
+            if (ImGui::CollapsingHeader("Primitives"))
+            {
+                int selectedShape = 0;
+                std::string shapeNames[numPrimitives] = { "Plane", "Cube", "Sphere", "Cylinder", "Cone" };
+
+                ImGui::Separator();
+                for (int i = 0; i < numPrimitives; i++)
                 {
-                    selectedShape = i;
-                    app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
-                    rightClickedGameObject = nullptr;
+                    if (ImGui::Selectable(shapeNames[i].c_str(), false, 0, ImVec2(200, 15)))
+                    {
+                        selectedShape = i;
+                        app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
+                        popUpOpen = false;
+                    }
                 }
+            }
+            if (ImGui::CollapsingHeader("Lights"))
+            {
+                int selectedShape = 0;
+                std::string shapeNames[numPrimitives] = { "Plane", "Cube", "Sphere", "Cylinder", "Cone" };
+
+                ImGui::Separator();
+                for (int i = 0; i < numPrimitives; i++)
+                {
+                    if (ImGui::Selectable(shapeNames[i].c_str(), false, 0, ImVec2(200, 15)))
+                    {
+                        selectedShape = i;
+                        //app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
+                        popUpOpen = false;
+                    }
+                }
+            }
             ImGui::EndPopup();
         }
-        CheckMouseInPopUp();
     }
+    CheckMouseInPopUp();
 
     ImGui::End();
 }
@@ -88,7 +112,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
     {
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); /*ImGui::SameLine(ImGui::GetWindowWidth() - 28);
         if (gameObject->visible_on_editor)
         {
             if (ImGui::Button(ICON_FA_EYE))
@@ -102,14 +126,14 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
             {
                 UpdateVisibleOnEditor(gameObject, true);
             }
-        }
+        }*/
         node_open = false;
     }
     else
     {
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
-        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); /*ImGui::SameLine(ImGui::GetWindowWidth() - 28);
         if (gameObject->visible_on_editor)
         {
             if (ImGui::Button(ICON_FA_EYE))
@@ -123,7 +147,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
             {
                 UpdateVisibleOnEditor(gameObject, true);
             }
-        }
+        }*/
     }
 
     if (ImGui::BeginDragDropSource())
@@ -163,7 +187,7 @@ void EW_Hierarchy::CheckMouseInPopUp()
 {
     ImVec2 act = ImVec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
     
-    if (act.x > ori.x + 100 || act.x < ori.x || act.y < ori.y || act.y > ori.y + 25 + numPrimitives * 20)
+    if (act.x > ori.x + 200 || act.x < ori.x || act.y < ori.y || act.y > ori.y + 250)
     {
         popUpOpen = false;
         ImGui::CloseCurrentPopup();

@@ -2,6 +2,8 @@
 
 #include "EditorWindow.h"
 
+#include <vector>
+
 class GameObject;
 class EO_Editor;
 
@@ -18,6 +20,7 @@ public:
 	void ProcessGameObject(GameObject* gameObject, int iteration);
 
 private:
+	static const int numSubmenus = 2;
 	static const int numPrimitives = 5;
 
 	std::map<uint, GameObject*>* gameObjectsReference = nullptr;
