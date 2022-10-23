@@ -86,13 +86,53 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
 
     if (gameObject->children.empty())
     {
-        node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration);
+        ImGui::AlignTextToFramePadding();
+        node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        //ImGui::PushFont(app->engine_order->editor->font_16);
+        if (gameObject->visible_on_editor)
+        {
+            if (ImGui::Button(ICON_FA_EYE))
+            {
+                UpdateVisibeOnEditor(gameObject, false);
+            }
+        }
+        else
+        {
+            if (ImGui::Button(ICON_FA_EYE_SLASH))
+            {
+                UpdateVisibeOnEditor(gameObject, true);
+            }
+        }
+        //ImGui::PopFont();
         node_open = false;
     }
     else
     {
-        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration);
+        ImGui::AlignTextToFramePadding();
+        node_flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
+        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        //ImGui::PushFont(app->engine_order->editor->font_16);
+        if (gameObject->visible_on_editor)
+        {
+            if (ImGui::Button(ICON_FA_EYE))
+            {
+                UpdateVisibeOnEditor(gameObject, false);
+            }
+        }
+        else
+        {
+            if (ImGui::Button(ICON_FA_EYE_SLASH))
+            {
+                UpdateVisibeOnEditor(gameObject, true);
+            }
+        }
+        //ImGui::PopFont();
+
+        for (size_t i = 0; i < gameObject->children.size(); i++)
+        {
+            ProcessGameObject(gameObject->children[i], i);
+        }
     }
 
     if (ImGui::BeginDragDropSource())
@@ -136,5 +176,24 @@ void EW_Hierarchy::CheckMouseInPopUp()
     {
         popUpOpen = false;
         ImGui::CloseCurrentPopup();
+    }
+}
+
+void EW_Hierarchy::UpdateVisibeOnEditor(GameObject* gameObject, bool visible_on_editor)
+{
+    gameObject->visible_on_editor = visible_on_editor;
+    C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::TYPE::MESH_RENDERER));
+    if (mr != NULL && gameObject->GetParent()->visible_on_editor)
+    {
+        mr->GetMesh().visible_on_editor = gameObject->visible_on_editor;
+    }
+    for (auto& childs : gameObject->GetChilds())
+    {
+        childs->visible_on_editor = visible_on_editor;
+        C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
+        if (c_mr != NULL && childs->visible_on_editor)
+        {
+            c_mr->GetMesh().visible_on_editor = gameObject->visible_on_editor;
+        }
     }
 }

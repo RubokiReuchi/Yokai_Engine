@@ -38,7 +38,7 @@ void EW_Inspector::Update()
 			for (auto& childs : selectGameobject->GetChilds())
 			{
 				C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
-				if (childs->visible)
+				if (c_mr != NULL && childs->visible)
 				{
 					c_mr->GetMesh().visible = selectGameobject->visible;
 				}

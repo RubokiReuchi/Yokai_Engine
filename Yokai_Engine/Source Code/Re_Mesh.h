@@ -50,6 +50,7 @@ public:
 	uint texture_id = -1;
 
 	bool visible = true;
+	bool visible_on_editor = true;
 private:
 	bool update_matrix = true;
 };
