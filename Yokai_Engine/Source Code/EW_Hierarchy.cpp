@@ -128,11 +128,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
             }
         }
         //ImGui::PopFont();
-
-        for (size_t i = 0; i < gameObject->children.size(); i++)
-        {
-            ProcessGameObject(gameObject->children[i], i);
-        }
     }
 
     if (ImGui::BeginDragDropSource())
