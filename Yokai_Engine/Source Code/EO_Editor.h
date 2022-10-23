@@ -41,10 +41,6 @@ public:
 		return selected_go;
 	}
 
-	// Fonts
-	ImFont* font_10 = nullptr;
-	ImFont* font_16 = nullptr;
-
 private:
 
 	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };

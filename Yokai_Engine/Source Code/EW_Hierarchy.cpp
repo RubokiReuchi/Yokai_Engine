@@ -89,7 +89,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
         ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
-        //ImGui::PushFont(app->engine_order->editor->font_16);
         if (gameObject->visible_on_editor)
         {
             if (ImGui::Button(ICON_FA_EYE))
@@ -104,7 +103,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
                 UpdateVisibleOnEditor(gameObject, true);
             }
         }
-        //ImGui::PopFont();
         node_open = false;
     }
     else
@@ -112,7 +110,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
         node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
-        //ImGui::PushFont(app->engine_order->editor->font_16);
         if (gameObject->visible_on_editor)
         {
             if (ImGui::Button(ICON_FA_EYE))
@@ -127,7 +124,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
                 UpdateVisibleOnEditor(gameObject, true);
             }
         }
-        //ImGui::PopFont();
     }
 
     if (ImGui::BeginDragDropSource())
