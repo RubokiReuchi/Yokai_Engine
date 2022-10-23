@@ -1,5 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleWindow.h"
 #include "ModuleInput.h"
 
 #include "ImGui/imgui_impl_sdl.h"
@@ -132,4 +133,9 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void ModuleInput::SetMousePos(float new_pos_x, float new_pos_y)
+{
+	SDL_WarpMouseInWindow(app->window->window, (int)new_pos_x, (int)new_pos_y);
 }

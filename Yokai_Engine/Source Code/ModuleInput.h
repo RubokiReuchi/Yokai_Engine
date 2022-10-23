@@ -59,6 +59,8 @@ public:
 		return mouse_y_motion;
 	}
 
+	void SetMousePos(float new_pos_x, float new_pos_y);
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
