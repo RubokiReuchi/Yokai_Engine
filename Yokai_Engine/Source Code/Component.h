@@ -14,11 +14,11 @@ public:
 
 	enum class TYPE
 	{
-		NONE,
 		TRANSFORM,
 		MESH_RENDERER,
 		MATERIAL,
 		CAMERA,
+		NUM_OF_COMPS,
 	};
 
 	Component(GameObject* game_object, TYPE type);
