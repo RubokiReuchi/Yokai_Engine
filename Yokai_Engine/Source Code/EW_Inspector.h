@@ -24,4 +24,8 @@ private:
 
 	bool popUpOpen = false;
 	ImVec2 ori;
+
+	ImGuiTextFilter filter;
+	static const int numComponents = 3;
+	void DisplayComponents();
 };

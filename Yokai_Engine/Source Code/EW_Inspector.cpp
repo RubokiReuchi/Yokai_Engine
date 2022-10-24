@@ -69,6 +69,7 @@ void EW_Inspector::Update()
 			if (ImGui::BeginPopup("New Component"))
 			{
 				
+				DisplayComponents();
 				ImGui::EndPopup();
 			}
 			if (!ImGuiH::CheckMouseInPopUp(ori))
@@ -91,5 +92,28 @@ void EW_Inspector::SetVisible(GameObject* selected_game_object, GameObject* game
 	for (auto& childs : game_object->GetChilds())
 	{
 		SetVisible(selected_game_object, childs, visible, false);
+	}
+}
+
+void EW_Inspector::DisplayComponents()
+{
+	ImGui::AlignTextToFramePadding();
+	ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
+	filter.Draw("##Filter");
+	std::string componentNames[numComponents - 1] = { "Camera", "Mesh Render" };
+	for (int i = 0; i < (numComponents - 1); i++)
+	{
+		std::string name = componentNames[i];
+		if (filter.PassFilter(name.c_str()))
+		{
+			if (ImGui::Selectable(name.c_str()))
+			{
+				switch (i)
+				{
+				case 0: dynamic_cast<Camera*>(selectGameobject->AddComponent(Component::TYPE::CAMERA)); break;
+				case 1: dynamic_cast<C_MeshRenderer*>(selectGameobject->AddComponent(Component::TYPE::MESH_RENDERER)); break;
+				}
+			}
+		}
 	}
 }

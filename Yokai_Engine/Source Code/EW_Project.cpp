@@ -18,7 +18,7 @@ void EW_Project::Update()
     // Options, Filter
     if (ImGui::Button("Options")) ImGui::OpenPopup("Options");
     ImGui::SameLine();
-    filter.Draw("Filter (\"incl,-excl\") (\"error\")", 180);
+    filter.Draw("Filter", 180);
     ImGui::Separator();
 
     ImVec2 windowSize = ImGui::GetWindowSize();
