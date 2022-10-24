@@ -80,7 +80,7 @@ void EW_Hierarchy::Update()
             }
             ImGui::EndPopup();
         }
-        if (!ImGuiH::CheckMouseInPopUp(ori))
+        if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(200.0f, 250.0f)))
         {
             popUpOpen = false;
             ImGui::CloseCurrentPopup();

@@ -140,11 +140,11 @@ bool ImGuiH::InputTextWithHint(const char* label, const char* hint, std::string*
 	return ImGui::InputTextWithHint(label, hint, (char*)str->c_str(), str->capacity() + 1, flags, InputTextCallback, &cb_user_data);
 }
 
-bool ImGuiH::CheckMouseInPopUp(ImVec2 ori)
+bool ImGuiH::CheckMouseInPopUp(ImVec2 ori, ImVec2 popup_size)
 {
 	ImVec2 act = ImVec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 
-	if (act.x > ori.x + 200 || act.x < ori.x || act.y < ori.y || act.y > ori.y + 250) return false;
+	if (act.x > ori.x + popup_size.x || act.x < ori.x || act.y < ori.y || act.y > ori.y + popup_size.y) return false;
 	else return true;
 }
 

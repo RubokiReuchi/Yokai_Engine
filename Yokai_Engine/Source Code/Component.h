@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ImGuiHelpers.h"
+#include "IconsFontAwesome.h"
 
 #include "MathGeoLib/include/MathGeoLib.h"
 
@@ -32,6 +33,8 @@ public:
 	TYPE GetType() { return type; }
 
 	virtual void OnEditor() {}
+
+	void ComponentOptions();
 
 	// c_transform
 	virtual void OnPositionUpdate(float3 position) {}

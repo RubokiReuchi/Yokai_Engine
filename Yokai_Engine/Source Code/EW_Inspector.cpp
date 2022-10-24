@@ -71,7 +71,7 @@ void EW_Inspector::Update()
 				DisplayComponents();
 				ImGui::EndPopup();
 			}
-			if (!ImGuiH::CheckMouseInPopUp(ori))
+			if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(200.0f, 250.0f)))
 			{
 				popUpOpen = false;
 				ImGui::CloseCurrentPopup();
@@ -110,7 +110,6 @@ void EW_Inspector::DisplayComponents()
 				switch (i)
 				{
 				case 0: dynamic_cast<Camera*>(selectGameobject->AddComponent(Component::TYPE::CAMERA)); break;
-				case 1: dynamic_cast<C_MeshRenderer*>(selectGameobject->AddComponent(Component::TYPE::MESH_RENDERER)); break;
 				}
 			}
 		}

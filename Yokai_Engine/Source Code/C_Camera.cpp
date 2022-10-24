@@ -19,19 +19,11 @@ C_Camera::~C_Camera()
 
 void C_Camera::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
-
-		float aspect_ratio = 1.0f / app->camera->activeGameCamera->GetAspectRatio();
-		ImGui::Image((ImTextureID)app->camera->activeGameCamera->frameBuffer.GetTexture(), ImVec2(gameDimensions.x, gameDimensions.x * aspect_ratio), ImVec2(0, 1), ImVec2(1, 0));
-	}
-	if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+	ImGui::AlignTextToFramePadding();
+	bool collapsed = ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
+	if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL "##Camera", ImVec2(20.0f, 0)))
 	{
 		popUpOpen = true;
-	}
-	if (popUpOpen)
-	{
 		ImGui::OpenPopup("Component Options");
 		ori = ImGui::GetMousePosOnOpeningCurrentPopup();
 	}
@@ -39,22 +31,16 @@ void C_Camera::OnEditor()
 	{
 		ImGui::CloseCurrentPopup();
 	}
+	if (collapsed)
+	{
+		ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
+
+		float aspect_ratio = 1.0f / app->camera->activeGameCamera->GetAspectRatio();
+		ImGui::Image((ImTextureID)app->camera->activeGameCamera->frameBuffer.GetTexture(), ImVec2(gameDimensions.x, gameDimensions.x * aspect_ratio), ImVec2(0, 1), ImVec2(1, 0));
+	}
 	if (popUpOpen)
 	{
-		ImGui::SetNextWindowSize(ImVec2(200.0f, 0.0f));
-		if (ImGui::BeginPopup("Component Options"))
-		{
-			if (ImGui::Selectable("Destroy Component"))
-			{
-				GetGameObject()->RemoveComponent(this);
-			}
-			ImGui::EndPopup();
-		}
-		if (!ImGuiH::CheckMouseInPopUp(ori))
-		{
-			popUpOpen = false;
-			ImGui::CloseCurrentPopup();
-		}
+		ComponentOptions();
 	}
 }
 
