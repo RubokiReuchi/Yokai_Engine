@@ -2,6 +2,10 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleEngineOrder.h"
+
+#include "MeshImporter.h"
+#include "TextureImporter.h"
 
 #include "ImGui/imgui_impl_sdl.h"
 
@@ -109,6 +113,13 @@ update_status ModuleInput::PreUpdate(float dt)
 			mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
 			break;
 
+			case SDL_DROPFILE:
+			{      
+				std::string dropped_file = e.drop.file;
+				DropFile(dropped_file);
+				break;
+			}
+
 			case SDL_QUIT:
 			quit = true;
 			break;
@@ -138,4 +149,26 @@ bool ModuleInput::CleanUp()
 void ModuleInput::SetMousePos(float new_pos_x, float new_pos_y)
 {
 	SDL_WarpMouseInWindow(app->window->window, (int)new_pos_x, (int)new_pos_y);
+}
+
+void ModuleInput::DropFile(std::string dropped_file)
+{
+	std::string flie_extension = dropped_file.substr(dropped_file.find_last_of(".") + 1);
+
+	if (flie_extension == "fbx")
+	{
+		MeshImporter::LoadMesh(dropped_file);
+	}
+	else if (flie_extension == "png")
+	{
+		uint new_tex = TextureImporter::ImportTextureSTBI(dropped_file);
+		for (auto& gameObject : app->engine_order->game_objects)
+		{
+			C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
+			if (c_mr != nullptr)
+			{
+				c_mr->GetMesh().texture_id = new_tex;
+			}
+		}
+	}
 }
