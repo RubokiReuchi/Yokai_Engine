@@ -125,7 +125,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             std::string s = ICON_FA_EYE "##";
             s += std::to_string(gameObject->id);
-            if (ImGui::Button(s.c_str()))
+            if (ImGui::Button(s.c_str()) && gameObject->GetParent()->visible_on_editor)
             {
                 SetVisibleOnEditor(gameObject, gameObject, false, true);
             }
@@ -134,7 +134,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             std::string s = ICON_FA_EYE_SLASH "##";
             s += std::to_string(gameObject->id);
-            if (ImGui::Button(s.c_str()))
+            if (ImGui::Button(s.c_str()) && gameObject->GetParent()->visible_on_editor)
             {
                 SetVisibleOnEditor(gameObject, gameObject, true, true);
             }
@@ -155,7 +155,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             std::string s = ICON_FA_EYE "##";
             s += std::to_string(gameObject->id);
-            if (ImGui::Button(s.c_str()))
+            if (ImGui::Button(s.c_str()) && gameObject->GetParent()->visible_on_editor)
             {
                 SetVisibleOnEditor(gameObject, gameObject, false, true);
             }
@@ -164,7 +164,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             std::string s = ICON_FA_EYE_SLASH "##";
             s += std::to_string(gameObject->id);
-            if (ImGui::Button(s.c_str()))
+            if (ImGui::Button(s.c_str()) && gameObject->GetParent()->visible_on_editor)
             {
                 SetVisibleOnEditor(gameObject, gameObject, true, true);
             }
