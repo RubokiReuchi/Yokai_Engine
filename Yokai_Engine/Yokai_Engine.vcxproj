@@ -190,6 +190,7 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.h" />
+    <ClInclude Include="Source Code\FileTree.hpp" />
     <ClInclude Include="Source Code\FrameBuffer.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\glmath.h" />

@@ -1,7 +1,7 @@
 #pragma once
 
-#define FONT_ICON_FILE_NAME_FAR "Assets/fa-regular-400.ttf"
-#define FONT_ICON_FILE_NAME_FAS "Assets/fa-solid-900.ttf"
+#define FONT_ICON_FILE_NAME_FAR "Assets/Fonts/fa-regular-400.ttf"
+#define FONT_ICON_FILE_NAME_FAS "Assets/Fonts/fa-solid-900.ttf"
 
 #define ICON_MIN_FA 0xe005
 #define ICON_MAX_16_FA 0xf8ff

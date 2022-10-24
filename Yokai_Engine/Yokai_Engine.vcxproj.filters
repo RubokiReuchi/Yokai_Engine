@@ -414,6 +414,9 @@
     <ClInclude Include="Source Code\IconsFontAwesome.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\FileTree.hpp">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">

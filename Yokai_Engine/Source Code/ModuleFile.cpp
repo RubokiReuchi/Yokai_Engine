@@ -1,6 +1,8 @@
 #include "ModuleFile.h"
 #include "Application.h"
 #include "PhysFS/include/physfs.h"
+#include "FileTree.hpp"
+#include <algorithm>
 
 #pragma comment (lib, "PhysFS/libx86/physfs.lib")
 
@@ -13,6 +15,8 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 
 	// Add Read Dir
 	S_AddPathToFileSystem(".");
+	S_AddPathToFileSystem("C:\\");
+	S_AddPathToFileSystem("D:\\");
 
 	//S_AddPathToFileSystem("Resources");
 }
@@ -40,6 +44,39 @@ bool ModuleFile::S_MakeDir(const std::string dir)
 bool ModuleFile::S_IsDirectory(const std::string file)
 {
 	return PHYSFS_isDirectory(file.c_str()) != 0;
+}
+
+std::string ModuleFile::S_NormalizePath(const std::string path)
+{
+	std::string ret = path;
+
+	// Remove no necesary path
+	int pos = ret.find("C:\\");
+
+	if (pos != std::string::npos) ret.erase(pos, 3);
+
+	pos = ret.find("D:\\");
+
+	if (pos != std::string::npos) ret.erase(pos, 3);
+
+	for (size_t i = 0; i < ret.size(); i++)
+	{
+		if (ret[i] == '\\') ret[i] = '/';
+	}
+
+	return ret;
+}
+
+std::string ModuleFile::S_UnNormalizePath(const std::string path)
+{
+	std::string ret = path;
+
+	for (int i = 0; i < ret.size(); i++)
+	{
+		if (ret[i] == '/') ret[i] = '\\';
+	}
+
+	return ret;
 }
 
 bool ModuleFile::S_AddPathToFileSystem(const std::string path)
@@ -154,7 +191,7 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 {
 	uint byteCount = 0;
 
-	std::string fileName = GetFileName(src, true);
+	std::string fileName = S_GetFileName(src, true);
 
 	des += fileName;
 
@@ -191,13 +228,36 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 	return byteCount;
 }
 
-std::string ModuleFile::GetFileName(const std::string file, bool getExtension)
+FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
+{
+	FileTree* ret = new FileTree(path + "/", S_GetFileName(path), parent);
+
+	char** list = PHYSFS_enumerateFiles(path.c_str());
+
+	for (int i = 0; list[i] != nullptr; i++)
+	{
+		std::string dirCheck = path + "/" + list[i];
+
+		if (PHYSFS_isDirectory(dirCheck.c_str()) != 0)
+		{
+			ret->directories.emplace_back(S_GetFileTree(dirCheck, ret));
+		}
+		else
+		{
+			ret->files.emplace_back(list[i]);
+		}
+	}
+
+	return ret;
+}
+
+std::string ModuleFile::S_GetFileName(const std::string file, bool getExtension)
 {
 	uint pos = file.find_last_of("/");
 
-	std::string name = "";
+	std::string name = file;
 
-	if (pos != std::string::npos) std::string name = file.substr(pos + 1, file.size() - 1);
+	if (pos != std::string::npos) name = file.substr(pos + 1, file.size() - 1);
 	else name = file;
 
 	if (!getExtension)
@@ -207,4 +267,19 @@ std::string ModuleFile::GetFileName(const std::string file, bool getExtension)
 	}
 
 	return name;
+}
+
+RE_TYPE ModuleFile::S_GetResourceType(const std::string& filename)
+{
+	std::string fileExtension = filename;
+	fileExtension = fileExtension.substr(fileExtension.find_last_of('.') + 1);
+
+	std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
+
+	//TODO: Add our own file extensions to this checks
+
+	if (fileExtension == "fbx" || fileExtension == "dae") return RE_TYPE::MESH;
+	if (fileExtension == "tga" || fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds") return RE_TYPE::TEXTURE;
+
+	return RE_TYPE::UNDEFINED;
 }
