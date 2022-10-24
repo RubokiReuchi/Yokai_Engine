@@ -34,5 +34,5 @@ private:
 	bool popUpOpen = false;
 	ImVec2 ori;
 
-	void UpdateVisibleOnEditor(GameObject* gameObject, bool visible_on_editor);
+	void SetVisibleOnEditor(GameObject* first_game_object, GameObject* game_object, bool visible_on_editor, bool it_one);
 };

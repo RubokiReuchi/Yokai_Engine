@@ -37,6 +37,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix;
 
 	M_ModelRender model_render;
+	bool drawing_scene = true;
 
 	// trigger exit
 	bool exit;

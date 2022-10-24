@@ -116,13 +116,18 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
         ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
+        {
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right)) rightClickedGameObject = gameObject;
+        }
         if (gameObject->visible_on_editor)
         {
             std::string s = ICON_FA_EYE "##";
             s += std::to_string(gameObject->id);
             if (ImGui::Button(s.c_str()))
             {
-                UpdateVisibleOnEditor(gameObject, false);
+                SetVisibleOnEditor(gameObject, gameObject, false, true);
             }
         }
         else
@@ -131,7 +136,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
             s += std::to_string(gameObject->id);
             if (ImGui::Button(s.c_str()))
             {
-                UpdateVisibleOnEditor(gameObject, true);
+                SetVisibleOnEditor(gameObject, gameObject, true, true);
             }
         }
         node_open = false;
@@ -141,13 +146,18 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
         node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
+        {
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right)) rightClickedGameObject = gameObject;
+        }
         if (gameObject->visible_on_editor)
         {
             std::string s = ICON_FA_EYE "##";
             s += std::to_string(gameObject->id);
             if (ImGui::Button(s.c_str()))
             {
-                UpdateVisibleOnEditor(gameObject, false);
+                SetVisibleOnEditor(gameObject, gameObject, false, true);
             }
         }
         else
@@ -156,7 +166,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
             s += std::to_string(gameObject->id);
             if (ImGui::Button(s.c_str()))
             {
-                UpdateVisibleOnEditor(gameObject, true);
+                SetVisibleOnEditor(gameObject, gameObject, true, true);
             }
         }
     }
@@ -169,12 +179,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
 
         ImGui::Text("Change game object parent");
         ImGui::EndDragDropSource();
-    }
-
-    if (ImGui::IsItemHovered())
-    {
-        if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
-        if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right)) rightClickedGameObject = gameObject;
     }
 
     if (ImGui::BeginDragDropTarget())
@@ -194,21 +198,16 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
     }
 }
 
-void EW_Hierarchy::UpdateVisibleOnEditor(GameObject* gameObject, bool visible_on_editor)
+void EW_Hierarchy::SetVisibleOnEditor(GameObject* first_game_object, GameObject* game_object, bool visible_on_editor, bool it_one)
 {
-    gameObject->visible_on_editor = visible_on_editor;
-    C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(gameObject->GetComponent(Component::TYPE::MESH_RENDERER));
-    if (mr != NULL && gameObject->GetParent()->visible_on_editor)
+    game_object->visible_on_editor = visible_on_editor;
+    C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(game_object->GetComponent(Component::TYPE::MESH_RENDERER));
+    if (mr != NULL && first_game_object->GetParent()->visible_on_editor)
     {
-        mr->GetMesh().visible_on_editor = gameObject->visible_on_editor;
+        mr->GetMesh().visible_on_editor = visible_on_editor;
     }
-    for (auto& childs : gameObject->GetChilds())
+    for (auto& childs : game_object->GetChilds())
     {
-        childs->visible_on_editor = visible_on_editor;
-        C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(childs->GetComponent(Component::TYPE::MESH_RENDERER));
-        if (c_mr != NULL && childs->visible_on_editor)
-        {
-            c_mr->GetMesh().visible_on_editor = gameObject->visible_on_editor;
-        }
+        SetVisibleOnEditor(first_game_object, childs, visible_on_editor, false);
     }
 }

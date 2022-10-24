@@ -129,6 +129,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 		app->camera->currentDrawingCamera = &app->camera->sceneCamera;
+		drawing_scene = true;
 
 		app->engine_order->DrawEO();
 		model_render.Draw();
@@ -140,6 +141,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 		app->camera->currentDrawingCamera = app->camera->activeGameCamera;
+		drawing_scene = false;
 
 		app->engine_order->DrawEO();
 		model_render.Draw();

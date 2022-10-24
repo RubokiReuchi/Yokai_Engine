@@ -47,6 +47,10 @@ void M_Render::Draw()
         {
             num_meshes--;
         }
+        else if (app->renderer3D->drawing_scene && !mesh.second.visible_on_editor)
+        {
+            num_meshes--;
+        }
         else
         {
             mesh.second.Update();
