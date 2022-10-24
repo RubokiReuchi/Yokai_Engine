@@ -52,7 +52,7 @@ public:
 		}
 		return NULL; // component not find
 	}
-	void RemoveComponent(Component::TYPE type)
+	/*void RemoveComponent(Component::TYPE type)
 	{
 		if (GetComponent(type) != NULL)
 		{
@@ -71,6 +71,22 @@ public:
 			}
 		}
 		else return;
+	}*/
+	void RemoveComponent(Component* component)
+	{
+		int pos_in_array = 0;
+		for (size_t i = 0; i < components.size(); i++)
+		{
+			if (components.at(i) == component)
+			{
+				components.erase(components.begin() + pos_in_array);
+				return;
+			}
+			else
+			{
+				pos_in_array++;
+			}
+		}
 	}
 	std::vector<Component*> GetComponentList()
 	{

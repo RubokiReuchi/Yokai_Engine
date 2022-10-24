@@ -41,17 +41,20 @@ void C_Camera::OnEditor()
 	}
 	if (popUpOpen)
 	{
-		/*ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+		ImGui::SetNextWindowSize(ImVec2(200.0f, 0.0f));
 		if (ImGui::BeginPopup("Component Options"))
 		{
-			
+			if (ImGui::Selectable("Destroy Component"))
+			{
+				GetGameObject()->RemoveComponent(this);
+			}
 			ImGui::EndPopup();
 		}
 		if (!ImGuiH::CheckMouseInPopUp(ori))
 		{
 			popUpOpen = false;
 			ImGui::CloseCurrentPopup();
-		}*/
+		}
 	}
 }
 

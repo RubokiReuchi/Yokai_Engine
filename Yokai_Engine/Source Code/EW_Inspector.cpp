@@ -68,7 +68,6 @@ void EW_Inspector::Update()
 			ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
 			if (ImGui::BeginPopup("New Component"))
 			{
-				
 				DisplayComponents();
 				ImGui::EndPopup();
 			}

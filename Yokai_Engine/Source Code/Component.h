@@ -44,4 +44,8 @@ private:
 	GameObject* go = nullptr;
 	TYPE type = TYPE::NONE;
 
+protected:
+	bool popUpOpen = false;
+	ImVec2 ori;
+
 };

@@ -22,6 +22,4 @@ private:
 	Quat original_lookingDir;
 	Quat lookingDir;
 
-	bool popUpOpen = false;
-	ImVec2 ori;
 };
