@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ImGuiHelpers.h"
+
 #include "MathGeoLib/include/MathGeoLib.h"
 
 #include "ImGui/imgui.h"
@@ -14,6 +16,7 @@ public:
 
 	enum class TYPE
 	{
+		NONE,
 		TRANSFORM,
 		MESH_RENDERER,
 		MATERIAL,

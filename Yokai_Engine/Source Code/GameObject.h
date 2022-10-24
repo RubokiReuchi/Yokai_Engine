@@ -89,10 +89,10 @@ public:
 		return parent;
 	}
 
+	std::string name;
 	bool enabled = true;
 	bool visible = true;
 	bool visible_on_editor = true;
-	std::string name;
 	std::string tag;
 	C_Transform* transform = nullptr;
 

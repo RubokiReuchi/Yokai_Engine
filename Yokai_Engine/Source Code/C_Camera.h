@@ -21,4 +21,7 @@ private:
 	uint cameraID = 0;
 	Quat original_lookingDir;
 	Quat lookingDir;
+
+	bool popUpOpen = false;
+	ImVec2 ori;
 };

@@ -115,42 +115,50 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
     {
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); /*ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
         if (gameObject->visible_on_editor)
         {
-            if (ImGui::Button(ICON_FA_EYE))
+            std::string s = ICON_FA_EYE "##";
+            s += std::to_string(gameObject->id);
+            if (ImGui::Button(s.c_str()))
             {
                 UpdateVisibleOnEditor(gameObject, false);
             }
         }
         else
         {
-            if (ImGui::Button(ICON_FA_EYE_SLASH))
+            std::string s = ICON_FA_EYE_SLASH "##";
+            s += std::to_string(gameObject->id);
+            if (ImGui::Button(s.c_str()))
             {
                 UpdateVisibleOnEditor(gameObject, true);
             }
-        }*/
+        }
         node_open = false;
     }
     else
     {
         ImGui::AlignTextToFramePadding();
         node_flags |= ImGuiTreeNodeFlags_AllowItemOverlap;
-        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); /*ImGui::SameLine(ImGui::GetWindowWidth() - 28);
+        node_open = ImGui::TreeNodeEx((void*)(intptr_t)iteration, node_flags, gameObject->name.c_str(), iteration); ImGui::SameLine(ImGui::GetWindowWidth() - 28);
         if (gameObject->visible_on_editor)
         {
-            if (ImGui::Button(ICON_FA_EYE))
+            std::string s = ICON_FA_EYE "##";
+            s += std::to_string(gameObject->id);
+            if (ImGui::Button(s.c_str()))
             {
                 UpdateVisibleOnEditor(gameObject, false);
             }
         }
         else
         {
-            if (ImGui::Button(ICON_FA_EYE_SLASH))
+            std::string s = ICON_FA_EYE_SLASH "##";
+            s += std::to_string(gameObject->id);
+            if (ImGui::Button(s.c_str()))
             {
                 UpdateVisibleOnEditor(gameObject, true);
             }
-        }*/
+        }
     }
 
     if (ImGui::BeginDragDropSource())

@@ -26,6 +26,33 @@ void C_Camera::OnEditor()
 		float aspect_ratio = 1.0f / app->camera->activeGameCamera->GetAspectRatio();
 		ImGui::Image((ImTextureID)app->camera->activeGameCamera->frameBuffer.GetTexture(), ImVec2(gameDimensions.x, gameDimensions.x * aspect_ratio), ImVec2(0, 1), ImVec2(1, 0));
 	}
+	if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+	{
+		popUpOpen = true;
+	}
+	if (popUpOpen)
+	{
+		ImGui::OpenPopup("Component Options");
+		ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+	}
+	else
+	{
+		ImGui::CloseCurrentPopup();
+	}
+	if (popUpOpen)
+	{
+		/*ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+		if (ImGui::BeginPopup("Component Options"))
+		{
+			
+			ImGui::EndPopup();
+		}
+		if (!ImGuiH::CheckMouseInPopUp(ori))
+		{
+			popUpOpen = false;
+			ImGui::CloseCurrentPopup();
+		}*/
+	}
 }
 
 void C_Camera::OnPositionUpdate(float3 pos)
