@@ -11,14 +11,19 @@ Component::~Component()
 {
 }
 
-void Component::ComponentOptions()
+void Component::ComponentOptions(bool undestructable)
 {
 	ImGui::SetNextWindowSize(ImVec2(200.0f, 100.0f));
 	if (ImGui::BeginPopup("Component Options"))
 	{
-		if (ImGui::Selectable("Destroy Component"))
+		ImGui::Text("Component Options");
+		ImGui::Separator();
+		if (!undestructable)
 		{
-			GetGameObject()->RemoveComponent(this);
+			if (ImGui::Selectable("Destroy Component"))
+			{
+				GetGameObject()->RemoveComponent(this);
+			}
 		}
 		ImGui::EndPopup();
 	}

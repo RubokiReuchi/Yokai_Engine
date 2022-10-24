@@ -18,9 +18,25 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::OnEditor()
 {
-	if (ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen))
+	ImGui::AlignTextToFramePadding();
+	bool no_collapsed = ImGui::CollapsingHeader("Mesh Render", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
+	if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL "##MeshRender", ImVec2(20.0f, 0)))
+	{
+		popUpOpen = true;
+		ImGui::OpenPopup("Component Options");
+		ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+	}
+	else
+	{
+		ImGui::CloseCurrentPopup();
+	}
+	if (no_collapsed)
 	{
 		
+	}
+	if (popUpOpen)
+	{
+		ComponentOptions(true);
 	}
 }
 

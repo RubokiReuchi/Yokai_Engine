@@ -34,7 +34,7 @@ public:
 
 	virtual void OnEditor() {}
 
-	void ComponentOptions();
+	void ComponentOptions(bool undestructable = false);
 
 	// c_transform
 	virtual void OnPositionUpdate(float3 position) {}

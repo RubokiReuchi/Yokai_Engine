@@ -20,7 +20,7 @@ C_Camera::~C_Camera()
 void C_Camera::OnEditor()
 {
 	ImGui::AlignTextToFramePadding();
-	bool collapsed = ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
+	bool no_collapsed = ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
 	if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL "##Camera", ImVec2(20.0f, 0)))
 	{
 		popUpOpen = true;
@@ -31,7 +31,7 @@ void C_Camera::OnEditor()
 	{
 		ImGui::CloseCurrentPopup();
 	}
-	if (collapsed)
+	if (no_collapsed)
 	{
 		ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 

@@ -21,7 +21,19 @@ void C_Transform::OnEditor()
 	float3 temp_rot = localTransform.rotation;
 	float3 temp_scl = localTransform.scale;
 
-	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	ImGui::AlignTextToFramePadding();
+	bool no_collapsed = ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
+	if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL "##Transform", ImVec2(20.0f, 0)))
+	{
+		popUpOpen = true;
+		ImGui::OpenPopup("Component Options");
+		ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+	}
+	else
+	{
+		ImGui::CloseCurrentPopup();
+	}
+	if (no_collapsed)
 	{
 		float offset = ImGui::CalcTextSize("Position: ").x + 16;
 		ImGui::Text("Position: ");
@@ -39,6 +51,10 @@ void C_Transform::OnEditor()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(offset);
 		if (ImGui::DragFloat3("##lScale", &temp_scl[0], 0.1f)) SetScale(temp_scl);
+	}
+	if (popUpOpen)
+	{
+		ComponentOptions(true);
 	}
 }
 
