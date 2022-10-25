@@ -46,39 +46,42 @@ void EW_Project::Update()
     static float windowInitX = windowSize.x;
 
     // Splitter
-    ImGuiH::DrawSplitter(0, 10, &width1, &width2, 200, 200);
+    ImGuiH::DrawSplitter(0, 10, &width1, &width2, 200, 275);
     width2 = (windowSize.x - width1 - 20);
 
     // Left Box
-    ImGui::BeginChild("LeftBox", ImVec2(width1, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::BeginChild("LeftBox", ImVec2(width1, 0), true);
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     DrawTreeNode(fileTree);
     ImGui::EndChild();
 
     ImGui::SameLine();
-
+    LOG("%0.2f", ImGui::GetMousePos().x);
     // RightBox
-    ImGui::BeginChild("RightBox", ImVec2(width2, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::BeginChild("RightBox", ImVec2(width2, 0), true);
     if (!filter.IsActive())
     {
-        for (size_t i = 0; i < currentNode->directories.size(); i++)
+        uint rows = 0;
+        uint dir_size = currentNode->directories.size();
+        for (uint i = 0; i < dir_size; i++)
         {
             std::string s;
             if (currentNode->directories.at(i)->files.empty()) s = ICON_FA_FOLDER_OPEN "\n";
             else s = ICON_FA_FOLDER_CLOSED "\n";
             s += currentNode->directories[i]->name;
-            if (ImGui::Button(s.c_str(), ImVec2(120, 120)))
-            {
-                new_dir = currentNode->directories[i];
-            }
-            ImGui::SameLine();
+            if (ImGui::Button(s.c_str(), ImVec2(120, 120))) new_dir = currentNode->directories[i];
+
+            if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
+            else ImGui::SameLine();
         }
-        for (size_t i = 0; i < currentNode->files.size(); i++)
+        for (size_t i = dir_size; i < currentNode->files.size() + dir_size; i++)
         {
             std::string s = ICON_FA_FILE "\n";
-            s += currentNode->files[i];
+            s += currentNode->files[i - dir_size];
             ImGui::Button(s.c_str(), ImVec2(120, 120));
-            ImGui::SameLine();
+
+            if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
+            else ImGui::SameLine();
         }
     }
     else
