@@ -24,8 +24,7 @@ void EW_Project::Update()
 
     // Filter
     ImGui::AlignTextToFramePadding();
-    if (ImGui::Button(ICON_FA_FOLDER_PLUS)) ImGui::OpenPopup("Create"); ImGui::SameLine(ImGui::GetWindowWidth() - 220);
-    ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine(); filter.Draw("##Filter", 200);
+    if (ImGui::Button(ICON_FA_FOLDER_PLUS)) ImGui::OpenPopup("Create"); 
     if (!currentNode->isRoot())
     {
         ImGui::SameLine();
@@ -34,6 +33,9 @@ void EW_Project::Update()
             new_dir = currentNode->GetParent();
         }
     }
+    ImGui::SameLine(ImGui::GetWindowWidth() - 220);
+    ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine(); filter.Draw("##Filter", 200);
+    
     ImGui::Separator();
 
     ImVec2 windowSize = ImGui::GetWindowSize();
@@ -42,15 +44,14 @@ void EW_Project::Update()
     static float windowInitX = windowSize.x;
 
     // Splitter
-    ImGuiH::DrawSplitter(0, 10, &width1, &width2, 10, 200);
+    ImGuiH::DrawSplitter(0, 10, &width1, &width2, 200, 200);
     width2 = (windowSize.x - width1 - 20);
 
     // Left Box
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.05f, 0.05f, 0.05f, 1.0f));
     ImGui::BeginChild("LeftBox", ImVec2(width1, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
     DrawTreeNode(fileTree);
     ImGui::EndChild();
-    ImGui::PopStyleColor();
 
     ImGui::SameLine();
 
@@ -70,7 +71,9 @@ void EW_Project::Update()
     }
     for (size_t i = 0; i < currentNode->files.size(); i++)
     {
-        ImGui::Button(currentNode->files[i].c_str(), ImVec2(120, 120));
+        std::string s = ICON_FA_FILE "\n";
+        s += currentNode->files[i];
+        ImGui::Button(s.c_str(), ImVec2(120, 120));
         ImGui::SameLine();
     }
     ImGui::EndChild();
@@ -80,7 +83,7 @@ void EW_Project::Update()
 
 void EW_Project::DrawTreeNode(const FileTree* node) const
 {
-    if (ImGui::TreeNode(node->name.c_str()))
+    if (ImGui::TreeNodeEx(node->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow))
     {
         for (size_t i = 0; i < node->directories.size(); i++)
         {
