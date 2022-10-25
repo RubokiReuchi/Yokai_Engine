@@ -82,8 +82,9 @@ void EW_Project::Update()
             ImGui::Button(s.c_str(), ImVec2(120, 120));
             if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceNoDisableHover | ImGuiDragDropFlags_SourceNoPreviewTooltip))
             {
-                ImGui::SetDragDropPayload(currentNode->files[i - dir_size].c_str(), &i, sizeof(std::string));
-                app->engine_order->editor->dd_file = currentNode->files[i - dir_size];
+                std::string file_path = currentNode->path + currentNode->files[i - dir_size];
+                ImGui::SetDragDropPayload(file_path.c_str(), &i, sizeof(std::string));
+                app->engine_order->editor->dd_file = file_path;
                 ImGui::EndDragDropSource();
             }
 

@@ -68,7 +68,7 @@ void EW_Scene::Update()
 		}
 	}
 
-	if (ImGui::BeginDragDropTarget())
+	if (ImGui::BeginDragDropTarget() && app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
 	{
 		std::string dd_file = app->engine_order->editor->dd_file;
 		app->engine_order->editor->dd_file = "";
