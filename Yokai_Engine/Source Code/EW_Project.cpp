@@ -1,4 +1,5 @@
 #include "EW_Project.h"
+#include "EO_Editor.h"
 #include "ModuleFile.h"
 #include "FileTree.hpp"
 #include "ImGuiHelpers.h"
@@ -56,7 +57,7 @@ void EW_Project::Update()
     ImGui::EndChild();
 
     ImGui::SameLine();
-    LOG("%0.2f", ImGui::GetMousePos().x);
+    
     // RightBox
     ImGui::BeginChild("RightBox", ImVec2(width2, 0), true);
     if (!filter.IsActive())
@@ -79,6 +80,12 @@ void EW_Project::Update()
             std::string s = ICON_FA_FILE "\n";
             s += currentNode->files[i - dir_size];
             ImGui::Button(s.c_str(), ImVec2(120, 120));
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceNoDisableHover | ImGuiDragDropFlags_SourceNoPreviewTooltip))
+            {
+                ImGui::SetDragDropPayload(currentNode->files[i - dir_size].c_str(), &i, sizeof(std::string));
+                app->engine_order->editor->dd_file = currentNode->files[i - dir_size];
+                ImGui::EndDragDropSource();
+            }
 
             if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
             else ImGui::SameLine();

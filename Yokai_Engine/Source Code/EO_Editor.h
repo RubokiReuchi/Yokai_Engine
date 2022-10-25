@@ -41,6 +41,8 @@ public:
 		return selected_go;
 	}
 
+	std::string dd_file = ""; // drag and drop
+
 private:
 
 	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };

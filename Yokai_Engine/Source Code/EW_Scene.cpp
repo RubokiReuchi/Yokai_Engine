@@ -1,6 +1,10 @@
 #include "EW_Scene.h"
 #include "Application.h"
+#include "EO_Editor.h"
 #include "ModuleInput.h"
+#include "ModuleFile.h"
+#include "MeshImporter.h"
+#include "TextureImporter.h"
 
 #include <math.h>
 
@@ -62,6 +66,27 @@ void EW_Scene::Update()
 		{
 			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + 23);
 		}
+	}
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		std::string dd_file = app->engine_order->editor->dd_file;
+		app->engine_order->editor->dd_file = "";
+		ImGuiDragDropFlags target_flags = 0;
+		target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;
+		target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect;
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dd_file.c_str(), target_flags))
+		{
+			switch (app->file->S_GetResourceType(dd_file))
+			{
+			case RE_TYPE::MESH:
+				MeshImporter::LoadMesh(dd_file);
+				break;
+			case RE_TYPE::TEXTURE:
+				break;
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 	ImGui::End();
 }
