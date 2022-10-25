@@ -2,8 +2,10 @@
 
 #include "EO_Base.h"
 #include "EditorWindow.h"
+#include "EW_Project.h"
 
 class GameObject;
+class EW_Project;
 
 enum class EW_TYPE
 {
@@ -42,6 +44,10 @@ public:
 	}
 
 	std::string dd_file = ""; // drag and drop
+	EW_Project* GetProjectWindow()
+	{
+		return dynamic_cast<EW_Project*>(editor_windows[(uint)EW_TYPE::PROJECT]);
+	}
 
 private:
 

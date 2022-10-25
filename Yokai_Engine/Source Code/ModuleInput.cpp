@@ -3,9 +3,8 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleEngineOrder.h"
-
-#include "MeshImporter.h"
-#include "TextureImporter.h"
+#include "ModuleFile.h"
+#include "EO_Editor.h"
 
 #include "ImGui/imgui_impl_sdl.h"
 
@@ -153,22 +152,7 @@ void ModuleInput::SetMousePos(float new_pos_x, float new_pos_y)
 
 void ModuleInput::DropFile(std::string dropped_file)
 {
-	std::string flie_extension = dropped_file.substr(dropped_file.find_last_of(".") + 1);
+	std::string dest = app->engine_order->editor->GetProjectWindow()->GetCurrentNodePath();
 
-	if (flie_extension == "fbx")
-	{
-		MeshImporter::LoadMesh(dropped_file);
-	}
-	else if (flie_extension == "png")
-	{
-		uint new_tex = TextureImporter::ImportTextureSTBI(dropped_file);
-		for (auto& gameObject : app->engine_order->game_objects)
-		{
-			C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
-			if (c_mr != nullptr)
-			{
-				c_mr->GetMesh().texture_id = new_tex;
-			}
-		}
-	}
+	app->file->S_Copy(dropped_file, dest, false);
 }

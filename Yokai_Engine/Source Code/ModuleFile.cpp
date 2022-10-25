@@ -194,7 +194,7 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 	std::string fileName = S_GetFileName(src, true);
 
 	des += fileName;
-
+	
 	do
 	{
 		if (S_Exists(des) && !replace)

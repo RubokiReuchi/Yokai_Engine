@@ -84,6 +84,8 @@ void EW_Scene::Update()
 				break;
 			case RE_TYPE::TEXTURE:
 				break;
+			case RE_TYPE::UNDEFINED:
+				break;
 			}
 		}
 		ImGui::EndDragDropTarget();

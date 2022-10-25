@@ -110,6 +110,11 @@ void EW_Project::Update()
 	ImGui::End();
 }
 
+std::string EW_Project::GetCurrentNodePath()
+{
+    return currentNode->path;
+}
+
 void EW_Project::DrawTreeNode(const FileTree* node) const
 {
     if (ImGui::TreeNodeEx(node->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow))
