@@ -71,7 +71,7 @@ std::string ModuleFile::S_UnNormalizePath(const std::string path)
 {
 	std::string ret = path;
 
-	for (int i = 0; i < ret.size(); i++)
+	for (size_t i = 0; i < ret.size(); i++)
 	{
 		if (ret[i] == '/') ret[i] = '\\';
 	}
@@ -282,4 +282,28 @@ RE_TYPE ModuleFile::S_GetResourceType(const std::string& filename)
 	if (fileExtension == "tga" || fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds") return RE_TYPE::TEXTURE;
 
 	return RE_TYPE::UNDEFINED;
+}
+
+std::vector<std::string> ModuleFile::S_GetAllFiles(std::string path)
+{
+	std::vector<std::string> ret;
+
+	char** list = PHYSFS_enumerateFiles(path.c_str());
+
+	for (int i = 0; list[i] != nullptr; i++)
+	{
+		std::string dirCheck = path + "/" + list[i];
+
+		if (PHYSFS_isDirectory(dirCheck.c_str()) != 0)
+		{
+			std::vector<std::string> temp = S_GetAllFiles(dirCheck);
+			ret.insert(ret.end(), temp.begin(), temp.end());
+		}
+		else
+		{
+			ret.push_back(list[i]);
+		}
+	}
+
+	return ret;
 }

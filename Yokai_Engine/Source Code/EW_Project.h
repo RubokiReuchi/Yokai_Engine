@@ -21,4 +21,6 @@ private:
 
 	FileTree* fileTree = nullptr;
 	FileTree* currentNode = nullptr;
+
+	std::vector<std::string> allFiles;
 };

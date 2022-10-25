@@ -80,7 +80,7 @@ void Console::S_SaveLog()
     // Read all context in the _buffers and put into buffer
     auto* b = buffers->front();
 
-    for (uint i = 0; i < buffers->size(); i++, b++) buffer += *b;
+    for (int i = 0; i < buffers->size(); i++, b++) buffer += *b;
 
     // Convert string buffer to char* buffer
     uint n = buffer.size() + 1;

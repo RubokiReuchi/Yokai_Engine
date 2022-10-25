@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 #include <string>
+#include <vector>
 
 #define ASSETS_PATH "Assets/"
 
@@ -49,4 +50,6 @@ public:
 	static std::string S_GetFileName(const std::string file, bool getExtension = true);
 
 	static RE_TYPE S_GetResourceType(const std::string& filename);
+
+	static std::vector<std::string> S_GetAllFiles(std::string path);
 };

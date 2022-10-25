@@ -9,6 +9,8 @@ EW_Project::EW_Project()
 	enabled = true;
 
     fileTree = currentNode = ModuleFile::S_GetFileTree("Assets");
+    allFiles.clear();
+    allFiles = ModuleFile::S_GetAllFiles("Assets");
 }
 
 EW_Project::~EW_Project()
@@ -57,24 +59,40 @@ void EW_Project::Update()
 
     // RightBox
     ImGui::BeginChild("RightBox", ImVec2(width2, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-    for (size_t i = 0; i < currentNode->directories.size(); i++)
+    if (!filter.IsActive())
     {
-        std::string s;
-        if (currentNode->directories.at(i)->files.empty()) s = ICON_FA_FOLDER_OPEN "\n";
-        else s = ICON_FA_FOLDER_CLOSED "\n";
-        s += currentNode->directories[i]->name;
-        if (ImGui::Button(s.c_str(), ImVec2(120, 120)))
+        for (size_t i = 0; i < currentNode->directories.size(); i++)
         {
-            new_dir = currentNode->directories[i];
+            std::string s;
+            if (currentNode->directories.at(i)->files.empty()) s = ICON_FA_FOLDER_OPEN "\n";
+            else s = ICON_FA_FOLDER_CLOSED "\n";
+            s += currentNode->directories[i]->name;
+            if (ImGui::Button(s.c_str(), ImVec2(120, 120)))
+            {
+                new_dir = currentNode->directories[i];
+            }
+            ImGui::SameLine();
         }
-        ImGui::SameLine();
+        for (size_t i = 0; i < currentNode->files.size(); i++)
+        {
+            std::string s = ICON_FA_FILE "\n";
+            s += currentNode->files[i];
+            ImGui::Button(s.c_str(), ImVec2(120, 120));
+            ImGui::SameLine();
+        }
     }
-    for (size_t i = 0; i < currentNode->files.size(); i++)
+    else
     {
-        std::string s = ICON_FA_FILE "\n";
-        s += currentNode->files[i];
-        ImGui::Button(s.c_str(), ImVec2(120, 120));
-        ImGui::SameLine();
+        for (size_t i = 0; i < allFiles.size(); i++)
+        {
+            if (filter.PassFilter(allFiles[i].c_str()))
+            {
+                std::string s = ICON_FA_FILE "\n";
+                s += allFiles[i];
+                ImGui::Button(s.c_str(), ImVec2(120, 120));
+                ImGui::SameLine();
+            }
+        }
     }
     ImGui::EndChild();
     if (new_dir) currentNode = new_dir;
