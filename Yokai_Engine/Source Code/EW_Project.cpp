@@ -21,6 +21,34 @@ EW_Project::~EW_Project()
 
 void EW_Project::Update()
 {
+    if (app->file->new_file)
+    {
+        std::string safe_path = currentNode->path;
+        fileTree = currentNode = ModuleFile::S_GetFileTree("Assets");
+        FileTree* tree = currentNode;// from here
+        std::string first_folder;
+        std::string actual_path = safe_path.substr(safe_path.find_first_of("/") + 1);;
+        while (!tree->directories.empty())
+        {
+            if (actual_path == "") break;
+            size_t npos = actual_path.find_first_of("/");
+            first_folder = actual_path;
+            first_folder.erase(npos, actual_path.length());
+            for (size_t i = 0; i < tree->directories.size(); i++)
+            {
+                if (first_folder == tree->directories[i]->name)
+                {
+                    actual_path.erase(0, first_folder.length() + 1);
+                    tree = tree->directories[i];
+                }
+            }
+        } // to here, the current_node is set to the one that was before reset files
+        currentNode = tree;
+        allFiles.clear();
+        allFiles = ModuleFile::S_GetAllFiles("Assets");
+        app->file->new_file = false;
+    }
+
 	// Project
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
     FileTree* new_dir = nullptr;

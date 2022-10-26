@@ -140,92 +140,90 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 
 uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, bool append)
 {
-	uint byteCount = 0;
+	uint objCount = 0;
 
-	bool exist = S_Exists(filePath);
+	std::string fileName;
+	fileName = S_GetFileName(filePath, true);
 
-	PHYSFS_file* des = nullptr;
 
-	do
+	bool exists = S_Exists(filePath);
+
+	PHYSFS_file* filehandle = nullptr;
+	if (append)
+		filehandle = PHYSFS_openAppend(filePath.c_str());
+	else
+		filehandle = PHYSFS_openWrite(filePath.c_str());
+
+	if (filehandle != nullptr)
 	{
-		if (append)	des = PHYSFS_openAppend(filePath.c_str());
-		else des = PHYSFS_openWrite(filePath.c_str());
+		objCount = PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
 
-		if (!des)
+		if (objCount == size)
 		{
-			LOG("FILE SYSTEM: Could not open file '%s' to write. ERROR: %s", filePath.c_str(), PHYSFS_getLastError());
-			break;
+			if (exists)
+			{
+				if (append)
+				{
+					LOG("FILE SYSTEM: Append %u bytes to file '%s'", objCount, fileName.data());
+				}
+				else
+					LOG("FILE SYSTEM: File '%s' overwritten with %u bytes", fileName.data(), objCount);
+			}
+			else
+				LOG("FILE SYSTEM: New file '%s' created with %u bytes", fileName.data(), objCount);
 		}
+		else
+			LOG("FILE SYSTEM: Could not write to file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
 
-		byteCount = (uint)PHYSFS_writeBytes(des, (const void*)buffer, size);
+		if (PHYSFS_close(filehandle) == 0)
+			LOG("FILE SYSTEM: Could not close file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+	}
+	else
+		LOG("FILE SYSTEM: Could not open file '%s' to write. ERROR: %s", fileName.data(), PHYSFS_getLastError());
 
-		if (byteCount != size)
-		{
-			LOG("FILE SYSTEM: Could not write to file '%s'. ERROR: %s", filePath.c_str(), PHYSFS_getLastError());
-			break;
-		}
-
-		if (!exist)
-		{
-			LOG("FILE SYSTEM: New file '%s' created with %u bytes", filePath.c_str(), byteCount);
-			break;
-		}
-
-		if (append)
-		{
-			LOG("FILE SYSTEM: Append %u bytes to file '%s'", byteCount, filePath.c_str());
-
-			break;
-		}
-
-		LOG("FILE SYSTEM: File '%s' overwritten with %u bytes", filePath.c_str(), byteCount);
-
-	} while (false);
-
-	if (PHYSFS_close(des) == 0) LOG("FILE SYSTEM: Could not close file '%s'. ERROR: %s", filePath.c_str(), PHYSFS_getLastError());
-
-	return byteCount;
+	return objCount;
 }
 
 uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 {
-	uint byteCount = 0;
+	uint size = 0;
+	std::string outputFile;
 
-	std::string fileName = S_GetFileName(src, true);
+	std::FILE* filehandle;
+	fopen_s(&filehandle, src.c_str(), "rb");
 
-	des += fileName;
-	
-	do
+	if (filehandle != nullptr)
 	{
-		if (S_Exists(des) && !replace)
+		fseek(filehandle, 0, SEEK_END);
+		size = ftell(filehandle);
+		rewind(filehandle);
+
+		char* buffer = new char[size];
+		size = fread(buffer, 1, size, filehandle);
+		if (size > 0)
 		{
-			LOG("FILE SYSTEM: the file you want to copy is already exist and you don't want to replace this: '%s'", src.c_str());
-			break;
+			outputFile = S_GetFileName(src, true);
+			outputFile.insert(0, "/");
+			outputFile.insert(0, des);
+
+			size = S_Save(outputFile.data(), buffer, size, false);
+			if (size > 0)
+			{
+				LOG("FILE SYSTEM: Successfully copied file '%s' in dir '%s'", src, des);
+			}
+			else
+				LOG("FILE SYSTEM: Could not copy file '%s' in dir '%s'", src, des);
 		}
+		else
+			LOG("FILE SYSTEM: Could not read from file '%s'", src);
 
-		char* buffer = nullptr;
+		RELEASE_ARRAY(buffer);
+		fclose(filehandle);
+	}
+	else
+		LOG("FILE SYSTEM: Could not open file '%s' to read", src);
 
-		uint srcSize = S_Load(src, &buffer);
-
-		if (srcSize <= 0)
-		{
-			LOG("FILE SYSTEM: Could not read from file '%s'", src.c_str());
-			break;
-		}
-
-		uint desSize = S_Save(des, buffer, srcSize, false);
-
-		if (desSize <= 0)
-		{
-			LOG("FILE SYSTEM: Could not save file '%s'", src.c_str());
-			break;
-		}
-
-		LOG("FILE SYSTEM: Successfully copied source file: '%s' to the destination file: '%s'", src.c_str(), des.c_str());
-
-	} while (false);
-
-	return byteCount;
+	return size;
 }
 
 FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
@@ -253,20 +251,24 @@ FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
 
 std::string ModuleFile::S_GetFileName(const std::string file, bool getExtension)
 {
-	uint pos = file.find_last_of("/");
+	std::string fileName = file;
 
-	std::string name = file;
+	uint found = fileName.find_last_of("\\");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
 
-	if (pos != std::string::npos) name = file.substr(pos + 1, file.size() - 1);
-	else name = file;
+	found = fileName.find_last_of("//");
+	if (found != std::string::npos)
+		fileName = fileName.substr(found + 1, fileName.size());
 
 	if (!getExtension)
 	{
-		uint ePos = name.find(".");
-		if (pos != std::string::npos) name = name.substr(0, ePos);
+		found = fileName.find_last_of(".");
+		if (found != std::string::npos)
+			fileName = fileName.substr(0, found);
 	}
 
-	return name;
+	return fileName;
 }
 
 RE_TYPE ModuleFile::S_GetResourceType(const std::string& filename)

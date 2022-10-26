@@ -52,4 +52,6 @@ public:
 	static RE_TYPE S_GetResourceType(const std::string& filename);
 
 	static std::vector<std::string> S_GetAllFiles(std::string path);
+
+	bool new_file = false;
 };

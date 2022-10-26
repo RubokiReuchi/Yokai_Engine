@@ -155,4 +155,5 @@ void ModuleInput::DropFile(std::string dropped_file)
 	std::string dest = app->engine_order->editor->GetProjectWindow()->GetCurrentNodePath();
 
 	app->file->S_Copy(dropped_file, dest, false);
+	app->file->new_file = true;
 }
