@@ -49,7 +49,16 @@ void SceneCamera::UpdateCameraInput(float dt)
 
 		if (dy != 0)
 		{
+			float3 viewDir = { cameraFrustum.ViewMatrix().v[2][0],  cameraFrustum.ViewMatrix().v[2][1], cameraFrustum.ViewMatrix().v[2][2] };
+			float cosAngle = math::Dot(float3(0, 1, 0), cameraFrustum.front);
+
 			float DeltaY = math::DegToRad((float)dy * Sensitivity * 0.75f);
+
+			if (math::Abs(cosAngle) > 0.99f)
+			{
+				if (cosAngle > 0 && DeltaY > 0) DeltaY = 0;
+				if (cosAngle < 0 && DeltaY < 0) DeltaY = 0;
+			}
 
 			math::Quat rotation = Quat::identity;
 			rotation.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, DeltaY);
