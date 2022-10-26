@@ -42,7 +42,7 @@ void EW_Project::Update()
                     tree = tree->directories[i];
                 }
             }
-        } // to here, the current_node is set to the one that was before reset files
+        } // to here, the currentNode is set to the one that was before reset files
         currentNode = tree;
         allFiles.clear();
         allFiles = ModuleFile::S_GetAllFiles("Assets");
@@ -143,9 +143,11 @@ std::string EW_Project::GetCurrentNodePath()
     return currentNode->path;
 }
 
-void EW_Project::DrawTreeNode(const FileTree* node) const
+void EW_Project::DrawTreeNode(FileTree* node)
 {
-    if (ImGui::TreeNodeEx(node->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow))
+    bool opened = ImGui::TreeNodeEx(node->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow);
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) currentNode = node;
+    if (opened)
     {
         for (size_t i = 0; i < node->directories.size(); i++)
         {

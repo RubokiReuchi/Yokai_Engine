@@ -16,7 +16,7 @@ public:
 	std::string GetCurrentNodePath();
 
 private:
-	void DrawTreeNode(const FileTree* node)const;
+	void DrawTreeNode(FileTree* node);
 
 	ImGuiTextFilter filter;
 
