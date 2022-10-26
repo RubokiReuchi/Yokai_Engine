@@ -17,7 +17,6 @@ public:
 
 private:
 	void DrawTreeNode(const FileTree* node)const;
-	void OnDrop(std::string filePath);
 
 	ImGuiTextFilter filter;
 

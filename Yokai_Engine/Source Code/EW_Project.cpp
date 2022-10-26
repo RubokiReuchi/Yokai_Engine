@@ -158,18 +158,3 @@ void EW_Project::DrawTreeNode(const FileTree* node) const
         ImGui::TreePop();
     }
 }
-
-void EW_Project::OnDrop(std::string filePath)
-{
-    std::string ret = ModuleFile::S_NormalizePath(filePath);
-
-    ModuleFile::S_Copy(ret, currentNode->path);
-
-    currentNode->files.push_back(ModuleFile::S_GetFileName(ret));
-
-    //RELEASE(fileTree);
-
-    //fileTree = ModuleFiles::S_GetFileTree("Assets");
-
-    //currentNode = fileTree;
-}

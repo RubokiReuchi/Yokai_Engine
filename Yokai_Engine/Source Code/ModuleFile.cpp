@@ -88,7 +88,9 @@ bool ModuleFile::S_AddPathToFileSystem(const std::string path)
 		LOG("File System error while adding a path or zip: %s\n", PHYSFS_getLastError());
 	}
 	else
+	{
 		ret = true;
+	}
 
 	return ret;
 }
@@ -104,7 +106,6 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 		if (!fsFile)
 		{
 			LOG("File System error while opening file %s: %s\n", filePath.c_str(), PHYSFS_getLastError());
-
 			break;
 		}
 
@@ -113,7 +114,6 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 		if (size <= 0)
 		{
 			LOG("File System error while reading from file %s: %s\n", filePath.c_str(), PHYSFS_getLastError());
-
 			break;
 		}
 
@@ -149,10 +149,8 @@ uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, boo
 	bool exists = S_Exists(filePath);
 
 	PHYSFS_file* filehandle = nullptr;
-	if (append)
-		filehandle = PHYSFS_openAppend(filePath.c_str());
-	else
-		filehandle = PHYSFS_openWrite(filePath.c_str());
+	if (append) filehandle = PHYSFS_openAppend(filePath.c_str());
+	else filehandle = PHYSFS_openWrite(filePath.c_str());
 
 	if (filehandle != nullptr)
 	{
@@ -167,19 +165,29 @@ uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, boo
 					LOG("FILE SYSTEM: Append %u bytes to file '%s'", objCount, fileName.data());
 				}
 				else
+				{
 					LOG("FILE SYSTEM: File '%s' overwritten with %u bytes", fileName.data(), objCount);
+				}
 			}
 			else
+			{
 				LOG("FILE SYSTEM: New file '%s' created with %u bytes", fileName.data(), objCount);
+			}
 		}
 		else
+		{
 			LOG("FILE SYSTEM: Could not write to file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+		}
 
 		if (PHYSFS_close(filehandle) == 0)
+		{
 			LOG("FILE SYSTEM: Could not close file '%s'. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+		}
 	}
 	else
+	{
 		LOG("FILE SYSTEM: Could not open file '%s' to write. ERROR: %s", fileName.data(), PHYSFS_getLastError());
+	}
 
 	return objCount;
 }
@@ -212,16 +220,22 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 				LOG("FILE SYSTEM: Successfully copied file '%s' in dir '%s'", src, des);
 			}
 			else
+			{
 				LOG("FILE SYSTEM: Could not copy file '%s' in dir '%s'", src, des);
+			}
 		}
 		else
+		{
 			LOG("FILE SYSTEM: Could not read from file '%s'", src);
+		}
 
 		RELEASE_ARRAY(buffer);
 		fclose(filehandle);
 	}
 	else
+	{
 		LOG("FILE SYSTEM: Could not open file '%s' to read", src);
+	}
 
 	return size;
 }
