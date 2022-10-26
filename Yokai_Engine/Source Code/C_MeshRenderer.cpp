@@ -38,25 +38,32 @@ void C_MeshRenderer::OnEditor()
 			id_names.push_back(std::to_string(loaded_tex.first));
 		}
 		
-		if (ImGui::BeginCombo("Select Texture", std::to_string(selected_texture).c_str(), ImGuiComboFlags_HeightSmall))
+		if (ImGui::BeginCombo("Select Texture", selected_texture.c_str(), ImGuiComboFlags_HeightSmall))
 		{
-			bool is_selected = (std::to_string(selected_texture) == "-1");
-			if (ImGui::Selectable("-1", is_selected))
+			bool is_selected = (selected_texture == "Default");
+			if (ImGui::Selectable("Default", is_selected))
 			{
-				selected_texture = std::stoi("-1");
+				selected_texture = "Default";
 				if (is_selected) ImGui::SetItemDefaultFocus();
 				GetMesh().texture_id = -1;
 				GetMesh().OpenGL_texture_id = -1;
 			}
-			for (size_t i = 0; i < id_names.size(); i++)
+			int i = 0;
+			for (auto& texture : M_Texture::loaded_textures)
 			{
-				is_selected = (std::to_string(selected_texture) == id_names[i]);
-				if (ImGui::Selectable(id_names[i].c_str(), is_selected))
+				size_t npos = texture.second.name.find_last_of("/") + 1;
+				std::string file_name = texture.second.name;
+				file_name = file_name.substr(npos);
+				npos = file_name.find_last_of(".");
+				file_name.erase(npos, 9);
+				is_selected = (selected_texture == file_name);
+				if (ImGui::Selectable(file_name.c_str(), is_selected))
 				{
-					selected_texture = std::stoi(id_names[i]);
+					selected_texture = file_name;
 					if (is_selected) ImGui::SetItemDefaultFocus();
-					GetMesh().texture_id = selected_texture;
+					GetMesh().texture_id = std::stoi(id_names[i]);
 				}
+				i++;
 			}
 			ImGui::EndCombo();
 		}
