@@ -23,9 +23,6 @@ public:
 	~Re_Mesh();
 
 	void InitAsMeshInformation(float3 position, float3 scale);
-	void InitAsCube(float3 position, float3 scale);
-	void InitAsSphere(float3 position, float3 scale);
-
 	void InitAsMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices, float3 pos, float3 scale);
 
 	void Update();

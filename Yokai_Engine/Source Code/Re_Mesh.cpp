@@ -37,64 +37,6 @@ void Re_Mesh::InitAsMeshInformation(float3 position, float3 scale)
 	this->scale = scale;
 }
 
-void Re_Mesh::InitAsCube(float3 position, float3 scale)
-{
-	this->position = position;
-	this->scale = scale;
-
-	vertices = new std::vector<Vertex>(8);
-
-	vertices->at(0).position = float3(-0.5, 0.5, 0.5);
-	vertices->at(1).position = float3(-0.5, -0.5, 0.5);
-	vertices->at(2).position = float3(0.5, 0.5, 0.5);
-	vertices->at(3).position = float3(0.5, -0.5, 0.5);
-	vertices->at(4).position = float3(-0.5, 0.5, -0.5);
-	vertices->at(5).position = float3(-0.5, -0.5, -0.5);
-	vertices->at(6).position = float3(0.5, 0.5, -0.5);
-	vertices->at(7).position = float3(0.5, -0.5, -0.5);
-
-	indices = new std::vector<uint>
-	{
-	  0, 2, 3, 0, 3, 1,
-	  2, 6, 7, 2, 7, 3,
-	  6, 4, 5, 6, 5, 7,
-	  4, 0, 1, 4, 1, 5,
-	  0, 4, 6, 0, 6, 2,
-	  1, 5, 7, 1, 7, 3,
-	};
-}
-
-void Re_Mesh::InitAsSphere(float3 position, float3 scale)
-{
-	this->position = position;
-	this->scale = scale;
-
-	int rings = 12;
-	int sectors = 24;
-	int radius = 1;
-
-	float const R = (float)1. / (float)(rings - 1);
-	float const S = (float)1. / (float)(sectors - 1);
-
-	vertices = new std::vector<Vertex>(rings * sectors);
-	indices = new std::vector<uint>(rings * sectors * 4);
-
-	int counter = 0;
-
-	for (int r = 0; r < rings; r++) for (int s = 0; s < sectors; s++)
-	{
-		float const y = (float)sin(-M_PI_2 + M_PI * r * R);
-		float const x = (float)cos(2 * M_PI * s * S) * (float)sin(M_PI * r * R);
-		float const z = (float)sin(2 * M_PI * s * S) * (float)sin(M_PI * r * R);
-
-		vertices->at(counter).position.x = x * radius;
-		vertices->at(counter).position.y = y * radius;
-		vertices->at(counter).position.z = z * radius;
-		counter++;
-		if (r < rings - 1) push_indices(*indices, sectors, r, s);
-	}
-}
-
 void Re_Mesh::Update()
 {
 	if (M_Texture::loaded_textures.find(texture_id) != M_Texture::loaded_textures.end()) // check if texture is loaded

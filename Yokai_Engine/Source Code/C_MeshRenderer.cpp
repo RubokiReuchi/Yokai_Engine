@@ -74,45 +74,6 @@ void C_MeshRenderer::OnEditor()
 	}
 }
 
-void C_MeshRenderer::InitAsDefaultCube(float3 position, float3 scale)
-{
-	mesh_id = 0;
-	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
-
-	if (!manager->initialized)
-	{
-		Re_Mesh cube;
-		cube.InitAsCube(position, scale);
-		instance_id = manager->SetMeshInformation(cube);
-	}
-	else
-	{
-		Re_Mesh meshInfo;
-		meshInfo.InitAsMeshInformation(position, scale);
-		instance_id = manager->AddMesh(meshInfo);
-	}
-}
-
-void C_MeshRenderer::InitAsDefaultSphere(float3 position, float3 scale)
-{
-	mesh_id = 1;
-	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
-
-
-	if (!manager->initialized)
-	{
-		Re_Mesh sphere;
-		sphere.InitAsSphere(position, scale);
-		instance_id = manager->SetMeshInformation(sphere);
-	}
-	else
-	{
-		Re_Mesh meshInfo;
-		meshInfo.InitAsMeshInformation(position, scale);
-		instance_id = manager->AddMesh(meshInfo);
-	}
-}
-
 void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 {
 	this->mesh_id = mesh_id + 2;
@@ -123,12 +84,6 @@ void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
 	instanceMesh.InitAsMeshInformation({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	instance_id = manager->AddMesh(instanceMesh);
-
-	//TODO: determine how this funciton will be called. 
-	// The body of this funciton should:
-	// Acces the ModelRenderManager to check if the given mesh has already been loaded.
-	// Create an instance inside the RenderManager in ModelRenderManager that manages this unique Mesh.
-	// Get an ID to access that instance, so its attributes can be dynamically changed from this component.
 }
 
 void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices)
