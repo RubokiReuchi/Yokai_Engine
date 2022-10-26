@@ -53,10 +53,11 @@ void EO_Editor::Start()
 	
 
 	// Setup font
-	io.Fonts->AddFontDefault();
+	default_font = io.Fonts->AddFontDefault();
 	static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
 	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-	io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 10.0f, &icons_config, icons_ranges);
+	io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 10.0f, &icons_config, icons_ranges); // icons font
+	arial_font_30 = io.Fonts->AddFontFromFileTTF("Assets/Fonts/arial-regular.ttf", 30.0f);
 
 	// Init OpenGL
 	const char* glsl_version = "#version 130";

@@ -81,15 +81,54 @@ void EW_Scene::Update()
 			{
 			case RE_TYPE::MESH:
 				MeshImporter::LoadMesh(dd_file);
+				app->engine_order->editor->message = "Mesh placed";
 				break;
 			case RE_TYPE::TEXTURE:
 				TextureImporter::ImportTextureSTBI(dd_file);
+				app->engine_order->editor->message = "Texture Loaded";
 				break;
 			case RE_TYPE::UNDEFINED:
+				app->engine_order->editor->message = "Undefined file extension";
 				break;
 			}
+			popUp = true;
+			popUp_cd = 0;
+			ImGui::OpenPopup("Message");
+
 		}
 		ImGui::EndDragDropTarget();
+	}
+
+	if (popUp)
+	{
+		popUp_cd++;
+		if (popUp_cd > 23)
+		{
+			float new_alpha = (255 - ((popUp_cd - 23) * 2)) / 255.0f;
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, new_alpha);
+		}
+		else
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 1.0f);
+		}
+		ImGui::SetNextWindowPos(ImVec2(ImGui::GetWindowPos().x + (ImGui::GetWindowSize().x / 2) - 150, ImGui::GetWindowPos().y + (ImGui::GetWindowSize().y / 2) - 75));
+		ImGui::SetNextWindowSize(ImVec2(300, 150));
+		if (ImGui::BeginPopup("Message"))
+		{
+			ImGui::PushFont(app->engine_order->editor->arial_font_30);
+			ImVec2 text_size = ImVec2(ImGui::CalcTextSize(app->engine_order->editor->message.c_str()).x, ImGui::CalcTextSize(app->engine_order->editor->message.c_str()).y);
+			ImGui::SetCursorPos(ImVec2((ImGui::GetWindowSize().x - text_size.x) * 0.5f, (ImGui::GetWindowSize().y - text_size.y) * 0.5f));
+			ImGui::Text(app->engine_order->editor->message.c_str());
+			ImGui::PopFont();
+			ImGui::EndPopup();
+		}
+		ImGui::PopStyleVar();
+		if (popUp_cd >= 150)
+		{
+			popUp = false;
+			popUp_cd = 0;
+			app->engine_order->editor->message = "";
+		}
 	}
 	ImGui::End();
 }

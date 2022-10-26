@@ -43,7 +43,12 @@ public:
 		return selected_go;
 	}
 
+	// Fonts
+	ImFont* default_font;
+	ImFont* arial_font_30;
+
 	std::string dd_file = ""; // drag and drop
+	std::string message = "";
 	EW_Project* GetProjectWindow()
 	{
 		return dynamic_cast<EW_Project*>(editor_windows[(uint)EW_TYPE::PROJECT]);

@@ -22,4 +22,7 @@ private:
 	SceneCamera* scene_camera = nullptr;
 	int scene_width, scene_height;
 
+	bool popUp = false;
+	int popUp_cd = 0;
+
 };
