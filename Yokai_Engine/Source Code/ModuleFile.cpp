@@ -154,7 +154,7 @@ uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, boo
 
 	if (filehandle != nullptr)
 	{
-		objCount = PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
+		objCount = (uint)PHYSFS_writeBytes(filehandle, (const void*)buffer, size);
 
 		if (objCount == size)
 		{

@@ -32,7 +32,34 @@ void C_MeshRenderer::OnEditor()
 	}
 	if (no_collapsed)
 	{
+		std::vector<std::string> id_names;
+		for (auto& loaded_tex : M_Texture::loaded_textures)
+		{
+			id_names.push_back(std::to_string(loaded_tex.first));
+		}
 		
+		if (ImGui::BeginCombo("Select Texture", std::to_string(selected_texture).c_str(), ImGuiComboFlags_HeightSmall))
+		{
+			bool is_selected = (std::to_string(selected_texture) == "-1");
+			if (ImGui::Selectable("-1", is_selected))
+			{
+				selected_texture = std::stoi("-1");
+				if (is_selected) ImGui::SetItemDefaultFocus();
+				GetMesh().texture_id = -1;
+				GetMesh().OpenGL_texture_id = -1;
+			}
+			for (size_t i = 0; i < id_names.size(); i++)
+			{
+				is_selected = (std::to_string(selected_texture) == id_names[i]);
+				if (ImGui::Selectable(id_names[i].c_str(), is_selected))
+				{
+					selected_texture = std::stoi(id_names[i]);
+					if (is_selected) ImGui::SetItemDefaultFocus();
+					GetMesh().texture_id = selected_texture;
+				}
+			}
+			ImGui::EndCombo();
+		}
 	}
 	if (popUpOpen)
 	{

@@ -26,4 +26,6 @@ public:
 private:
 	uint mesh_id;
 	uint instance_id;
+
+	int selected_texture = -1;
 };

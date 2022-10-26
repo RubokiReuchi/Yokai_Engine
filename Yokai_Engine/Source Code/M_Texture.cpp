@@ -1,4 +1,6 @@
 #include "M_Texture.h"
+#include "Application.h"
+#include "ModuleEngineOrder.h"
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilut.h"
 #include "TextureImporter.h"

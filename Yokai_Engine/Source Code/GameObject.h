@@ -127,6 +127,5 @@ private:
 
 	uint id = 0; // ID =  0 is an invalid ID. First ID is 1
 
-	//friend class C_Transform;
 	friend class EW_Hierarchy;
 };

@@ -83,6 +83,7 @@ void EW_Scene::Update()
 				MeshImporter::LoadMesh(dd_file);
 				break;
 			case RE_TYPE::TEXTURE:
+				TextureImporter::ImportTextureSTBI(dd_file);
 				break;
 			case RE_TYPE::UNDEFINED:
 				break;
