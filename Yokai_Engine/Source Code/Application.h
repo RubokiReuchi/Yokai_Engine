@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "Timer.h"
+#include "Console.h"
 #include "Module.h"
 #include "ModuleFile.h"
 #include "ModuleWindow.h"

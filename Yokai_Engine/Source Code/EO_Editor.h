@@ -3,6 +3,7 @@
 #include "EO_Base.h"
 #include "EditorWindow.h"
 #include "EW_Project.h"
+#include "EW_Console.h"
 
 class GameObject;
 class EW_Project;
@@ -47,6 +48,7 @@ public:
 	ImFont* default_font;
 	ImFont* arial_font_30;
 
+	// drag and drop
 	std::string dd_file = ""; // drag and drop
 	std::string message = "";
 	EW_Project* GetProjectWindow()

@@ -9,6 +9,12 @@ EW_Console::EW_Console()
 	Console::S_Init();
 
 	Console::S_Log("Window Console Start");
+
+	Console::S_Log("PHYSFS::Inizializated");
+
+	Console::S_Log("ImGui::Inizializated");
+
+	Console::S_Log("DevIL::Inizializated");
 }
 
 EW_Console::~EW_Console()
