@@ -114,79 +114,74 @@ bool EO_Editor::SetMenuBar()
 	bool exit = false;
 
 	// Top Bar
-	ImGui::Begin("Yokai_Engine", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-		ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_MenuBar);
-	if (ImGui::BeginMenuBar())
+	ImGui::BeginMainMenuBar();
+	if (ImGui::BeginMenu("File"))
 	{
-		if (ImGui::BeginMenu("File"))
-		{
-			if (ImGui::MenuItem("New"))
-			{
-
-			}
-			if (ImGui::MenuItem("Open"))
-			{
-
-			}
-			if (ImGui::MenuItem("Save"))
-			{
-
-			}
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Edit"))
+		if (ImGui::MenuItem("New"))
 		{
 
-			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("View"))
+		if (ImGui::MenuItem("Open"))
 		{
-			ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe);
 
-			if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
-				(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-
-			if (ImGui::Checkbox("Cull Face", &app->renderer3D->cull_face))
-				(app->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-
-			if (ImGui::Checkbox("Lighting", &app->renderer3D->lighting))
-				(app->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
-
-			if (ImGui::Checkbox("Color Material", &app->renderer3D->color_material))
-				(app->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
-
-			if (ImGui::Checkbox("Texture 2D", &app->renderer3D->texture_2d))
-				(app->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
-			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Windows"))
+		if (ImGui::MenuItem("Save"))
 		{
-			for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
-			{
-				if (i != (uint)EW_TYPE::ABOUT) // about goes in help
-				{
-					ImGui::Checkbox(editor_windows[i]->window_name.c_str(), &editor_windows[i]->enabled);
-				}
-			}
-			ImGui::EndMenu();
+
 		}
-		if (ImGui::BeginMenu("Settings"))
-		{
-			ImGui::Checkbox("Vsync", &app->renderer3D->vsync);
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Help"))
-		{
-			ImGui::Checkbox(editor_windows[(uint)EW_TYPE::ABOUT]->window_name.c_str(), &editor_windows[(uint)EW_TYPE::ABOUT]->enabled);
-			ImGui::EndMenu();
-		}
-		if (ImGui::MenuItem("Exit"))
-		{
-			exit = true; // close window
-		}
-		ImGui::EndMenuBar();
+		ImGui::EndMenu();
 	}
-	ImGui::End();
+	if (ImGui::BeginMenu("Edit"))
+	{
+
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("View"))
+	{
+		ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe);
+
+		if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
+			(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+
+		if (ImGui::Checkbox("Cull Face", &app->renderer3D->cull_face))
+			(app->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+
+		if (ImGui::Checkbox("Lighting", &app->renderer3D->lighting))
+			(app->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
+
+		if (ImGui::Checkbox("Color Material", &app->renderer3D->color_material))
+			(app->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
+
+		if (ImGui::Checkbox("Texture 2D", &app->renderer3D->texture_2d))
+			(app->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Windows"))
+	{
+		for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)
+		{
+			if (i != (uint)EW_TYPE::ABOUT) // about goes in help
+			{
+				ImGui::Checkbox(editor_windows[i]->window_name.c_str(), &editor_windows[i]->enabled);
+			}
+		}
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Settings"))
+	{
+		ImGui::Checkbox("Vsync", &app->renderer3D->vsync);
+		ImGui::EndMenu();
+	}
+	if (ImGui::BeginMenu("Help"))
+	{
+		ImGui::Checkbox(editor_windows[(uint)EW_TYPE::ABOUT]->window_name.c_str(), &editor_windows[(uint)EW_TYPE::ABOUT]->enabled);
+		ImGui::EndMenu();
+	}
+	if (ImGui::MenuItem("Exit"))
+	{
+		exit = true; // close window
+	}
+	ImGui::EndMainMenuBar();
 
 	// update enabled windows
 	for (int i = 0; i < (uint)EW_TYPE::NUM_EW_TYPE; i++)

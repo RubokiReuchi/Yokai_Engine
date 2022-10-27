@@ -39,9 +39,9 @@ void Re_Mesh::InitAsMeshInformation(float3 position, float3 scale)
 
 void Re_Mesh::Update()
 {
-	if (M_Texture::loaded_textures.find(texture_id) != M_Texture::loaded_textures.end()) // check if texture is loaded
+	if (M_Texture::loaded_textures.find((uint)texture_id) != M_Texture::loaded_textures.end()) // check if texture is loaded
 	{
-		OpenGL_texture_id = M_Texture::BindTexture(texture_id);
+		OpenGL_texture_id = M_Texture::BindTexture((uint)texture_id);
 	}
 
 	if (!update_matrix) return;

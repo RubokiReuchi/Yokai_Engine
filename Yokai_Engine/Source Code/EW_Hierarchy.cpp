@@ -21,7 +21,7 @@ EW_Hierarchy::~EW_Hierarchy()
 void EW_Hierarchy::Update()
 {
     // Hierarchy
-    ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
     
     if (ImGui::Button(ICON_FA_FOLDER_PLUS "  Create new Game Object", ImVec2(ImGui::GetWindowWidth(), 25)))
     {

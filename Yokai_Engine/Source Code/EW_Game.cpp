@@ -15,7 +15,7 @@ EW_Game::~EW_Game()
 void EW_Game::Update()
 {
 	// Screen
-	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 
 	currentGameCamera->active = true;
 	app->camera->updateGameCamera = (bool)ImGui::IsWindowHovered();

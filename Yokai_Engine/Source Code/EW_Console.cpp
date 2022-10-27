@@ -26,7 +26,7 @@ void EW_Console::Update()
 {
 	// Console
 	static int num = 0;
-	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	if (ImGui::SmallButton("Save Log"))
 	{
 		Console::S_SaveLog();

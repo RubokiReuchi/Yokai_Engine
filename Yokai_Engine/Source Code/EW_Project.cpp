@@ -50,7 +50,7 @@ void EW_Project::Update()
     }
 
 	// Project
-	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse);
     FileTree* new_dir = nullptr;
 
     // Filter

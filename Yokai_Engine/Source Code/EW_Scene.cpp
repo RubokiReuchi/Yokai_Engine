@@ -23,7 +23,7 @@ EW_Scene::~EW_Scene()
 void EW_Scene::Update()
 {
 	// Screen
-	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	
 	scene_camera->active = true;
 	app->camera->updateSceneCamera = (bool)ImGui::IsWindowHovered();

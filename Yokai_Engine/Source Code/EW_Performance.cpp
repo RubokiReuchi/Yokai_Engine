@@ -38,7 +38,7 @@ void EW_Performance::Update()
 
 	frames->push_back(ImGui::GetIO().Framerate);
 
-	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	if (ImGui::CollapsingHeader("Frame Rate", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::PlotHistogram("##Framerate", frames->front(), frames->size(), 0, framerate.c_str(), 0.0f, 160.0f, ImVec2(300, 160));
@@ -49,12 +49,30 @@ void EW_Performance::Update()
 	}
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::TextWrapped("Window Width:"); ImGui::SameLine();
-		ImGui::TextColored(ImVec4(255, 255, 0, 255), std::to_string(*windowWidth).c_str());
+		std::string w_size = std::to_string(app->window->width) + "x" + std::to_string(app->window->height);
+		std::string display_options[] = { "1280x720", "1920x1080" };
+		ImGui::TextWrapped("Window Size:"); ImGui::SameLine();
+		if (ImGui::BeginCombo("##Window Size", w_size.c_str()))
+		{
+			for (size_t i = 0; i < 2; i++)
+			{
+				bool is_selected = (w_size == display_options[i]);
+				if (ImGui::Selectable(display_options[i].c_str(), is_selected))
+				{
+					size_t npos = display_options[i].find_last_of("x") + 1;
+					std::string value = display_options[i];
+					app->window->height = stoi(value.substr(npos));
+					app->window->width = stoi(value.erase(npos, 9));
+					if (is_selected) ImGui::SetItemDefaultFocus();
+					SDL_SetWindowSize(app->window->window, app->window->width, app->window->height);
+					SDL_DisplayMode DM;
+					SDL_GetCurrentDisplayMode(0, &DM);
+					SDL_SetWindowPosition(app->window->window, (DM.w - app->window->width) / 2, (DM.h - app->window->height) / 2);
+				}
+			}
+			ImGui::EndCombo();
+		}
 
-		ImGui::TextWrapped("Window Height:"); ImGui::SameLine();
-		ImGui::TextColored(ImVec4(255, 255, 0, 255), std::to_string(*windowHeight).c_str()); ImGui::SameLine();
-		ImGui::Spacing();
 		ImGui::Checkbox("VSync", isVSyncOn);
 		app->renderer3D->ToggleVSync(*isVSyncOn);
 	}
