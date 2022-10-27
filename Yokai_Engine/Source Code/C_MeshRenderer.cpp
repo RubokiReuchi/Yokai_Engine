@@ -36,6 +36,15 @@ void C_MeshRenderer::OnEditor()
 		for (auto& loaded_tex : M_Texture::loaded_textures)
 		{
 			id_names.push_back(std::to_string(loaded_tex.first));
+			if (GetMesh().texture_id != 0 && GetMesh().texture_id == loaded_tex.first)
+			{
+				size_t npos = loaded_tex.second.name.find_last_of("/") + 1;
+				std::string file_name = loaded_tex.second.name;
+				file_name = file_name.substr(npos);
+				npos = file_name.find_last_of(".");
+				file_name.erase(npos, 9);
+				selected_texture = file_name;
+			}
 		}
 		
 		if (ImGui::BeginCombo("Select Texture", selected_texture.c_str(), ImGuiComboFlags_HeightSmall))
@@ -67,6 +76,11 @@ void C_MeshRenderer::OnEditor()
 			}
 			ImGui::EndCombo();
 		}
+
+		ImGui::Text("Visible: "), ImGui::SameLine();
+		if (GetMesh().visible) ImGui::Text("True");
+		else ImGui::Text("False");
+		
 	}
 	if (popUpOpen)
 	{

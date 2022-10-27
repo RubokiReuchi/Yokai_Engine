@@ -84,7 +84,7 @@ void EW_Scene::Update()
 				app->engine_order->editor->message = "Mesh placed";
 				break;
 			case RE_TYPE::TEXTURE:
-				TextureImporter::ImportTextureSTBI(dd_file);
+				dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh().texture_id = TextureImporter::ImportTextureSTBI(dd_file);
 				app->engine_order->editor->message = "Texture Loaded";
 				break;
 			case RE_TYPE::UNDEFINED:

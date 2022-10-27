@@ -44,7 +44,7 @@ public:
 	float4x4 model_matrix = model_matrix.identity;
 
 	float OpenGL_texture_id = -1;
-	uint texture_id = -1;
+	uint texture_id = 0;
 
 	bool visible = true;
 	bool visible_on_editor = true;
