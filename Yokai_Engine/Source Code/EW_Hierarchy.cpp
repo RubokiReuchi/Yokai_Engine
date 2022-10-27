@@ -64,19 +64,7 @@ void EW_Hierarchy::Update()
             }
             if (ImGui::CollapsingHeader("Lights"))
             {
-                int selectedShape = 0;
-                std::string shapeNames[numPrimitives] = { "Plane", "Cube", "Sphere", "Cylinder", "Cone" };
-
-                ImGui::Separator();
-                for (int i = 0; i < numPrimitives; i++)
-                {
-                    if (ImGui::Selectable(shapeNames[i].c_str(), false, 0, ImVec2(200, 15)))
-                    {
-                        selectedShape = i;
-                        //app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
-                        popUpOpen = false;
-                    }
-                }
+                
             }
             ImGui::EndPopup();
         }

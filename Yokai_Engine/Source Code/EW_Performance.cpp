@@ -50,11 +50,11 @@ void EW_Performance::Update()
 	if (ImGui::CollapsingHeader("Window", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		std::string w_size = std::to_string(app->window->width) + "x" + std::to_string(app->window->height);
-		std::string display_options[] = { "1280x720", "1920x1080" };
+		std::string display_options[] = { "1280x720", "1920x1080", "2560x1440", "3840x2160" };
 		ImGui::TextWrapped("Window Size:"); ImGui::SameLine();
 		if (ImGui::BeginCombo("##Window Size", w_size.c_str()))
 		{
-			for (size_t i = 0; i < 2; i++)
+			for (size_t i = 0; i < 4; i++)
 			{
 				bool is_selected = (w_size == display_options[i]);
 				if (ImGui::Selectable(display_options[i].c_str(), is_selected))

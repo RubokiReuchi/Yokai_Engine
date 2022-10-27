@@ -48,6 +48,7 @@ void EO_Editor::Start()
 	}
 
 	io.IniFilename = "Config/settings.ini";
+	io.ConfigWindowsMoveFromTitleBarOnly;
 
 	// Setup ImGui style
 	
@@ -179,7 +180,26 @@ bool EO_Editor::SetMenuBar()
 		ImGui::Checkbox(editor_windows[(uint)EW_TYPE::ABOUT]->window_name.c_str(), &editor_windows[(uint)EW_TYPE::ABOUT]->enabled);
 		ImGui::EndMenu();
 	}
-	if (ImGui::MenuItem("Exit"))
+	ImGui::SameLine(ImGui::GetWindowWidth() - 80);
+	if (ImGui::MenuItem(ICON_FA_WINDOW_MINIMIZE))
+	{
+		SDL_MinimizeWindow(app->window->window);
+	}
+	if (SDL_GetWindowFlags(app->window->window) & SDL_WINDOW_FULLSCREEN_DESKTOP)
+	{
+		if (ImGui::MenuItem(ICON_FA_WINDOW_RESTORE))
+		{
+			SDL_SetWindowFullscreen(app->window->window, 0);
+		}
+	}
+	else
+	{
+		if (ImGui::MenuItem(ICON_FA_WINDOW_MAXIMIZE))
+		{
+			SDL_SetWindowFullscreen(app->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+	}
+	if (ImGui::MenuItem(ICON_FA_XMARK))
 	{
 		exit = true; // close window
 	}

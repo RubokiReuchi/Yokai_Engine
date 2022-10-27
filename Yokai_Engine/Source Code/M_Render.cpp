@@ -27,7 +27,7 @@ uint M_Render::SetMeshInformation(Re_Mesh& mesh)
     Re_Mesh firstMesh;
     firstMesh.InitAsMeshInformation(mesh.position, mesh.scale);
 
-    mesh.CleanUp(); // Destroy the original vertex and index data (now it is stored inside this render manager).
+    mesh.CleanUp(); // Destroy the original vertex and index data (now it is stored inside this render manager)
     initialized = true;
 
     return AddMesh(firstMesh); // Adds a copy of the original mesh into the mesh list.

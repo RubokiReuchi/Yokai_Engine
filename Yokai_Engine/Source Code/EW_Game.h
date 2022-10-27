@@ -20,5 +20,5 @@ public:
 private:
 
 	Camera* currentGameCamera = nullptr;
-	int game_width, game_height;
+	float game_width, game_height;
 };
