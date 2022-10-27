@@ -35,6 +35,11 @@ public:
 
 	void SetTransform(float3 pos, float3 s, float3 rot);
 
+	void ShowNormals(int normals)
+	{
+		show_normals = normals;
+	}
+
 	float3 position;
 	float3 rotation;
 	float3 scale;
@@ -48,6 +53,8 @@ public:
 
 	bool visible = true;
 	bool visible_on_editor = true;
+	int show_normals = 0;
+
 private:
 	bool update_matrix = true;
 };

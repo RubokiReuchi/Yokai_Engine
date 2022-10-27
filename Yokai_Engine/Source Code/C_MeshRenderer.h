@@ -26,4 +26,5 @@ private:
 	uint instance_id;
 
 	std::string selected_texture = "Default";
+	int selected_normal = 0;
 };

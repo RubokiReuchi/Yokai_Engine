@@ -80,7 +80,22 @@ void C_MeshRenderer::OnEditor()
 		ImGui::Text("Visible: "), ImGui::SameLine();
 		if (GetMesh().visible) ImGui::Text("True");
 		else ImGui::Text("False");
-		
+
+		std::string display_options[] = {"None", "Vertex Normals", "Face Normals"};
+		if (ImGui::BeginCombo("Display Normals", display_options[selected_normal].c_str(), ImGuiComboFlags_HeightSmall))
+		{
+			for (size_t i = 0; i < 3; i++)
+			{
+				bool is_selected = (selected_normal == i);
+				if (ImGui::Selectable(display_options[i].c_str(), is_selected))
+				{
+					selected_normal = i;
+					if (is_selected) ImGui::SetItemDefaultFocus();
+					GetMesh().show_normals = selected_normal;
+				}
+			}
+			ImGui::EndCombo();
+		}
 	}
 	if (popUpOpen)
 	{

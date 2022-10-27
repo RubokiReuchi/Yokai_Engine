@@ -6,6 +6,7 @@
 M_Render::M_Render()
 {
     basic_shader = new Re_Shader("../Source Code/shaders/basic.vertex.shader", "../Source Code/shaders/basic.fragment.shader");
+    line_shader = new Re_Shader("../Source Code/shaders/lines.vertex.shader", "../Source Code/shaders/lines.fragment.shader");
 }
 
 M_Render::~M_Render()
@@ -21,6 +22,7 @@ uint M_Render::SetMeshInformation(Re_Mesh& mesh)
     this->total_indices.insert(total_indices.begin(), mesh.indices->begin(), mesh.indices->end());
 
     CreateBuffers();
+    CreateNormalsDisplayBuffer();
 
     Re_Mesh firstMesh;
     firstMesh.InitAsMeshInformation(mesh.position, mesh.scale);
@@ -96,7 +98,16 @@ void M_Render::Draw()
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
     glBindVertexArray(0);
 
-    // Reset model matrices.
+    // Drawing normals for every mesh instance
+    int index = 0;
+    for (auto& mesh : meshes)
+    {
+        if (mesh.second.show_normals == 1) DrawVertexNormals(index);
+        else if (mesh.second.show_normals == 2) DrawFaceNormals(index);
+        index++;
+    }
+
+    // Reset model matrices
     model_matrices.clear();
     texture_ids.clear();
     M_Texture::UnBindTextures();
@@ -185,4 +196,120 @@ void M_Render::CreateBuffers()
     glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
+}
+
+void M_Render::CreateNormalsDisplayBuffer()
+{
+    {
+        vertexNormalsDisplay.resize(total_vertices.size() * 2);
+
+        float lineMangitude = 1.0f;
+
+        int j = 0;
+        for (size_t i = 0; i < total_vertices.size() * 2; i++)
+        {
+            if (i % 2 == 0)
+            {
+                vertexNormalsDisplay[i] = total_vertices[j].position;
+            }
+            else
+            {
+                vertexNormalsDisplay[i] = (total_vertices[j].position + total_vertices[j].normals) * lineMangitude;
+                j++;
+            }
+
+        }
+
+        glGenVertexArrays(1, &VertexLineVAO);
+        glBindVertexArray(VertexLineVAO);
+
+        // Create Vertex Buffer Object
+        glGenBuffers(1, &VertexLineVBO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, VertexLineVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * vertexNormalsDisplay.size(), &vertexNormalsDisplay[0], GL_STATIC_DRAW);
+
+        // vertex positions
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+        glBindVertexArray(0);
+    }
+
+    {
+        faceNormalsDisplay.resize((total_indices.size() / 3) * 2); // 3 vertices make a face; we need 2 points to display 1 face normal. 
+
+        float lineMangitude = 1.0f;
+
+        int k = 0;
+        int l = 0;
+
+        int iterations = faceNormalsDisplay.size() / 2;
+        for (int i = 0; i < iterations; i++)
+        {
+            float3 faceCenter = { 0,0,0 };
+            for (int j = 0; j < 3; j++)
+            {
+                faceCenter += total_vertices[total_indices[k++]].position;
+            }
+            faceCenter /= 3;
+            faceNormalsDisplay.push_back(faceCenter);
+
+            float3 normalsDir = { 0,0,0 };
+            for (int j = 0; j < 3; j++)
+            {
+                normalsDir += total_vertices[total_indices[l++]].normals;
+            }
+            normalsDir /= 3;
+            normalsDir.Normalize();
+            faceNormalsDisplay.push_back((faceCenter + normalsDir) * lineMangitude);
+        }
+
+        glGenVertexArrays(1, &FaceLineVAO);
+        glBindVertexArray(FaceLineVAO);
+
+        // Create Vertex Buffer Object
+        glGenBuffers(1, &FaceLineVBO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, FaceLineVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * faceNormalsDisplay.size(), &faceNormalsDisplay[0], GL_STATIC_DRAW);
+
+        // vertex positions
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+        glBindVertexArray(0);
+    }
+}
+
+void M_Render::DrawVertexNormals(int modelMatrixIndex)
+{
+    line_shader->Bind();
+    line_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
+    line_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+    line_shader->SetFloat4("lineColor", 0.36f, 0.75f, 0.72f, 1.0f);
+    line_shader->SetMatFloat4v("model", &model_matrices[modelMatrixIndex].v[0][0]);
+
+    glBindVertexArray(VertexLineVAO);
+
+    glDrawArrays(GL_LINES, 0, vertexNormalsDisplay.size());
+
+    glBindVertexArray(0);
+
+}
+
+void M_Render::DrawFaceNormals(int modelMatrixIndex)
+{
+    line_shader->Bind();
+    line_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
+    line_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+    line_shader->SetFloat4("lineColor", 0.75f, 0.36f, 0.32f, 1.0f);
+    line_shader->SetMatFloat4v("model", &model_matrices[modelMatrixIndex].v[0][0]);
+
+    glBindVertexArray(FaceLineVAO);
+
+    glDrawArrays(GL_LINES, 0, faceNormalsDisplay.size());
+
+    glBindVertexArray(0);
+
 }
