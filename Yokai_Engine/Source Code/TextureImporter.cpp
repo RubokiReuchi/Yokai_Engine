@@ -106,14 +106,20 @@ uint TextureImporter::ImportTexture(std::string path)
 
 uint TextureImporter::CheckerImage()
 {
-	GLubyte checker_image[240][240][4];
+	//Check if the given texture has been already loaded
+	if (M_Texture::usedPaths.find("Checkers") != M_Texture::usedPaths.end())
+	{
+		return M_Texture::usedPaths["Checkers"]; // Check is texture loaded
+	}
+
+	GLubyte checkerImage[240][240][4];
 	for (int i = 0; i < 240; i++) {
 		for (int j = 0; j < 240; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checker_image[i][j][0] = (GLubyte)c;
-			checker_image[i][j][1] = (GLubyte)c;
-			checker_image[i][j][2] = (GLubyte)c;
-			checker_image[i][j][3] = (GLubyte)255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
 		}
 	}
 
@@ -126,7 +132,14 @@ uint TextureImporter::CheckerImage()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 240, 240, 0, GL_RGBA, GL_UNSIGNED_BYTE, checker_image);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 240, 240, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	Re_Texture engineTexture;
+	engineTexture.OpenGL_id = textureID;
+	engineTexture.name = "Checkers";
+
+	M_Texture::loaded_textures[textureID] = engineTexture; // Add loaded texture inside TextureManager
+	M_Texture::usedPaths["Checkers"] = textureID;
 
 	return textureID;
 }

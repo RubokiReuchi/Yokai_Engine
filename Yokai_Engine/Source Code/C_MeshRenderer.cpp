@@ -3,6 +3,7 @@
 #include "ModuleRenderer3D.h"
 #include "M_ModelRender.h"
 #include "Re_Mesh.h"
+#include "TextureImporter.h"
 
 C_MeshRenderer::C_MeshRenderer(GameObject* gameObject) : Component(gameObject, TYPE::MESH_RENDERER)
 {
@@ -37,20 +38,30 @@ void C_MeshRenderer::OnEditor()
 		for (auto& loaded_tex : M_Texture::loaded_textures)
 		{
 			id_names.push_back(std::to_string(loaded_tex.first));
-			if (GetMesh().texture_id != 0 && GetMesh().texture_id == loaded_tex.first)
+			if (GetMesh().texture_id > 0 && GetMesh().texture_id == loaded_tex.first)
 			{
-				size_t npos = loaded_tex.second.name.find_last_of("/") + 1;
-				std::string file_name = loaded_tex.second.name;
-				ImGui::Text(loaded_tex.second.name.c_str());
-				file_name = file_name.substr(npos);
-				npos = file_name.find_last_of(".");
-				file_name.erase(npos, 9);
-				selected_texture = file_name;
+				if (loaded_tex.second.name != "Checkers")
+				{
+					size_t npos = loaded_tex.second.name.find_last_of("/") + 1;
+					std::string file_name = loaded_tex.second.name;
+					ImGui::Text(loaded_tex.second.name.c_str());
+					file_name = file_name.substr(npos);
+					npos = file_name.find_last_of(".");
+					file_name.erase(npos, 9);
+					selected_texture = file_name;
+				}
+				else
+				{
+					ImGui::Text("NULL");
+					selected_texture = "Checkers";
+				}
 			}
-			else
-			{
-				ImGui::Text("NULL");
-			}
+		}
+		if (GetMesh().texture_id == -1)
+		{
+			ImGui::Text("NULL");
+			selected_texture = "Default";
+
 		}
 		
 		if (ImGui::BeginCombo("Select Texture", selected_texture.c_str(), ImGuiComboFlags_HeightSmall))
@@ -63,9 +74,17 @@ void C_MeshRenderer::OnEditor()
 				GetMesh().texture_id = -1;
 				GetMesh().OpenGL_texture_id = -1;
 			}
+			is_selected = (selected_texture == "Checkers");
+			if (ImGui::Selectable("Checkers", is_selected))
+			{
+				selected_texture = "Checkers";
+				if (is_selected) ImGui::SetItemDefaultFocus();
+				GetMesh().texture_id = (float)TextureImporter::CheckerImage();
+			}
 			int i = 0;
 			for (auto& texture : M_Texture::loaded_textures)
 			{
+				if (texture.second.name == "Checkers") { i++; continue; }
 				size_t npos = texture.second.name.find_last_of("/") + 1;
 				std::string file_name = texture.second.name;
 				file_name = file_name.substr(npos);
@@ -76,7 +95,7 @@ void C_MeshRenderer::OnEditor()
 				{
 					selected_texture = file_name;
 					if (is_selected) ImGui::SetItemDefaultFocus();
-					GetMesh().texture_id = std::stoi(id_names[i]);
+					GetMesh().texture_id = (float)std::stoi(id_names[i]);
 				}
 				i++;
 			}
