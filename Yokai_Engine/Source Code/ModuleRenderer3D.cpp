@@ -12,14 +12,14 @@
 #include"MathGeoLib/include/Geometry/Frustum.h"
 #include"MathGeoLib/include/Geometry/Plane.h"
 
-#pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
-#pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-#pragma comment (lib, "Glew/libx86/glew32.lib") /* link Microsoft OpenGL lib   */
+#pragma comment (lib, "glu32.lib")
+#pragma comment (lib, "opengl32.lib")
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled),
 vsync(true), wireframe(false), exit(false)
 {
-	depth_test = cull_face = lighting = /*color_material =*/ texture_2d = true;
+	depth_test = cull_face = lighting = color_material = texture_2d = true;
 }
 
 // Destructor

@@ -128,7 +128,6 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 			break;
 		}
 
-		//Adding end of file at the end of the buffer. Loading a shader file does not add this for some reason
 		(*buffer)[size] = '\0';
 
 	} while (false);

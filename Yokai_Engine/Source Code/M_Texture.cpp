@@ -14,9 +14,9 @@ float M_Texture::BindTexture(uint texture)
 {
 	for (size_t i = 0; i < bindedTexturesInfo.size(); i++)
 	{
-		if (bindedTexturesInfo[i].Texture_id == texture)
+		if (bindedTexturesInfo[i].Texture_id == texture) // check if texture already binded
 		{
-			return (float)bindedTexturesInfo[i].OpenGL_slot_id; // If binding texture has already been binded, return the OpenGl slot
+			return (float)bindedTexturesInfo[i].OpenGL_slot_id;
 		}
 	}
 

@@ -13,12 +13,11 @@ ModuleCamera3D::ModuleCamera3D(bool start_enabled) : Module(start_enabled)
 ModuleCamera3D::~ModuleCamera3D()
 {}
 
-// -----------------------------------------------------------------
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
 
-	// Create Empty GameObject with camera component.
+	// Create Empty GameObject with camera component
 	GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
 	C_Camera* camera = dynamic_cast<C_Camera*>(main_camera->AddComponent(Component::TYPE::CAMERA));
 	dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(8.0f, 2.0f, 0), float3(0, 0, 0), float3(0, -90, 0));

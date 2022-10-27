@@ -25,7 +25,7 @@ void EW_Project::Update()
     {
         std::string safe_path = currentNode->path;
         fileTree = currentNode = ModuleFile::S_GetFileTree("Assets");
-        FileTree* tree = currentNode;// from here
+        FileTree* tree = currentNode; // from here
         std::string first_folder;
         std::string actual_path = safe_path.substr(safe_path.find_first_of("/") + 1);
         while (!tree->directories.empty())

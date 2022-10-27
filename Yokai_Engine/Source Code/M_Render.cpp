@@ -17,7 +17,7 @@ M_Render::~M_Render()
 uint M_Render::SetMeshInformation(Re_Mesh& mesh)
 {
     if (initialized) LOG("Tried to call M_Render::SetMeshInformation more than once in a single Render Manager instance");
-    // Set this RenderManager Mesh information.
+    // Set this RenderManager Mesh information
     this->total_vertices.insert(total_vertices.begin(), mesh.vertices->begin(), mesh.vertices->end());
     this->total_indices.insert(total_indices.begin(), mesh.indices->begin(), mesh.indices->end());
 
@@ -30,14 +30,14 @@ uint M_Render::SetMeshInformation(Re_Mesh& mesh)
     mesh.CleanUp(); // Destroy the original vertex and index data (now it is stored inside this render manager)
     initialized = true;
 
-    return AddMesh(firstMesh); // Adds a copy of the original mesh into the mesh list.
+    return AddMesh(firstMesh); // Adds a copy of the original mesh into the mesh list
 }
 
 void M_Render::Draw()
 {
     float3 npos, nrot, nscl;
     size_t num_meshes = meshes.size();
-    if (!initialized) return; // This is placed here for security reasons. No RenderManager should be created without being initialized.
+    if (!initialized) return; // This is placed here for security reasons. No RenderManager should be created without being initialized
     if (meshes.empty())
     {
         LOG("A Render Manager is being updated without any meshes!");
@@ -237,7 +237,7 @@ void M_Render::CreateNormalsDisplayBuffer()
     }
 
     {
-        faceNormalsDisplay.resize((total_indices.size() / 3) * 2); // 3 vertices make a face; we need 2 points to display 1 face normal. 
+        faceNormalsDisplay.resize((total_indices.size() / 3) * 2); // 3 vertices make a face; we need 2 points to display 1 face normal.
 
         float lineMangitude = 1.0f;
 

@@ -82,9 +82,5 @@ void Camera::SetFOV(float fov)
 
 void Camera::CalculateViewMatrix()
 {
-	/*ViewMatrix = float4x4(X.x, Y.x, Z.x, 0.0f, X.y, Y.y, Z.y, 0.0f, X.z, Y.z, Z.z, 0.0f, -Dot(X, Position), -Dot(Y, Position), -Dot(Z, Position), 1.0f);
-	ViewMatrixInverse = ViewMatrix.Inverted();
-	cameraFrustum.pos = Position;
-	cameraFrustum.front = Z;
-	cameraFrustum.up = Y;*/
+	
 }

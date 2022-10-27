@@ -16,7 +16,7 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	// Load AiScene
 	const aiScene* scene = GetAiScene(path);
 
-	// Check if this file path has already been loaded.
+	// Check if this file path has already been loaded
 	if (loadedMeshes.find(path) != loadedMeshes.end())
 	{
 		uint first_id = loadedMeshes[path].initialID;
@@ -24,7 +24,7 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	}
 	else
 	{
-		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize(); // Set the ID of the first mesh inside this Model
+		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize(); // Set the id of the first mesh inside this Model
 		loadedMeshes[path].numOfMeshes = 0;
 		ProcessNewNode(scene->mRootNode, scene, path);
 	}
@@ -50,7 +50,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 		ProcessNewNode(node->mChildren[0], scene, path, parent);
 		return;
 	}
-
+	
 	// Create empty Gameobject 
 	GameObject* newParent = nullptr;
 
@@ -63,7 +63,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 	}
 	else newParent = new GameObject(parent, node->mName.C_Str());
 
-	// Set new GameObject position with node Transform.
+	// Set new GameObject position with node Transform
 	aiVector3D translation, scaling;
 	aiQuaternion rotation;
 
@@ -80,7 +80,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 
 	uint meshNum = node->mNumMeshes;
 
-	loadedMeshes[path].numOfMeshes += meshNum; // Increase the number of meshes for every mesh inside this node.
+	loadedMeshes[path].numOfMeshes += meshNum; // Increase the number of meshes for every mesh inside this node
 
 	for (uint i = 0; i < meshNum; i++)
 	{
@@ -91,7 +91,7 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		// Creates an empty Gameobject that is children to the empty gameObject created here.
+		// Creates an empty Gameobject that is children to the empty gameObject created here
 		ProcessNewNode(node->mChildren[i], scene, path, newParent);
 	}
 
@@ -103,7 +103,7 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 {
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
-
+	
 	// Get Mesh information
 	for (uint i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -145,8 +145,6 @@ void MeshImporter::ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject
 		}
 	}
 
-	// TODO: Load texture data 
-
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
@@ -177,7 +175,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 	}
 	else newParent = new GameObject(parent, node->mName.C_Str());
 
-	// Set new GameObject position with node Transform.
+	// Set new GameObject position with node Transform
 	aiVector3D translation, scaling;
 	aiQuaternion rotation;
 
@@ -213,7 +211,7 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		// Creates an empty Gameobject that is children to the empty gameObject created here.
+		// Creates an empty Gameobject that is children to the empty gameObject created here
 		ProcessLoadedNode(node->mChildren[i], scene, firstMeshID, newParent);
 	}
 

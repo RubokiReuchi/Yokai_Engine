@@ -17,7 +17,6 @@ public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
 	~GameObject();
 
-	//TODO: Could do with an array of functions that creates a specific component
 	Component* AddComponent(Component::TYPE type)
 	{
 		Component* new_component;
@@ -52,26 +51,6 @@ public:
 		}
 		return NULL; // component not find
 	}
-	/*void RemoveComponent(Component::TYPE type)
-	{
-		if (GetComponent(type) != NULL)
-		{
-			int pos_in_array = 0;
-			for (uint i = 0; i < (uint)Component::TYPE::NUM_OF_COMPS; i++)
-			{
-				if (GetComponent((Component::TYPE)i))
-				{
-					if (type == (Component::TYPE)i)
-					{
-						components.erase(components.begin() + pos_in_array);
-						return;
-					}
-					else pos_in_array++;
-				}
-			}
-		}
-		else return;
-	}*/
 	void RemoveComponent(Component* component)
 	{
 		int pos_in_array = 0;
@@ -114,7 +93,7 @@ public:
 
 	bool is_camera;
 
-private:
+public:
 	void RemoveChild(GameObject* child);
 
 	std::vector<Component*> components;
@@ -125,7 +104,7 @@ private:
 	bool active = true;
 	bool destroyed = false;
 
-	uint id = 0; // ID =  0 is an invalid ID. First ID is 1
+	uint id = 0; // id = 0 is an invalid id, id = 1 is the world(root)
 
 	friend class EW_Hierarchy;
 };

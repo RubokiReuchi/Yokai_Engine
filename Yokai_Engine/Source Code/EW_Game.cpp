@@ -23,7 +23,6 @@ void EW_Game::Update()
 
 	if (gameDimensions.x != game_width)
 	{
-		// If the size of this imgui window is different from the one stored.
 		game_width = gameDimensions.x;
 		game_height = game_width * (9.0f / 16.0f);
 

@@ -46,7 +46,7 @@ void Re_Mesh::Update()
 
 	if (!update_matrix) return;
 
-	// Update Model matrix. This information will be used later by the RenderManager.
+	// Update Model matrix
 	model_matrix.SetIdentity();
 
 	math::Quat rot = rot.FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));

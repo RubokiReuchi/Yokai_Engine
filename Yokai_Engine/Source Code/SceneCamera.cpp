@@ -15,7 +15,6 @@ SceneCamera::~SceneCamera()
 
 void SceneCamera::UpdateCameraInput(float dt)
 {
-	// Mouse motion ----------------
 	if (editor == nullptr) editor = app->engine_order->editor;
 	GameObject* selectedGO = editor->GetSelectedGameObject();
 
@@ -33,7 +32,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 	if (!fast_move)	speed = 0.5f * dt;
 	else speed = 5.0f * dt;
 
-	// Mouse motion ----------------
+	// Move
 	if (confine_move && app->input->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos += cameraFrustum.up * speed;

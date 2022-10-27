@@ -21,7 +21,7 @@ private:
 
 	void RegenerateBuffer();
 private:
-	uint FBO = 0; // Frame Buffer Object
+	uint FBO = 0;
 	uint texture_color_buffer = 0;
 	uint RBO = 0;
 

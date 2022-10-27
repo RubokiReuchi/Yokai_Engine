@@ -21,14 +21,13 @@ void TextureImporter::ImportImage(const char* fileName, char* buffer, int size)
 
 	ILuint imgSize;
 	ILubyte* data;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
-	imgSize = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	imgSize = ilSaveL(IL_DDS, nullptr, 0);
 
 	if (imgSize > 0)
 	{
-		data = new ILubyte[imgSize]; // allocate data buffer
-		if (ilSaveL(IL_DDS, data, imgSize) > 0) // Save to buffer with the ilSaveIL function
-			buffer = (char*)data;
+		data = new ILubyte[imgSize];
+		if (ilSaveL(IL_DDS, data, imgSize) > 0) buffer = (char*)data;
 
 		RELEASE_ARRAY(data);
 	}
@@ -51,7 +50,6 @@ uint TextureImporter::Load(char* buffer, int size, int* width, int* heigth)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	engineTexture.OpenGL_id = ilutGLBindTexImage();
 
-	//TODO: Generate mipmaps and use best settings
 	glBindTexture(GL_TEXTURE_2D, engineTexture.OpenGL_id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -63,7 +61,7 @@ uint TextureImporter::Load(char* buffer, int size, int* width, int* heigth)
 	*width = ilGetInteger(IL_IMAGE_WIDTH);
 	*heigth = ilGetInteger(IL_IMAGE_HEIGHT);
 
-	M_Texture::loaded_textures[engineTexture.OpenGL_id] = engineTexture; // Add loaded texture inside TextureManager.
+	M_Texture::loaded_textures[engineTexture.OpenGL_id] = engineTexture; // Add loaded texture inside M_texture
 
 	return engineTexture.OpenGL_id;
 }
@@ -73,7 +71,7 @@ uint TextureImporter::ImportTexture(std::string path)
 	//Check if the given texture has been already loaded
 	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
 	{
-		return M_Texture::usedPaths[path]; // If this texture path was already loaded, return the loaded texture.
+		return M_Texture::usedPaths[path];
 	}
 
 	ILuint ImgId = 0;
@@ -98,7 +96,7 @@ uint TextureImporter::ImportTexture(std::string path)
 	engineTexture.OpenGL_id = texture;
 	engineTexture.name = path;
 
-	M_Texture::loaded_textures[texture] = engineTexture; // Add loaded texture inside TextureManager.
+	M_Texture::loaded_textures[texture] = engineTexture; // Add loaded texture inside M_texture
 	M_Texture::usedPaths[path] = texture;
 
 	return texture;
@@ -109,7 +107,7 @@ uint TextureImporter::CheckerImage()
 	//Check if the given texture has been already loaded
 	if (M_Texture::usedPaths.find("Checkers") != M_Texture::usedPaths.end())
 	{
-		return M_Texture::usedPaths["Checkers"]; // Check is texture loaded
+		return M_Texture::usedPaths["Checkers"];
 	}
 
 	GLubyte checkerImage[240][240][4];
@@ -138,7 +136,7 @@ uint TextureImporter::CheckerImage()
 	engineTexture.OpenGL_id = textureID;
 	engineTexture.name = "Checkers";
 
-	M_Texture::loaded_textures[textureID] = engineTexture; // Add loaded texture inside TextureManager
+	M_Texture::loaded_textures[textureID] = engineTexture; // Add loaded texture inside M_texture
 	M_Texture::usedPaths["Checkers"] = textureID;
 
 	return textureID;
@@ -149,15 +147,14 @@ uint TextureImporter::ImportTextureSTBI(std::string path)
 	//Check if the given texture has been already loaded
 	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
 	{
-		return M_Texture::usedPaths[path]; // If this texture path was already loaded, return the loaded texture.
+		return M_Texture::usedPaths[path];
 	}
 
 	uint m_renderer_id;
 	std::string m_file_path;
 	unsigned char* m_local_buffer;
-	int m_Width, m_Height, m_BPP;	// BPP = Bits per pixel
+	int m_Width, m_Height, m_BPP; // BPP = Bits per pixel
 
-	//stbi_set_flip_vertically_on_load(1);
 	m_local_buffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
 	glGenTextures(1, &m_renderer_id);
@@ -180,7 +177,7 @@ uint TextureImporter::ImportTextureSTBI(std::string path)
 	engineTexture.OpenGL_id = m_renderer_id;
 	engineTexture.name = path;
 
-	M_Texture::loaded_textures[m_renderer_id] = engineTexture; // Add loaded texture inside TextureManager.
+	M_Texture::loaded_textures[m_renderer_id] = engineTexture; // Add loaded texture inside M_texture
 	M_Texture::usedPaths[path] = m_renderer_id;
 
 	return m_renderer_id;

@@ -31,7 +31,7 @@ private:
 	static void ProcessNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
 	static void ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go = false);
 
-	//ProcessLoaded creates a new Instance inside a RenderManager for each Mesh
+	//ProcessLoaded creates a new Instance inside a M_Render for each Mesh
 	static void ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr);
 
 	static std::map<std::string, MeshInfo> loadedMeshes;

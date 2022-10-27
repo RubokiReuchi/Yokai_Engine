@@ -3,7 +3,6 @@
 
 C_Transform::C_Transform(GameObject* gameObject) : Component(gameObject, TYPE::TRANSFORM)
 {
-	// If this is not the root node, we need the parents global transform.
 	if (this->GetGameObject()->GetParent() != NULL)
 	{
 		C_Transform* parentTransform = dynamic_cast<C_Transform*>(gameObject->GetParent()->GetComponent(Component::TYPE::TRANSFORM));
@@ -20,7 +19,7 @@ void C_Transform::OnEditor()
 	float3 temp_pos = localTransform.position;
 	float3 temp_rot = localTransform.rotation;
 	float3 temp_scl = localTransform.scale;
-
+	
 	ImGui::AlignTextToFramePadding();
 	bool no_collapsed = ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap); ImGui::SameLine(ImGui::GetWindowWidth() - 22);
 	if (ImGui::Button(ICON_FA_ELLIPSIS_VERTICAL "##Transform", ImVec2(20.0f, 0)))

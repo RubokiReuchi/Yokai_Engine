@@ -49,7 +49,7 @@ public:
 	ImFont* arial_font_30;
 
 	// drag and drop
-	std::string dd_file = ""; // drag and drop
+	std::string dd_file = "";
 	std::string message = "";
 	EW_Project* GetProjectWindow()
 	{
