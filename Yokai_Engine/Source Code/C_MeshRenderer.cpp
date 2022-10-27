@@ -32,6 +32,7 @@ void C_MeshRenderer::OnEditor()
 	}
 	if (no_collapsed)
 	{
+		ImGui::Text("Texture Path: "); ImGui::SameLine();
 		std::vector<std::string> id_names;
 		for (auto& loaded_tex : M_Texture::loaded_textures)
 		{
@@ -40,10 +41,15 @@ void C_MeshRenderer::OnEditor()
 			{
 				size_t npos = loaded_tex.second.name.find_last_of("/") + 1;
 				std::string file_name = loaded_tex.second.name;
+				ImGui::Text(loaded_tex.second.name.c_str());
 				file_name = file_name.substr(npos);
 				npos = file_name.find_last_of(".");
 				file_name.erase(npos, 9);
 				selected_texture = file_name;
+			}
+			else
+			{
+				ImGui::Text("NULL");
 			}
 		}
 		
