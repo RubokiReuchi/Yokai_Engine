@@ -88,6 +88,8 @@ void EO_Editor::PostUpdate()
 	ImGui_ImplSDL2_NewFrame(app->window->window);
 	ImGui::NewFrame();
 
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
 	if (!SetMenuBar())
 	{
 		app->renderer3D->exit = true;
