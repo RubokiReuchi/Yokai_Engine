@@ -21,4 +21,6 @@ public:
 private:
 	void Focus(const float3& focusPoint);
 
+	bool fast_move = false;
+
 };

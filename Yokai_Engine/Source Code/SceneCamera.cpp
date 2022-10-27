@@ -28,9 +28,10 @@ void SceneCamera::UpdateCameraInput(float dt)
 	cameraFrustum.WorldMatrix().Decompose(empty, lookingDir, empty);
 
 	float3 newPos(0, 0, 0);
-	float speed = 5.0f * dt;
-	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 50.0f * dt;
+	float speed;
+	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN) fast_move = !fast_move;
+	if (!fast_move)	speed = 0.5f * dt;
+	else speed = 5.0f * dt;
 
 	// Mouse motion ----------------
 	if (confine_move && app->input->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)

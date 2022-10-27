@@ -28,10 +28,6 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 		loadedMeshes[path].numOfMeshes = 0;
 		ProcessNewNode(scene->mRootNode, scene, path);
 	}
-
-
-	// Create a new RenderManager or add Mesh information as an instance
-	// Create a MeshRenderComponent inside a GameObject for every Mesh, following the assimp hierachy structure.
 	return returnGameObject;
 }
 
@@ -59,7 +55,11 @@ void MeshImporter::ProcessNewNode(aiNode* node, const aiScene* scene, std::strin
 
 	bool necessaryNode = node->mNumChildren > 1;
 
-	if (parent == nullptr) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	if (parent == nullptr)
+	{
+		if (node->mNumChildren == 0) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+		else returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	}
 	else newParent = new GameObject(parent, node->mName.C_Str());
 
 	// Set new GameObject position with node Transform.
@@ -169,7 +169,11 @@ void MeshImporter::ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& f
 
 	bool necessaryNode = node->mNumChildren > 1;
 
-	if (parent == nullptr) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	if (parent == nullptr)
+	{
+		if (node->mNumChildren == 0) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+		else returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+	}
 	else newParent = new GameObject(parent, node->mName.C_Str());
 
 	// Set new GameObject position with node Transform.
