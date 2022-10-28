@@ -10,15 +10,11 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 {
 	PHYSFS_init(0);
 
-	// Add Write Dir
-	if (PHYSFS_setWriteDir(".") == 0) LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+	if (PHYSFS_setWriteDir(".") == 0) LOG("FileSystem:: %s\n", PHYSFS_getLastError());
 
-	// Add Read Dir
-	S_AddPathToFileSystem(".");
-	S_AddPathToFileSystem("C:\\");
-	S_AddPathToFileSystem("D:\\");
-
-	//S_AddPathToFileSystem("Resources");
+	FS_AddPathToFileSystem(".");
+	FS_AddPathToFileSystem("C:\\");
+	FS_AddPathToFileSystem("D:\\");
 }
 
 ModuleFile::~ModuleFile()
@@ -26,14 +22,14 @@ ModuleFile::~ModuleFile()
 	PHYSFS_deinit();
 }
 
-bool ModuleFile::S_Exists(const std::string file)
+bool ModuleFile::FS_Exists(const std::string file)
 {
 	return PHYSFS_exists(file.c_str()) != 0;
 }
 
-bool ModuleFile::S_MakeDir(const std::string dir)
+bool ModuleFile::FS_MakeDir(const std::string dir)
 {
-	if (S_IsDirectory(dir) == false)
+	if (FS_IsDirectory(dir) == false)
 	{
 		PHYSFS_mkdir(dir.c_str());
 		return true;
@@ -41,12 +37,12 @@ bool ModuleFile::S_MakeDir(const std::string dir)
 	return false;
 }
 
-bool ModuleFile::S_IsDirectory(const std::string file)
+bool ModuleFile::FS_IsDirectory(const std::string file)
 {
 	return PHYSFS_isDirectory(file.c_str()) != 0;
 }
 
-std::string ModuleFile::S_NormalizePath(const std::string path)
+std::string ModuleFile::FS_NormalizePath(const std::string path)
 {
 	std::string ret = path;
 
@@ -67,7 +63,7 @@ std::string ModuleFile::S_NormalizePath(const std::string path)
 	return ret;
 }
 
-std::string ModuleFile::S_UnNormalizePath(const std::string path)
+std::string ModuleFile::FS_UnNormalizePath(const std::string path)
 {
 	std::string ret = path;
 
@@ -79,7 +75,7 @@ std::string ModuleFile::S_UnNormalizePath(const std::string path)
 	return ret;
 }
 
-bool ModuleFile::S_AddPathToFileSystem(const std::string path)
+bool ModuleFile::FS_AddPathToFileSystem(const std::string path)
 {
 	bool ret = false;
 
@@ -95,7 +91,7 @@ bool ModuleFile::S_AddPathToFileSystem(const std::string path)
 	return ret;
 }
 
-uint ModuleFile::S_Load(const std::string filePath, char** buffer)
+uint ModuleFile::FS_Load(const std::string filePath, char** buffer)
 {
 	uint byteCount = 0;
 
@@ -137,15 +133,15 @@ uint ModuleFile::S_Load(const std::string filePath, char** buffer)
 	return byteCount;
 }
 
-uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, bool append)
+uint ModuleFile::FS_Save(const std::string filePath, char* buffer, uint size, bool append)
 {
 	uint objCount = 0;
 
 	std::string fileName;
-	fileName = S_GetFileName(filePath, true);
+	fileName = FS_GetFileName(filePath, true);
 
 
-	bool exists = S_Exists(filePath);
+	bool exists = FS_Exists(filePath);
 
 	PHYSFS_file* filehandle = nullptr;
 	if (append) filehandle = PHYSFS_openAppend(filePath.c_str());
@@ -191,7 +187,7 @@ uint ModuleFile::S_Save(const std::string filePath, char* buffer, uint size, boo
 	return objCount;
 }
 
-uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
+uint ModuleFile::FS_Copy(const std::string src, std::string des, bool replace)
 {
 	uint size = 0;
 	std::string outputFile;
@@ -209,11 +205,11 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 		size = fread(buffer, 1, size, filehandle);
 		if (size > 0)
 		{
-			outputFile = S_GetFileName(src, true);
+			outputFile = FS_GetFileName(src, true);
 			outputFile.insert(0, "/");
 			outputFile.insert(0, des);
 
-			size = S_Save(outputFile.data(), buffer, size, false);
+			size = FS_Save(outputFile.data(), buffer, size, false);
 			if (size > 0)
 			{
 				LOG("FILE SYSTEM: Successfully copied file '%s' in dir '%s'", src, des);
@@ -239,9 +235,9 @@ uint ModuleFile::S_Copy(const std::string src, std::string des, bool replace)
 	return size;
 }
 
-FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
+FileTree* ModuleFile::FS_GetFileTree(std::string path, FileTree* parent)
 {
-	FileTree* ret = new FileTree(path + "/", S_GetFileName(path), parent);
+	FileTree* ret = new FileTree(path + "/", FS_GetFileName(path), parent);
 
 	char** list = PHYSFS_enumerateFiles(path.c_str());
 
@@ -251,7 +247,7 @@ FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
 
 		if (PHYSFS_isDirectory(dirCheck.c_str()) != 0)
 		{
-			ret->directories.emplace_back(S_GetFileTree(dirCheck, ret));
+			ret->directories.emplace_back(FS_GetFileTree(dirCheck, ret));
 		}
 		else
 		{
@@ -262,7 +258,7 @@ FileTree* ModuleFile::S_GetFileTree(std::string path, FileTree* parent)
 	return ret;
 }
 
-std::string ModuleFile::S_GetFileName(const std::string file, bool getExtension)
+std::string ModuleFile::FS_GetFileName(const std::string file, bool getExtension)
 {
 	std::string fileName = file;
 
@@ -284,7 +280,7 @@ std::string ModuleFile::S_GetFileName(const std::string file, bool getExtension)
 	return fileName;
 }
 
-RE_TYPE ModuleFile::S_GetResourceType(const std::string& filename)
+RE_TYPE ModuleFile::FS_GetResourceType(const std::string& filename)
 {
 	std::string fileExtension = filename;
 	fileExtension = fileExtension.substr(fileExtension.find_last_of('.') + 1);
@@ -299,7 +295,7 @@ RE_TYPE ModuleFile::S_GetResourceType(const std::string& filename)
 	return RE_TYPE::UNDEFINED;
 }
 
-std::vector<std::string> ModuleFile::S_GetAllFiles(std::string path)
+std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 {
 	std::vector<std::string> ret;
 
@@ -311,7 +307,7 @@ std::vector<std::string> ModuleFile::S_GetAllFiles(std::string path)
 
 		if (PHYSFS_isDirectory(dirCheck.c_str()) != 0)
 		{
-			std::vector<std::string> temp = S_GetAllFiles(dirCheck);
+			std::vector<std::string> temp = FS_GetAllFiles(dirCheck);
 			ret.insert(ret.end(), temp.begin(), temp.end());
 		}
 		else

@@ -18,12 +18,7 @@ public:
 	void SetEnabled(bool enabled)
 	{
 		this->enabled = enabled;
-		/*for (component: components)
-		{
-			gameobjects.Enabled(enabled);
-		})*/
 	}
-
 	bool IsEnabled() const
 	{
 		return enabled;

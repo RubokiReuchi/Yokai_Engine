@@ -79,7 +79,7 @@ void EW_Scene::Update()
 		{
 			float id;
 			C_MeshRenderer* mr = nullptr;
-			switch (app->file->S_GetResourceType(dd_file))
+			switch (app->file->FS_GetResourceType(dd_file))
 			{
 			case RE_TYPE::MESH:
 				MeshImporter::LoadMesh(dd_file);

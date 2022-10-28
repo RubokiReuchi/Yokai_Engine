@@ -12,8 +12,6 @@ class EO_Editor;
 enum class EO_NUM
 {
 	GAME,
-	UI,
-	DEBUG,
 	EDITOR, // editor should always be the last layer
 	NUM_EO_TYPE, // number of EngineOrder types
 };

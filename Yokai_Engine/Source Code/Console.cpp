@@ -90,7 +90,7 @@ void Console::SaveConsoleLog()
     strcpy_s(arr, n, buffer.c_str());
 
     // Save buffer info and release unnecessary memory
-    ModuleFile::S_Save(LOG_PATH, arr, n, false);
+    ModuleFile::FS_Save(LOG_PATH, arr, n, false);
 
     RELEASE_ARRAY(arr);
 }

@@ -24,34 +24,31 @@ public:
 
 	~ModuleFile();
 
-	// Static functions
-	static bool S_Exists(const std::string file);
+	static bool FS_Exists(const std::string file);
 
-	static bool S_MakeDir(const std::string dir);
+	static bool FS_MakeDir(const std::string dir);
 
-	static bool S_IsDirectory(const std::string file);
+	static bool FS_IsDirectory(const std::string file);
 
-	static std::string S_NormalizePath(const std::string path);
+	static std::string FS_NormalizePath(const std::string path);
 
-	static std::string S_UnNormalizePath(const std::string path);
+	static std::string FS_UnNormalizePath(const std::string path);
 
-	// can be path or zip
-	static bool S_AddPathToFileSystem(const std::string path);
+	static bool FS_AddPathToFileSystem(const std::string path);
 
-	static uint S_Load(const std::string filePath, char** buffer);
+	static uint FS_Load(const std::string filePath, char** buffer);
 
-	static uint S_Save(const std::string filePath, char* buffer, uint size, bool append);
+	static uint FS_Save(const std::string filePath, char* buffer, uint size, bool append);
 
-	static uint S_Copy(const std::string src, const std::string des, bool replace = true);
+	static uint FS_Copy(const std::string src, const std::string des, bool replace = true);
 
+	static FileTree* FS_GetFileTree(std::string path, FileTree* parent = nullptr);
 
-	static FileTree* S_GetFileTree(std::string path, FileTree* parent = nullptr);
+	static std::string FS_GetFileName(const std::string file, bool getExtension = true);
 
-	static std::string S_GetFileName(const std::string file, bool getExtension = true);
+	static RE_TYPE FS_GetResourceType(const std::string& filename);
 
-	static RE_TYPE S_GetResourceType(const std::string& filename);
-
-	static std::vector<std::string> S_GetAllFiles(std::string path);
+	static std::vector<std::string> FS_GetAllFiles(std::string path);
 
 	bool new_file = false;
 };

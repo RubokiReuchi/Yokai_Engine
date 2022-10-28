@@ -9,9 +9,9 @@ EW_Project::EW_Project()
 	window_name = "Project";
 	enabled = true;
 
-    fileTree = currentNode = ModuleFile::S_GetFileTree("Assets");
+    fileTree = currentNode = ModuleFile::FS_GetFileTree("Assets");
     allFiles.clear();
-    allFiles = ModuleFile::S_GetAllFiles("Assets");
+    allFiles = ModuleFile::FS_GetAllFiles("Assets");
 }
 
 EW_Project::~EW_Project()
@@ -24,7 +24,7 @@ void EW_Project::Update()
     if (app->file->new_file)
     {
         std::string safe_path = currentNode->path;
-        fileTree = currentNode = ModuleFile::S_GetFileTree("Assets");
+        fileTree = currentNode = ModuleFile::FS_GetFileTree("Assets");
         FileTree* tree = currentNode; // from here
         std::string first_folder;
         std::string actual_path = safe_path.substr(safe_path.find_first_of("/") + 1);
@@ -45,7 +45,7 @@ void EW_Project::Update()
         } // to here, the currentNode is set to the one that was before reset files
         currentNode = tree;
         allFiles.clear();
-        allFiles = ModuleFile::S_GetAllFiles("Assets");
+        allFiles = ModuleFile::FS_GetAllFiles("Assets");
         app->file->new_file = false;
     }
 

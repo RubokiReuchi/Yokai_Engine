@@ -29,7 +29,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 	float3 newPos(0, 0, 0);
 	float speed;
 	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN) fast_move = !fast_move;
-	if (!fast_move)	speed = 0.5f * dt;
+	if (!fast_move)	speed = 1.0f * dt;
 	else speed = 5.0f * dt;
 
 	// Move
