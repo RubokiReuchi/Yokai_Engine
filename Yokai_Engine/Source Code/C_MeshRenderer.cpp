@@ -103,8 +103,9 @@ void C_MeshRenderer::OnEditor()
 		}
 
 		ImGui::Text("Visible: "), ImGui::SameLine();
-		if (GetMesh().visible) ImGui::TextColored({ 100, 230, 0, 255 }, "True");
-		else ImGui::TextColored({ 232, 0, 0, 255 }, "False");
+		if (GetMesh().visible) 
+			ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "True");
+		else ImGui::TextColored(ImVec4(0.9f, 0.0f, 0.0f, 1.0f), "False");
 
 		std::string display_options[] = {"None", "Vertex Normals", "Face Normals"};
 		if (ImGui::BeginCombo("Display Normals", display_options[selected_normal].c_str(), ImGuiComboFlags_HeightSmall))

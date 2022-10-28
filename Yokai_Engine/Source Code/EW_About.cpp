@@ -14,7 +14,7 @@ void EW_About::Update()
 {
 	// About
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
-	ImGui::TextColored({ 240, 138, 0, 255 }, "Yokai Engine");
+	ImGui::TextColored(ImVec4(0.94f, 0.54f, 0.0f, 1.0f), "Yokai Engine");
 	ImGui::Text("A 3D Game Engine");
 	ImGui::Text("By Ruben Ayora");
 	ImGui::Text("");
