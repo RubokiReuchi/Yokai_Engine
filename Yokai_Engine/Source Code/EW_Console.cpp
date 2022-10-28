@@ -6,20 +6,20 @@ EW_Console::EW_Console()
 	window_name = "Console";
 	enabled = true;
 
-	Console::S_Init();
+	Console::InitConsole();
 
-	Console::S_Log("Window Console Start");
+	Console::LogInConsole("Window Console Start");
 
-	Console::S_Log("PHYSFS::Inizializated");
+	Console::LogInConsole("PHYSFS::Inizializated");
 
-	Console::S_Log("ImGui::Inizializated");
+	Console::LogInConsole("ImGui::Inizializated");
 
-	Console::S_Log("DevIL::Inizializated");
+	Console::LogInConsole("DevIL::Inizializated");
 }
 
 EW_Console::~EW_Console()
 {
-	Console::S_Close();
+	Console::CloseConsole();
 }
 
 void EW_Console::Update()
@@ -29,7 +29,7 @@ void EW_Console::Update()
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	if (ImGui::SmallButton("Save Log"))
 	{
-		Console::S_SaveLog();
+		Console::SaveConsoleLog();
 	}
 	ImGui::SameLine();
 
@@ -41,11 +41,11 @@ void EW_Console::Update()
 
 	if (ImGui::SmallButton("Clear"))
 	{
-		Console::S_ClearLog();
+		Console::ClearConsole();
 	}
 	ImGui::SameLine();
 
-	ImGui::Text("Total Logs: %s", Console::S_GetLogCounts());
+	ImGui::Text("Total Logs: %s", Console::GetLogCounts());
 
 	ImGui::Separator();
 
@@ -55,7 +55,7 @@ void EW_Console::Update()
 	{
 		std::string* buffer = nullptr;
 
-		uint console_size = Console::S_GetLog(&buffer);
+		uint console_size = Console::GetConsoleLog(&buffer);
 
 		for (size_t i = 0; i < console_size; buffer++, i++)
 		{
@@ -64,7 +64,7 @@ void EW_Console::Update()
 	}
 	else
 	{
-		auto logs = Console::S_GetCollapseLog();
+		auto logs = Console::GetCollapseLog();
 
 		for (auto& log : logs)
 		{

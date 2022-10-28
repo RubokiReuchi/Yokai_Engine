@@ -7,7 +7,7 @@ std::map<std::string, uint> Console::buffers_map;
 std::string Console::log_count_text = "";
 size_t Console::log_count = 0;
 
-void Console::S_Init()
+void Console::InitConsole()
 {
     static bool isInit = false;
 
@@ -16,7 +16,7 @@ void Console::S_Init()
     buffers = new CArrayS(MAX_CONSOLE_LOGS);
 }
 
-void Console::S_Close()
+void Console::CloseConsole()
 {
     static bool isClosed = false;
 
@@ -25,9 +25,9 @@ void Console::S_Close()
     RELEASE(buffers);
 }
 
-void Console::S_Log(const std::string text)
+void Console::LogInConsole(const std::string text)
 {
-    buffers->push_back("\nDebug.Log: " + text);
+    buffers->push_back("\n> " + text);
 
     auto it = buffers_map.find(text);
 
@@ -38,31 +38,31 @@ void Console::S_Log(const std::string text)
     log_count++;
 }
 
-uint Console::S_GetLog(std::string** buffer)
+uint Console::GetConsoleLog(std::string** buffer)
 {
     *buffer = buffers->front();
 
     return buffers->size();
 }
 
-std::map<std::string, uint> Console::S_GetCollapseLog()
+std::map<std::string, uint> Console::GetCollapseLog()
 {
     return buffers_map;
 }
 
-std::string Console::S_GetLastLog()
+std::string Console::GetLastLog()
 {
     return *(buffers->front() + buffers->size());
 }
 
-const char* Console::S_GetLogCounts()
+const char* Console::GetLogCounts()
 {
     log_count_text = log_count > 999 ? "999+" : std::to_string(log_count);
 
     return log_count_text.c_str();
 }
 
-void Console::S_ClearLog()
+void Console::ClearConsole()
 {
     buffers->reset();
 
@@ -73,7 +73,7 @@ void Console::S_ClearLog()
     log_count = 0;
 }
 
-void Console::S_SaveLog()
+void Console::SaveConsoleLog()
 {
     std::string buffer = "DEBUG INFO:\n";
 

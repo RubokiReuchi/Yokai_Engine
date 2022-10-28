@@ -30,7 +30,7 @@ Re_Mesh::~Re_Mesh()
 {
 }
 
-void Re_Mesh::InitAsMeshInformation(float3 position, float3 scale)
+void Re_Mesh::InitMeshTransform(float3 position, float3 scale)
 {
 	this->position = position;
 	this->rotation = float3(0.0f, 0.0f, 0.0f);
@@ -41,32 +41,28 @@ void Re_Mesh::Update()
 {
 	if (M_Texture::loaded_textures.find((uint)texture_id) != M_Texture::loaded_textures.end()) // check if texture is loaded
 	{
-		OpenGL_texture_id = M_Texture::BindTexture((uint)texture_id);
+		GL_id = M_Texture::BindTexture((uint)texture_id);
 	}
 
 	if (!update_matrix) return;
 
 	// Update Model matrix
 	model_matrix.SetIdentity();
-
 	math::Quat rot = rot.FromEulerXYZ(math::DegToRad(rotation.x), math::DegToRad(rotation.y), math::DegToRad(rotation.z));
 	rot.Normalize();
-
 	model_matrix = float4x4::FromTRS(position, rot, scale);
-
 	model_matrix.Transpose();
 
 	update_matrix = false;
 }
 
-void Re_Mesh::InitAsMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices, float3 pos, float3 scale)
+void Re_Mesh::InitMeshInfo(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, float3 pos, float3 scale)
 {
 	this->position = pos;
 	this->scale = scale;
 
-	this->vertices = new std::vector<Vertex>(vertices);
+	this->vertices = new std::vector<VertexInfo>(vertices);
 	this->indices = new std::vector<uint>(indices);
-
 }
 
 void Re_Mesh::CleanUp()

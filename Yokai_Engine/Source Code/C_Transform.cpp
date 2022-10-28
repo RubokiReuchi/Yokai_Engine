@@ -232,5 +232,5 @@ void C_Transform::CalculateGlobalMatrix()
 
 	math::Quat rotation = Quat::FromEulerXYZ(math::DegToRad(globalTransform.rotation.x), math::DegToRad(globalTransform.rotation.y), math::DegToRad(globalTransform.rotation.z));
 
-	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, float3(1.0f, 1.0f, 1.0f));
+	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, float3(1, 1, 1));
 }

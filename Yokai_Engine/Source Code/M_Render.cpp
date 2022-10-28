@@ -5,8 +5,8 @@
 
 M_Render::M_Render()
 {
+    // Create the shaders
     basic_shader = new Re_Shader("../Source Code/shaders/basic.vertex.shader", "../Source Code/shaders/basic.fragment.shader");
-    line_shader = new Re_Shader("../Source Code/shaders/lines.vertex.shader", "../Source Code/shaders/lines.fragment.shader");
 }
 
 M_Render::~M_Render()
@@ -14,100 +14,82 @@ M_Render::~M_Render()
     RELEASE(basic_shader);
 }
 
-uint M_Render::SetMeshInformation(Re_Mesh& mesh)
+uint M_Render::InitManageRender(Re_Mesh& mesh)
 {
-    if (initialized) LOG("Tried to call M_Render::SetMeshInformation more than once in a single Render Manager instance");
-    // Set this RenderManager Mesh information
+    if (initialized) LOG("Init already done");
+    initialized = true;
+    
     this->total_vertices.insert(total_vertices.begin(), mesh.vertices->begin(), mesh.vertices->end());
     this->total_indices.insert(total_indices.begin(), mesh.indices->begin(), mesh.indices->end());
 
-    CreateBuffers();
-    CreateNormalsDisplayBuffer();
+    CreateMeshBuffers();
 
     Re_Mesh firstMesh;
-    firstMesh.InitAsMeshInformation(mesh.position, mesh.scale);
+    firstMesh.InitMeshTransform(mesh.position, mesh.scale);
+    mesh.CleanUp();
 
-    mesh.CleanUp(); // Destroy the original vertex and index data (now it is stored inside this render manager)
-    initialized = true;
-
-    return AddMesh(firstMesh); // Adds a copy of the original mesh into the mesh list
+    return AddMesh(firstMesh);
 }
 
 void M_Render::Draw()
 {
-    float3 npos, nrot, nscl;
     size_t num_meshes = meshes.size();
-    if (!initialized) return; // This is placed here for security reasons. No RenderManager should be created without being initialized
-    if (meshes.empty())
-    {
-        LOG("A Render Manager is being updated without any meshes!");
-        return;
-    }
+    if (!initialized) return;
+    if (meshes.empty()) return;
     for (auto &mesh : meshes)
     {
         if (!mesh.second.visible) // mesh renderer with visibility set to false
         {
             num_meshes--;
         }
-        else if (app->renderer3D->drawing_scene && !mesh.second.visible_on_editor)
+        else if (app->renderer3D->drawing_scene && !mesh.second.visible_on_editor) // mesh renderer with visibility in editor set to false
         {
             num_meshes--;
         }
         else
         {
             mesh.second.Update();
-            model_matrices.push_back(mesh.second.model_matrix); // Insert updated matrices
-            texture_ids.push_back(mesh.second.OpenGL_texture_id);
-            npos = mesh.second.position;
-            nrot = mesh.second.rotation;
-            nscl = mesh.second.scale;
+            model_matrices.push_back(mesh.second.model_matrix); // Insert matrices of each mesh in this M_Render
+            texture_ids.push_back(mesh.second.GL_id);
         }
     }
     if (num_meshes == 0)
     {
-        return;
+        return; // draw if no mesh is visible
     }
 
-    // Update View and Projection matrices
-    basic_shader->Bind();
-    basic_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
-    basic_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
+    // Bind shader with ViewMatrix and ProjectionMatrix
+    glUseProgram(basic_shader->program_id);
+    glUniformMatrix4fv(glGetUniformLocation(basic_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
+    glUniformMatrix4fv(glGetUniformLocation(basic_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
 
-
-    // Draw using Dynamic Geometry
+    // Call binded info
     glBindVertexArray(VAO);
 
-    // Update Model matrices
+    // model matrix bind
     glBindBuffer(GL_ARRAY_BUFFER, MBO);
     void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr, &model_matrices.front(), model_matrices.size() * sizeof(float4x4));
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
-    // Update TextureIDs
+    // texture id bind
     glBindBuffer(GL_ARRAY_BUFFER, TBO);
     void* ptr2 = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     memcpy(ptr2, &texture_ids.front(), texture_ids.size() * sizeof(float));
     glUnmapBuffer(GL_ARRAY_BUFFER);
 
+    // Bind shader with all binded textures
     for (uint i = 0; i < M_Texture::bindedTextures; i++)
     {
-        basic_shader->SetInt(("textures[" + std::to_string(i) + "]").c_str(), i);
+        std::string texture = "textures[" + std::to_string(i) + "]";
+        glUniform1i(glGetUniformLocation(basic_shader->program_id, texture.c_str()), i);
     }
 
-    // Draw
+    // Draw meshes with texture
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
     glBindVertexArray(0);
 
-    // Drawing normals for every mesh instance
-    int index = 0;
-    for (auto& mesh : meshes)
-    {
-        if (mesh.second.show_normals == 1) DrawVertexNormals(index);
-        else if (mesh.second.show_normals == 2) DrawFaceNormals(index);
-        index++;
-    }
-
-    // Reset model matrices
+    // free information
     model_matrices.clear();
     texture_ids.clear();
     M_Texture::UnBindTextures();
@@ -115,16 +97,12 @@ void M_Render::Draw()
 
 uint M_Render::AddMesh(Re_Mesh& mesh)
 {
-    if (!initialized)
-    {
-        LOG("Trying to add mesh information into a RenderManager that has not been initialized yet!");
-    }
     uint meshID = ++id_counter;
     meshes[meshID] = mesh;
     return meshID;
 }
 
-void M_Render::CreateBuffers()
+void M_Render::CreateMeshBuffers()
 {
     // Create Vertex Array Object
     glGenVertexArrays(1, &VAO);
@@ -132,19 +110,18 @@ void M_Render::CreateBuffers()
 
     // Create Vertex Buffer Object
     glGenBuffers(1, &VBO);
-
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * total_vertices.size(), &total_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexInfo) * total_vertices.size(), &total_vertices[0], GL_STATIC_DRAW);
 
     // vertex positions
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)0);
     // vertex normals
     glEnableVertexAttribArray(5);
-    glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normals));
+    glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)offsetof(VertexInfo, normals));
     // vertex texture coords
     glEnableVertexAttribArray(6);
-    glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tex_coords));
+    glVertexAttribPointer(6, 2, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)offsetof(VertexInfo, tex_coords));
 
     // Create Index Buffer Object
     glGenBuffers(1, &IBO);
@@ -153,38 +130,30 @@ void M_Render::CreateBuffers()
 
     glBindVertexArray(0);
 
-    // Create Model Matrix buffer object
+    // Create Model Matrix Buffer Object
     glGenBuffers(1, &MBO);
-
     glBindBuffer(GL_ARRAY_BUFFER, MBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float4x4) * 1000000, nullptr, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(VAO);
 
-    // You can't pass an entire matrix, so we go row by row.
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)0);
-
+    glVertexAttribDivisor(1, 1);
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)sizeof(float4));
-
+    glVertexAttribDivisor(2, 1);
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 2));
-
+    glVertexAttribDivisor(3, 1);
     glEnableVertexAttribArray(4);
     glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(float4x4), (void*)(sizeof(float4) * 3));
-
-    // Set instancing interval
-    glVertexAttribDivisor(1, 1);
-    glVertexAttribDivisor(2, 1);
-    glVertexAttribDivisor(3, 1);
     glVertexAttribDivisor(4, 1);
 
     glBindVertexArray(0);
 
-    // Create TextureID buffer object
+    // Create TextureID Buffer Object
     glGenBuffers(1, &TBO);
-
     glBindBuffer(GL_ARRAY_BUFFER, TBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 10000, nullptr, GL_DYNAMIC_DRAW);
 
@@ -192,124 +161,7 @@ void M_Render::CreateBuffers()
 
     glEnableVertexAttribArray(7);
     glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
-
     glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
-}
-
-void M_Render::CreateNormalsDisplayBuffer()
-{
-    {
-        vertexNormalsDisplay.resize(total_vertices.size() * 2);
-
-        float lineMangitude = 1.0f;
-
-        int j = 0;
-        for (size_t i = 0; i < total_vertices.size() * 2; i++)
-        {
-            if (i % 2 == 0)
-            {
-                vertexNormalsDisplay[i] = total_vertices[j].position;
-            }
-            else
-            {
-                vertexNormalsDisplay[i] = (total_vertices[j].position + total_vertices[j].normals) * lineMangitude;
-                j++;
-            }
-
-        }
-
-        glGenVertexArrays(1, &VertexLineVAO);
-        glBindVertexArray(VertexLineVAO);
-
-        // Create Vertex Buffer Object
-        glGenBuffers(1, &VertexLineVBO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VertexLineVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * vertexNormalsDisplay.size(), &vertexNormalsDisplay[0], GL_STATIC_DRAW);
-
-        // vertex positions
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
-
-        glBindVertexArray(0);
-    }
-
-    {
-        faceNormalsDisplay.resize((total_indices.size() / 3) * 2); // 3 vertices make a face; we need 2 points to display 1 face normal.
-
-        float lineMangitude = 1.0f;
-
-        int k = 0;
-        int l = 0;
-
-        int iterations = faceNormalsDisplay.size() / 2;
-        for (int i = 0; i < iterations; i++)
-        {
-            float3 faceCenter = { 0,0,0 };
-            for (int j = 0; j < 3; j++)
-            {
-                faceCenter += total_vertices[total_indices[k++]].position;
-            }
-            faceCenter /= 3;
-            faceNormalsDisplay.push_back(faceCenter);
-
-            float3 normalsDir = { 0,0,0 };
-            for (int j = 0; j < 3; j++)
-            {
-                normalsDir += total_vertices[total_indices[l++]].normals;
-            }
-            normalsDir /= 3;
-            normalsDir.Normalize();
-            faceNormalsDisplay.push_back((faceCenter + normalsDir) * lineMangitude);
-        }
-
-        glGenVertexArrays(1, &FaceLineVAO);
-        glBindVertexArray(FaceLineVAO);
-
-        // Create Vertex Buffer Object
-        glGenBuffers(1, &FaceLineVBO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, FaceLineVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * faceNormalsDisplay.size(), &faceNormalsDisplay[0], GL_STATIC_DRAW);
-
-        // vertex positions
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
-
-        glBindVertexArray(0);
-    }
-}
-
-void M_Render::DrawVertexNormals(int modelMatrixIndex)
-{
-    line_shader->Bind();
-    line_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
-    line_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
-    line_shader->SetFloat4("lineColor", 0.36f, 0.75f, 0.72f, 1.0f);
-    line_shader->SetMatFloat4v("model", &model_matrices[modelMatrixIndex].v[0][0]);
-
-    glBindVertexArray(VertexLineVAO);
-
-    glDrawArrays(GL_LINES, 0, vertexNormalsDisplay.size());
-
-    glBindVertexArray(0);
-
-}
-
-void M_Render::DrawFaceNormals(int modelMatrixIndex)
-{
-    line_shader->Bind();
-    line_shader->SetMatFloat4v("view", app->camera->currentDrawingCamera->GetViewMatrix());
-    line_shader->SetMatFloat4v("projection", app->camera->currentDrawingCamera->GetProjectionMatrix());
-    line_shader->SetFloat4("lineColor", 0.75f, 0.36f, 0.32f, 1.0f);
-    line_shader->SetMatFloat4v("model", &model_matrices[modelMatrixIndex].v[0][0]);
-
-    glBindVertexArray(FaceLineVAO);
-
-    glDrawArrays(GL_LINES, 0, faceNormalsDisplay.size());
-
-    glBindVertexArray(0);
-
 }

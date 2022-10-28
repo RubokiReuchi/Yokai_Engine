@@ -72,14 +72,14 @@ void C_MeshRenderer::OnEditor()
 				selected_texture = "Default";
 				if (is_selected) ImGui::SetItemDefaultFocus();
 				GetMesh().texture_id = -1;
-				GetMesh().OpenGL_texture_id = -1;
+				GetMesh().GL_id = -1;
 			}
 			is_selected = (selected_texture == "Checkers");
 			if (ImGui::Selectable("Checkers", is_selected))
 			{
 				selected_texture = "Checkers";
 				if (is_selected) ImGui::SetItemDefaultFocus();
-				GetMesh().texture_id = (float)TextureImporter::CheckerImage();
+				GetMesh().texture_id = (float)TextureImporter::CreateTextureChecker();
 			}
 			int i = 0;
 			for (auto& texture : M_Texture::loaded_textures)
@@ -106,22 +106,6 @@ void C_MeshRenderer::OnEditor()
 		if (GetMesh().visible) 
 			ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "True");
 		else ImGui::TextColored(ImVec4(0.9f, 0.0f, 0.0f, 1.0f), "False");
-
-		std::string display_options[] = {"None", "Vertex Normals", "Face Normals"};
-		if (ImGui::BeginCombo("Display Normals", display_options[selected_normal].c_str(), ImGuiComboFlags_HeightSmall))
-		{
-			for (size_t i = 0; i < 3; i++)
-			{
-				bool is_selected = (selected_normal == i);
-				if (ImGui::Selectable(display_options[i].c_str(), is_selected))
-				{
-					selected_normal = i;
-					if (is_selected) ImGui::SetItemDefaultFocus();
-					GetMesh().show_normals = selected_normal;
-				}
-			}
-			ImGui::EndCombo();
-		}
 	}
 	if (popUpOpen)
 	{
@@ -129,27 +113,27 @@ void C_MeshRenderer::OnEditor()
 	}
 }
 
-void C_MeshRenderer::InitAsLoadedMesh(uint mesh_id)
+void C_MeshRenderer::InitAsInstanciedMesh(uint mesh_id)
 {
 	this->mesh_id = mesh_id + 2;
 
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(this->mesh_id);
 
 	Re_Mesh instanceMesh;
-	instanceMesh.InitAsMeshInformation({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
+	instanceMesh.InitMeshTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	instance_id = manager->AddMesh(instanceMesh);
 }
 
-void C_MeshRenderer::InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices)
+void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices)
 {
 	Re_Mesh newMesh;
-	newMesh.InitAsMesh(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
+	newMesh.InitMeshInfo(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	mesh_id = app->renderer3D->model_render.GetMapSize() + 2;
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id); // Create a M_Render
 
-	instance_id = manager->SetMeshInformation(newMesh);
+	instance_id = manager->InitManageRender(newMesh);
 }
 
 void C_MeshRenderer::OnPositionUpdate(float3 position)

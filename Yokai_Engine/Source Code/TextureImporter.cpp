@@ -9,102 +9,8 @@
 #pragma comment (lib, "DevIL/libx86/ILU.lib")
 #pragma comment (lib, "DevIL/libx86/ILUT.lib")
 
-void TextureImporter::ImportImage(const char* fileName, char* buffer, int size)
+uint TextureImporter::CreateTextureChecker()
 {
-	ILuint ImgId = 0;
-	ilGenImages(1, &ImgId);
-	ilBindImage(ImgId);
-	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
-	{
-		LOG("Error loading image: %s", ilutGetString(ilGetError()));
-	}
-
-	ILuint imgSize;
-	ILubyte* data;
-	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-	imgSize = ilSaveL(IL_DDS, nullptr, 0);
-
-	if (imgSize > 0)
-	{
-		data = new ILubyte[imgSize];
-		if (ilSaveL(IL_DDS, data, imgSize) > 0) buffer = (char*)data;
-
-		RELEASE_ARRAY(data);
-	}
-
-	ilDeleteImages(1, &ImgId);
-}
-
-uint TextureImporter::Load(char* buffer, int size, int* width, int* heigth)
-{
-	ILuint ImgId = 0;
-	ilGenImages(1, &ImgId);
-	ilBindImage(ImgId);
-	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
-	{
-		LOG("Error loading image: %s", ilutGetString(ilGetError()));
-	}
-
-	Re_Texture engineTexture;
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	engineTexture.OpenGL_id = ilutGLBindTexImage();
-
-	glBindTexture(GL_TEXTURE_2D, engineTexture.OpenGL_id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	*width = ilGetInteger(IL_IMAGE_WIDTH);
-	*heigth = ilGetInteger(IL_IMAGE_HEIGHT);
-
-	M_Texture::loaded_textures[engineTexture.OpenGL_id] = engineTexture; // Add loaded texture inside M_texture
-
-	return engineTexture.OpenGL_id;
-}
-
-uint TextureImporter::ImportTexture(std::string path)
-{
-	//Check if the given texture has been already loaded
-	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
-	{
-		return M_Texture::usedPaths[path];
-	}
-
-	ILuint ImgId = 0;
-	ilGenImages(1, &ImgId);
-	ilBindImage(ImgId);
-	if (!ilLoadImage(path.c_str()))
-	{
-		LOG("Error loading image: %s", ilutGetString(ilGetError()));
-	}
-
-	GLuint texture = ilutGLBindTexImage();
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	Re_Texture engineTexture;
-	engineTexture.OpenGL_id = texture;
-	engineTexture.name = path;
-
-	M_Texture::loaded_textures[texture] = engineTexture; // Add loaded texture inside M_texture
-	M_Texture::usedPaths[path] = texture;
-
-	return texture;
-}
-
-uint TextureImporter::CheckerImage()
-{
-	//Check if the given texture has been already loaded
 	if (M_Texture::usedPaths.find("Checkers") != M_Texture::usedPaths.end())
 	{
 		return M_Texture::usedPaths["Checkers"];
@@ -142,9 +48,8 @@ uint TextureImporter::CheckerImage()
 	return textureID;
 }
 
-uint TextureImporter::ImportTextureSTBI(std::string path)
+uint TextureImporter::ImportTexture(std::string path)
 {
-	//Check if the given texture has been already loaded
 	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
 	{
 		return M_Texture::usedPaths[path];

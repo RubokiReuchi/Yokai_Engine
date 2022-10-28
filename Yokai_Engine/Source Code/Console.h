@@ -18,30 +18,27 @@ using CArrayS = Htool::CycleArray<std::string>;
 class Console
 {
 public:
-	static void S_Init();
+	static void InitConsole();
 
-	static void S_Close();
+	static void CloseConsole();
 
-	static void S_Log(const std::string text);
+	static void LogInConsole(const std::string text);
 
-	static uint S_GetLog(std::string** buffer);
+	static uint GetConsoleLog(std::string** buffer);
 
-	static std::map<std::string, uint> S_GetCollapseLog();
+	static std::map<std::string, uint> GetCollapseLog();
 
-	static std::string S_GetLastLog();
+	static std::string GetLastLog();
 
-	static const char* S_GetLogCounts();
+	static const char* GetLogCounts();
 
-	static void S_ClearLog();
+	static void ClearConsole();
 
-	static void S_SaveLog();
+	static void SaveConsoleLog();
 
 private:
 	static CArrayS* buffers;
-
 	static std::map<std::string, uint> buffers_map;
-
 	static std::string log_count_text;
-
 	static size_t log_count;
 };

@@ -11,8 +11,8 @@ public:
 
 	void OnEditor();
 
-	void InitAsLoadedMesh(uint mesh_id);
-	void InitAsNewMesh(std::vector<Vertex>& vertices, std::vector<uint>& indices);
+	void InitAsInstanciedMesh(uint mesh_id);
+	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices);
 
 	void OnPositionUpdate(float3 position) override;
 	void OnScaleUpdate(float3 scale) override;
@@ -26,5 +26,4 @@ private:
 	uint instance_id;
 
 	std::string selected_texture = "Default";
-	int selected_normal = 0;
 };

@@ -32,9 +32,9 @@ M_Render* M_ModelRender::GetRenderManager(uint id)
 
 void M_ModelRender::Draw()
 {
-	for (auto& obj : render_map)
+	for (auto& m_render : render_map)
 	{
-		obj.second.Draw();
+		m_render.second.Draw();
 	}
 }
 

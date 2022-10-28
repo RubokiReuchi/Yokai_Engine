@@ -28,11 +28,8 @@ static unsigned int CompileShader(const std::string& source, unsigned int type)
 	{
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
-		glGetShaderInfoLog(id, length, &length, message);
-
-		std::cout << "Failed to compile Shader!" << std::endl;
-		std::cout << message << std::endl;
+		std::vector<char> message(length);
+		glGetShaderInfoLog(id, length, &length, &message[0]);
 
 		glDeleteShader(id);
 		return 0;
@@ -66,39 +63,4 @@ void Re_Shader::CreateShader(const char* vertexPath, const char* fragmentPath)
 
 	glDeleteShader(vertexShaderID);
 	glDeleteShader(fragmentShaderID);
-}
-
-void Re_Shader::Bind()
-{
-	glUseProgram(program_id);
-}
-
-void Re_Shader::SetBool(const std::string& name, bool value) const
-{
-	glUniform1i(glGetUniformLocation(program_id, name.c_str()), (int)value);
-}
-
-void Re_Shader::SetInt(const std::string& name, int value) const
-{
-	glUniform1i(glGetUniformLocation(program_id, name.c_str()), value);
-}
-
-void Re_Shader::SetFloat(const std::string& name, float value) const
-{
-	glUniform1f(glGetUniformLocation(program_id, name.c_str()), value);
-}
-
-void Re_Shader::SetFloat3(const std::string& name, float v1, float v2, float v3) const
-{
-	glUniform3f(glGetUniformLocation(program_id, name.c_str()), v1, v2, v3);
-}
-
-void Re_Shader::SetFloat4(const std::string& name, float v1, float v2, float v3, float v4) const
-{
-	glUniform4f(glGetUniformLocation(program_id, name.c_str()), v1, v2, v3, v4);
-}
-
-void Re_Shader::SetMatFloat4v(const std::string& name, const float* value)
-{
-	glUniformMatrix4fv(glGetUniformLocation(program_id, name.c_str()), 1, GL_FALSE, value);
 }

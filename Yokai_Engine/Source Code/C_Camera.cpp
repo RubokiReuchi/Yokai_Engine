@@ -7,9 +7,8 @@ C_Camera::C_Camera(GameObject* gameObject) : Component(gameObject, Component::TY
 {
 	cameraID = app->camera->game_cameras.size();
 
-	float3 empty = { 0,0,0 };
 	lookingDir = Quat::identity;
-	app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix().Decompose(empty, lookingDir, empty);
+	app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix().Decompose(float3(0, 0, 0), lookingDir, float3(0, 0, 0));
 	original_lookingDir = lookingDir;
 }
 

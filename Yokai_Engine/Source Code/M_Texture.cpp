@@ -14,13 +14,13 @@ float M_Texture::BindTexture(uint texture)
 {
 	for (size_t i = 0; i < bindedTexturesInfo.size(); i++)
 	{
-		if (bindedTexturesInfo[i].Texture_id == texture) // check if texture already binded
+		if (bindedTexturesInfo[i].Texture_id == texture)
 		{
 			return (float)bindedTexturesInfo[i].OpenGL_slot_id;
 		}
 	}
 
-	if (GL_TEXTURE0 + bindedTextures == GL_TEXTURE31) // If we loaded 32 textures already
+	if (GL_TEXTURE0 + bindedTextures == GL_TEXTURE31)
 		return -1;
 
 	glActiveTexture(GL_TEXTURE0 + bindedTextures);

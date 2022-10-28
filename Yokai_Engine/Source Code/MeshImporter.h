@@ -22,17 +22,14 @@ class MeshImporter
 {
 public:
 
-	static GameObject* LoadMesh(std::string path); // This function loads all the information in the mesh and creates all necessary Gameobjects in the process
+	static GameObject* LoadMesh(std::string path);
 
 private:
 	static const aiScene* GetAiScene(std::string path);
 
-	// ProcessNew creates a new RenderManger for each Mesh
-	static void ProcessNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
-	static void ProcessNewMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go = false);
-
-	//ProcessLoaded creates a new Instance inside a M_Render for each Mesh
-	static void ProcessLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr);
+	static void CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
+	static void CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go = false);
+	static void CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr); // create a copy
 
 	static std::map<std::string, MeshInfo> loadedMeshes;
 	static Assimp::Importer importer;
