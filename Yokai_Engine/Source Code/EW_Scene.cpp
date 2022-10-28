@@ -77,6 +77,8 @@ void EW_Scene::Update()
 		target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect;
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dd_file.c_str(), target_flags))
 		{
+			float id;
+			C_MeshRenderer* mr = nullptr;
 			switch (app->file->S_GetResourceType(dd_file))
 			{
 			case RE_TYPE::MESH:
@@ -84,7 +86,12 @@ void EW_Scene::Update()
 				app->engine_order->editor->message = "Mesh placed";
 				break;
 			case RE_TYPE::TEXTURE:
-				dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh().texture_id = (float)TextureImporter::ImportTextureSTBI(dd_file);
+				id = (float)TextureImporter::ImportTextureSTBI(dd_file);
+				mr = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER));
+				if (mr != NULL)
+				{
+					mr->GetMesh().texture_id = id;
+				}
 				app->engine_order->editor->message = "Texture Loaded";
 				break;
 			case RE_TYPE::UNDEFINED:

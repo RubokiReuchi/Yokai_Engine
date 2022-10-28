@@ -3,7 +3,7 @@
 EW_About::EW_About()
 {
 	window_name = "About";
-	enabled = true;
+	enabled = false;
 }
 
 EW_About::~EW_About()
