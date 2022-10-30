@@ -57,7 +57,7 @@ update_status ModuleEO::PreUpdate(float dt)
         editor->GetSelectedGameObject()->DeleteGameObject();
     }
     
-    for (int i = 0; i < delete_qeue.size(); i++)
+    for (size_t i = 0; i < delete_qeue.size(); i++)
     {
         RELEASE(delete_qeue[i]);
     }
