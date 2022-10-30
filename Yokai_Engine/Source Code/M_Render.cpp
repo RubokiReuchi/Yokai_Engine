@@ -6,7 +6,7 @@
 M_Render::M_Render()
 {
     // Create the shaders
-    basic_shader = new Re_Shader("../Project Folder/shaders/basic.vertex.shader", "../Project Folder/shaders/basic.fragment.shader");
+    basic_shader = new Re_Shader("Assets/shaders/basic.vertex.shader", "Assets/shaders/basic.fragment.shader");
 }
 
 M_Render::~M_Render()
