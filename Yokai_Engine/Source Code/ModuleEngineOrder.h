@@ -45,4 +45,5 @@ public:
 	GameObject* rootGameObject = nullptr;
 
 	std::map<uint, GameObject*> game_objects;
+	std::vector<GameObject*> delete_qeue;
 };

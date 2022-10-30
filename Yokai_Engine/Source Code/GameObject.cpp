@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Application.h"
+#include "EO_Editor.h"
 
 GameObject::GameObject(GameObject* parent, std::string name, std::string tag, bool is_camera) : name(name), tag(tag), is_camera(is_camera)
 {
@@ -21,6 +22,18 @@ GameObject::~GameObject()
 		RELEASE(children[i]);
 	}
 	children.clear();
+}
+
+void GameObject::DeleteGameObject()
+{
+	app->engine_order->editor->SetSelectedGameObject(nullptr);
+	parent->RemoveChild(this);
+	app->engine_order->game_objects[id] = nullptr;
+	app->engine_order->delete_qeue.push_back(this);
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		children[i]->DeleteGameObject();
+	}
 }
 
 bool GameObject::AddChild(GameObject* child)

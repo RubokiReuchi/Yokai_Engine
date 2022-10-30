@@ -22,6 +22,11 @@ void EW_Inspector::Update()
 	selectGameobject = editor->GetSelectedGameObject();
 	// Inspector
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
+	if (selectGameobject == NULL)
+	{
+		ImGui::End();
+		return;
+	}
 	ImGui::Checkbox("##Enable", &selectGameobject->enabled);
 	ImGui::SameLine();  ImGuiH::InputText("##Name", &selectGameobject->name);
 	if (!selectGameobject->is_camera)
@@ -99,7 +104,7 @@ void EW_Inspector::DisplayComponents()
 	ImGui::AlignTextToFramePadding();
 	ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
 	filter.Draw("##Filter");
-	std::string componentNames[numComponents - 1] = { "Camera", "Mesh Render" };
+	std::string componentNames[numComponents - 1] = { "Camera" };
 	for (int i = 0; i < (numComponents - 1); i++)
 	{
 		std::string name = componentNames[i];

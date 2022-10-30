@@ -17,6 +17,8 @@ public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
 	~GameObject();
 
+	void DeleteGameObject();
+
 	Component* AddComponent(Component::TYPE type)
 	{
 		Component* new_component;
@@ -83,6 +85,7 @@ public:
 	{
 		return parent;
 	}
+	void RemoveChild(GameObject* child);
 
 	std::string name;
 	bool enabled = true;
@@ -94,8 +97,6 @@ public:
 	bool is_camera;
 
 public:
-	void RemoveChild(GameObject* child);
-
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;
 

@@ -1,4 +1,5 @@
 #include "ModuleEngineOrder.h"
+#include "ModuleInput.h"
 #include "EO_Editor.h"
 #include "EO_Game.h"
 #include "MeshImporter.h"
@@ -51,6 +52,16 @@ bool ModuleEO::Start()
 
 update_status ModuleEO::PreUpdate(float dt)
 {
+    if (app->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+    {
+        editor->GetSelectedGameObject()->DeleteGameObject();
+    }
+    
+    for (int i = 0; i < delete_qeue.size(); i++)
+    {
+        RELEASE(delete_qeue[i]);
+    }
+
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {
         if (engine_order[i] && engine_order[i]->IsEnabled())
