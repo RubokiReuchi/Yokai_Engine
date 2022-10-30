@@ -177,35 +177,35 @@ void C_Transform::UpdatePosition()
 
 void C_Transform::UpdateRotation()
 {
-	float3 totalRotation = parentGlobalTransform.rotation + localTransform.rotation;
+	float3 globalRotation = parentGlobalTransform.rotation + localTransform.rotation;
 	// Give current rotation change to the transform component of every child of this transform's gameobject.
 	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
 	{
 		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnRotationUpdate(totalRotation);
+		child_transform->OnRotationUpdate(globalRotation);
 	}
 
 	// Give current rotation change to every component linked to this transform's gameobject.
 	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(totalRotation);
+		this->GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
 	}
 }
 
 void C_Transform::UpdateScale()
 {
-	float3 totalScale = parentGlobalTransform.scale + localTransform.scale;
+	float3 globalScale = parentGlobalTransform.scale + localTransform.scale;
 	// Give current scale change to the transform component of every child of this transform's gameobject.
 	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
 	{
 		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnScaleUpdate(totalScale);
+		child_transform->OnScaleUpdate(globalScale);
 	}
 
 	// Give current scale change to every component linked to this transform's gameobject.
 	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(totalScale);
+		this->GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(globalScale);
 	}
 }
 

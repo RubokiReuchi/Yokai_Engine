@@ -104,8 +104,8 @@ void EW_Inspector::DisplayComponents()
 	ImGui::AlignTextToFramePadding();
 	ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
 	filter.Draw("##Filter");
-	std::string componentNames[numComponents - 1] = { "Camera" };
-	for (int i = 0; i < (numComponents - 1); i++)
+	std::string componentNames[numComponents - 2] = { "Camera" };
+	for (int i = 0; i < (numComponents - 2); i++)
 	{
 		std::string name = componentNames[i];
 		if (filter.PassFilter(name.c_str()))
