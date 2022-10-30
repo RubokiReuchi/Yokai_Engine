@@ -11,7 +11,7 @@ EW_Hierarchy::EW_Hierarchy()
     editor = dynamic_cast<EO_Editor*>(app->engine_order->engine_order[(uint)EO_NUM::EDITOR]);
     gameObjectsReference = &app->engine_order->game_objects;
 
-    base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
+    base_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 }
 
 EW_Hierarchy::~EW_Hierarchy()
