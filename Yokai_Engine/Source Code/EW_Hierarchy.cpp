@@ -111,6 +111,26 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
         }
+
+        if (ImGui::BeginDragDropSource())
+        {
+            ImGui::SetDragDropPayload(gameObject->name.c_str(), gameObject, sizeof(GameObject*));
+
+            draggingGameObject = gameObject;
+
+            ImGui::Text("Change game object parent");
+            ImGui::EndDragDropSource();
+        }
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(draggingGameObject->name.c_str()))
+            {
+                draggingGameObject->SetParent(gameObject);
+                draggingGameObject = nullptr;
+            }
+            ImGui::EndDragDropTarget();
+        }
+
         if (gameObject->visible_on_editor)
         {
             std::string s = ICON_FA_EYE "##";
@@ -140,6 +160,26 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
         }
+
+        if (ImGui::BeginDragDropSource())
+        {
+            ImGui::SetDragDropPayload(gameObject->name.c_str(), gameObject, sizeof(GameObject*));
+
+            draggingGameObject = gameObject;
+
+            ImGui::Text("Change game object parent");
+            ImGui::EndDragDropSource();
+        }
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(draggingGameObject->name.c_str()))
+            {
+                draggingGameObject->SetParent(gameObject);
+                draggingGameObject = nullptr;
+            }
+            ImGui::EndDragDropTarget();
+        }
+
         if (gameObject->visible_on_editor)
         {
             std::string s = ICON_FA_EYE "##";
@@ -158,26 +198,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
                 SetVisibleOnEditor(gameObject, gameObject, true, true);
             }
         }
-    }
-
-    if (ImGui::BeginDragDropSource())
-    {
-        ImGui::SetDragDropPayload("GameObject", gameObject, sizeof(GameObject*));
-
-        draggingGameObject = gameObject;
-
-        ImGui::Text("Change game object parent");
-        ImGui::EndDragDropSource();
-    }
-
-    if (ImGui::BeginDragDropTarget())
-    {
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject"))
-        {
-            draggingGameObject->SetParent(gameObject);
-            draggingGameObject = nullptr;
-        }
-        ImGui::EndDragDropTarget();
     }
 
     if (node_open)
