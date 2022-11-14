@@ -40,12 +40,15 @@ void EW_Hierarchy::Update()
 
     if (popUpOpen)
     {
-        int selectedSubmenu = 0;
-        std::string submenuNames[numSubmenus] = { "Primitives", "Lights" };
-
         ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
         if (ImGui::BeginPopup("New GameObject"))
         {
+            if (ImGui::Selectable("Empty GameObject", false, 0, ImVec2(200, 15)))
+            {
+                GameObject* newGameObject = new GameObject(editor->GetSelectedGameObject(), "Empty GameObject");
+                popUpOpen = false;
+            }
+            ImGui::Separator();
             if (ImGui::CollapsingHeader("Primitives"))
             {
                 int selectedShape = 0;
@@ -57,7 +60,7 @@ void EW_Hierarchy::Update()
                     if (ImGui::Selectable(shapeNames[i].c_str(), false, 0, ImVec2(200, 15)))
                     {
                         selectedShape = i;
-                        app->renderer3D->model_render.CreatePrimitive(rightClickedGameObject, (PrimitiveType)i);
+                        app->renderer3D->model_render.CreatePrimitive(app->engine_order->rootGameObject, (PrimitiveType)i);
                         popUpOpen = false;
                     }
                 }
@@ -107,7 +110,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
-            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right)) rightClickedGameObject = gameObject;
         }
         if (gameObject->visible_on_editor)
         {
@@ -137,7 +139,6 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
-            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right)) rightClickedGameObject = gameObject;
         }
         if (gameObject->visible_on_editor)
         {
