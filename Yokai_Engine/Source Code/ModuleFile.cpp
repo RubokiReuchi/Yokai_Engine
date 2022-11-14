@@ -280,14 +280,19 @@ std::string ModuleFile::FS_GetFileName(const std::string file, bool getExtension
 	return fileName;
 }
 
+std::string ModuleFile::FS_GetFilePath(const std::string file, bool fileIncluded)
+{
+	
+
+	return fileName;
+}
+
 RE_TYPE ModuleFile::FS_GetResourceType(const std::string& filename)
 {
 	std::string fileExtension = filename;
 	fileExtension = fileExtension.substr(fileExtension.find_last_of('.') + 1);
 
 	std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
-
-	//TODO: Add our own file extensions to this checks
 
 	if (fileExtension == "fbx" || fileExtension == "dae") return RE_TYPE::MESH;
 	if (fileExtension == "tga" || fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds") return RE_TYPE::TEXTURE;

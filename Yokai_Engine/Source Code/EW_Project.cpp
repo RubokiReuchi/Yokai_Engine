@@ -122,6 +122,8 @@ void EW_Project::Update()
     }
     else
     {
+        uint rows = 0;
+        uint dir_size = currentNode->directories.size();
         for (size_t i = 0; i < allFiles.size(); i++)
         {
             if (filter.PassFilter(allFiles[i].c_str()))
@@ -129,6 +131,15 @@ void EW_Project::Update()
                 std::string s = ICON_FA_FILE "\n";
                 s += allFiles[i];
                 ImGui::Button(s.c_str(), ImVec2(120, 120));
+                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceNoDisableHover | ImGuiDragDropFlags_SourceNoPreviewTooltip))
+                {
+                    std::string file_path = app->file->FS_GetFileName(allFiles[i]);
+                    ImGui::SetDragDropPayload(file_path.c_str(), &i, sizeof(std::string));
+                    app->engine_order->editor->dd_file = file_path;
+                    ImGui::EndDragDropSource();
+                }
+
+                if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
                 ImGui::SameLine();
             }
         }
