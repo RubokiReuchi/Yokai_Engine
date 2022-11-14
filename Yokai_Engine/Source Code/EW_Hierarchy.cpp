@@ -45,7 +45,7 @@ void EW_Hierarchy::Update()
         {
             if (ImGui::Selectable("Empty GameObject", false, 0, ImVec2(200, 15)))
             {
-                GameObject* newGameObject = new GameObject(editor->GetSelectedGameObject(), "Empty GameObject");
+                GameObject* newGameObject = new GameObject(app->engine_order->rootGameObject, "Empty GameObject");
                 popUpOpen = false;
             }
             ImGui::Separator();
@@ -78,6 +78,32 @@ void EW_Hierarchy::Update()
         }
     }
 
+    if (optionsOpen)
+    {
+        ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+        if (ImGui::BeginPopup("Options"))
+        {
+            if (ImGui::Selectable("Unparent", false, 0, ImVec2(200, 15)))
+            {
+                optionedGameObject->SetParent(app->engine_order->rootGameObject);
+                optionedGameObject = nullptr;
+                optionsOpen = false;
+            }
+            if (ImGui::Selectable("Delete", false, 0, ImVec2(200, 15)))
+            {
+                optionedGameObject->DeleteGameObject();
+                optionedGameObject = nullptr;
+                optionsOpen = false;
+            }
+            ImGui::EndPopup();
+        }
+        if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(200.0f, 250.0f)))
+        {
+            optionsOpen = false;
+            ImGui::CloseCurrentPopup();
+        }
+    }
+
     ImGui::End();
 }
 
@@ -91,7 +117,6 @@ void EW_Hierarchy::DrawGameObjectChildren(GameObject* gameObject, bool onlyChild
             ProcessGameObject(gameObject->children[i], i);
         }
     }
-
 }
 
 void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
@@ -110,6 +135,20 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+            {
+                optionedGameObject = gameObject;
+                optionsOpen = !optionsOpen;
+                if (optionsOpen)
+                {
+                    ImGui::OpenPopup("Options");
+                    ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+                }
+                else
+                {
+                    ImGui::CloseCurrentPopup();
+                }
+            }
         }
 
         if (ImGui::BeginDragDropSource())
@@ -118,7 +157,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
 
             draggingGameObject = gameObject;
 
-            ImGui::Text("Change game object parent");
+            ImGui::Text("Change GO parent");
             ImGui::EndDragDropSource();
         }
         if (ImGui::BeginDragDropTarget())
@@ -159,6 +198,20 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
+            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+            {
+                optionedGameObject = gameObject;
+                optionsOpen = !optionsOpen;
+                if (optionsOpen)
+                {
+                    ImGui::OpenPopup("Options");
+                    ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+                }
+                else
+                {
+                    ImGui::CloseCurrentPopup();
+                }
+            }
         }
 
         if (ImGui::BeginDragDropSource())

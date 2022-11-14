@@ -27,10 +27,12 @@ private:
 	EO_Editor* editor = nullptr;
 
 	GameObject* draggingGameObject = nullptr;
+	GameObject* optionedGameObject = nullptr;
+	bool optionsOpen = false; //options popUp
 
 	ImGuiTreeNodeFlags base_flags;
 
-	bool popUpOpen = false;
+	bool popUpOpen = false; //create popUp
 	ImVec2 ori;
 
 	void SetVisibleOnEditor(GameObject* first_game_object, GameObject* game_object, bool visible_on_editor, bool it_one);

@@ -52,11 +52,6 @@ bool ModuleEO::Start()
 
 update_status ModuleEO::PreUpdate(float dt)
 {
-    if (app->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
-    {
-        editor->GetSelectedGameObject()->DeleteGameObject();
-    }
-    
     for (size_t i = 0; i < delete_qeue.size(); i++)
     {
         RELEASE(delete_qeue[i]);
