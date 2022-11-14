@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "M_ModelRender.h"
 #include "C_MeshRenderer.h"
+#include "C_Material.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -147,7 +148,11 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 
 	// Load into a GameObject and set the mesh render
 	if (create_go) GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
-	else dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+	else
+	{
+		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
+	}
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)

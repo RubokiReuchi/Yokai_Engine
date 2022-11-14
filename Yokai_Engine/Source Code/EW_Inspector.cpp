@@ -52,6 +52,10 @@ void EW_Inspector::Update()
 		{
 			dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
 		}
+		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MATERIAL) != NULL)
+		{
+			dynamic_cast<C_Material*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MATERIAL))->OnEditor();
+		}
 
 		ImGui::Separator();
 		if (ImGuiH::ButtonAlignOnLine("Add Component"))

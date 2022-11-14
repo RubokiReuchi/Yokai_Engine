@@ -24,6 +24,4 @@ public:
 private:
 	uint mesh_id;
 	uint instance_id;
-
-	std::string selected_texture = "Default";
 };

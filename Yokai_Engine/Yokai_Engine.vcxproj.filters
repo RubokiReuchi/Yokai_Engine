@@ -417,6 +417,9 @@
     <ClInclude Include="Source Code\FileTree.hpp">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\C_Material.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -673,6 +676,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\EO_Game.cpp">
       <Filter>Sources\Modules\EngineOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\C_Material.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
