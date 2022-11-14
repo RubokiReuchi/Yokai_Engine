@@ -83,6 +83,12 @@ void EW_Hierarchy::Update()
         ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
         if (ImGui::BeginPopup("Options"))
         {
+            if (ImGui::Selectable("Create Empty", false, 0, ImVec2(200, 15)))
+            {
+                GameObject* newGameObject = new GameObject(optionedGameObject, "Empty GameObject");
+                optionedGameObject = nullptr;
+                optionsOpen = false;
+            }
             if (ImGui::Selectable("Unparent", false, 0, ImVec2(200, 15)))
             {
                 optionedGameObject->SetParent(app->engine_order->rootGameObject);
