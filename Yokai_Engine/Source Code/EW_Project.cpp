@@ -129,11 +129,11 @@ void EW_Project::Update()
             if (filter.PassFilter(allFiles[i].c_str()))
             {
                 std::string s = ICON_FA_FILE "\n";
-                s += allFiles[i];
+                s += app->file->FS_GetFileName(allFiles[i]);
                 ImGui::Button(s.c_str(), ImVec2(120, 120));
                 if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceNoDisableHover | ImGuiDragDropFlags_SourceNoPreviewTooltip))
                 {
-                    std::string file_path = app->file->FS_GetFileName(allFiles[i]);
+                    std::string file_path = allFiles[i];
                     ImGui::SetDragDropPayload(file_path.c_str(), &i, sizeof(std::string));
                     app->engine_order->editor->dd_file = file_path;
                     ImGui::EndDragDropSource();

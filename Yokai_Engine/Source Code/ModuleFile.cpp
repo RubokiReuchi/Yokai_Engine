@@ -280,13 +280,6 @@ std::string ModuleFile::FS_GetFileName(const std::string file, bool getExtension
 	return fileName;
 }
 
-std::string ModuleFile::FS_GetFilePath(const std::string file, bool fileIncluded)
-{
-	
-
-	return fileName;
-}
-
 RE_TYPE ModuleFile::FS_GetResourceType(const std::string& filename)
 {
 	std::string fileExtension = filename;
@@ -317,9 +310,10 @@ std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 		}
 		else
 		{
-			ret.push_back(list[i]);
+			std::string s = path + "/" + list[i];
+			ret.push_back(s);
 		}
 	}
-
+	
 	return ret;
 }
