@@ -36,6 +36,11 @@ void C_Camera::OnEditor()
 
 		float aspect_ratio = 1.0f / app->camera->activeGameCamera->GetAspectRatio();
 		ImGui::Image((ImTextureID)app->camera->activeGameCamera->frameBuffer.GetTexture(), ImVec2(gameDimensions.x, gameDimensions.x * aspect_ratio), ImVec2(0, 1), ImVec2(1, 0));
+		
+		float temp_fov = math::RadToDeg(GetCamera()->GetFOV());
+		ImGui::Text("FOV: ");
+		ImGui::SameLine();
+		if (ImGui::DragFloat("##Fov", &temp_fov, 0.1f)) GetCamera()->SetFOV(temp_fov);
 	}
 	if (popUpOpen)
 	{
