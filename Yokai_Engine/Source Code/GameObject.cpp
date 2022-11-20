@@ -6,7 +6,7 @@ GameObject::GameObject(GameObject* parent, std::string name, std::string tag, bo
 {
 	id = app->engine_order->AddGameObject(this);
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
-	if (parent != nullptr) parent->AddChild(this);
+	if (parent != NULL) parent->AddChild(this);
 }
 
 GameObject::~GameObject()
@@ -26,9 +26,9 @@ GameObject::~GameObject()
 
 void GameObject::DeleteGameObject()
 {
-	app->engine_order->editor->SetSelectedGameObject(nullptr);
+	app->engine_order->editor->SetSelectedGameObject(NULL);
 	parent->RemoveChild(this);
-	app->engine_order->game_objects[id] = nullptr;
+	app->engine_order->game_objects[id] = NULL;
 	app->engine_order->delete_qeue.push_back(this);
 	for (size_t i = 0; i < children.size(); i++)
 	{
@@ -38,24 +38,30 @@ void GameObject::DeleteGameObject()
 
 bool GameObject::AddChild(GameObject* child)
 {
-	if (!child) return false;
-	if (child->parent == this) return false;
-
-	GameObject* p = parent;
-
-	while (p)
+	if (child->parent == this)
 	{
-		if (p == child) return false;
+		return false;
+	}
 
-		p = p->parent;
+	GameObject* aux_parent = parent;
+	while (aux_parent)
+	{
+		if (aux_parent == child)
+		{
+			return false;
+		}
+
+		aux_parent = aux_parent->parent;
 	}
 
 	children.push_back(child);
 
-	if (child->parent) child->parent->RemoveChild(child);
+	if (child->parent)
+	{
+		child->parent->RemoveChild(child);
+	}
 
 	child->parent = this;
-
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
 	child->transform->UpdateTransform();
 
@@ -69,11 +75,12 @@ bool GameObject::SetParent(GameObject* parent)
 
 void GameObject::RemoveChild(GameObject* child)
 {
-	if (!child) return;
-
 	for (size_t i = 0; i < children.size(); ++i)
 	{
-		if (children[i] == child) children.erase(children.begin() + i);
+		if (children[i] == child)
+		{
+			children.erase(children.begin() + i);
+		}
 	}
-	child->parent = nullptr;
+	child->parent = NULL;
 }

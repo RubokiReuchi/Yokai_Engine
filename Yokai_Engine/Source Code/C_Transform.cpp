@@ -129,8 +129,10 @@ void C_Transform::OnTransformUpdate(float3 pos, float3 scale, float3 rot)
 
 Transform C_Transform::GetGlobalTransform()
 {
-	// If we have no parent, we are the root gameObject. which means our local transform is also our global.
-	if (this->GetGameObject()->GetParent() == NULL) return localTransform;
+	if (this->GetGameObject()->GetParent() == NULL)
+	{
+		return localTransform;
+	}
 
 	Transform global_transform;
 	global_transform.position = parentGlobalTransform.position + localTransform.position;
