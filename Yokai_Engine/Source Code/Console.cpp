@@ -1,95 +1,54 @@
 #include "Console.h"
 #include "ModuleFile.h"
-#include "CycleArray.hpp"
 
-CArrayS* Console::buffers = nullptr;
-std::map<std::string, uint> Console::buffers_map;
-std::string Console::log_count_text = "";
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl3.h"
+
+std::map<uint, std::string> Console::console;
 size_t Console::log_count = 0;
-
-void Console::InitConsole()
-{
-    static bool isInit = false;
-
-    if (isInit) return;
-
-    buffers = new CArrayS(MAX_CONSOLE_LOGS);
-}
-
-void Console::CloseConsole()
-{
-    static bool isClosed = false;
-
-    if (isClosed) return;
-
-    RELEASE(buffers);
-}
 
 void Console::LogInConsole(const std::string text)
 {
-    buffers->push_back("\n> " + text);
-
-    auto it = buffers_map.find(text);
-
-    if (it == buffers_map.end()) buffers_map.insert(std::make_pair(text, 0));
-
-    buffers_map[text]++;
-
-    log_count++;
+    console[log_count++] = (" > " + text);
 }
 
-uint Console::GetConsoleLog(std::string** buffer)
+void Console::DrawConsoleLog()
 {
-    *buffer = buffers->front();
-
-    return buffers->size();
-}
-
-std::map<std::string, uint> Console::GetCollapseLog()
-{
-    return buffers_map;
+    for (auto& log : console)
+    {
+        ImGui::Text(log.second.c_str());
+    }
 }
 
 std::string Console::GetLastLog()
 {
-    return *(buffers->front() + buffers->size());
+    std::map<uint, std::string>::iterator aux = console.end();
+    return aux->second;
 }
 
-const char* Console::GetLogCounts()
+void Console::ClearConsoleLog()
 {
-    log_count_text = log_count > 999 ? "999+" : std::to_string(log_count);
-
-    return log_count_text.c_str();
-}
-
-void Console::ClearConsole()
-{
-    buffers->reset();
-
-    buffers_map.clear();
-
-    log_count_text.clear();
-
+    console.clear();
     log_count = 0;
 }
 
 void Console::SaveConsoleLog()
 {
-    std::string buffer = "DEBUG INFO:\n";
+    std::string save = "";
 
-    // Read all context in the _buffers and put into buffer
-    auto* b = buffers->front();
+    for (auto& log : console)
+    {
+        save += log.second;
+        save += "\n";
+    }
 
-    for (int i = 0; i < buffers->size(); i++, b++) buffer += *b;
-
-    // Convert string buffer to char* buffer
-    uint n = buffer.size() + 1;
+    uint n = save.size() + 1;
 
     char* arr = new char[n];
 
-    strcpy_s(arr, n, buffer.c_str());
+    strcpy_s(arr, n, save.c_str());
 
-    // Save buffer info and release unnecessary memory
     ModuleFile::FS_Save(LOG_PATH, arr, n, false);
 
     RELEASE_ARRAY(arr);

@@ -384,9 +384,6 @@
     <ClInclude Include="Source Code\EW_Project.h">
       <Filter>Sources\EditorWindows</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CycleArray.hpp">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Console.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
