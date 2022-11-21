@@ -28,4 +28,7 @@ public:
 private:
 	uint mesh_id;
 	uint instance_id;
+
+	bool show_aabb = false;
+	bool show_obb = false;
 };

@@ -160,6 +160,21 @@ float3 C_Transform::GetUp()
 	return globalMatrix.RotatePart().Col(1).Normalized();
 }
 
+void C_Transform::UpdateBB()
+{
+	GameObject* go = GetGameObject();
+
+	if (!go->aabb_init) return;
+
+	CalculateGlobalMatrix();
+
+	go->global_obb = go->aabb;
+	go->global_obb.Transform(globalMatrix);
+
+	go->global_aabb.SetNegativeInfinity();
+	go->global_aabb.Enclose(go->global_obb);
+}
+
 void C_Transform::UpdatePosition()
 {
 	float3 globalPosition = parentGlobalTransform.position + localTransform.position;
@@ -175,6 +190,8 @@ void C_Transform::UpdatePosition()
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnPositionUpdate(globalPosition);
 	}
+
+	UpdateBB();
 }
 
 void C_Transform::UpdateRotation()
@@ -192,6 +209,8 @@ void C_Transform::UpdateRotation()
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
 	}
+
+	UpdateBB();
 }
 
 void C_Transform::UpdateScale()
@@ -209,6 +228,8 @@ void C_Transform::UpdateScale()
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(globalScale);
 	}
+
+	UpdateBB();
 }
 
 void C_Transform::UpdateTransform()
@@ -226,6 +247,8 @@ void C_Transform::UpdateTransform()
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
 	}
+
+	UpdateBB();
 }
 
 void C_Transform::CalculateGlobalMatrix()

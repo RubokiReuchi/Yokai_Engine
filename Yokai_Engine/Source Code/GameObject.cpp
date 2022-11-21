@@ -59,9 +59,11 @@ bool GameObject::AddChild(GameObject* child)
 	if (child->parent)
 	{
 		child->parent->RemoveChild(child);
+		child->parent->GenerateAABB(); // recalculate aabb of old parent
 	}
 
 	child->parent = this;
+	GenerateAABB(); // recalculate aabb of new parent
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
 	child->transform->UpdateTransform();
 
@@ -87,6 +89,8 @@ void GameObject::RemoveChild(GameObject* child)
 
 void GameObject::GenerateAABB()
 {
+	if (!aabb_init) aabb_init = true;
+
 	std::vector<float3> vertices_pos = GetAllVerticesPositions(this);
 
 	float* v_pos = new float[vertices_pos.size() * 3];

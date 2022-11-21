@@ -85,7 +85,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	eulerRot.y = math::RadToDeg(eulerRot.y);
 	eulerRot.z = math::RadToDeg(eulerRot.z);
 
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
+	//dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 
 	uint meshNum = node->mNumMeshes;
 
@@ -103,8 +103,8 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	}
 
 	// set transform after al child have been added
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 	newParent->GenerateAABB();
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
 
 void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go)

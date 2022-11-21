@@ -37,6 +37,8 @@ public:
 	float3 GetRight();
 	float3 GetUp();
 
+	void UpdateBB();
+
 private:
 	Transform localTransform;
 

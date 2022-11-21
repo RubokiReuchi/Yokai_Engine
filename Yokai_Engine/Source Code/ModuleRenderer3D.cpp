@@ -136,14 +136,18 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		app->engine_order->DrawEO();
 		model_render.Draw();
 
-		std::vector<float3> lines;
-		lines.push_back(float3(0, 0, 0));
-		lines.push_back(float3(50, 50, 50));
-		lines.push_back(float3(50, 50, 50));
-		lines.push_back(float3(50, 0, 50));
-
-		if (dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER)))
+		GameObject* selected_go = app->engine_order->editor->GetSelectedGameObject();
+		if (selected_go && !selected_go->is_camera)
 		{
+			float3 points[8];
+			selected_go->global_aabb.GetCornerPoints(points);
+
+			std::vector<float3> lines;
+			for (size_t i = 0; i < 8; i++)
+			{
+				lines.push_back(points[i]);
+			}
+
 			DrawAABB(lines);
 		}
 	}
@@ -232,8 +236,8 @@ void ModuleRenderer3D::DrawAABB(std::vector<float3> lines)
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
 	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.75f, 0.36f, 0.32f, 1.0f);
-	Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
-	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
+	//Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+	//glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
 
 	UpdateAABB_Buffer(lines);
 

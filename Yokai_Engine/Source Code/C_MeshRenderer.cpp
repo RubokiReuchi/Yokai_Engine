@@ -34,9 +34,17 @@ void C_MeshRenderer::OnEditor()
 	if (no_collapsed)
 	{
 		ImGui::Text("Visible: "), ImGui::SameLine();
-		if (GetMesh().visible) 
+		if (GetMesh().visible)
+		{
 			ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.0f, 1.0f), "True");
-		else ImGui::TextColored(ImVec4(0.9f, 0.0f, 0.0f, 1.0f), "False");
+		}
+		else
+		{
+			ImGui::TextColored(ImVec4(0.9f, 0.0f, 0.0f, 1.0f), "False");
+		}
+
+		ImGui::Checkbox("Show AABB", &show_aabb);
+		ImGui::Checkbox("Show OBB", &show_obb);
 	}
 	if (popUpOpen)
 	{

@@ -96,9 +96,13 @@ public:
 	std::string tag;
 	C_Transform* transform = nullptr;
 
-	AABB aabb;
+	bool aabb_init = false;
+	AABB aabb; // local
 	void GenerateAABB();
 	std::vector<float3> GetAllVerticesPositions(GameObject* go);
+
+	OBB global_obb;
+	AABB global_aabb;
 
 	bool is_camera;
 
