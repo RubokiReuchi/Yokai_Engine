@@ -139,6 +139,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		std::vector<float3> lines;
 		lines.push_back(float3(0, 0, 0));
 		lines.push_back(float3(50, 50, 50));
+		lines.push_back(float3(50, 50, 50));
+		lines.push_back(float3(50, 0, 50));
 
 		if (dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER)))
 		{
@@ -209,7 +211,7 @@ void ModuleRenderer3D::InitAABB_Buffer()
 	// Create Vertex Buffer Object
 	glGenBuffers(1, &linesVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, linesVBO);
-	glBufferData(GL_ARRAY_BUFFER, NULL, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float3) * MAX_LINES * 2, NULL, GL_DYNAMIC_DRAW);
 
 	// vertex positions
 	glEnableVertexAttribArray(0);

@@ -10,6 +10,7 @@
 #include"MathGeoLib/include/Geometry/OBB.h"
 
 #define MAX_LIGHTS 8
+#define MAX_LINES 99
 
 class ModuleRenderer3D : public Module
 {
