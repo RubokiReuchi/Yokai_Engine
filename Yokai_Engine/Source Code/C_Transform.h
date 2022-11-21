@@ -5,7 +5,7 @@
 struct Transform
 {
 	float3 position = float3(0.0f, 0.0f, 0.0f);
-	float3 scale = float3(0.0f, 0.0f, 0.0f);
+	float3 scale = float3(1.0f, 1.0f, 1.0f);
 	float3 rotation = float3(0.0f, 0.0f, 0.0f);
 };
 

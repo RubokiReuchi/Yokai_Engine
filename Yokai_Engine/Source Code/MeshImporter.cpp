@@ -85,8 +85,6 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	eulerRot.y = math::RadToDeg(eulerRot.y);
 	eulerRot.z = math::RadToDeg(eulerRot.z);
 
-	//dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
-
 	uint meshNum = node->mNumMeshes;
 
 	loadedMeshes[path].numOfMeshes += meshNum;

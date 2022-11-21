@@ -137,7 +137,9 @@ Transform C_Transform::GetGlobalTransform()
 	Transform global_transform;
 	global_transform.position = parentGlobalTransform.position + localTransform.position;
 	global_transform.rotation = parentGlobalTransform.rotation + localTransform.rotation;
-	global_transform.scale = parentGlobalTransform.scale + localTransform.scale;
+	global_transform.scale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
+	global_transform.scale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
+	global_transform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
 
 	return global_transform;
 }
@@ -215,7 +217,11 @@ void C_Transform::UpdateRotation()
 
 void C_Transform::UpdateScale()
 {
-	float3 globalScale = parentGlobalTransform.scale + localTransform.scale;
+	float3 globalScale;
+	globalScale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
+	globalScale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
+	globalScale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
+
 	// Give current scale change to the transform component of every child of this transform's gameobject.
 	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
 	{
@@ -257,5 +263,5 @@ void C_Transform::CalculateGlobalMatrix()
 
 	math::Quat rotation = Quat::FromEulerXYZ(math::DegToRad(globalTransform.rotation.x), math::DegToRad(globalTransform.rotation.y), math::DegToRad(globalTransform.rotation.z));
 
-	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, float3(1, 1, 1));
+	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, globalTransform.scale);
 }
