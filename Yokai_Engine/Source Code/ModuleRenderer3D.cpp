@@ -93,6 +93,8 @@ bool ModuleRenderer3D::Init()
 	}
 
 	model_render.Init();
+	line_shader = new Re_Shader("Assets/shaders/lines.vertex.shader", "Assets/shaders/lines.fragment.shader");
+	InitAABB_Buffer();
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -133,6 +135,15 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		app->engine_order->DrawEO();
 		model_render.Draw();
+
+		std::vector<float3> lines;
+		lines.push_back(float3(0, 0, 0));
+		lines.push_back(float3(50, 50, 50));
+
+		if (dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER)))
+		{
+			DrawAABB(lines);
+		}
 	}
 	if (app->camera->activeGameCamera->active)
 	{
@@ -188,4 +199,43 @@ void ModuleRenderer3D::ToggleVSync(bool is_on)
 {
 	vsync = is_on;
 	SDL_GL_SetSwapInterval(vsync);
+}
+
+void ModuleRenderer3D::InitAABB_Buffer()
+{
+	glGenVertexArrays(1, &linesVAO);
+	glBindVertexArray(linesVAO);
+
+	// Create Vertex Buffer Object
+	glGenBuffers(1, &linesVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, linesVBO);
+	glBufferData(GL_ARRAY_BUFFER, NULL, NULL, GL_DYNAMIC_DRAW);
+
+	// vertex positions
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float3), (void*)0);
+
+	glBindVertexArray(0);
+}
+
+void ModuleRenderer3D::UpdateAABB_Buffer(std::vector<float3> lines)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, linesVBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float3) * lines.size(), &lines[0]);
+}
+
+void ModuleRenderer3D::DrawAABB(std::vector<float3> lines)
+{
+	glUseProgram(line_shader->program_id);
+	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
+	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
+	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.75f, 0.36f, 0.32f, 1.0f);
+	Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
+
+	UpdateAABB_Buffer(lines);
+
+	glBindVertexArray(linesVAO);
+	glDrawArrays(GL_LINES, 0, lines.size());
+	glBindVertexArray(0);
 }

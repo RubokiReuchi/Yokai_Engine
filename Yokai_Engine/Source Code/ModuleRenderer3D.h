@@ -4,7 +4,6 @@
 #include "Globals.h"
 #include "Light.h"
 #include "M_ModelRender.h"
-
 #include "MeshImporter.h"
 
 #include"MathGeoLib/include/Geometry/AABB.h"
@@ -27,6 +26,14 @@ public:
 	void OnResize(int width, int height);
 
 	void ToggleVSync(bool is_on);
+
+private:
+	void InitAABB_Buffer();
+	void UpdateAABB_Buffer(std::vector<float3> lines);
+	void DrawAABB(std::vector<float3> lines);
+	Re_Shader* line_shader = nullptr;
+	uint linesVAO = 0;
+	uint linesVBO = 0;
 
 public:
 
