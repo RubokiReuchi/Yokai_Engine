@@ -58,10 +58,19 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 
 	if (parent == nullptr)
 	{
-		if (node->mNumChildren == 0) returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
-		else returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+		if (node->mNumChildren == 0)
+		{
+			returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, node->mName.C_Str());
+		}
+		else
+		{
+			returnGameObject = newParent = new GameObject(app->engine_order->rootGameObject, "GameObject");
+		}
 	}
-	else newParent = new GameObject(parent, node->mName.C_Str());
+	else
+	{
+		newParent = new GameObject(parent, node->mName.C_Str());
+	}
 
 	// Set new GameObject position with node Transform
 	aiVector3D translation, scaling;
@@ -147,7 +156,10 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 	}
 
 	// Load into a GameObject and set the mesh render
-	if (create_go) GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
+	if (create_go)
+	{
+		GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
+	}
 	else
 	{
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);

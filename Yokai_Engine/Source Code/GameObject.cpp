@@ -84,3 +84,12 @@ void GameObject::RemoveChild(GameObject* child)
 	}
 	child->parent = NULL;
 }
+
+void GameObject::GenerateAABB()
+{
+	this->aabb;
+	C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(GetComponent(Component::TYPE::MESH_RENDERER));
+
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)mr->GetMesh().vertices, mr->GetMesh().vertices->size());
+}

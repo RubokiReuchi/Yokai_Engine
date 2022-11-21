@@ -96,6 +96,9 @@ public:
 	std::string tag;
 	C_Transform* transform = nullptr;
 
+	AABB aabb;
+	void GenerateAABB();
+
 	bool is_camera;
 
 public:
