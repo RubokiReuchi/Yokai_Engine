@@ -9,6 +9,8 @@ public:
 	C_MeshRenderer(GameObject* gameObject);
 	virtual ~C_MeshRenderer() override;
 
+	void Update();
+
 	void OnEditor();
 
 	void InitAsInstanciedMesh(uint mesh_id);
@@ -31,4 +33,5 @@ private:
 
 	bool show_aabb = false;
 	bool show_obb = false;
+	std::vector<float3> PointsToLines_AABB(float3 points[8]);
 };

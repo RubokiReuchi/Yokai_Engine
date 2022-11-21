@@ -17,6 +17,28 @@ C_MeshRenderer::~C_MeshRenderer()
 	manager->GetMap().erase(instance_id);
 }
 
+void C_MeshRenderer::Update()
+{
+	if (show_aabb)
+	{
+		float3 points[8];
+		GetGameObject()->global_aabb.GetCornerPoints(points);
+
+		std::vector<float3> lines = PointsToLines_AABB(points);
+		
+		app->renderer3D->AddLines(lines);
+	}
+	if (show_obb)
+	{
+		float3 points[8];
+		GetGameObject()->global_obb.GetCornerPoints(points);
+
+		std::vector<float3> lines = PointsToLines_AABB(points);
+
+		app->renderer3D->AddLines(lines);
+	}
+}
+
 void C_MeshRenderer::OnEditor()
 {
 	ImGui::AlignTextToFramePadding();
@@ -102,4 +124,41 @@ Re_Mesh& C_MeshRenderer::GetMesh()
 	Re_Mesh& meshReference = manager->GetMap()[instance_id];
 
 	return meshReference;
+}
+
+std::vector<float3> C_MeshRenderer::PointsToLines_AABB(float3 points[8])
+{
+	std::vector<float3> lines;
+
+	// face 1
+	lines.push_back(points[0]); // line 1
+	lines.push_back(points[1]);
+	lines.push_back(points[0]); // line 2
+	lines.push_back(points[4]);
+	lines.push_back(points[1]); // line 3
+	lines.push_back(points[5]);
+	lines.push_back(points[4]); // line 4
+	lines.push_back(points[5]);
+
+	// face 2
+	lines.push_back(points[2]); // line 5
+	lines.push_back(points[3]);
+	lines.push_back(points[2]); // line 6
+	lines.push_back(points[6]);
+	lines.push_back(points[6]); // line 7
+	lines.push_back(points[7]);
+	lines.push_back(points[3]); // line 8
+	lines.push_back(points[7]);
+
+	// joints
+	lines.push_back(points[0]); // line 9
+	lines.push_back(points[2]);
+	lines.push_back(points[1]); // line 10
+	lines.push_back(points[3]);
+	lines.push_back(points[4]); // line 11
+	lines.push_back(points[6]);
+	lines.push_back(points[5]); // line 12
+	lines.push_back(points[7]);
+
+	return lines;
 }

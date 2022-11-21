@@ -24,6 +24,14 @@ GameObject::~GameObject()
 	children.clear();
 }
 
+void GameObject::Update()
+{
+	for (auto& component : components)
+	{
+		if (component->IsEnabled()) component->Update();
+	}
+}
+
 void GameObject::DeleteGameObject()
 {
 	app->engine_order->editor->SetSelectedGameObject(NULL);

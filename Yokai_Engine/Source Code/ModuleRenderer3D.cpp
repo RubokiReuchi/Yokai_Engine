@@ -136,20 +136,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		app->engine_order->DrawEO();
 		model_render.Draw();
 
-		GameObject* selected_go = app->engine_order->editor->GetSelectedGameObject();
-		if (selected_go && !selected_go->is_camera)
-		{
-			float3 points[8];
-			selected_go->global_aabb.GetCornerPoints(points);
-
-			std::vector<float3> lines;
-			for (size_t i = 0; i < 8; i++)
-			{
-				lines.push_back(points[i]);
-			}
-
-			DrawAABB(lines);
-		}
+		if (drawing_lines.size() > 0) DrawLines();
 	}
 	if (app->camera->activeGameCamera->active)
 	{
@@ -207,6 +194,29 @@ void ModuleRenderer3D::ToggleVSync(bool is_on)
 	SDL_GL_SetSwapInterval(vsync);
 }
 
+void ModuleRenderer3D::DrawLines()
+{
+	glUseProgram(line_shader->program_id);
+	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
+	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
+	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.75f, 0.36f, 0.32f, 1.0f);
+	//Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+	//glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
+
+	UpdateAABB_Buffer(drawing_lines);
+
+	glBindVertexArray(linesVAO);
+	glDrawArrays(GL_LINES, 0, drawing_lines.size());
+	glBindVertexArray(0);
+
+	drawing_lines.clear();
+}
+
+void ModuleRenderer3D::AddLines(std::vector<float3> lines)
+{
+	drawing_lines.insert(drawing_lines.end(), lines.begin(), lines.end());
+}
+
 void ModuleRenderer3D::InitAABB_Buffer()
 {
 	glGenVertexArrays(1, &linesVAO);
@@ -228,20 +238,4 @@ void ModuleRenderer3D::UpdateAABB_Buffer(std::vector<float3> lines)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, linesVBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float3) * lines.size(), &lines[0]);
-}
-
-void ModuleRenderer3D::DrawAABB(std::vector<float3> lines)
-{
-	glUseProgram(line_shader->program_id);
-	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
-	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
-	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.75f, 0.36f, 0.32f, 1.0f);
-	//Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
-	//glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
-
-	UpdateAABB_Buffer(lines);
-
-	glBindVertexArray(linesVAO);
-	glDrawArrays(GL_LINES, 0, lines.size());
-	glBindVertexArray(0);
 }

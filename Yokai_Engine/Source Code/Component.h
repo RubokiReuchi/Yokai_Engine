@@ -28,6 +28,8 @@ public:
 	Component(GameObject* game_object, TYPE type);
 	virtual ~Component();
 
+	virtual void Update() {}
+
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }
 	TYPE GetType() { return type; }

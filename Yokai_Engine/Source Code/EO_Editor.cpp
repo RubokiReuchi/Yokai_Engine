@@ -79,8 +79,13 @@ void EO_Editor::PreUpdate()
 {}
 
 void EO_Editor::Update()
-{}
-
+{
+	// will be moved to scene
+	for (auto& go : app->engine_order->game_objects)
+	{
+		go.second->Update();
+	}
+}
 
 void EO_Editor::PostUpdate()
 {

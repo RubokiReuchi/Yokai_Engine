@@ -10,7 +10,7 @@
 #include"MathGeoLib/include/Geometry/OBB.h"
 
 #define MAX_LIGHTS 8
-#define MAX_LINES 99
+#define MAX_LINES 999
 
 class ModuleRenderer3D : public Module
 {
@@ -28,13 +28,19 @@ public:
 
 	void ToggleVSync(bool is_on);
 
+	void AddLines(std::vector<float3> lines);
+
 private:
+
+	void DrawLines();
+
 	void InitAABB_Buffer();
 	void UpdateAABB_Buffer(std::vector<float3> lines);
-	void DrawAABB(std::vector<float3> lines);
 	Re_Shader* line_shader = nullptr;
 	uint linesVAO = 0;
 	uint linesVBO = 0;
+
+	std::vector<float3> drawing_lines;
 
 public:
 

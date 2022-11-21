@@ -18,6 +18,8 @@ public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
 	~GameObject();
 
+	void Update();
+
 	void DeleteGameObject();
 
 	Component* AddComponent(Component::TYPE type)
