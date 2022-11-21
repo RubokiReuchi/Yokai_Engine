@@ -104,6 +104,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 
 	// set transform after al child have been added
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
+	newParent->GenerateAABB();
 }
 
 void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go)

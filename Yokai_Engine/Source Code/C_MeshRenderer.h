@@ -20,6 +20,10 @@ public:
 	void OnTransformUpdate(float3 position, float3 scale, float3 rotation) override;
 
 	Re_Mesh& GetMesh();
+	uint GetMeshID()
+	{
+		return mesh_id;
+	}
 
 private:
 	uint mesh_id;

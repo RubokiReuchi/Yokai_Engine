@@ -98,6 +98,7 @@ public:
 
 	AABB aabb;
 	void GenerateAABB();
+	std::vector<float3> GetAllVerticesPositions(GameObject* go);
 
 	bool is_camera;
 

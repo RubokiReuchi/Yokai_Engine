@@ -87,9 +87,43 @@ void GameObject::RemoveChild(GameObject* child)
 
 void GameObject::GenerateAABB()
 {
-	this->aabb;
-	C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(GetComponent(Component::TYPE::MESH_RENDERER));
+	std::vector<float3> vertices_pos = GetAllVerticesPositions(this);
+
+	float* v_pos = new float[vertices_pos.size() * 3];
+	for (size_t i = 0; i < vertices_pos.size(); i++)
+	{
+		v_pos[i * 3] = vertices_pos[i].x;
+		v_pos[i * 3 + 1] = vertices_pos[i].y;
+		v_pos[i * 3 + 2] = vertices_pos[i].z;
+	}
 
 	aabb.SetNegativeInfinity();
-	aabb.Enclose((float3*)mr->GetMesh().vertices, mr->GetMesh().vertices->size());
+	aabb.Enclose((float3*)v_pos, vertices_pos.size());
+
+	delete[] v_pos;
+}
+
+std::vector<float3> GameObject::GetAllVerticesPositions(GameObject* go)
+{
+	std::vector<float3> vertices_pos;
+
+	for (size_t i = 0; i < go->children.size(); i++)
+	{
+		std::vector<float3> child_vertices_pos = GetAllVerticesPositions(go->children[i]);
+		vertices_pos.insert(vertices_pos.end(), child_vertices_pos.begin(), child_vertices_pos.end());
+	}
+
+	if (go->GetComponent(Component::TYPE::MESH_RENDERER))
+	{
+		uint mesh_id = dynamic_cast<C_MeshRenderer*>(go->GetComponent(Component::TYPE::MESH_RENDERER))->GetMeshID();
+		M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
+		std::vector<float3> mesh_vertices_pos;
+		for (auto& vertex : manager->GetVertices())
+		{
+			mesh_vertices_pos.push_back(vertex.position);
+		}
+		vertices_pos.insert(vertices_pos.end(), mesh_vertices_pos.begin(), mesh_vertices_pos.end());
+	}
+
+	return vertices_pos;
 }

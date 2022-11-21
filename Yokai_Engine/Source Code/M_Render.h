@@ -18,7 +18,15 @@ public:
 
 	uint AddMesh(Re_Mesh& mesh);
 
-	std::map<uint, Re_Mesh>& GetMap() { return meshes; };
+	std::map<uint, Re_Mesh>& GetMap()
+	{
+		return meshes;
+	}
+
+	std::vector<VertexInfo> GetVertices()
+	{
+		return total_vertices;
+	}
 
 public:
 	bool initialized = false;
