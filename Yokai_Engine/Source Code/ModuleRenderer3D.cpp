@@ -19,7 +19,7 @@
 ModuleRenderer3D::ModuleRenderer3D(bool start_enabled) : Module(start_enabled),
 vsync(true), wireframe(false), exit(false)
 {
-	depth_test = cull_face = lighting = color_material = texture_2d = true;
+	cull_face = lighting = color_material = texture_2d = true;
 }
 
 // Destructor
@@ -81,6 +81,8 @@ bool ModuleRenderer3D::Init()
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 		
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_STENCIL_TEST);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_LIGHTING);
 		lights[0].Active(true);

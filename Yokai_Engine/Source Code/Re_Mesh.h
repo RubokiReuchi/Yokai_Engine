@@ -49,6 +49,8 @@ public:
 	bool visible_on_editor = true;
 	bool in_camera = true;
 
+	bool is_outlined = false;
+
 private:
 	bool update_matrix = true;
 };

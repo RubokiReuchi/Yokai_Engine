@@ -2,11 +2,13 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
+#include "EO_Editor.h"
 
 M_Render::M_Render()
 {
     // Create the shaders
     basic_shader = new Re_Shader("Assets/shaders/basic.vertex.shader", "Assets/shaders/basic.fragment.shader");
+    outline_shader = new Re_Shader("Assets/shaders/outline.vertex.shader", "Assets/shaders/outline.fragment.shader");
 }
 
 M_Render::~M_Render()
@@ -33,6 +35,7 @@ uint M_Render::InitManageRender(Re_Mesh& mesh)
 
 void M_Render::Draw()
 {
+    bool go_selected = false;
     size_t num_meshes = meshes.size();
     if (!initialized) return;
     if (meshes.empty()) return;
@@ -52,11 +55,20 @@ void M_Render::Draw()
             model_matrices.push_back(mesh.second.model_matrix); // Insert matrices of each mesh in this M_Render
             texture_ids.push_back(mesh.second.GL_id);
         }
+        if (app->renderer3D->drawing_scene && mesh.second.is_outlined)
+        {
+            go_selected = true;
+            selected_total_indices = total_indices;
+            selected_model_matrices.push_back(mesh.second.model_matrix.UniformScale(1.01f)); // outline weight = 0.01f
+        }
     }
     if (num_meshes == 0)
     {
         return; // draw if no mesh is visible
     }
+
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
 
     // Bind shader with ViewMatrix and ProjectionMatrix
     glUseProgram(basic_shader->program_id);
@@ -88,6 +100,39 @@ void M_Render::Draw()
     // Draw meshes with texture
     glDrawElementsInstanced(GL_TRIANGLES, total_indices.size(), GL_UNSIGNED_INT, 0, model_matrices.size());
     glBindVertexArray(0);
+
+    // outline
+    if (go_selected)
+    {
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+
+        // Bind shader with ViewMatrix and ProjectionMatrix
+        glUseProgram(outline_shader->program_id);
+        glUniformMatrix4fv(glGetUniformLocation(outline_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
+        glUniformMatrix4fv(glGetUniformLocation(outline_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
+
+        // Call binded info
+        glBindVertexArray(VAO);
+
+        // model matrix bind
+        glBindBuffer(GL_ARRAY_BUFFER, MBO);
+        void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        memcpy(ptr, &selected_model_matrices.front(), selected_model_matrices.size() * sizeof(float4x4));
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+
+        // Draw meshes with texture
+        glDrawElementsInstanced(GL_TRIANGLES, selected_total_indices.size(), GL_UNSIGNED_INT, 0, selected_model_matrices.size());
+        glBindVertexArray(0);
+
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
+
+        selected_total_indices.clear();
+        selected_model_matrices.clear();
+    }
 
     // free information
     model_matrices.clear();

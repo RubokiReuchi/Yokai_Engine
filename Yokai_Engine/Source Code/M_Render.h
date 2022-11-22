@@ -34,6 +34,7 @@ private:
 	void CreateMeshBuffers();
 
 	Re_Shader* basic_shader = nullptr;
+	Re_Shader* outline_shader = nullptr;
 
 private:
 	// M_Render meshes info
@@ -51,4 +52,8 @@ private:
 	uint TBO = 0; // TextureID Buffer Object
 
 	int id_counter = 0;
+
+	// outlined meshes
+	std::vector<uint> selected_total_indices;
+	std::vector<float4x4> selected_model_matrices;
 };

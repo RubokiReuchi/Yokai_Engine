@@ -35,10 +35,7 @@ public:
 
 	void CleanUp();
 
-	void SetSelectedGameObject(GameObject* go)
-	{
-		selected_go = go;
-	}
+	void SetSelectedGameObject(GameObject* go);
 	GameObject* GetSelectedGameObject()
 	{
 		return selected_go;
@@ -63,4 +60,6 @@ private:
 	GameObject* selected_go = nullptr;
 
 	bool SetMenuBar();
+
+	void SetOutline(GameObject* selected_game_object, GameObject* game_object);
 };

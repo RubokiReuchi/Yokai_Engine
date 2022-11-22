@@ -116,6 +116,22 @@ void EO_Editor::CleanUp()
 	ImGui::DestroyContext();
 }
 
+void EO_Editor::SetSelectedGameObject(GameObject* go)
+{
+	selected_go = go;
+
+	// outline
+	for (auto& game_object : app->engine_order->game_objects)
+	{
+		C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(game_object.second->GetComponent(Component::TYPE::MESH_RENDERER));
+		if (mr != NULL)
+		{
+			mr->GetMesh().is_outlined = false;
+		}
+	}
+	SetOutline(go, go);
+}
+
 bool EO_Editor::SetMenuBar()
 {
 	bool exit = false;
@@ -146,9 +162,6 @@ bool EO_Editor::SetMenuBar()
 	if (ImGui::BeginMenu("View"))
 	{
 		ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe);
-
-		if (ImGui::Checkbox("Depth Test", &app->renderer3D->depth_test))
-			(app->renderer3D->depth_test) ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 
 		if (ImGui::Checkbox("Cull Face", &app->renderer3D->cull_face))
 			(app->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
@@ -227,4 +240,17 @@ bool EO_Editor::SetMenuBar()
 	}
 
 	return !exit;
+}
+
+void EO_Editor::SetOutline(GameObject* selected_game_object, GameObject* game_object)
+{
+	C_MeshRenderer* mr = dynamic_cast<C_MeshRenderer*>(game_object->GetComponent(Component::TYPE::MESH_RENDERER));
+	if (mr != NULL)
+	{
+		mr->GetMesh().is_outlined = true;
+	}
+	for (auto& childs : game_object->GetChilds())
+	{
+		SetOutline(selected_game_object, childs);
+	}
 }

@@ -44,7 +44,7 @@ private:
 
 public:
 
-	bool vsync, wireframe, depth_test, cull_face, lighting, color_material, texture_2d;
+	bool vsync, wireframe, cull_face, lighting, color_material, texture_2d;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
