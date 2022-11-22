@@ -201,9 +201,7 @@ void ModuleRenderer3D::DrawLines()
 	glUseProgram(line_shader->program_id);
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
-	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.75f, 0.36f, 0.32f, 1.0f);
-	//Re_Mesh go_mesh = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
-	//glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "model"), 1, GL_FALSE, &go_mesh.model_matrix.v[0][0]);
+	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.235f, 0.529, 0.0f, 1.0f);
 
 	UpdateAABB_Buffer(drawing_lines);
 
