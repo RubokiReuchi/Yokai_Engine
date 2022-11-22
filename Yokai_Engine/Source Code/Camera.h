@@ -25,6 +25,8 @@ public:
 	void SetFOV(float fov);
 	float GetFOV() { return FOV; };
 
+	void CheckGoInCamera();
+
 public:
 	float3 X, Y, Z, Position, Reference;
 	bool active = true;

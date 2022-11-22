@@ -38,7 +38,7 @@ void M_Render::Draw()
     if (meshes.empty()) return;
     for (auto &mesh : meshes)
     {
-        if (!mesh.second.visible) // mesh renderer with visibility set to false
+        if (!mesh.second.visible || !mesh.second.in_camera) // mesh renderer with visibility set to false or not in camera frustrum
         {
             num_meshes--;
         }

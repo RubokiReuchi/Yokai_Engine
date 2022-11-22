@@ -47,6 +47,7 @@ public:
 
 	bool visible = true;
 	bool visible_on_editor = true;
+	bool in_camera = true;
 
 private:
 	bool update_matrix = true;

@@ -132,6 +132,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		app->camera->currentDrawingCamera = &app->camera->sceneCamera;
 		drawing_scene = true;
+		app->camera->currentDrawingCamera->CheckGoInCamera();
 
 		app->engine_order->DrawEO();
 		model_render.Draw();

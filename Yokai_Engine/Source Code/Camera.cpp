@@ -80,6 +80,46 @@ void Camera::SetFOV(float fov)
 	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
 }
 
+void Camera::CheckGoInCamera()
+{
+	for (auto& go : app->engine_order->game_objects)
+	{
+		if (!go.second->GetComponent(Component::TYPE::MESH_RENDERER))
+		{
+			continue;
+		}
+
+		bool ret = true;
+		float3 corner[8];
+		int total = 0;
+		go.second->global_aabb.GetCornerPoints(corner);
+
+		for (size_t p = 0; p < 6; p++)
+		{
+			int count = 8;
+			int pt = 1;
+
+			for (size_t i = 0; i < 8; i++)
+			{
+				if (cameraFrustum.GetPlane(p).IsOnPositiveSide(corner[i]))
+				{
+					pt = 0;
+					count--;
+				}
+			}
+
+			if (count == 0)
+			{
+				ret = false;
+			}
+
+			total += pt;
+		}
+
+		dynamic_cast<C_MeshRenderer*>(go.second->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh().in_camera = ret;
+	}
+}
+
 void Camera::CalculateViewMatrix()
 {
 	
