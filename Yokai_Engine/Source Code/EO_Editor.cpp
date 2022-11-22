@@ -127,6 +127,7 @@ void EO_Editor::SetSelectedGameObject(GameObject* go)
 		if (mr != NULL)
 		{
 			mr->GetMesh().is_outlined = false;
+			mr->GetMesh().is_outlined_child = false;
 		}
 	}
 	SetOutline(go, go);
@@ -248,6 +249,10 @@ void EO_Editor::SetOutline(GameObject* selected_game_object, GameObject* game_ob
 	if (mr != NULL)
 	{
 		mr->GetMesh().is_outlined = true;
+		if (selected_game_object->id != game_object->id)
+		{
+			mr->GetMesh().is_outlined_child = true;
+		}
 	}
 	for (auto& childs : game_object->GetChilds())
 	{

@@ -36,6 +36,7 @@ uint M_Render::InitManageRender(Re_Mesh& mesh)
 void M_Render::Draw()
 {
     bool go_selected = false;
+    bool go_selected_child = false;
     size_t num_meshes = meshes.size();
     if (!initialized) return;
     if (meshes.empty()) return;
@@ -58,6 +59,7 @@ void M_Render::Draw()
         if (app->renderer3D->drawing_scene && mesh.second.is_outlined)
         {
             go_selected = true;
+            if (mesh.second.is_outlined_child) go_selected_child = true;
             selected_total_indices = total_indices;
             selected_model_matrices.push_back(mesh.second.model_matrix.UniformScale(1.01f)); // outline weight = 0.01f
         }
@@ -106,7 +108,7 @@ void M_Render::Draw()
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
         glStencilMask(0x00);
-        glDisable(GL_DEPTH_TEST);
+        if (go_selected_child) glDisable(GL_DEPTH_TEST);
 
         // Bind shader with ViewMatrix and ProjectionMatrix
         glUseProgram(outline_shader->program_id);

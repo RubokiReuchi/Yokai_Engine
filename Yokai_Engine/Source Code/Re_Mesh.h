@@ -45,11 +45,13 @@ public:
 	float GL_id = -1;
 	float texture_id = -1;
 
+	// render attributes
 	bool visible = true;
 	bool visible_on_editor = true;
 	bool in_camera = true;
 
 	bool is_outlined = false;
+	bool is_outlined_child = false;
 
 private:
 	bool update_matrix = true;
