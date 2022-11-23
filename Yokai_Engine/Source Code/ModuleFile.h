@@ -66,6 +66,5 @@ public:
 	void YK_CreateLibrary();
 
 	char* YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std::vector<uint>* indices);
-	void YK_LoadMesh(const char*);
 
 };

@@ -96,3 +96,28 @@ void Re_Mesh::SetTransform(float3 pos, float3 s, float3 rot)
 	this->rotation = rot;
 	update_matrix = true;
 }
+
+void Re_Mesh::YK_LoadMesh(const char* path)
+{
+	char* buffer = NULL;
+	char* cursor = buffer;
+	if (app->file->FS_Load(path, &buffer) == 0) return;
+
+	uint ranges[5];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+	cursor += bytes;
+
+	size_t num_indices = ranges[0];
+	size_t num_vertices = ranges[1];
+
+	bytes = sizeof(uint) * num_indices;
+	std::vector<uint>* indices = NULL;
+	memcpy(indices, cursor, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(VertexInfo) * num_vertices;
+	std::vector<VertexInfo>* vertices = NULL;
+	memcpy(vertices, cursor, bytes);
+	cursor += bytes;
+}

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Globals.h"
+#include "Application.h"
+#include "ModuleFile.h"
 #include "Color.h"
 #include "MathGeoLib/include/MathGeoLib.h"
 
@@ -33,6 +35,8 @@ public:
 	void SetScale(float3 s);
 	void SetRotation(float3 rot);
 	void SetTransform(float3 pos, float3 s, float3 rot);
+
+	void YK_LoadMesh(const char* path);
 
 	float3 position;
 	float3 rotation;

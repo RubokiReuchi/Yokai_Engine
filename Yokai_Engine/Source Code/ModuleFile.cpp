@@ -346,11 +346,11 @@ char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std
 	cursor += bytes;
 
 	bytes = sizeof(uint) * num_indices;
-	memcpy(cursor, indices, bytes);
+	memcpy(cursor, &indices, bytes);
 	cursor += bytes;
 
 	bytes = sizeof(VertexInfo) * num_vertices;
-	memcpy(cursor, vertices, bytes);
+	memcpy(cursor, &vertices, bytes);
 	cursor += bytes;
 
 	return buffer;
