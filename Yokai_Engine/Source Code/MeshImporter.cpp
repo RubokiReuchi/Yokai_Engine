@@ -4,6 +4,7 @@
 #include "M_ModelRender.h"
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
+#include "ModuleFile.h"
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -164,6 +165,17 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}
+
+	// save custom format
+	std::string file = MESHES_PATH;
+	file += node_name.C_Str();
+	file += ".ykmesh";
+
+	uint size = 0;
+	char* buffer = (char*)app->file->YK_SaveMesh(size, &vertices, &indices);
+
+	app->file->FS_Save(file.c_str(), buffer, size, false);
+	RELEASE_ARRAY(buffer);
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)

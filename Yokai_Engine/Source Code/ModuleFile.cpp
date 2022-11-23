@@ -15,6 +15,8 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 	FS_AddPathToFileSystem(".");
 	FS_AddPathToFileSystem("C:\\");
 	FS_AddPathToFileSystem("D:\\");
+
+	YK_CreateLibrary();
 }
 
 ModuleFile::~ModuleFile()
@@ -316,4 +318,40 @@ std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 	}
 	
 	return ret;
+}
+
+void ModuleFile::YK_CreateLibrary()
+{
+	if (!FS_IsDirectory(LIBRARY_PATH)) PHYSFS_mkdir(LIBRARY_PATH);
+	if (!FS_IsDirectory(MESHES_PATH)) PHYSFS_mkdir(MESHES_PATH);
+	if (!FS_IsDirectory(TEXTURES_PATH)) PHYSFS_mkdir(TEXTURES_PATH);
+	if (!FS_IsDirectory(MATERIALS_PATH)) PHYSFS_mkdir(MATERIALS_PATH);
+	if (!FS_IsDirectory(SHADERS_PATH)) PHYSFS_mkdir(SHADERS_PATH);
+	if (!FS_IsDirectory(SCENES_PATH)) PHYSFS_mkdir(SCENES_PATH);
+	if (!FS_IsDirectory(SCRIPTS_PATH)) PHYSFS_mkdir(SCRIPTS_PATH);
+}
+
+char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std::vector<uint>* indices)
+{
+	size_t num_indices = indices->size();
+	size_t num_vertices = vertices->size();
+	uint ranges[2] = { num_indices, num_vertices };
+	size = sizeof(ranges) + (sizeof(uint) * num_indices) + (sizeof(VertexInfo) * num_vertices);
+
+	char* buffer = new char[size];
+	char* cursor = buffer;
+
+	uint bytes = sizeof(ranges);
+	memcpy(cursor, ranges, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(uint) * num_indices;
+	memcpy(cursor, indices, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(VertexInfo) * num_vertices;
+	memcpy(cursor, vertices, bytes);
+	cursor += bytes;
+
+	return buffer;
 }

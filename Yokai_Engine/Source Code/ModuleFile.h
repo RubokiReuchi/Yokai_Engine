@@ -3,10 +3,20 @@
 #include "Module.h"
 #include "Globals.h"
 
+#include "Re_Mesh.h"
+
 #include <string>
 #include <vector>
 
 #define ASSETS_PATH "Assets/"
+
+#define LIBRARY_PATH "Library/"
+#define MESHES_PATH "Library/Meshes/"
+#define TEXTURES_PATH "Library/Textures/"
+#define SCENES_PATH "Library/Scenes/"
+#define SCRIPTS_PATH "Library/Scripts/"
+#define SHADERS_PATH "Library/Shaders/"
+#define MATERIALS_PATH "Library/Materials/"
 
 class FileTree;
 
@@ -51,4 +61,11 @@ public:
 	static std::vector<std::string> FS_GetAllFiles(std::string path);
 
 	bool new_file = false;
+
+	// custom format
+	void YK_CreateLibrary();
+
+	char* YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std::vector<uint>* indices);
+	void YK_LoadMesh(const char*);
+
 };
