@@ -331,10 +331,10 @@ void ModuleFile::YK_CreateLibrary()
 	if (!FS_IsDirectory(SCRIPTS_PATH)) PHYSFS_mkdir(SCRIPTS_PATH);
 }
 
-char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std::vector<uint>* indices)
+char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices)
 {
-	size_t num_indices = indices->size();
-	size_t num_vertices = vertices->size();
+	size_t num_indices = indices.size();
+	size_t num_vertices = vertices.size();
 	uint ranges[2] = { num_indices, num_vertices };
 	size = sizeof(ranges) + (sizeof(uint) * num_indices) + (sizeof(VertexInfo) * num_vertices);
 
@@ -346,11 +346,11 @@ char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std
 	cursor += bytes;
 
 	bytes = sizeof(uint) * num_indices;
-	memcpy(cursor, &indices, bytes);
+	memcpy(cursor, &indices[0], bytes);
 	cursor += bytes;
 
 	bytes = sizeof(VertexInfo) * num_vertices;
-	memcpy(cursor, &vertices, bytes);
+	memcpy(cursor, &vertices[0], bytes);
 	cursor += bytes;
 
 	return buffer;

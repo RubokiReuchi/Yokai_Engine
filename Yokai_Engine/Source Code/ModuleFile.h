@@ -3,8 +3,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "Re_Mesh.h"
-
 #include <string>
 #include <vector>
 
@@ -19,6 +17,7 @@
 #define MATERIALS_PATH "Library/Materials/"
 
 class FileTree;
+struct VertexInfo;
 
 enum class RE_TYPE
 {
@@ -65,6 +64,6 @@ public:
 	// custom format
 	void YK_CreateLibrary();
 
-	char* YK_SaveMesh(uint& size, std::vector<VertexInfo>* vertices, std::vector<uint>* indices);
+	char* YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices);
 
 };

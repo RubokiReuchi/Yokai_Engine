@@ -101,7 +101,7 @@ void Re_Mesh::YK_LoadMesh(const char* path)
 {
 	char* buffer = NULL;
 	char* cursor = buffer;
-	if (app->file->FS_Load(path, &buffer) == 0) return;
+	if (ModuleFile::FS_Load(path, &buffer) == 0) return;
 
 	uint ranges[5];
 	uint bytes = sizeof(ranges);

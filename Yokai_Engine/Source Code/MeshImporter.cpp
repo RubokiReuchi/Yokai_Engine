@@ -172,7 +172,7 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 	file += ".ykmesh";
 
 	uint size = 0;
-	char* buffer = (char*)app->file->YK_SaveMesh(size, &vertices, &indices);
+	char* buffer = (char*)app->file->YK_SaveMesh(size, vertices, indices);
 
 	app->file->FS_Save(file.c_str(), buffer, size, false);
 	RELEASE_ARRAY(buffer);
