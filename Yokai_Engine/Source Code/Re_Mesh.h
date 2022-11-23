@@ -35,7 +35,7 @@ public:
 	void SetRotation(float3 rot);
 	void SetTransform(float3 pos, float3 s, float3 rot);
 
-	void YK_LoadMesh(const char* path);
+	void YK_LoadMesh(const char* path, std::vector<VertexInfo> vertices, std::vector<uint> indices);
 
 	float3 position;
 	float3 rotation;

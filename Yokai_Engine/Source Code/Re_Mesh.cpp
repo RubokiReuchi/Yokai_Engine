@@ -97,7 +97,7 @@ void Re_Mesh::SetTransform(float3 pos, float3 s, float3 rot)
 	update_matrix = true;
 }
 
-void Re_Mesh::YK_LoadMesh(const char* path)
+void Re_Mesh::YK_LoadMesh(const char* path, std::vector<VertexInfo> vertices, std::vector<uint> indices)
 {
 	char* buffer = NULL;
 	char* cursor = buffer;
@@ -112,12 +112,10 @@ void Re_Mesh::YK_LoadMesh(const char* path)
 	size_t num_vertices = ranges[1];
 
 	bytes = sizeof(uint) * num_indices;
-	std::vector<uint>* indices = NULL;
-	memcpy(indices, cursor, bytes);
+	memcpy(&indices[0], cursor, bytes);
 	cursor += bytes;
 
 	bytes = sizeof(VertexInfo) * num_vertices;
-	std::vector<VertexInfo>* vertices = NULL;
-	memcpy(vertices, cursor, bytes);
+	memcpy(&vertices[0], cursor, bytes);
 	cursor += bytes;
 }
