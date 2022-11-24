@@ -53,6 +53,11 @@ void Re_Mesh::Update()
 	model_matrix = float4x4::FromTRS(position, rot, scale);
 	model_matrix.Transpose();
 
+	// update outline matrix
+	outline_matrix.SetIdentity();
+	outline_matrix = float4x4::FromTRS(position, rot, scale * 1.01f);
+	outline_matrix.Transpose();
+
 	update_matrix = false;
 }
 
@@ -95,27 +100,4 @@ void Re_Mesh::SetTransform(float3 pos, float3 s, float3 rot)
 	this->scale = s;
 	this->rotation = rot;
 	update_matrix = true;
-}
-
-void Re_Mesh::YK_LoadMesh(const char* path, std::vector<VertexInfo> vertices, std::vector<uint> indices)
-{
-	char* buffer = NULL;
-	char* cursor = buffer;
-	if (ModuleFile::FS_Load(path, &buffer) == 0) return;
-
-	uint ranges[5];
-	uint bytes = sizeof(ranges);
-	memcpy(ranges, cursor, bytes);
-	cursor += bytes;
-
-	size_t num_indices = ranges[0];
-	size_t num_vertices = ranges[1];
-
-	bytes = sizeof(uint) * num_indices;
-	memcpy(&indices[0], cursor, bytes);
-	cursor += bytes;
-
-	bytes = sizeof(VertexInfo) * num_vertices;
-	memcpy(&vertices[0], cursor, bytes);
-	cursor += bytes;
 }

@@ -61,7 +61,7 @@ void M_Render::Draw()
             go_selected = true;
             if (mesh.second.is_outlined_child) go_selected_child = true;
             selected_total_indices = total_indices;
-            selected_model_matrices.push_back(mesh.second.model_matrix.UniformScale(1.01f)); // outline weight = 0.01f
+            selected_model_matrices.push_back(mesh.second.outline_matrix);
         }
     }
     if (num_meshes == 0)

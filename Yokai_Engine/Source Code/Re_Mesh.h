@@ -35,8 +35,6 @@ public:
 	void SetRotation(float3 rot);
 	void SetTransform(float3 pos, float3 s, float3 rot);
 
-	void YK_LoadMesh(const char* path, std::vector<VertexInfo> vertices, std::vector<uint> indices);
-
 	float3 position;
 	float3 rotation;
 	float3 scale;
@@ -44,6 +42,7 @@ public:
 	std::vector<VertexInfo>* vertices = nullptr;
 	std::vector<uint>* indices = nullptr;
 	float4x4 model_matrix = model_matrix.identity;
+	float4x4 outline_matrix = outline_matrix.identity;
 
 	float GL_id = -1;
 	float texture_id = -1;

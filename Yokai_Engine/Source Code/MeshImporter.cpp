@@ -238,3 +238,44 @@ void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& fir
 	// set transform after al child have been added
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
+
+void SaveMesh::YK_LoadMesh(const char* path)
+{
+	char* buffer = NULL;
+	if (ModuleFile::FS_Load(path, &buffer) == 0) return;
+	char* cursor = buffer;
+
+	uint ranges[5];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+	cursor += bytes;
+
+	size_t num_indices = ranges[0];
+	size_t num_vertices = ranges[1];
+	indices.resize(num_indices);
+	vertices.resize(num_vertices);
+
+	bytes = sizeof(uint) * num_indices;
+	memcpy(&indices[0], cursor, bytes);
+	cursor += bytes;
+
+	bytes = sizeof(VertexInfo) * num_vertices;
+	memcpy(&vertices[0], cursor, bytes);
+	cursor += bytes;
+}
+
+GameObject* MeshImporter::LoadMeshFromYK(std::string path)
+{
+	returnGameObject = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
+
+	SaveMesh aux_mesh;
+	aux_mesh.YK_LoadMesh(path.c_str());
+
+	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices);
+	dynamic_cast<C_Material*>(returnGameObject->AddComponent(Component::TYPE::MATERIAL));
+
+	returnGameObject->GenerateAABB();
+	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+
+	return returnGameObject;
+}

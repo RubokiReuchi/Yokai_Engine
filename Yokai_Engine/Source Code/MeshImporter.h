@@ -11,6 +11,7 @@
 #include <map>
 
 class GameObject;
+struct VertexInfo;
 
 struct MeshInfo
 {
@@ -18,11 +19,20 @@ struct MeshInfo
 	uint initialID;
 };
 
+struct SaveMesh
+{
+	std::vector<VertexInfo> vertices;
+	std::vector<uint> indices;
+
+	void YK_LoadMesh(const char* path);
+};
+
 class MeshImporter
 {
 public:
 
 	static GameObject* LoadMesh(std::string path);
+	static GameObject* LoadMeshFromYK(std::string path);
 
 private:
 	static const aiScene* GetAiScene(std::string path);
