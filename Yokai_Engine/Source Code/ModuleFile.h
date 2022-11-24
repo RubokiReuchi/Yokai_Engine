@@ -9,6 +9,7 @@
 #define ASSETS_PATH "Assets/"
 
 #define LIBRARY_PATH "Library/"
+#define MODELS_PATH "Library/Models/"
 #define MESHES_PATH "Library/Meshes/"
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
@@ -64,6 +65,7 @@ public:
 	// custom format
 	void YK_CreateLibrary();
 
+	void YK_SaveModel(std::string path, std::vector<std::string> children_paths);
+	std::vector<std::string> YK_LoadModel(std::string path);
 	char* YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices);
-
 };

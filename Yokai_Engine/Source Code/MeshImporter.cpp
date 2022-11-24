@@ -14,10 +14,15 @@ GameObject* MeshImporter::returnGameObject = nullptr;
 
 GameObject* MeshImporter::LoadMesh(std::string path)
 {
-	std::string new_path = MESHES_PATH + ModuleFile::FS_GetFileName(path, false) + ".ykmesh";
-	if (ModuleFile::FS_Exists(new_path))
+	std::string mesh_path = MESHES_PATH + ModuleFile::FS_GetFileName(path, false) + ".ykmesh";
+	std::string model_path = MODELS_PATH + ModuleFile::FS_GetFileName(path, false) + ".ykmodel";
+	if (ModuleFile::FS_Exists(mesh_path))
 	{
-		return LoadMeshFromYK(new_path);
+		return LoadMeshFromYK(mesh_path);
+	}
+	else if (ModuleFile::FS_Exists(model_path))
+	{
+		return LoadModelFromYK(model_path);
 	}
 	else
 	{
@@ -25,9 +30,27 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	}
 }
 
-GameObject* MeshImporter::LoadMeshFromYK(std::string path)
+GameObject* MeshImporter::LoadModelFromYK(std::string path)
 {
-	returnGameObject = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
+	GameObject* new_go = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
+
+	std::vector<std::string> children_paths = app->file->YK_LoadModel(path);
+	for (int i = 0; i < std::stoi(children_paths[0]); i++)
+	{
+		LoadMeshFromYK(children_paths[i + 1], new_go);
+	}
+
+	// set transform after al child have been added
+	new_go->GenerateAABB();
+	dynamic_cast<C_Transform*>(new_go->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+
+	return new_go;
+}
+
+GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
+{
+	if (!parent) parent = app->engine_order->rootGameObject;
+	returnGameObject = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
 	SaveMesh aux_mesh;
 	aux_mesh.YK_LoadMesh(path.c_str());
@@ -57,6 +80,27 @@ GameObject* MeshImporter::LoadMeshFromFBX(std::string path)
 		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize();
 		loadedMeshes[path].numOfMeshes = 0;
 		CreateNewNode(scene->mRootNode, scene, path);
+
+		aiNode* n = scene->mRootNode;
+		if (n->mNumChildren > 0)
+		{
+			std::vector<std::string> model_paths;
+			model_paths.push_back(std::to_string(n->mNumChildren));
+			for (size_t i = 0; i < n->mNumChildren; i++)
+			{
+				std::string file = MESHES_PATH;
+				file += n->mChildren[i]->mName.C_Str();
+				file += ".ykmesh";
+				model_paths.push_back(file);
+			}
+
+			// save custom format
+			std::string file = MODELS_PATH;
+			file += app->file->FS_GetFileName(path, false);
+			file += ".ykmodel";
+
+			app->file->YK_SaveModel(file, model_paths);
+		}
 	}
 	return returnGameObject;
 }
@@ -274,7 +318,7 @@ void SaveMesh::YK_LoadMesh(const char* path)
 	if (ModuleFile::FS_Load(path, &buffer) == 0) return;
 	char* cursor = buffer;
 
-	uint ranges[5];
+	uint ranges[2];
 	uint bytes = sizeof(ranges);
 	memcpy(ranges, cursor, bytes);
 	cursor += bytes;

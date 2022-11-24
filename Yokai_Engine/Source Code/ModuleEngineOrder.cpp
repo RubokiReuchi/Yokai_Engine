@@ -47,8 +47,6 @@ bool ModuleEO::Start()
         }
     }
 
-    //MeshImporter::LoadMeshFromYK("Library/Meshes/Baker_house.ykmesh");
-
     return true;
 }
 

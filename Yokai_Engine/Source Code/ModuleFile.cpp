@@ -3,6 +3,8 @@
 #include "PhysFS/include/physfs.h"
 #include "FileTree.hpp"
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 
 #pragma comment (lib, "PhysFS/libx86/physfs.lib")
 
@@ -323,12 +325,51 @@ std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 void ModuleFile::YK_CreateLibrary()
 {
 	if (!FS_IsDirectory(LIBRARY_PATH)) PHYSFS_mkdir(LIBRARY_PATH);
+	if (!FS_IsDirectory(MODELS_PATH)) PHYSFS_mkdir(MODELS_PATH);
 	if (!FS_IsDirectory(MESHES_PATH)) PHYSFS_mkdir(MESHES_PATH);
 	if (!FS_IsDirectory(TEXTURES_PATH)) PHYSFS_mkdir(TEXTURES_PATH);
 	if (!FS_IsDirectory(MATERIALS_PATH)) PHYSFS_mkdir(MATERIALS_PATH);
 	if (!FS_IsDirectory(SHADERS_PATH)) PHYSFS_mkdir(SHADERS_PATH);
 	if (!FS_IsDirectory(SCENES_PATH)) PHYSFS_mkdir(SCENES_PATH);
 	if (!FS_IsDirectory(SCRIPTS_PATH)) PHYSFS_mkdir(SCRIPTS_PATH);
+}
+
+void ModuleFile::YK_SaveModel(std::string path, std::vector<std::string> children_paths)
+{
+	std::ofstream file(path, std::ofstream::out);
+	if (file.is_open())
+	{
+		for (size_t i = 0; i < children_paths.size(); i++)
+		{
+			file << children_paths[i] << "\n";
+		}
+		file.close();
+	}
+	else
+	{
+		LOG("Error saving model.");
+	}
+}
+
+std::vector<std::string> ModuleFile::YK_LoadModel(std::string path)
+{
+	std::vector<std::string> ret;
+	std::string line;
+
+	std::fstream file(path, std::ofstream::in);
+	if (file.is_open())
+	{
+		while (std::getline(file, line))
+		{
+			ret.push_back(line);
+		}
+	}
+	else
+	{
+		LOG("Error loading model.");
+	}
+
+	return ret;
 }
 
 char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices)
