@@ -14,6 +14,35 @@ GameObject* MeshImporter::returnGameObject = nullptr;
 
 GameObject* MeshImporter::LoadMesh(std::string path)
 {
+	std::string new_path = MESHES_PATH + ModuleFile::FS_GetFileName(path, false) + ".ykmesh";
+	if (ModuleFile::FS_Exists(new_path))
+	{
+		return LoadMeshFromYK(new_path);
+	}
+	else
+	{
+		return LoadMeshFromFBX(path);
+	}
+}
+
+GameObject* MeshImporter::LoadMeshFromYK(std::string path)
+{
+	returnGameObject = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
+
+	SaveMesh aux_mesh;
+	aux_mesh.YK_LoadMesh(path.c_str());
+
+	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices);
+	dynamic_cast<C_Material*>(returnGameObject->AddComponent(Component::TYPE::MATERIAL));
+
+	returnGameObject->GenerateAABB();
+	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+
+	return returnGameObject;
+}
+
+GameObject* MeshImporter::LoadMeshFromFBX(std::string path)
+{
 	returnGameObject = nullptr;
 	
 	const aiScene* scene = GetAiScene(path);
@@ -155,17 +184,6 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	}
 
-	// save custom format
-	std::string file = MESHES_PATH;
-	file += node_name.C_Str();
-	file += ".ykmesh";
-
-	uint size = 0;
-	char* buffer = (char*)app->file->YK_SaveMesh(size, vertices, indices);
-
-	app->file->FS_Save(file.c_str(), buffer, size, false);
-	RELEASE_ARRAY(buffer);
-
 	// Load into a GameObject and set the mesh render
 	if (create_go)
 	{
@@ -176,6 +194,17 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}
+
+	// save custom format
+	std::string file = MESHES_PATH;
+	file += node_name.C_Str();
+	file += ".ykmesh";
+
+	uint size = 0;
+	char* buffer = (char*)app->file->YK_SaveMesh(size, vertices, indices);
+
+	app->file->FS_Save(file.c_str(), buffer, size, false);
+	RELEASE_ARRAY(buffer);
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)
@@ -262,20 +291,4 @@ void SaveMesh::YK_LoadMesh(const char* path)
 	bytes = sizeof(VertexInfo) * num_vertices;
 	memcpy(&vertices[0], cursor, bytes);
 	cursor += bytes;
-}
-
-GameObject* MeshImporter::LoadMeshFromYK(std::string path)
-{
-	returnGameObject = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
-
-	SaveMesh aux_mesh;
-	aux_mesh.YK_LoadMesh(path.c_str());
-
-	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices);
-	dynamic_cast<C_Material*>(returnGameObject->AddComponent(Component::TYPE::MATERIAL));
-
-	returnGameObject->GenerateAABB();
-	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-
-	return returnGameObject;
 }

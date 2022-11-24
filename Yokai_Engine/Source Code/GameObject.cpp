@@ -34,14 +34,23 @@ void GameObject::Update()
 
 void GameObject::DeleteGameObject()
 {
-	app->engine_order->editor->SetSelectedGameObject(NULL);
+	if (app->engine_order->editor->GetSelectedGameObject()) app->engine_order->editor->SetSelectedGameObject(NULL);
 	parent->RemoveChild(this);
-	app->engine_order->game_objects[id] = NULL;
-	app->engine_order->delete_qeue.push_back(this);
-	for (size_t i = 0; i < children.size(); i++)
+	for (size_t i = 1; i < app->engine_order->game_objects.size() + 1; i++)
 	{
-		children[i]->DeleteGameObject();
+		if (app->engine_order->game_objects[i]->id > this->id)
+		{
+			app->engine_order->game_objects[i - 1] = app->engine_order->game_objects[i];
+			app->engine_order->game_objects[i]->id--;
+		}
 	}
+	app->engine_order->game_objects.erase(app->engine_order->game_objects.size());
+	app->engine_order->delete_qeue.push_back(this);
+	while (children.size() > 0)
+	{
+		children[0]->DeleteGameObject();
+	}
+	app->engine_order->id_counter--;
 }
 
 bool GameObject::AddChild(GameObject* child)

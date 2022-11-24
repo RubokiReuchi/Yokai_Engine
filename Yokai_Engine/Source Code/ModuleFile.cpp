@@ -289,8 +289,8 @@ RE_TYPE ModuleFile::FS_GetResourceType(const std::string& filename)
 
 	std::transform(fileExtension.begin(), fileExtension.end(), fileExtension.begin(), ::tolower);
 
-	if (fileExtension == "fbx" || fileExtension == "dae") return RE_TYPE::MESH;
-	if (fileExtension == "tga" || fileExtension == "png" || fileExtension == "jpg" || fileExtension == "dds") return RE_TYPE::TEXTURE;
+	if (fileExtension == "fbx") return RE_TYPE::MESH;
+	if (fileExtension == "png" || fileExtension == "jpg") return RE_TYPE::TEXTURE;
 
 	return RE_TYPE::UNDEFINED;
 }

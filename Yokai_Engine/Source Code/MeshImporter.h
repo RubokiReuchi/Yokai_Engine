@@ -32,9 +32,11 @@ class MeshImporter
 public:
 
 	static GameObject* LoadMesh(std::string path);
-	static GameObject* LoadMeshFromYK(std::string path);
 
 private:
+	static GameObject* LoadMeshFromYK(std::string path);
+	static GameObject* LoadMeshFromFBX(std::string path);
+
 	static const aiScene* GetAiScene(std::string path);
 
 	static void CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);

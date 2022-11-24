@@ -130,7 +130,7 @@ void EO_Editor::SetSelectedGameObject(GameObject* go)
 			mr->GetMesh().is_outlined_child = false;
 		}
 	}
-	SetOutline(go, go);
+	if (selected_go) SetOutline(go, go);
 }
 
 bool EO_Editor::SetMenuBar()
