@@ -1,4 +1,6 @@
 #include "TextureImporter.h"
+#include "Application.h"
+#include "ModuleFile.h"
 #include "DevIL/include/il.h"
 #include "DevIL/include/ilut.h"
 #include "stb_image/stb_image.cpp"
@@ -8,6 +10,97 @@
 #pragma comment (lib, "DevIL/libx86/DevIL.lib")
 #pragma comment (lib, "DevIL/libx86/ILU.lib")
 #pragma comment (lib, "DevIL/libx86/ILUT.lib")
+
+uint TextureImporter::LoadTexture(std::string path)
+{
+	std::string texture_path = TEXTURES_PATH + ModuleFile::FS_GetFileName(path, false) + ".dds";
+	if (!ModuleFile::FS_Exists(texture_path))
+	{
+		// save custom format
+		std::string file = TEXTURES_PATH;
+		file += app->file->FS_GetFileName(path, false);
+		file += ".dds";
+
+		uint size = 0;
+		char* buffer = YK_SaveTexture(size, path);
+
+		app->file->FS_Save(file.c_str(), buffer, size, false);
+		RELEASE_ARRAY(buffer);
+	}
+
+	return ImportTexture(texture_path);
+}
+
+char* TextureImporter::YK_SaveTexture(uint& size, std::string path)
+{
+	char* buffer = NULL;
+	size = app->file->FS_Load(path, &buffer);
+
+	ILuint image = 0;
+	ilGenImages(1, &image);
+	ilBindImage(image);
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	{
+		LOG("Image not loaded.");
+	}
+
+	ILuint n_size = 0;
+	ILubyte* data = NULL;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+	n_size = ilSaveL(IL_DDS, nullptr, 0);
+	if (n_size > 0)
+	{
+		data = new ILubyte[n_size];
+		size = ilSaveL(IL_DDS, data, n_size);
+	}
+
+	ilDeleteImages(1, &image);
+
+	return (char*)data;
+}
+
+uint TextureImporter::ImportTexture(std::string path)
+{
+	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
+	{
+		return M_Texture::usedPaths[path];
+	}
+
+	uint m_renderer_id;
+	char* buffer = NULL;
+	uint size = app->file->FS_Load(path, &buffer);
+
+	ILuint image;
+	ilGenImages(1, &image);
+	ilBindImage(image);
+
+	if (!ilLoadL(IL_TYPE_UNKNOWN, buffer, size))
+	{
+		LOG("Image not loaded.");
+	}
+
+	glGenTextures(1, &m_renderer_id);
+	glBindTexture(GL_TEXTURE_2D, m_renderer_id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
+	ilDeleteImages(1, &image);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	Re_Texture tex;
+	tex.OpenGL_id = m_renderer_id;
+	tex.name = path;
+
+	M_Texture::loaded_textures[m_renderer_id] = tex; // Add loaded texture inside M_texture
+	M_Texture::usedPaths[path] = m_renderer_id;
+
+	return m_renderer_id;
+}
 
 uint TextureImporter::CreateTextureChecker()
 {
@@ -46,44 +139,4 @@ uint TextureImporter::CreateTextureChecker()
 	M_Texture::usedPaths["Checkers"] = textureID;
 
 	return textureID;
-}
-
-uint TextureImporter::ImportTexture(std::string path)
-{
-	if (M_Texture::usedPaths.find(path) != M_Texture::usedPaths.end())
-	{
-		return M_Texture::usedPaths[path];
-	}
-
-	uint m_renderer_id;
-	std::string m_file_path;
-	unsigned char* m_local_buffer;
-	int m_Width, m_Height, m_BPP; // BPP = Bits per pixel
-
-	m_local_buffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
-
-	glGenTextures(1, &m_renderer_id);
-	glBindTexture(GL_TEXTURE_2D, m_renderer_id);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_local_buffer);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	if (m_local_buffer)
-	{
-		stbi_image_free(m_local_buffer);
-	}
-
-	Re_Texture engineTexture;
-	engineTexture.OpenGL_id = m_renderer_id;
-	engineTexture.name = path;
-
-	M_Texture::loaded_textures[m_renderer_id] = engineTexture; // Add loaded texture inside M_texture
-	M_Texture::usedPaths[path] = m_renderer_id;
-
-	return m_renderer_id;
 }
