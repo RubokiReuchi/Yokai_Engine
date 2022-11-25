@@ -37,6 +37,12 @@ void Re_Mesh::InitMeshTransform(float3 position, float3 scale)
 	this->scale = scale;
 }
 
+void Re_Mesh::InitMeshVertex(std::vector<VertexInfo>* vertices, std::vector<uint>* indices)
+{
+	this->vertices = vertices;
+	this->indices = indices;
+}
+
 void Re_Mesh::Update()
 {
 	if (M_Texture::loaded_textures.find((uint)texture_id) != M_Texture::loaded_textures.end()) // check if texture is loaded

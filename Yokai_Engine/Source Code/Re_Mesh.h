@@ -24,6 +24,7 @@ public:
 	~Re_Mesh();
 
 	void InitMeshTransform(float3 position, float3 scale);
+	void InitMeshVertex(std::vector<VertexInfo>* vertices, std::vector<uint>* indices);
 	void InitMeshInfo(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, float3 pos, float3 scale);
 
 	void Update();

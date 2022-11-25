@@ -28,6 +28,7 @@ uint M_Render::InitManageRender(Re_Mesh& mesh)
 
     Re_Mesh firstMesh;
     firstMesh.InitMeshTransform(mesh.position, mesh.scale);
+    firstMesh.InitMeshVertex(mesh.vertices, mesh.indices);
     mesh.CleanUp();
 
     return AddMesh(firstMesh);
