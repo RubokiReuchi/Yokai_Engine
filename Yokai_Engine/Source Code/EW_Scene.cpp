@@ -27,6 +27,22 @@ void EW_Scene::Update()
 	
 	scene_camera->active = true;
 	app->camera->updateSceneCamera = (bool)ImGui::IsWindowHovered();
+	if (app->camera->updateSceneCamera)
+	{
+		if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+		{
+			app->camera->click_state = 2;
+		}
+		else if(ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+		{
+			app->camera->click_state = 1;
+		}
+
+		app->engine_order->scene_pos.x = ImGui::GetWindowPos().x;
+		app->engine_order->scene_pos.y = ImGui::GetWindowPos().y + ImGui::GetFrameHeight();
+		app->engine_order->scene_size.x = ImGui::GetWindowSize().x;
+		app->engine_order->scene_size.y = ImGui::GetWindowSize().y - ImGui::GetFrameHeight();
+	}
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
 
 	if (gameDimensions.x != scene_width || gameDimensions.y != scene_height)
@@ -34,10 +50,6 @@ void EW_Scene::Update()
 		// If the size of this imgui window is different from the one stored.
 		scene_width = (int)gameDimensions.x;
 		scene_height = (int)gameDimensions.y;
-		app->engine_order->scene_pos.x = ImGui::GetWindowPos().x;
-		app->engine_order->scene_pos.y = ImGui::GetWindowPos().y + ImGui::GetFrameHeight();
-		app->engine_order->scene_size.x = ImGui::GetWindowSize().x;
-		app->engine_order->scene_size.y = ImGui::GetWindowSize().y - ImGui::GetFrameHeight();
 
 		app->camera->sceneCamera.ChangeAspectRatio((float)scene_width / (float)scene_height);
 	}

@@ -59,9 +59,10 @@ update_status ModuleCamera3D::Update(float dt)
 	if (updateSceneCamera)
 	{
 		sceneCamera.UpdateCameraInput(dt);
-		if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (click_state != 0)
 		{
 			sceneCamera.CalculateMousePicking();
+			click_state = 0;
 		}
 	}
 

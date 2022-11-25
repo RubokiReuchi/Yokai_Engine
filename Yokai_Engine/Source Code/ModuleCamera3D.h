@@ -31,6 +31,7 @@ public:
 
 	bool updateSceneCamera = false;
 	bool updateGameCamera = false;
+	uint click_state = 0; // 0 --> idle, 1 --> single click, 2 --> double click
 
 private:
 	Camera* frameBufferRegenCamera = nullptr;

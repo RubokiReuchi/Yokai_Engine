@@ -197,7 +197,19 @@ void SceneCamera::CalculateMousePicking()
 
 		go_hitted.clear();
 
-		app->engine_order->editor->SetSelectedGameObject(hitted_go);
+		if (app->camera->click_state == 2)
+		{
+			app->engine_order->editor->SetSelectedGameObject(hitted_go);
+		}
+		else
+		{
+			GameObject* parent = hitted_go;
+			while (parent->parent != app->engine_order->rootGameObject)
+			{
+				parent = parent->parent;
+			}
+			app->engine_order->editor->SetSelectedGameObject(parent);
+		}
 	}
 	else
 	{
