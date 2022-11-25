@@ -28,7 +28,6 @@ public:
 
 private:
 	void Focus(const float3& focusPoint);
-	void Confine(float& value, float min_value, float max_value);
 
 	bool fast_move = false;
 
