@@ -37,10 +37,10 @@ void Re_Mesh::InitMeshTransform(float3 position, float3 scale)
 	this->scale = scale;
 }
 
-void Re_Mesh::InitMeshVertex(std::vector<VertexInfo>* vertices, std::vector<uint>* indices)
+void Re_Mesh::InitMeshVertex(std::vector<VertexInfo> vertices, std::vector<uint> indices)
 {
-	this->vertices = vertices;
-	this->indices = indices;
+	this->vertices = &vertices;
+	this->indices = &indices;
 }
 
 void Re_Mesh::Update()

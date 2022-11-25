@@ -173,7 +173,7 @@ void SceneCamera::CalculateMousePicking()
 		float min_distance = 9999;
 		for (auto& go : go_hitted)
 		{
-			Re_Mesh& aux_mesh = dynamic_cast<C_MeshRenderer*>(go->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+			Re_Mesh aux_mesh = dynamic_cast<C_MeshRenderer*>(go->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
 			LineSegment ray = picking_ray;
 			ray.Transform(go->transform->GetGlobalMatrix().Inverted());
 

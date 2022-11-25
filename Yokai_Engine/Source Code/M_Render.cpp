@@ -16,7 +16,7 @@ M_Render::~M_Render()
     RELEASE(basic_shader);
 }
 
-uint M_Render::InitManageRender(Re_Mesh& mesh)
+uint M_Render::InitManageRender(Re_Mesh mesh)
 {
     if (initialized) LOG("Init already done");
     initialized = true;
@@ -26,12 +26,7 @@ uint M_Render::InitManageRender(Re_Mesh& mesh)
 
     CreateMeshBuffers();
 
-    Re_Mesh firstMesh;
-    firstMesh.InitMeshTransform(mesh.position, mesh.scale);
-    firstMesh.InitMeshVertex(mesh.vertices, mesh.indices);
-    mesh.CleanUp();
-
-    return AddMesh(firstMesh);
+    return AddMesh(mesh);
 }
 
 void M_Render::Draw()

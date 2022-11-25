@@ -12,7 +12,7 @@ public:
 	M_Render();
 	~M_Render();
 
-	uint InitManageRender(Re_Mesh& mesh);
+	uint InitManageRender(Re_Mesh mesh);
 
 	void Draw();
 
