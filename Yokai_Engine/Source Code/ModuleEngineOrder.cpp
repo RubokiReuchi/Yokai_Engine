@@ -122,3 +122,21 @@ uint ModuleEO::AddGameObject(GameObject* go)
     game_objects[id_counter] = go;
     return id_counter++;
 }
+
+std::string ModuleEO::GenerateUUID()
+{
+    std::string uuid = "";
+    char c;
+    int r;
+
+    srand(time(NULL));
+    for (int i = 0; i < 16; i++)
+    {
+        r = rand() % 35;
+        if (r < 26) c = 'A' + r;
+        else c = char(r + 23);
+        uuid += c;
+    }
+
+    return uuid;
+}

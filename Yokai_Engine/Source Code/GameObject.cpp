@@ -7,6 +7,11 @@ GameObject::GameObject(GameObject* parent, std::string name, std::string tag, bo
 	id = app->engine_order->AddGameObject(this);
 	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
 	if (parent != NULL) parent->AddChild(this);
+
+	if (UUID == "-1")
+	{
+		UUID = app->engine_order->GenerateUUID();
+	}
 }
 
 GameObject::~GameObject()

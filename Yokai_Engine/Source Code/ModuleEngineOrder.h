@@ -6,6 +6,7 @@
 #include "EO_Base.h"
 
 #include <map>
+#include <random>
 
 class EO_Editor;
 
@@ -35,6 +36,8 @@ public:
 	bool CleanUp();
 
 	uint AddGameObject(GameObject* go);
+
+	std::string GenerateUUID();
 
 public:
 	EO_Base* engine_order[(uint)EO_NUM::NUM_EO_TYPE] = { nullptr };
