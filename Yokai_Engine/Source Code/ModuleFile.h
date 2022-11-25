@@ -58,6 +58,8 @@ public:
 
 	static RE_TYPE FS_GetResourceType(const std::string& filename);
 
+	static std::string FS_GetExtension(const std::string& file);
+
 	static std::vector<std::string> FS_GetAllFiles(std::string path);
 
 	bool new_file = false;

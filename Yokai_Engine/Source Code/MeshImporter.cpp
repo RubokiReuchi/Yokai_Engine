@@ -30,14 +30,22 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	}
 }
 
-GameObject* MeshImporter::LoadModelFromYK(std::string path)
+GameObject* MeshImporter::LoadModelFromYK(std::string path, GameObject* parent)
 {
-	GameObject* new_go = new GameObject(app->engine_order->rootGameObject, ModuleFile::FS_GetFileName(path, false));
+	if (!parent) parent = app->engine_order->rootGameObject;
+	GameObject* new_go = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
 	std::vector<std::string> children_paths = app->file->YK_LoadModel(path);
 	for (int i = 0; i < std::stoi(children_paths[0]); i++)
 	{
-		LoadMeshFromYK(children_paths[i + 1], new_go);
+		if (app->file->FS_GetExtension(children_paths[i + 1]) == ".ykmesh")
+		{
+			LoadMeshFromYK(children_paths[i + 1], new_go);
+		}
+		else if (app->file->FS_GetExtension(children_paths[i + 1]) == ".ykmodel")
+		{
+			LoadModelFromYK(children_paths[i + 1], new_go);
+		}
 	}
 
 	// set transform after al child have been added
@@ -80,27 +88,6 @@ GameObject* MeshImporter::LoadMeshFromFBX(std::string path)
 		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize();
 		loadedMeshes[path].numOfMeshes = 0;
 		CreateNewNode(scene->mRootNode, scene, path);
-
-		aiNode* n = scene->mRootNode;
-		if (n->mNumChildren > 0)
-		{
-			std::vector<std::string> model_paths;
-			model_paths.push_back(std::to_string(n->mNumChildren));
-			for (size_t i = 0; i < n->mNumChildren; i++)
-			{
-				std::string file = MESHES_PATH;
-				file += n->mChildren[i]->mName.C_Str();
-				file += ".ykmesh";
-				model_paths.push_back(file);
-			}
-
-			// save custom format
-			std::string file = MODELS_PATH;
-			file += app->file->FS_GetFileName(path, false);
-			file += ".ykmodel";
-
-			app->file->YK_SaveModel(file, model_paths);
-		}
 	}
 	return returnGameObject;
 }
@@ -119,6 +106,36 @@ const aiScene* MeshImporter::GetAiScene(std::string path)
 
 void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent)
 {
+	// save custom format
+	if (node->mNumChildren > 1)
+	{
+		std::vector<std::string> model_paths;
+		model_paths.push_back(std::to_string(node->mNumChildren));
+		for (size_t i = 0; i < node->mNumChildren; i++)
+		{
+			if (node->mChildren[i]->mNumChildren > 0)
+			{
+				std::string file = MODELS_PATH;
+				file += node->mChildren[i]->mName.C_Str();
+				file += ".ykmodel";
+				model_paths.push_back(file);
+			}
+			else
+			{
+				std::string file = MESHES_PATH;
+				file += node->mChildren[i]->mName.C_Str();
+				file += ".ykmesh";
+				model_paths.push_back(file);
+			}
+		}
+
+		std::string file = MODELS_PATH;
+		file += app->file->FS_GetFileName(path, false);
+		file += ".ykmodel";
+
+		app->file->YK_SaveModel(file, model_paths);
+	}
+
 	if (node->mNumMeshes == 0 && node->mNumChildren == 1)
 	{
 		CreateNewNode(node->mChildren[0], scene, path, parent);

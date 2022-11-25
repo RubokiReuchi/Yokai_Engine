@@ -34,7 +34,7 @@ public:
 	static GameObject* LoadMesh(std::string path);
 
 private:
-	static GameObject* LoadModelFromYK(std::string path);
+	static GameObject* LoadModelFromYK(std::string path, GameObject* parent = nullptr);
 	static GameObject* LoadMeshFromYK(std::string path, GameObject* parent = nullptr);
 	static GameObject* LoadMeshFromFBX(std::string path);
 

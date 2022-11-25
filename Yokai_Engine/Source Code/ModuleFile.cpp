@@ -297,6 +297,14 @@ RE_TYPE ModuleFile::FS_GetResourceType(const std::string& filename)
 	return RE_TYPE::UNDEFINED;
 }
 
+std::string ModuleFile::FS_GetExtension(const std::string& file)
+{
+	std::string fileExtension = file;
+	fileExtension = fileExtension.substr(fileExtension.find_last_of('.'));
+
+	return fileExtension;
+}
+
 std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 {
 	std::vector<std::string> ret;
