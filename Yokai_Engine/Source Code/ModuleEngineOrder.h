@@ -39,6 +39,8 @@ public:
 public:
 	EO_Base* engine_order[(uint)EO_NUM::NUM_EO_TYPE] = { nullptr };
 	EO_Editor* editor = nullptr;
+	ImVec2 scene_pos;
+	ImVec2 scene_size;
 
 	uint id_counter = 1;
 

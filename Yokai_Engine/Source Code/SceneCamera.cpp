@@ -145,6 +145,33 @@ void SceneCamera::UpdateCameraInput(float dt)
 		}
 	}
 }
+void SceneCamera::CalculateMousePicking()
+{
+	float mouse_x = (((float)app->input->GetMouseX() - app->engine_order->scene_pos.x) / app->engine_order->scene_size.x) - 0.5f;
+	float mouse_y = (((float)app->input->GetMouseY() - app->engine_order->scene_pos.y) / app->engine_order->scene_size.y) - 0.5f;
+	Confine(mouse_x, -0.5f, 0.5f);
+	Confine(mouse_y, -0.5f, 0.5f);
+	LineSegment picking_ray = cameraFrustum.UnProjectLineSegment(mouse_x * 2, mouse_y * 2);
+
+	GameObject* near_hit = NULL;
+	float close_distance = 9999;
+	for (auto& go : app->engine_order->game_objects)
+	{
+		if (go.second->GetComponent(Component::TYPE::MESH_RENDERER))
+		{
+			RayCastHit hit;
+			float aux;
+			hit.hit = picking_ray.Intersects(go.second->global_aabb, hit.distance, aux);
+			if (hit.hit && hit.distance < close_distance)
+			{
+				close_distance = hit.distance;
+				near_hit = go.second;
+			}
+		}
+	}
+	if (close_distance == 9999) near_hit = NULL;
+	app->engine_order->editor->SetSelectedGameObject(near_hit);
+}
 
 void SceneCamera::Focus(const float3& focusPoint)
 {
@@ -152,4 +179,16 @@ void SceneCamera::Focus(const float3& focusPoint)
 	newPos += float3(4.0f, 0.0f, 2.0f);
 	cameraFrustum.pos = newPos;
 	LookAt(focusPoint);
+}
+
+void SceneCamera::Confine(float& value, float min_value, float max_value)
+{
+	if (value > max_value)
+	{
+		value = max_value;
+	}
+	else if (value < min_value)
+	{
+		value = min_value;
+	}
 }

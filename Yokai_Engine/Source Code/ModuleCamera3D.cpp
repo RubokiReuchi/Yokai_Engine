@@ -56,7 +56,14 @@ update_status ModuleCamera3D::Update(float dt)
 		frameBufferRegenCamera = nullptr;
 	}
 
-	if (updateSceneCamera) sceneCamera.UpdateCameraInput(dt);
+	if (updateSceneCamera)
+	{
+		sceneCamera.UpdateCameraInput(dt);
+		if (app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			sceneCamera.CalculateMousePicking();
+		}
+	}
 
 	return UPDATE_CONTINUE;
 }

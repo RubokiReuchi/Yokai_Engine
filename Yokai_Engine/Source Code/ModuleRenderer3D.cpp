@@ -203,7 +203,7 @@ void ModuleRenderer3D::DrawLines()
 	glUseProgram(line_shader->program_id);
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
-	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.235f, 0.529, 0.0f, 1.0f);
+	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.235f, 0.529f, 0.0f, 1.0f);
 
 	UpdateAABB_Buffer(drawing_lines);
 
