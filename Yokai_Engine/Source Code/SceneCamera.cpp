@@ -153,24 +153,57 @@ void SceneCamera::CalculateMousePicking()
 	Confine(mouse_y, -0.5f, 0.5f);
 	LineSegment picking_ray = cameraFrustum.UnProjectLineSegment(mouse_x * 2, mouse_y * 2);
 
-	GameObject* near_hit = NULL;
-	float close_distance = 9999;
+	std::vector<GameObject*> go_hitted;
 	for (auto& go : app->engine_order->game_objects)
 	{
 		if (go.second->GetComponent(Component::TYPE::MESH_RENDERER))
 		{
 			RayCastHit hit;
-			float aux;
-			hit.hit = picking_ray.Intersects(go.second->global_aabb, hit.distance, aux);
-			if (hit.hit && hit.distance < close_distance)
+			hit.hit = picking_ray.Intersects(go.second->global_aabb);
+			if (hit.hit)
 			{
-				close_distance = hit.distance;
-				near_hit = go.second;
+				go_hitted.push_back(go.second);
 			}
 		}
 	}
-	if (close_distance == 9999) near_hit = NULL;
-	app->engine_order->editor->SetSelectedGameObject(near_hit);
+
+	if (!go_hitted.empty())
+	{
+		GameObject* hitted_go = NULL;
+		float min_distance = 9999;
+		for (auto& go : go_hitted)
+		{
+			Re_Mesh& aux_mesh = dynamic_cast<C_MeshRenderer*>(go->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+			LineSegment ray = picking_ray;
+			ray.Transform(go->transform->GetGlobalMatrix().Inverted());
+
+			for (size_t i = 0; i < aux_mesh.indices->size(); i += 3)
+			{
+				float3 vertex1_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i)).position);
+				float3 vertex2_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i + 1)).position);
+				float3 vertex3_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i + 2)).position);
+
+				Triangle face(vertex1_pos, vertex2_pos, vertex3_pos);
+
+				RayCastHit hit;
+				hit.hit = picking_ray.Intersects(face, &hit.distance, nullptr);
+				if (hit.hit && hit.distance < min_distance)
+				{
+					min_distance = hit.distance;
+					hitted_go = go;
+				}
+			}
+		}
+
+		go_hitted.clear();
+
+		app->engine_order->editor->SetSelectedGameObject(hitted_go);
+	}
+	else
+	{
+		app->engine_order->editor->SetSelectedGameObject(NULL);
+	}
+	
 }
 
 void SceneCamera::Focus(const float3& focusPoint)

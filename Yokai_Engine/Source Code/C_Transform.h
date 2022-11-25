@@ -32,6 +32,10 @@ public:
 	void OnTransformUpdate(float3 position, float3 scale, float3 rotation) override;
 
 	Transform GetGlobalTransform();
+	float4x4 GetGlobalMatrix()
+	{
+		return globalMatrix;
+	}
 
 	float3 GetForward();
 	float3 GetRight();
