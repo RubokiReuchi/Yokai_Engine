@@ -3,6 +3,8 @@
 #include "EditorWindow.h"
 #include "SceneCamera.h"
 
+#include "ImGuizmo/ImGuizmo.h"
+
 class EW_Scene : public EditorWindow
 {
 public:
@@ -16,6 +18,10 @@ public:
 	{
 		scene_camera->active = active;
 	}
+
+	ImGuizmo::OPERATION guizmo_operation;
+	ImGuizmo::MODE guizmo_mode;
+	bool guizmo_hide;
 
 private:
 

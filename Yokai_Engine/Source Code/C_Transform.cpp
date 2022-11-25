@@ -83,6 +83,24 @@ void C_Transform::SetTransform(float3 pos, float3 scl, float3 rot)
 	UpdateTransform();
 }
 
+void C_Transform::SetTransform(float4x4 matrix)
+{
+	float3 pos, scl, euler_rot;
+	Quat rot;
+
+	matrix.Decompose(pos, rot, scl);
+
+	euler_rot = rot.ToEulerXYZ();
+	euler_rot.x = math::RadToDeg(euler_rot.x);
+	euler_rot.y = math::RadToDeg(euler_rot.y);
+	euler_rot.z = math::RadToDeg(euler_rot.z);
+
+	this->localTransform.position = pos;
+	this->localTransform.scale = scl;
+	this->localTransform.rotation = euler_rot;
+	UpdateTransform();
+}
+
 void C_Transform::Translate(float3 translation)
 {
 	this->localTransform.position += translation;

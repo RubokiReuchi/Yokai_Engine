@@ -58,6 +58,9 @@
     <Filter Include="Sources\Tools\ImGui">
       <UniqueIdentifier>{eb724267-f19e-4bfd-b126-e21ab596cd97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGuizmo">
+      <UniqueIdentifier>{dc1a32c8-4db4-4fbc-8ad8-b8d7149f0add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -417,6 +420,9 @@
     <ClInclude Include="Source Code\C_Material.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.h">
+      <Filter>Sources\Tools\ImGuizmo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -676,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\C_Material.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuizmo\ImGuizmo.cpp">
+      <Filter>Sources\Tools\ImGuizmo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

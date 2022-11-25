@@ -14,6 +14,10 @@ EW_Scene::EW_Scene()
 	enabled = true;
 
 	scene_camera = &app->camera->sceneCamera;
+
+	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+	guizmo_mode = ImGuizmo::MODE::WORLD;
+	guizmo_hide = true;
 }
 
 EW_Scene::~EW_Scene()
@@ -27,7 +31,7 @@ void EW_Scene::Update()
 	
 	scene_camera->active = true;
 	app->camera->updateSceneCamera = (bool)ImGui::IsWindowHovered();
-	if (app->camera->updateSceneCamera)
+	if (app->camera->updateSceneCamera && !ImGuizmo::IsUsing() && !ImGuizmo::IsOver())
 	{
 		if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -81,6 +85,48 @@ void EW_Scene::Update()
 		else if (ImGui::GetMousePos().y + 11 + dy > ImGui::GetWindowPos().y + ImGui::GetWindowHeight())
 		{
 			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + 23);
+		}
+	}
+
+	// ImGuizmo
+	GameObject* go = app->engine_order->editor->GetSelectedGameObject();
+	if (go != NULL)
+	{
+		if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_IDLE)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+			{
+				guizmo_hide = true;
+			}
+			else if(app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
+				guizmo_hide = false;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+				guizmo_hide = false;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::SCALE;
+				guizmo_hide = false;
+			}
+		}
+
+		if (!guizmo_hide)
+		{
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
+
+			ImGuizmo::SetDrawlist();
+			float4x4 matrix = go->transform->GetGlobalMatrix().Transposed();
+
+			if (ImGuizmo::Manipulate(app->camera->sceneCamera.GetViewMatrix(), app->camera->sceneCamera.GetProjectionMatrix(), guizmo_operation, guizmo_mode, matrix.ptr()) && ImGui::IsWindowHovered())
+			{
+				matrix.Transpose();
+				go->transform->SetTransform(matrix);
+			}
 		}
 	}
 

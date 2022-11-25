@@ -21,6 +21,7 @@ public:
 	void SetScale(float3 scl);
 	void SetRotation(float3 rot);
 	void SetTransform(float3 pos, float3 scl, float3 rot);
+	void SetTransform(float4x4 matrix);
 
 	void Translate(float3 translation);
 	void Scale(float3 scale);
