@@ -197,7 +197,7 @@ void SceneCamera::CalculateMousePicking()
 
 		go_hitted.clear();
 
-		if (app->camera->click_state == 2)
+		if (app->camera->click_state == 2 || hitted_go == NULL)
 		{
 			app->engine_order->editor->SetSelectedGameObject(hitted_go);
 		}
