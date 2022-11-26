@@ -139,7 +139,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		app->engine_order->DrawEO();
 		model_render.Draw();
 
-		if (drawing_lines.size() > 0) DrawLines();
+		if (drawing_lines.size() > 0)
+		{
+			for (size_t i = 0; i < drawing_lines.size(); i++)
+			{
+				DrawLines(lines_colors[i], i);
+			}
+
+			drawing_lines.clear();
+			lines_colors.clear();
+		}
 	}
 	if (app->camera->activeGameCamera->active)
 	{
@@ -198,25 +207,40 @@ void ModuleRenderer3D::ToggleVSync(bool is_on)
 	SDL_GL_SetSwapInterval(vsync);
 }
 
-void ModuleRenderer3D::DrawLines()
+void ModuleRenderer3D::DrawLines(float4 color, size_t iteration)
 {
 	glUseProgram(line_shader->program_id);
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "view"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetViewMatrix());
 	glUniformMatrix4fv(glGetUniformLocation(line_shader->program_id, "projection"), 1, GL_FALSE, app->camera->currentDrawingCamera->GetProjectionMatrix());
-	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), 0.235f, 0.529f, 0.0f, 1.0f);
+	glUniform4f(glGetUniformLocation(line_shader->program_id, "lineColor"), color.x, color.y, color.z, color.w);
 
-	UpdateAABB_Buffer(drawing_lines);
+	UpdateAABB_Buffer(drawing_lines[iteration]);
 
 	glBindVertexArray(linesVAO);
-	glDrawArrays(GL_LINES, 0, drawing_lines.size());
+	glDrawArrays(GL_LINES, 0, drawing_lines[iteration].size());
 	glBindVertexArray(0);
 
-	drawing_lines.clear();
+	drawing_lines[iteration].clear();
 }
 
-void ModuleRenderer3D::AddLines(std::vector<float3> lines)
+void ModuleRenderer3D::AddLines(std::vector<float3> lines, float4 color)
 {
-	drawing_lines.insert(drawing_lines.end(), lines.begin(), lines.end());
+	bool already_created = false;
+	size_t i;
+
+	for (auto& c : lines_colors)
+	{
+		if (c.second.x == color.x && c.second.y == color.y && c.second.z == color.z && c.second.w == color.w)
+		{
+			already_created = true;
+			i = c.first;
+		}
+	}
+
+	if (!already_created) i = drawing_lines.size();
+
+	drawing_lines[i].insert(drawing_lines[i].end(), lines.begin(), lines.end());
+	lines_colors[i] = color;
 }
 
 void ModuleRenderer3D::InitAABB_Buffer()

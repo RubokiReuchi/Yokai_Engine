@@ -26,7 +26,7 @@ void C_MeshRenderer::Update()
 
 		std::vector<float3> lines = PointsToLines_AABB(points);
 		
-		app->renderer3D->AddLines(lines);
+		app->renderer3D->AddLines(lines, float4(0.235f, 0.529f, 0.0f, 1.0f));
 	}
 	if (show_obb)
 	{
@@ -35,7 +35,7 @@ void C_MeshRenderer::Update()
 
 		std::vector<float3> lines = PointsToLines_AABB(points);
 
-		app->renderer3D->AddLines(lines);
+		app->renderer3D->AddLines(lines, float4(0.69f, 0.203f, 0.321f, 1.0f));
 	}
 }
 

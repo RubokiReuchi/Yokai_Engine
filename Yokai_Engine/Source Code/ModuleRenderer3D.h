@@ -28,11 +28,11 @@ public:
 
 	void ToggleVSync(bool is_on);
 
-	void AddLines(std::vector<float3> lines);
+	void AddLines(std::vector<float3> lines, float4 color);
 
 private:
 
-	void DrawLines();
+	void DrawLines(float4 color, size_t iteration);
 
 	void InitAABB_Buffer();
 	void UpdateAABB_Buffer(std::vector<float3> lines);
@@ -40,7 +40,8 @@ private:
 	uint linesVAO = 0;
 	uint linesVBO = 0;
 
-	std::vector<float3> drawing_lines;
+	std::map<uint, std::vector<float3>> drawing_lines;
+	std::map<uint, float4> lines_colors;
 
 public:
 
