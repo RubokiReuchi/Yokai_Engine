@@ -1,15 +1,6 @@
 #pragma once
 
-#include <queue>
-
 #include "EditorWindow.h"
-
-namespace Htool
-{
-	template<class T> class CycleArray;
-}
-
-using CArrayF = Htool::CycleArray<float>;
 
 class EW_Performance : public EditorWindow
 {
@@ -22,7 +13,8 @@ public:
 
 private:
 
-	Htool::CycleArray<float>* frames = nullptr;
+	std::vector<float> frame_array;
+	float* frames = nullptr;
 
 	bool fullscreen = false;
 

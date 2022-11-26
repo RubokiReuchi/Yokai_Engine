@@ -4,14 +4,14 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 #include "ModuleFile.h"
-#include "CycleArray.hpp"
 
 EW_Performance::EW_Performance()
 {
 	window_name = "Performance";
 	enabled = true;
 
-	frames = new CArrayF(60, 0.0f);
+	for (size_t i = 0; i < 60; i++) frame_array.push_back(0.0f);
+	frames = &frame_array[0];
 
 	countCPU = SDL_GetCPUCount();
 
@@ -28,7 +28,7 @@ EW_Performance::EW_Performance()
 
 EW_Performance::~EW_Performance()
 {
-	RELEASE(frames);
+	
 }
 
 void EW_Performance::Update()
@@ -36,12 +36,17 @@ void EW_Performance::Update()
 	// Performance
 	std::string framerate = "Framerate: " + std::to_string(ImGui::GetIO().Framerate);
 
-	frames->push_back(ImGui::GetIO().Framerate);
+	for (size_t i = 0; i < 59; i++)
+	{
+		frame_array[i] = frame_array[i + 1];
+	}
+	frame_array[59] = ImGui::GetIO().Framerate;
+	frames = &frame_array[0];
 
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	if (ImGui::CollapsingHeader("Frame Rate", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::PlotHistogram("##Framerate", frames->front(), frames->size(), 0, framerate.c_str(), 0.0f, 160.0f, ImVec2(300, 160));
+		ImGui::PlotHistogram("##Framerate", frames, 60, 0, framerate.c_str(), 0.0f, 160.0f, ImVec2(300, 160));
 		if (ImGui::SliderInt("FPS Limit", frameLimit, 30, 120))
 		{
 			app->SetFPS(*frameLimit);
