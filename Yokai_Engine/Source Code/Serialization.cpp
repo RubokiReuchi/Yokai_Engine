@@ -83,6 +83,40 @@ void Serialization::SetBool(JSON_Object* json_object, std::string variable, bool
     json_object_set_boolean(json_object, variable.c_str(), value);
 }
 
+int Serialization::GetInt(JSON_Object* json_object, std::string variable)
+{
+    return (int)json_object_get_number(json_object, variable.c_str());
+}
+
+std::string Serialization::GetString(JSON_Object* json_object, std::string variable)
+{
+    return json_object_get_string(json_object, variable.c_str());
+}
+
+float3 Serialization::GetFloat3(JSON_Object* json_object, std::string variable)
+{
+    JSON_Array* j_array = json_object_get_array(json_object, variable.c_str());
+    float aux0 = (float)json_array_get_number(j_array, 0);
+    float aux1 = (float)json_array_get_number(j_array, 1);
+    float aux2 = (float)json_array_get_number(j_array, 2);
+    return float3(aux0, aux1, aux2);
+}
+
+Quat Serialization::GetQuat(JSON_Object* json_object, std::string variable)
+{
+    JSON_Array* j_array = json_object_get_array(json_object, variable.c_str());
+    float aux0 = (float)json_array_get_number(j_array, 0);
+    float aux1 = (float)json_array_get_number(j_array, 1);
+    float aux2 = (float)json_array_get_number(j_array, 2);
+    float aux3 = (float)json_array_get_number(j_array, 3);
+    return Quat(aux0, aux1, aux2, aux3);
+}
+
+bool Serialization::GetBool(JSON_Object* json_object, std::string variable)
+{
+    return json_object_get_boolean(json_object, variable.c_str());
+}
+
 void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Component*> components)
 {
     JSON_Value* go_value = json_value_init_array();
@@ -122,4 +156,44 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
     }
 
     json_object_set_value(json_object, "Components", go_value);
+}
+
+void Serialization::SaveSettings()
+{
+    JSON_Value* settings_value = json_value_init_object();
+    JSON_Object* settings_object = json_value_get_object(settings_value);
+
+    // values
+    SetInt(settings_object, "FPS", app->fpsCap);
+    SetBool(settings_object, "Vsync", app->renderer3D->vsync);
+    SetString(settings_object, "WindowSize", (std::to_string(app->window->width) + "x" + std::to_string(app->window->height)).c_str());
+
+    json_serialize_to_file_pretty(settings_value, "Config/settings.ykconfig");
+    json_value_free(settings_value);
+}
+
+void Serialization::LoadSettings()
+{
+    JSON_Value* settings_value = json_parse_file("Config/settings.ykconfig");
+
+    if (settings_value == NULL)
+    {
+        Console::LogInConsole("Error opening 'Config/settings.ykconfig'.");
+        return;
+    }
+
+    JSON_Object* settings_object = json_value_get_object(settings_value);
+    app->fpsCap = GetInt(settings_object, "FPS");
+    app->renderer3D->vsync = GetBool(settings_object, "Vsync");
+    std::string aux = GetString(settings_object, "WindowSize");
+
+    size_t npos = aux.find_last_of("x") + 1;
+    std::string value = aux;
+    app->window->height = stoi(value.substr(npos));
+    app->window->width = stoi(value.erase(npos, 9));
+
+    SDL_SetWindowSize(app->window->window, app->window->width, app->window->height);
+    SDL_DisplayMode DM;
+    SDL_GetCurrentDisplayMode(0, &DM);
+    SDL_SetWindowPosition(app->window->window, (DM.w - app->window->width) / 2, (DM.h - app->window->height) / 2);
 }

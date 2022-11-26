@@ -154,17 +154,21 @@ bool EO_Editor::SetMenuBar()
 	ImGui::BeginMainMenuBar();
 	if (ImGui::BeginMenu("File"))
 	{
-		if (ImGui::MenuItem("New"))
+		if (ImGui::MenuItem("New Scene"))
 		{
 
 		}
-		if (ImGui::MenuItem("Open"))
+		if (ImGui::MenuItem("Load Scene"))
 		{
 
 		}
-		if (ImGui::MenuItem("Save"))
+		if (ImGui::MenuItem("Save Scene"))
 		{
 			Serialization::YK_SaveScene();
+		}
+		if (ImGui::MenuItem("Save Scene As"))
+		{
+			
 		}
 		ImGui::EndMenu();
 	}

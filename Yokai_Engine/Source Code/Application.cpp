@@ -59,6 +59,7 @@ bool Application::Init()
 	{
 		ret = list_modules[i]->Start();
 	}
+	Serialization::LoadSettings();
 	
 	return ret;
 }
@@ -112,6 +113,7 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 	
+	Serialization::SaveSettings();
 	for (int i = list_modules.size() - 1; i >= 0 && ret == true; --i)
 	{
 		ret = list_modules[i]->CleanUp();
