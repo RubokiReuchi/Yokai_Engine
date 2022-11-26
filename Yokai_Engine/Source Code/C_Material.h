@@ -18,4 +18,6 @@ private:
 	C_MeshRenderer* renderer = nullptr;
 
 	std::string selected_texture = "Default";
+
+	friend class Serialization;
 };

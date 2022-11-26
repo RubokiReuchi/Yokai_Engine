@@ -34,4 +34,6 @@ private:
 	bool show_aabb = false;
 	bool show_obb = false;
 	std::vector<float3> PointsToLines_AABB(float3 points[8]);
+
+	friend class Serialization;
 };

@@ -1,7 +1,7 @@
 {
-    "UUID": "2YE8PH3XZMBISDS9",
-    "ParentUUID": "2YE8PH3XZMBISDS9",
-    "Name": "Baker_house",
+    "UUID": "ZATIHEXAIHNACU8Y",
+    "ParentUUID": "W6NZR71XR5V124EL",
+    "Name": "Chimney",
     "Position": [
         0,
         0,
@@ -22,5 +22,18 @@
     "VisibleOnEditor": true,
     "Tag": "Default",
     "IsCamera": false,
-    "GameObjectID": 5
+    "GameObjectID": 4,
+    "Components": [
+        {
+            "Type": "2",
+            "Enabled": true,
+            "ShowAABB": false,
+            "ShowOBB": false
+        },
+        {
+            "Type": "3",
+            "Enabled": true,
+            "SelectedTexturePath": "Baker_house"
+        }
+    ]
 }

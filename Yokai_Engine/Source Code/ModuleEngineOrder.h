@@ -38,6 +38,7 @@ public:
 	uint AddGameObject(GameObject* go);
 
 	std::string GenerateUUID();
+	uint seed; // used to generate random numbers
 
 public:
 	EO_Base* engine_order[(uint)EO_NUM::NUM_EO_TYPE] = { nullptr };
@@ -50,5 +51,5 @@ public:
 	GameObject* rootGameObject = nullptr;
 
 	std::map<uint, GameObject*> game_objects;
-	std::vector<GameObject*> delete_qeue;
+	std::vector<GameObject*> delete_queu;
 };

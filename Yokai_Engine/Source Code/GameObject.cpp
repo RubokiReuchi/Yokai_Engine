@@ -50,7 +50,7 @@ void GameObject::DeleteGameObject()
 		}
 	}
 	app->engine_order->game_objects.erase(app->engine_order->game_objects.size());
-	app->engine_order->delete_qeue.push_back(this);
+	app->engine_order->delete_queu.push_back(this);
 	while (children.size() > 0)
 	{
 		children[0]->DeleteGameObject();

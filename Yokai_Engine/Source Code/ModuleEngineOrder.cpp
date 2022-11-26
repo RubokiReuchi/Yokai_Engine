@@ -17,6 +17,7 @@ ModuleEO::~ModuleEO()
 bool ModuleEO::Init()
 {
     rootGameObject = new GameObject(nullptr, "Root", "None");
+    seed = (uint)time(NULL);
     return true;
 }
 
@@ -52,9 +53,9 @@ bool ModuleEO::Start()
 
 update_status ModuleEO::PreUpdate(float dt)
 {
-    for (size_t i = 0; i < delete_qeue.size(); i++)
+    for (size_t i = 0; i < delete_queu.size(); i++)
     {
-        RELEASE(delete_qeue[i]);
+        RELEASE(delete_queu[i]);
     }
 
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
@@ -69,6 +70,8 @@ update_status ModuleEO::PreUpdate(float dt)
 
 update_status ModuleEO::Update(float dt)
 {
+    seed++;
+
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {
         if (engine_order[i] && engine_order[i]->IsEnabled())
@@ -129,7 +132,7 @@ std::string ModuleEO::GenerateUUID()
     char c;
     int r;
 
-    srand(time(NULL));
+    srand(seed++);
     for (int i = 0; i < 16; i++)
     {
         r = rand() % 35;

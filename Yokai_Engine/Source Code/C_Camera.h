@@ -22,4 +22,5 @@ private:
 	Quat original_lookingDir;
 	Quat lookingDir;
 
+	friend class Serialization;
 };
