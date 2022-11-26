@@ -81,6 +81,18 @@ void EO_Editor::PreUpdate()
 void EO_Editor::Update()
 {
 	// will be moved to scene
+	std::vector<float3> grid;
+	float grid_radius = 10;
+	for (float i = -grid_radius; i <= grid_radius; i++)
+	{
+		grid.push_back(float3(i, 0, grid_radius));
+		grid.push_back(float3(i, 0, -grid_radius));
+		grid.push_back(float3(grid_radius, 0, i));
+		grid.push_back(float3(-grid_radius, 0, i));
+	}
+
+	app->renderer3D->AddLines(grid, float4(1.0f, 1.0f, 1.0f, 1.0f));
+
 	for (auto& go : app->engine_order->game_objects)
 	{
 		go.second->Update();
