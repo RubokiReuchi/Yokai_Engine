@@ -70,8 +70,6 @@ update_status ModuleEO::PreUpdate(float dt)
 
 update_status ModuleEO::Update(float dt)
 {
-    seed++;
-
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {
         if (engine_order[i] && engine_order[i]->IsEnabled())

@@ -164,7 +164,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Save"))
 		{
-			Serialization::SerializeGameObject(nullptr, selected_go);
+			Serialization::YK_SaveScene();
 		}
 		ImGui::EndMenu();
 	}

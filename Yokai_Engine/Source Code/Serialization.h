@@ -9,6 +9,9 @@ class GameObject;
 class Serialization
 {
 public:
+	static void YK_SaveScene();
+
+private:
 	static void SerializeGameObject(JSON_Array* json_array, GameObject* go);
 
 	static void SetInt(JSON_Object* json_object, std::string variable, int value);

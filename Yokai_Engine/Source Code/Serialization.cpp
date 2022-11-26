@@ -1,5 +1,25 @@
 #include "Serialization.h"
-#include "ModuleFile.h"
+#include "Application.h"
+#include "ModuleEngineOrder.h"
+
+void Serialization::YK_SaveScene()
+{
+    JSON_Value* scene_value = json_value_init_object();
+    JSON_Object* scene_object = json_value_get_object(scene_value);
+
+    JSON_Value* gameobjects_value = json_value_init_array();
+    JSON_Array* gameobjects_array = json_value_get_array(gameobjects_value);
+
+    for (auto& go : app->engine_order->game_objects)
+    {
+        SerializeGameObject(gameobjects_array, go.second);
+    }
+
+    json_object_set_value(scene_object, "GameObjects", gameobjects_value);
+
+    json_serialize_to_file_pretty(scene_value, "Library/Scenes/scene.ykscene");
+    json_value_free(scene_value);
+}
 
 void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
 {
@@ -8,7 +28,10 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     
     // values
     SetString(go_object, "UUID", go->UUID.c_str());
-    SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
+    if (go->parent != NULL) // excludes root
+    {
+        SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
+    }
     SetString(go_object, "Name", go->name.c_str());
     SetFloat3(go_object, "Position", go->transform->GetLocalTransform().position);
     SetFloat3(go_object, "Rotation", go->transform->GetLocalTransform().rotation);
@@ -19,10 +42,9 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     SetString(go_object, "Tag", go->tag.c_str());
     SetBool(go_object, "IsCamera", go->is_camera);
     SetInt(go_object, "GameObjectID", go->id);
-    CheckComponents(go_object, go->GetComponentList());
+    if (go->GetComponentList().size() > 1) CheckComponents(go_object, go->GetComponentList());
     
-    json_serialize_to_file_pretty(go_value, "Library/Scenes/scene.ykscene");
-    json_value_free(go_value);
+    json_array_append_value(json_array, go_value);
 }
 
 void Serialization::SetInt(JSON_Object* json_object, std::string variable, int value)
