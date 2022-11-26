@@ -114,9 +114,6 @@ public:
 
 	GameObject* parent = nullptr;
 
-	bool active = true;
-	bool destroyed = false;
-
 	uint id = 0; // id = 0 is an invalid id, id = 1 is the world(root)
 	std::string UUID = "-1";
 

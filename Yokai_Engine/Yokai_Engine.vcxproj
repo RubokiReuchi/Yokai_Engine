@@ -216,6 +216,7 @@
     <ClInclude Include="Source Code\Re_Shader.h" />
     <ClInclude Include="Source Code\Re_Texture.h" />
     <ClInclude Include="Source Code\SceneCamera.h" />
+    <ClInclude Include="Source Code\Serialization.h" />
     <ClInclude Include="Source Code\TextureImporter.h" />
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
@@ -306,6 +307,7 @@
     <ClCompile Include="Source Code\Re_Shader.cpp" />
     <ClCompile Include="Source Code\Re_Texture.cpp" />
     <ClCompile Include="Source Code\SceneCamera.cpp" />
+    <ClCompile Include="Source Code\Serialization.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

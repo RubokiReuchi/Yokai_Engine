@@ -44,6 +44,11 @@ public:
 
 	void UpdateBB();
 
+	Transform GetLocalTransform()
+	{
+		return localTransform;
+	}
+
 private:
 	Transform localTransform;
 

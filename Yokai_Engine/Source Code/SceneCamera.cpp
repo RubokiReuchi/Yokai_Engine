@@ -184,7 +184,7 @@ void SceneCamera::CalculateMousePicking()
 				Triangle face(vertex1_pos, vertex2_pos, vertex3_pos);
 
 				RayCastHit hit;
-				hit.hit = picking_ray.Intersects(face, &hit.distance, nullptr);
+				hit.hit = ray.Intersects(face, &hit.distance, nullptr);
 				if (hit.hit && hit.distance < min_distance)
 				{
 					min_distance = hit.distance;

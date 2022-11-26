@@ -423,6 +423,9 @@
     <ClInclude Include="Source Code\External Libraries\parson\parson.h">
       <Filter>Sources\Tools\Json</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Serialization.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -685,6 +688,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\External Libraries\parson\parson.c">
       <Filter>Sources\Tools\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Serialization.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "Serialization.h"
 
 #include "EW_Hierarchy.h"
 #include "EW_Game.h"
@@ -163,7 +164,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Save"))
 		{
-
+			Serialization::SerializeGameObject(nullptr, selected_go);
 		}
 		ImGui::EndMenu();
 	}
