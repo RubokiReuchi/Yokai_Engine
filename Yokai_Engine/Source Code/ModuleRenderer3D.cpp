@@ -146,8 +146,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 				DrawLines(lines_colors[i], i);
 			}
 
-			//drawing_lines.clear();
-			//lines_colors.clear();
+			drawing_lines.clear();
+			lines_colors.clear();
 		}
 	}
 	if (app->camera->activeGameCamera->active)
@@ -220,7 +220,7 @@ void ModuleRenderer3D::DrawLines(float4 color, size_t iteration)
 	glDrawArrays(GL_LINES, 0, drawing_lines[iteration].size());
 	glBindVertexArray(0);
 
-	//drawing_lines[iteration].clear();
+	drawing_lines[iteration].clear();
 }
 
 void ModuleRenderer3D::AddLines(std::vector<float3> lines, float4 color)
