@@ -7,6 +7,8 @@ void Serialization::YK_SaveScene()
     JSON_Value* scene_value = json_value_init_object();
     JSON_Object* scene_object = json_value_get_object(scene_value);
 
+    SerializeSceneCamera(scene_object);
+
     JSON_Value* gameobjects_value = json_value_init_array();
     JSON_Array* gameobjects_array = json_value_get_array(gameobjects_value);
 
@@ -19,6 +21,19 @@ void Serialization::YK_SaveScene()
 
     json_serialize_to_file_pretty(scene_value, "Library/Scenes/scene.ykscene");
     json_value_free(scene_value);
+}
+
+void Serialization::SerializeSceneCamera(JSON_Object* json_object)
+{
+    JSON_Value* camera_value = json_value_init_object();
+    JSON_Object* camera_object = json_value_get_object(camera_value);
+
+    // values
+    SetFloat3(camera_object, "Position", app->camera->sceneCamera.Position);
+    SetFloat3(camera_object, "Reference", app->camera->sceneCamera.Reference);
+    SetFloat(camera_object, "FOV", app->camera->sceneCamera.GetFOV());
+
+    json_object_set_value(json_object, "SceneCamera", camera_value);
 }
 
 void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
@@ -57,6 +72,11 @@ void Serialization::SetString(JSON_Object* json_object, std::string variable, st
     json_object_set_string(json_object, variable.c_str(), value.c_str());
 }
 
+void Serialization::SetFloat(JSON_Object* json_object, std::string variable, float value)
+{
+    json_object_set_number(json_object, variable.c_str(), value);
+}
+
 void Serialization::SetFloat3(JSON_Object* json_object, std::string variable, float3 value)
 {
     JSON_Value* j_value = json_value_init_array();
@@ -91,6 +111,11 @@ int Serialization::GetInt(JSON_Object* json_object, std::string variable)
 std::string Serialization::GetString(JSON_Object* json_object, std::string variable)
 {
     return json_object_get_string(json_object, variable.c_str());
+}
+
+float Serialization::GetFloat(JSON_Object* json_object, std::string variable)
+{
+    return (float)json_object_get_number(json_object, variable.c_str());
 }
 
 float3 Serialization::GetFloat3(JSON_Object* json_object, std::string variable)

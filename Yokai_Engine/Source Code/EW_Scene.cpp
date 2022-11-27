@@ -131,6 +131,11 @@ void EW_Scene::Update()
 				if (guizmo_mode == ImGuizmo::MODE::WORLD) guizmo_mode = ImGuizmo::MODE::LOCAL;
 				else guizmo_mode = ImGuizmo::MODE::WORLD;
 			}
+
+			if (go->is_camera && guizmo_operation == ImGuizmo::OPERATION::SCALE)
+			{
+				guizmo_hide = true;
+			}
 		}
 
 		if (!guizmo_hide)

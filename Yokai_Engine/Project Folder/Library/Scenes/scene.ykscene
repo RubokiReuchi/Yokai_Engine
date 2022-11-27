@@ -1,4 +1,31 @@
 {
+    "SceneCamera": {
+        "X": [
+            1,
+            0,
+            0
+        ],
+        "Y": [
+            0,
+            1,
+            0
+        ],
+        "Z": [
+            0,
+            0,
+            1
+        ],
+        "Position": [
+            0.45499861240386963,
+            1.4929056167602539,
+            5.1134090423583984
+        ],
+        "Reference": [
+            0.45499861240386963,
+            1.4929056167602539,
+            0.11340866237878799
+        ]
+    },
     "GameObjects": [
         {
             "UUID": "D9VKDK8QVT2PKAWW",
@@ -26,7 +53,7 @@
             "GameObjectID": 1
         },
         {
-            "UUID": "ID4ZB9VOIXWKB64I",
+            "UUID": "FFYHIJFXEYB1MK5M",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -71,7 +98,7 @@
             ]
         },
         {
-            "UUID": "L9BAR7S1AAOTMOXV",
+            "UUID": "IJ5RYQCA6B4AXC7Z",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "BakerHouse",
             "Position": [
@@ -97,8 +124,8 @@
             "GameObjectID": 3
         },
         {
-            "UUID": "OCPSHEHESTG46GZ1",
-            "ParentUUID": "L9BAR7S1AAOTMOXV",
+            "UUID": "LECAOXANONVJHU15",
+            "ParentUUID": "IJ5RYQCA6B4AXC7Z",
             "Name": "Chimney",
             "Position": [
                 0,
@@ -136,8 +163,8 @@
             ]
         },
         {
-            "UUID": "RGV46LFRK69DHYTE",
-            "ParentUUID": "L9BAR7S1AAOTMOXV",
+            "UUID": "PHQLE571G8NSRLVI",
+            "ParentUUID": "IJ5RYQCA6B4AXC7Z",
             "Name": "Baker_house",
             "Position": [
                 0,
