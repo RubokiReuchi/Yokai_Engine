@@ -11,7 +11,7 @@ Camera::Camera()
 	Y = float3(0.0f, 1.0f, 0.0f);
 	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = float3(0.0f, 0.0f, 5.0f);
+	Position = float3(0.0f, 0.0f, 0.0f);
 	Reference = float3(0.0f, 0.0f, 0.0f);
 
 	cameraFrustum.type = math::FrustumType::PerspectiveFrustum;

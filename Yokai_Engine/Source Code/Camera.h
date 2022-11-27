@@ -37,7 +37,7 @@ public:
 protected:
 	void CalculateViewMatrix();
 
-private:
+protected:
 	float4x4 ViewMatrix, ViewMatrixInverse, ProjectionMatrix;
 	bool changeFOVWithBufferSize;
 	float aspectRatio = 0.0f;

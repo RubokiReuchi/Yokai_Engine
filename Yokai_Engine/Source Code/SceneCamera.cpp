@@ -7,6 +7,9 @@
 
 SceneCamera::SceneCamera()
 {
+	// init position in scene
+	float3x4 start_matrix = float3x4(0.515f, -0.214f, 0.831f, 12.246f, -1.743f, 0.968f, 0.249f, 5.231f, -0.858f, -0.128f, 0.498f, 6.535f);
+	cameraFrustum.SetWorldMatrix(start_matrix);
 }
 
 SceneCamera::~SceneCamera()

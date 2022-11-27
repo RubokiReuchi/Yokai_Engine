@@ -42,6 +42,8 @@ public:
 		fps = 1.0f / (float)mFPS;
 	}
 
+	bool restart = false;
+
 	void SetSceneName(std::string scene_name)
 	{
 		scene_loaded_name = scene_name;
@@ -50,7 +52,6 @@ public:
 	{
 		return scene_loaded_name;
 	}
-
 
 	Application();
 	~Application();
