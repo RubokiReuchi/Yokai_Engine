@@ -1,24 +1,23 @@
 {
     "SceneCamera": {
         "CameraMatrix": [
-            0.51399528980255127,
-            -0.21400000154972076,
-            0.83099997043609619,
-            12.246000289916992,
-            0.00020402789232321084,
-            0.96799999475479126,
-            0.24899999797344208,
-            5.2309999465942383,
-            -0.85779291391372681,
-            -0.12800000607967377,
-            0.49799999594688416,
-            6.5349998474121094
+            -0.54205214977264404,
+            -0.13387751579284668,
+            0.829612135887146,
+            10.873446464538574,
+            0.00034804642200469971,
+            0.98719233274459839,
+            0.15953420102596283,
+            5.4133963584899902,
+            -0.84034478664398193,
+            0.086764603853225708,
+            -0.53506314754486084,
+            -6.9936947822570801
         ]
     },
     "GameObjects": [
         {
             "UUID": "D9VKDK8QVT2PKAWW",
-            "ParentUUID": "Root",
             "Name": "Root",
             "Position": [
                 0,
@@ -39,11 +38,10 @@
             "Visible": true,
             "VisibleOnEditor": true,
             "Tag": "None",
-            "IsCamera": false,
-            "GameObjectID": 1
+            "IsCamera": false
         },
         {
-            "UUID": "8K8FKIX8UJNGNIEU",
+            "UUID": "XSPRTVJQ8WMHPXJX",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -66,7 +64,6 @@
             "VisibleOnEditor": true,
             "Tag": "Camera",
             "IsCamera": true,
-            "GameObjectID": 2,
             "Components": [
                 {
                     "Type": 4,
@@ -92,7 +89,7 @@
             ]
         },
         {
-            "UUID": "BOFY9PVLMVFPY1G1",
+            "UUID": "1N42I3G4Y9EQ1PD3",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "BakerHouse",
             "Position": [
@@ -114,12 +111,11 @@
             "Visible": true,
             "VisibleOnEditor": true,
             "Tag": "Default",
-            "IsCamera": false,
-            "GameObjectID": 3
+            "IsCamera": false
         },
         {
-            "UUID": "ERT9YWSX687YASBE",
-            "ParentUUID": "BOFY9PVLMVFPY1G1",
+            "UUID": "5RAK8AEHIL6ZB8GG",
+            "ParentUUID": "1N42I3G4Y9EQ1PD3",
             "Name": "Chimney",
             "Position": [
                 0,
@@ -141,7 +137,6 @@
             "VisibleOnEditor": true,
             "Tag": "Default",
             "IsCamera": false,
-            "GameObjectID": 4,
             "Components": [
                 {
                     "Type": 2,
@@ -158,8 +153,8 @@
             ]
         },
         {
-            "UUID": "HMZJF3QJWKY8SB5J",
-            "ParentUUID": "BOFY9PVLMVFPY1G1",
+            "UUID": "8UOUWGBT9XX9UYAL",
+            "ParentUUID": "1N42I3G4Y9EQ1PD3",
             "Name": "Baker_house",
             "Position": [
                 0,
@@ -181,7 +176,6 @@
             "VisibleOnEditor": true,
             "Tag": "Default",
             "IsCamera": false,
-            "GameObjectID": 5,
             "Components": [
                 {
                     "Type": 2,
@@ -198,37 +192,36 @@
             ]
         },
         {
-            "UUID": "LQEU5ANWG5QH42YW",
+            "UUID": "BQV6EN97S9PI6I4Y",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Cube",
             "Position": [
                 0,
-                2.7045717239379883,
-                5.4750289916992188
+                3.5403909683227539,
+                5.5453147888183594
             ],
             "Rotation": [
-                -90.000007629394531,
+                -0,
                 0,
-                0
+                -0
             ],
             "Scale": [
                 1,
-                0.99999785423278809,
-                0.99999785423278809
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
             "VisibleOnEditor": true,
             "Tag": "Default",
             "IsCamera": false,
-            "GameObjectID": 6,
             "Components": [
                 {
                     "Type": 2,
                     "Enabled": true,
                     "ShowAABB": false,
                     "ShowOBB": false,
-                    "MeshPath": ""
+                    "MeshPath": "Library\/Meshes\/cube.ykmesh"
                 },
                 {
                     "Type": 3,

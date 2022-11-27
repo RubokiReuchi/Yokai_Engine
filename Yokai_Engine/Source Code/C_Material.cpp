@@ -60,7 +60,6 @@ void C_Material::OnEditor()
 		{
 			ImGui::Text("NULL");
 			selected_texture = "Default";
-
 		}
 		
 		if (ImGui::BeginCombo("Select Texture", selected_texture.c_str(), ImGuiComboFlags_HeightSmall))
@@ -105,6 +104,12 @@ void C_Material::OnEditor()
 	{
 		ComponentOptions(true);
 	}
+}
+
+void C_Material::SetTexture(std::string texture)
+{
+	TextureImporter::LoadTexture(texture);
+	std::string selected_texture = texture;
 }
 
 Re_Mesh& C_Material::GetMesh()

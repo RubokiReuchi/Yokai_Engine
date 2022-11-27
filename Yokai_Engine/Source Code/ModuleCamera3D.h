@@ -10,6 +10,8 @@
 
 #include <map>
 
+class GameObject;
+
 class ModuleCamera3D : public Module
 {
 public:
@@ -21,6 +23,8 @@ public:
 	bool CleanUp();
 
 	void RequestFrameBufferRegen(Camera* camera, int width, int height);
+
+	void InitNewGameCamera(GameObject* go);
 
 public:
 	std::map<uint, Camera> game_cameras;

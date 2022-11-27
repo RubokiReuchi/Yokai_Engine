@@ -65,7 +65,7 @@ GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
 	aux_mesh.YK_LoadMesh(path.c_str());
 
 	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
-	dynamic_cast<C_Material*>(returnGameObject->AddComponent(Component::TYPE::MATERIAL));
+	returnGameObject->AddComponent(Component::TYPE::MATERIAL);
 
 	returnGameObject->GenerateAABB();
 	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });

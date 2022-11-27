@@ -75,3 +75,13 @@ void ModuleCamera3D::RequestFrameBufferRegen(Camera* camera, int width, int heig
 	newBufferWidth = width;
 	newBufferHeight = height;
 }
+
+void ModuleCamera3D::InitNewGameCamera(GameObject* go)
+{
+	C_Camera* camera = dynamic_cast<C_Camera*>(go->AddComponent(Component::TYPE::CAMERA));
+	currentDrawingCamera = activeGameCamera = camera->GetCamera();
+
+	camera->GetCamera()->frameBuffer.SetBufferInfo();
+	camera->GetCamera()->frameBuffer.SetDimensions(app->window->width, app->window->height);
+	camera->GetCamera()->changeFOVWithBufferSize = false;
+}

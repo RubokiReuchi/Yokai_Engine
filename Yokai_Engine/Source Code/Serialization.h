@@ -9,7 +9,7 @@ class GameObject;
 struct SerializedGO
 {
 	std::string UUID;
-	std::string parentUUID;
+	std::string parentUUID = "-1";
 	std::string name;
 	float3 position;
 	float3 rotation;
@@ -19,7 +19,6 @@ struct SerializedGO
 	bool visible_on_editor;
 	std::string tag;
 	bool is_camera;
-	uint id;
 
 	std::vector<int> components_type;
 	std::vector<bool> components_enabled;

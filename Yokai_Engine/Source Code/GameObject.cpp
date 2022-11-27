@@ -14,6 +14,49 @@ GameObject::GameObject(GameObject* parent, std::string name, std::string tag, bo
 	}
 }
 
+GameObject::GameObject(SerializedGO go)
+{
+	name = go.name;
+	tag = go.tag;
+	is_camera = go.is_camera;
+
+	id = app->engine_order->AddGameObject(this);
+	transform = dynamic_cast<C_Transform*>(AddComponent(Component::TYPE::TRANSFORM));
+	UUID = go.UUID;
+	if (go.parentUUID != "-1") app->engine_order->GetGameObjectByUUID(go.parentUUID)->AddChild(this);
+
+	enabled = go.enabled;
+	visible = go.visible;
+	visible_on_editor = go.visible_on_editor;
+
+	// components
+	SaveMesh aux_mesh;
+
+	for (size_t i = 0; i < go.components_type.size(); i++)
+	{
+		switch (go.components_type[i])
+		{
+		case 2: // Mesh Renderer
+			aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
+			dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);
+			break;
+		case 3: // Material
+			dynamic_cast<C_Material*>(AddComponent(Component::TYPE::MATERIAL))->SetTexture(go.selected_texture);
+			break;
+		case 4: // Camera
+			app->camera->InitNewGameCamera(this);
+			C_Camera* cam = dynamic_cast<C_Camera*>(GetComponent(Component::TYPE::CAMERA));
+			cam->GetCamera()->cameraFrustum.SetWorldMatrix(go.camera_matrix);
+			cam->GetCamera()->SetFOV(math::RadToDeg(go.fov));
+			cam->GetCamera()->SetRange(go.camera_range);
+			break;
+		}
+	}
+
+	if (!is_camera) GenerateAABB();
+	dynamic_cast<C_Transform*>(GetComponent(Component::TYPE::TRANSFORM))->SetTransform(go.position, go.scale, go.rotation);
+}
+
 GameObject::~GameObject()
 {
 	for (size_t i = 0; i < components.size(); i++)
@@ -40,7 +83,7 @@ void GameObject::Update()
 void GameObject::DeleteGameObject()
 {
 	if (app->engine_order->editor->GetSelectedGameObject()) app->engine_order->editor->SetSelectedGameObject(NULL);
-	parent->RemoveChild(this);
+	if (parent) parent->RemoveChild(this);
 	for (size_t i = 1; i < app->engine_order->game_objects.size() + 1; i++)
 	{
 		if (app->engine_order->game_objects[i]->id > this->id)

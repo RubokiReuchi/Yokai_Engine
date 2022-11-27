@@ -45,7 +45,7 @@ void Serialization::YK_LoadScene(std::string path)
 
     JSON_Object* scene_object = json_value_get_object(scene_value);
     
-    DeSerializeSceneCamera(scene_object);
+    //DeSerializeSceneCamera(scene_object);
 
     JSON_Array* gameobjects_array = json_object_get_array(scene_object, "GameObjects");
 
@@ -53,6 +53,8 @@ void Serialization::YK_LoadScene(std::string path)
     {
         DeSerializeGameObject(gameobjects_array, i);
     }
+
+    app->engine_order->LoadSerializedGO();
 }
 
 void Serialization::SerializeSceneCamera(JSON_Object* json_object)
@@ -73,14 +75,7 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     
     // values
     SetString(go_object, "UUID", go->UUID.c_str());
-    if (go->parent != NULL)
-    {
-        SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
-    }
-    else // if Root
-    {
-        SetString(go_object, "ParentUUID", "Root");
-    }
+    if (go->parent != NULL) SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
     SetString(go_object, "Name", go->name.c_str());
     SetFloat3(go_object, "Position", go->transform->GetLocalTransform().position);
     SetFloat3(go_object, "Rotation", go->transform->GetLocalTransform().rotation);
@@ -90,7 +85,6 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     SetBool(go_object, "VisibleOnEditor", go->visible_on_editor);
     SetString(go_object, "Tag", go->tag.c_str());
     SetBool(go_object, "IsCamera", go->is_camera);
-    SetInt(go_object, "GameObjectID", go->id);
     if (go->GetComponentList().size() > 1) CheckComponents(go_object, go->GetComponentList());
     
     json_array_append_value(json_array, go_value);
@@ -108,7 +102,7 @@ void Serialization::DeSerializeGameObject(JSON_Array* json_array, size_t it)
 
     SerializedGO go;
     go.UUID = GetString(go_object, "UUID");
-    go.parentUUID = GetString(go_object, "ParentUUID");
+    if (it > 0) go.parentUUID = GetString(go_object, "ParentUUID");
     go.name = GetString(go_object, "Name");
     go.position = GetFloat3(go_object, "Position");
     go.rotation = GetFloat3(go_object, "Rotation");
@@ -118,7 +112,6 @@ void Serialization::DeSerializeGameObject(JSON_Array* json_array, size_t it)
     go.visible_on_editor = GetBool(go_object, "VisibleOnEditor");
     go.tag = GetString(go_object, "Tag");
     go.is_camera = GetBool(go_object, "IsCamera");
-    go.id = GetInt(go_object, "GameObjectID");
 
     JSON_Array* components_array = json_object_get_array(go_object, "Components");
 

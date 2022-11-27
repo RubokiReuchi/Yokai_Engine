@@ -24,7 +24,6 @@ bool ModuleEO::Init()
 bool ModuleEO::Start()
 {
     engine_order[(uint)EO_NUM::EDITOR] = editor = new EO_Editor();
-    //editor->SetSelectedGameObject(game_objects[2]);
     engine_order[(uint)EO_NUM::GAME] = new EO_Game();
 
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
@@ -122,6 +121,33 @@ uint ModuleEO::AddGameObject(GameObject* go)
 {
     game_objects[id_counter] = go;
     return id_counter++;
+}
+
+void ModuleEO::LoadSerializedGO()
+{
+    rootGameObject->DeleteGameObject();
+    app->camera->game_cameras.clear();
+
+    rootGameObject = new GameObject(serialized_go[0]);
+    for (size_t i = 1; i < serialized_go.size(); i++)
+    {
+        GameObject* new_go = new GameObject(serialized_go[i]);
+    }
+
+    serialized_go.clear();
+}
+
+GameObject* ModuleEO::GetGameObjectByUUID(std::string uuid)
+{
+    for (auto& go : game_objects)
+    {
+        if (go.second->UUID == uuid)
+        {
+            return go.second;
+        }
+    }
+
+    return NULL;
 }
 
 std::string ModuleEO::GenerateUUID()

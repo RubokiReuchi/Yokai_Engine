@@ -12,6 +12,8 @@ public:
 
 	void OnEditor();
 
+	void SetTexture(std::string texture);
+
 	Re_Mesh& GetMesh();
 
 private:

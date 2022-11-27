@@ -37,6 +37,8 @@ public:
 	bool CleanUp();
 
 	uint AddGameObject(GameObject* go);
+	void LoadSerializedGO();
+	GameObject* GetGameObjectByUUID(std::string uuid);
 
 	std::string GenerateUUID();
 	uint seed; // used to generate random numbers

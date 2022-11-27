@@ -149,7 +149,10 @@ void FileExplorer::CkeckDirectory(std::string scene_name)
 	}
 	else if (explorer.type == Explorer::TYPE::LOAD)
 	{
-		//Load scene
-		CloseExplorer();
+		if (scene_name != "")
+		{
+			Serialization::YK_LoadScene(scene_name);
+			CloseExplorer();
+		}
 	}
 }

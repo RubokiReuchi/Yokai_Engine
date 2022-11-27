@@ -11,11 +11,13 @@
 #include <string>
 
 class C_Transform;
+struct SerializedGO;
 
 class GameObject
 {
 public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
+	GameObject(SerializedGO go);
 	~GameObject();
 
 	void Update();
