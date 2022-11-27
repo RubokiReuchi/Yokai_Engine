@@ -9,7 +9,7 @@ class GameObject;
 class Serialization
 {
 public:
-	static void YK_SaveScene();
+	static void YK_SaveScene(std::string first_save = "ifyouputthatnameyougotme");
 	static void SaveSettings();
 	static void LoadSettings();
 

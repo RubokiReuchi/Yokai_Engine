@@ -191,6 +191,7 @@
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.h" />
     <ClInclude Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.h" />
     <ClInclude Include="Source Code\External Libraries\parson\parson.h" />
+    <ClInclude Include="Source Code\FileExplorer.h" />
     <ClInclude Include="Source Code\FileTree.hpp" />
     <ClInclude Include="Source Code\FrameBuffer.h" />
     <ClInclude Include="Source Code\GameObject.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Math\TransformOps.cpp" />
     <ClCompile Include="Source Code\External Libraries\MathGeoLib\include\Time\Clock.cpp" />
     <ClCompile Include="Source Code\External Libraries\parson\parson.c" />
+    <ClCompile Include="Source Code\FileExplorer.cpp" />
     <ClCompile Include="Source Code\FrameBuffer.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />

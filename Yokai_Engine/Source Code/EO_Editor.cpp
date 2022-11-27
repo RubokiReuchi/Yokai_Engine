@@ -113,6 +113,8 @@ void EO_Editor::PostUpdate()
 		app->renderer3D->exit = true;
 	}
 
+	file_explorer.DrawExplorer();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
@@ -168,7 +170,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Save Scene As"))
 		{
-			
+			file_explorer.OpenExplorer("Save As", Explorer::TYPE::SAVE, SCENES_PATH);
 		}
 		ImGui::EndMenu();
 	}

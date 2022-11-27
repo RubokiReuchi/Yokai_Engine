@@ -4,6 +4,7 @@
 #include "EditorWindow.h"
 #include "EW_Project.h"
 #include "EW_Console.h"
+#include "FileExplorer.h"
 
 class GameObject;
 class EW_Project;
@@ -62,4 +63,6 @@ private:
 	bool SetMenuBar();
 
 	void SetOutline(GameObject* selected_game_object, GameObject* game_object);
+
+	FileExplorer file_explorer;
 };

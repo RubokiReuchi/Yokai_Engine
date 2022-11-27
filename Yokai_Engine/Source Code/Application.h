@@ -31,6 +31,8 @@ private:
 	Timer ms_timer;
 	float dt;
 
+	std::string scene_loaded_name = "default";
+
 public:
 
 	float fps = 1.0f / 60.0f;
@@ -39,6 +41,16 @@ public:
 	{
 		fps = 1.0f / (float)mFPS;
 	}
+
+	void SetSceneName(std::string scene_name)
+	{
+		scene_loaded_name = scene_name;
+	}
+	std::string GetSceneName()
+	{
+		return scene_loaded_name;
+	}
+
 
 	Application();
 	~Application();

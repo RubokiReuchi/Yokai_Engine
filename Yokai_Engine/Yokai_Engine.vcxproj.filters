@@ -426,6 +426,9 @@
     <ClInclude Include="Source Code\Serialization.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\FileExplorer.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -690,6 +693,9 @@
       <Filter>Sources\Tools\Json</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Serialization.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\FileExplorer.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>

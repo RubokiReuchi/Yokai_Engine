@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleEngineOrder.h"
 
-void Serialization::YK_SaveScene()
+void Serialization::YK_SaveScene(std::string first_save)
 {
     JSON_Value* scene_value = json_value_init_object();
     JSON_Object* scene_object = json_value_get_object(scene_value);
@@ -19,7 +19,16 @@ void Serialization::YK_SaveScene()
 
     json_object_set_value(scene_object, "GameObjects", gameobjects_value);
 
-    json_serialize_to_file_pretty(scene_value, "Library/Scenes/scene.ykscene");
+    std::string save_path = "Library/Scenes/";
+    if (first_save == "ifyouputthatnameyougotme")
+    {
+        save_path += app->GetSceneName() + ".ykscene";
+    }
+    else
+    {
+        save_path += first_save + ".ykscene";
+    }
+    json_serialize_to_file_pretty(scene_value, save_path.c_str());
     json_value_free(scene_value);
 }
 

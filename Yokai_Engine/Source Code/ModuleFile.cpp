@@ -330,6 +330,18 @@ std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 	return ret;
 }
 
+std::vector<std::string> ModuleFile::FS_RemoveExtensions(std::vector<std::string> paths)
+{
+	std::vector<std::string> new_paths;
+	for (size_t i = 0; i < paths.size(); i++)
+	{
+		size_t pos = paths[i].find_last_of(".");
+		new_paths.push_back(paths[i].substr(0, pos));
+	}
+
+	return new_paths;
+}
+
 void ModuleFile::YK_CreateLibrary()
 {
 	if (!FS_IsDirectory(LIBRARY_PATH)) PHYSFS_mkdir(LIBRARY_PATH);

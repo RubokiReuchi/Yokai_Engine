@@ -62,6 +62,8 @@ public:
 
 	static std::vector<std::string> FS_GetAllFiles(std::string path);
 
+	static std::vector<std::string> FS_RemoveExtensions(std::vector<std::string> paths);
+
 	bool new_file = false;
 
 	// custom format
