@@ -9,6 +9,7 @@ void FileExplorer::InitExplorer(std::string name, Explorer::TYPE type, std::stri
 	explorer.name = name;
 	explorer.type = type;
 	explorer.path = path;
+	explorer.scene_name = "";
 }
 
 void FileExplorer::ClearExplorer()
@@ -16,6 +17,7 @@ void FileExplorer::ClearExplorer()
 	explorer.name = "name";
 	explorer.type = Explorer::TYPE::UNINICIALIZED;
 	explorer.path = "";
+	explorer.scene_name = "";
 }
 
 void FileExplorer::OpenExplorer(std::string name, Explorer::TYPE type, std::string path)
@@ -45,6 +47,7 @@ void FileExplorer::DrawExplorer()
 {
 	if (!explorer.opened) return;
 
+	ImGuiInputTextFlags_ textinput_flags = ImGuiInputTextFlags_None;
 	std::string explorer_confirm;
 	switch (explorer.type)
 	{
@@ -71,12 +74,42 @@ void FileExplorer::DrawExplorer()
 	DrawFiles(explorer.scene_name);
 	ImGui::Text("File Name:");
 	ImGui::SameLine();
-	ImGuiH::InputText("##Name", &explorer.scene_name);
+	if (explorer.type == Explorer::TYPE::LOAD) textinput_flags = ImGuiInputTextFlags_ReadOnly;
+	ImGuiH::InputText("##Name", &explorer.scene_name, textinput_flags);
+	
 	ImGui::SameLine();
 	if (ImGuiH::ButtonAlignOnLine(explorer_confirm.c_str(), 1.0f))
 	{
 		CkeckDirectory(explorer.scene_name);
 	}
+
+	// confirm popUp
+	if (comfirm_popUp)
+	{
+		ImGui::SetNextWindowSize(ImVec2(150.0f, 75.0f));
+		if (ImGui::BeginPopup("Confirm Save"))
+		{
+			ImGuiH::TextAlignOnLine("Overwrite file?");
+			if (ImGuiH::ButtonAlignOnLine("Confirm"))
+			{
+				Serialization::YK_SaveScene(explorer.scene_name);
+				ImGui::CloseCurrentPopup();
+				CloseExplorer();
+			}
+			if (ImGuiH::ButtonAlignOnLine("Cancel"))
+			{
+				comfirm_popUp = false;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+		if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(150.0f, 75.0f)))
+		{
+			comfirm_popUp = false;
+			ImGui::CloseCurrentPopup();
+		}
+	}
+	
 	ImGui::End();
 }
 
@@ -99,10 +132,24 @@ void FileExplorer::CkeckDirectory(std::string scene_name)
 {
 	if (explorer.type == Explorer::TYPE::SAVE)
 	{
-		if (std::find(directory->files.begin(), directory->files.end(), scene_name) == directory->files.end()) // file not found
+		if (scene_name != "")
 		{
-			Serialization::YK_SaveScene(scene_name);
-			CloseExplorer();
+			if (std::find(directory->files.begin(), directory->files.end(), scene_name + ".ykscene") == directory->files.end()) // file not found
+			{
+				Serialization::YK_SaveScene(scene_name);
+				CloseExplorer();
+			}
+			else
+			{
+				ImGui::OpenPopup("Confirm Save");
+				comfirm_popUp = true;
+				ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+			}
 		}
+	}
+	else if (explorer.type == Explorer::TYPE::LOAD)
+	{
+		//Load scene
+		CloseExplorer();
 	}
 }

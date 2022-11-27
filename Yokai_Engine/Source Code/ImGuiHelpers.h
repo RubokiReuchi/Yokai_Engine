@@ -21,4 +21,5 @@ namespace ImGuiH
 
 	bool CheckMouseInPopUp(ImVec2 ori, ImVec2 popup_size);
 	bool ButtonAlignOnLine(const char* label, float alignment = 0.5f); // 0 --> align left, 0.5 --> align center, 1 --> align right
+	void TextAlignOnLine(const char* label, float alignment = 0.5f); // 0 --> align left, 0.5 --> align center, 1 --> align right
 }

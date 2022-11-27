@@ -162,7 +162,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Load Scene"))
 		{
-
+			file_explorer.OpenExplorer("Load From", Explorer::TYPE::LOAD, SCENES_PATH);
 		}
 		if (ImGui::MenuItem("Save Scene"))
 		{

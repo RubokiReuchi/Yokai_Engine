@@ -48,4 +48,7 @@ private:
 
 	FileTree* directory = nullptr;
 
+	bool comfirm_popUp = false;
+	ImVec2 ori;
+
 };

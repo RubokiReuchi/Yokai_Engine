@@ -1,30 +1,16 @@
 {
     "SceneCamera": {
-        "X": [
-            1,
-            0,
-            0
-        ],
-        "Y": [
-            0,
-            1,
-            0
-        ],
-        "Z": [
-            0,
-            0,
-            1
-        ],
         "Position": [
-            0.45499861240386963,
-            1.4929056167602539,
-            5.1134090423583984
+            0,
+            0,
+            0
         ],
         "Reference": [
-            0.45499861240386963,
-            1.4929056167602539,
-            0.11340866237878799
-        ]
+            0,
+            0,
+            0
+        ],
+        "FOV": 1.0471975803375244
     },
     "GameObjects": [
         {
@@ -53,7 +39,7 @@
             "GameObjectID": 1
         },
         {
-            "UUID": "FFYHIJFXEYB1MK5M",
+            "UUID": "ANKY1EFKRQRCMPXY",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -67,9 +53,9 @@
                 0
             ],
             "Scale": [
-                0,
-                0,
-                0
+                1,
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -82,6 +68,8 @@
                     "Type": "4",
                     "Enabled": true,
                     "CameraID": 0,
+                    "FOV": 1.0471975803375244,
+                    "CameraRange": 1000,
                     "OriginalLookingDirection": [
                         0,
                         1,
@@ -98,7 +86,7 @@
             ]
         },
         {
-            "UUID": "IJ5RYQCA6B4AXC7Z",
+            "UUID": "ERQ9PLCXJBJLXGR4",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "BakerHouse",
             "Position": [
@@ -124,8 +112,8 @@
             "GameObjectID": 3
         },
         {
-            "UUID": "LECAOXANONVJHU15",
-            "ParentUUID": "IJ5RYQCA6B4AXC7Z",
+            "UUID": "HM6J7SAB2NBU9ZLH",
+            "ParentUUID": "ERQ9PLCXJBJLXGR4",
             "Name": "Chimney",
             "Position": [
                 0,
@@ -163,8 +151,8 @@
             ]
         },
         {
-            "UUID": "PHQLE571G8NSRLVI",
-            "ParentUUID": "IJ5RYQCA6B4AXC7Z",
+            "UUID": "KPC3WZ7OTZ34SQNM",
+            "ParentUUID": "ERQ9PLCXJBJLXGR4",
             "Name": "Baker_house",
             "Position": [
                 0,
