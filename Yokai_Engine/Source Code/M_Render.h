@@ -28,6 +28,8 @@ public:
 		return total_vertices;
 	}
 
+	std::string GetMeshPath();
+
 public:
 	bool initialized = false;
 private:

@@ -9,6 +9,7 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 std::map<std::string, MeshInfo> MeshImporter::loadedMeshes;
+std::map<uint, std::string> MeshImporter::loadedPaths;
 Assimp::Importer MeshImporter::importer;
 GameObject* MeshImporter::returnGameObject = nullptr;
 

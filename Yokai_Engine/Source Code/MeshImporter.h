@@ -45,6 +45,7 @@ private:
 	static void CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr); // create a copy
 
 	static std::map<std::string, MeshInfo> loadedMeshes;
+	static std::map<uint, std::string> loadedPaths;
 	static Assimp::Importer importer;
 	static GameObject* returnGameObject;
 };

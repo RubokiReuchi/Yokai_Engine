@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 #include "EO_Base.h"
+#include "Serialization.h"
 
 #include <map>
 #include <random>
@@ -52,4 +53,6 @@ public:
 
 	std::map<uint, GameObject*> game_objects;
 	std::vector<GameObject*> delete_queu;
+
+	std::vector<SerializedGO> serialized_go;
 };

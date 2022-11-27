@@ -32,15 +32,36 @@ void Serialization::YK_SaveScene(std::string first_save)
     json_value_free(scene_value);
 }
 
+void Serialization::YK_LoadScene(std::string path)
+{
+    std::string load_path = "Library/Scenes/" + path + ".ykscene";
+    JSON_Value* scene_value = json_parse_file(load_path.c_str());
+
+    if (scene_value == NULL)
+    {
+        Console::LogInConsole("Error loading  " + load_path + " scene.");
+        return;
+    }
+
+    JSON_Object* scene_object = json_value_get_object(scene_value);
+    
+    DeSerializeSceneCamera(scene_object);
+
+    JSON_Array* gameobjects_array = json_object_get_array(scene_object, "GameObjects");
+
+    for (size_t i = 0; i < json_array_get_count(gameobjects_array); i++)
+    {
+        DeSerializeGameObject(gameobjects_array, i);
+    }
+}
+
 void Serialization::SerializeSceneCamera(JSON_Object* json_object)
 {
     JSON_Value* camera_value = json_value_init_object();
     JSON_Object* camera_object = json_value_get_object(camera_value);
 
     // values
-    SetFloat3(camera_object, "Position", app->camera->sceneCamera.Position);
-    SetFloat3(camera_object, "Reference", app->camera->sceneCamera.Reference);
-    SetFloat(camera_object, "FOV", app->camera->sceneCamera.GetFOV());
+    SetFloat3x4(camera_object, "CameraMatrix", app->camera->sceneCamera.cameraFrustum.WorldMatrix());
 
     json_object_set_value(json_object, "SceneCamera", camera_value);
 }
@@ -56,6 +77,10 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     {
         SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
     }
+    else
+    {
+        SetString(go_object, "ParentUUID", "Root");
+    }
     SetString(go_object, "Name", go->name.c_str());
     SetFloat3(go_object, "Position", go->transform->GetLocalTransform().position);
     SetFloat3(go_object, "Rotation", go->transform->GetLocalTransform().rotation);
@@ -69,6 +94,64 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     if (go->GetComponentList().size() > 1) CheckComponents(go_object, go->GetComponentList());
     
     json_array_append_value(json_array, go_value);
+}
+
+void Serialization::DeSerializeSceneCamera(JSON_Object* json_object)
+{
+    float3x4 matrix = GetFloat3x4(json_object, "CameraMatrix");
+    app->camera->sceneCamera.cameraFrustum.SetWorldMatrix(matrix);
+}
+
+void Serialization::DeSerializeGameObject(JSON_Array* json_array, size_t it)
+{
+    JSON_Object* go_object = json_array_get_object(json_array, it);
+
+    SerializedGO go;
+    go.UUID = GetString(go_object, "UUID");
+    go.parentUUID = GetString(go_object, "ParentUUID");
+    go.name = GetString(go_object, "Name");
+    go.position = GetFloat3(go_object, "Position");
+    go.rotation = GetFloat3(go_object, "Rotation");
+    go.scale = GetFloat3(go_object, "Scale");
+    go.enabled = GetBool(go_object, "Enabled");
+    go.visible = GetBool(go_object, "Visible");
+    go.visible_on_editor = GetBool(go_object, "VisibleOnEditor");
+    go.tag = GetString(go_object, "Tag");
+    go.is_camera = GetBool(go_object, "IsCamera");
+    go.id = GetInt(go_object, "GameObjectID");
+
+    JSON_Array* components_array = json_object_get_array(go_object, "Components");
+
+    for (size_t i = 0; i < json_array_get_count(components_array); i++)
+    {
+        JSON_Object* component_object = json_array_get_object(components_array, i);
+
+        switch (GetInt(component_object, "Type"))
+        {
+        case 2:
+            go.components_type.push_back(2);
+            go.components_enabled.push_back(GetBool(component_object, "Enabled"));
+            go.show_aabb = GetBool(component_object, "ShowAABB");
+            go.show_obb = GetBool(component_object, "ShowOBB");
+            //go.mesh_path = GetString(component_object, "MeshPath");
+            break;
+        case 3:
+            go.components_type.push_back(3);
+            go.components_enabled.push_back(GetBool(component_object, "Enabled"));
+            go.selected_texture = GetString(component_object, "SelectedTexturePath");
+            break;
+        case 4:
+            go.components_type.push_back(4);
+            go.components_enabled.push_back(GetBool(component_object, "Enabled"));
+            go.camera_id = GetInt(component_object, "CameraID");
+            go.fov = GetFloat(component_object, "FOV");
+            go.camera_range = GetFloat(component_object, "CameraRange");
+            go.camera_matrix = GetFloat3x4(component_object, "CameraMatrix");
+            break;
+        }
+    }
+
+    app->engine_order->serialized_go.push_back(go);
 }
 
 void Serialization::SetInt(JSON_Object* json_object, std::string variable, int value)
@@ -112,6 +195,25 @@ void Serialization::SetBool(JSON_Object* json_object, std::string variable, bool
     json_object_set_boolean(json_object, variable.c_str(), value);
 }
 
+void Serialization::SetFloat3x4(JSON_Object* json_object, std::string variable, float3x4 value)
+{
+    JSON_Value* j_value = json_value_init_array();
+    JSON_Array* j_array = json_value_get_array(j_value);
+    json_array_append_number(j_array, value.v[0][0]);
+    json_array_append_number(j_array, value.v[0][1]);
+    json_array_append_number(j_array, value.v[0][2]);
+    json_array_append_number(j_array, value.v[0][3]);
+    json_array_append_number(j_array, value.v[1][0]);
+    json_array_append_number(j_array, value.v[1][1]);
+    json_array_append_number(j_array, value.v[1][2]);
+    json_array_append_number(j_array, value.v[1][3]);
+    json_array_append_number(j_array, value.v[2][0]);
+    json_array_append_number(j_array, value.v[2][1]);
+    json_array_append_number(j_array, value.v[2][2]);
+    json_array_append_number(j_array, value.v[2][3]);
+    json_object_set_value(json_object, variable.c_str(), j_value);
+}
+
 int Serialization::GetInt(JSON_Object* json_object, std::string variable)
 {
     return (int)json_object_get_number(json_object, variable.c_str());
@@ -151,6 +253,24 @@ bool Serialization::GetBool(JSON_Object* json_object, std::string variable)
     return json_object_get_boolean(json_object, variable.c_str());
 }
 
+float3x4 Serialization::GetFloat3x4(JSON_Object* json_object, std::string variable)
+{
+    JSON_Array* j_array = json_object_get_array(json_object, variable.c_str());
+    float aux0 = (float)json_array_get_number(j_array, 0);
+    float aux1 = (float)json_array_get_number(j_array, 1);
+    float aux2 = (float)json_array_get_number(j_array, 2);
+    float aux3 = (float)json_array_get_number(j_array, 3);
+    float aux4 = (float)json_array_get_number(j_array, 4);
+    float aux5 = (float)json_array_get_number(j_array, 5);
+    float aux6 = (float)json_array_get_number(j_array, 6);
+    float aux7 = (float)json_array_get_number(j_array, 7);
+    float aux8 = (float)json_array_get_number(j_array, 8);
+    float aux9 = (float)json_array_get_number(j_array, 9);
+    float aux10 = (float)json_array_get_number(j_array, 10);
+    float aux11 = (float)json_array_get_number(j_array, 11);
+    return float3x4(aux0, aux1, aux2, aux3, aux4, aux5, aux6, aux7, aux8, aux9, aux10, aux11);
+}
+
 void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Component*> components)
 {
     JSON_Value* go_value = json_value_init_array();
@@ -164,24 +284,24 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
         switch (components[i]->GetType())
         {
         case Component::TYPE::MESH_RENDERER:
-            SetString(component_object, "Type", std::to_string((int)components[i]->GetType()));
+            SetInt(component_object, "Type", (int)components[i]->GetType());
             SetBool(component_object, "Enabled", components[i]->IsEnabled());
             SetBool(component_object, "ShowAABB", dynamic_cast<C_MeshRenderer*>(components[i])->show_aabb);
             SetBool(component_object, "ShowOBB", dynamic_cast<C_MeshRenderer*>(components[i])->show_obb);
+            //SetString(component_object, "MeshPath", );
             break;
         case Component::TYPE::MATERIAL:
-            SetString(component_object, "Type", std::to_string((int)components[i]->GetType()));
+            SetInt(component_object, "Type", (int)components[i]->GetType());
             SetBool(component_object, "Enabled", components[i]->IsEnabled());
             SetString(component_object, "SelectedTexturePath", dynamic_cast<C_Material*>(components[i])->selected_texture);
             break;
         case Component::TYPE::CAMERA:
-            SetString(component_object, "Type", std::to_string((int)components[i]->GetType()));
+            SetInt(component_object, "Type", (int)components[i]->GetType());
             SetBool(component_object, "Enabled", components[i]->IsEnabled());
             SetInt(component_object, "CameraID", dynamic_cast<C_Camera*>(components[i])->cameraID);
             SetFloat(component_object, "FOV", dynamic_cast<C_Camera*>(components[i])->GetCamera()->GetFOV());
             SetFloat(component_object, "CameraRange", dynamic_cast<C_Camera*>(components[i])->GetCamera()->GetRange());
-            SetQuat(component_object, "OriginalLookingDirection", dynamic_cast<C_Camera*>(components[i])->original_lookingDir);
-            SetQuat(component_object, "LookingDirection", dynamic_cast<C_Camera*>(components[i])->lookingDir);
+            SetFloat3x4(component_object, "CameraMatrix", dynamic_cast<C_Camera*>(components[i])->GetCamera()->cameraFrustum.WorldMatrix());
             break;
         default:
             SetString(component_object, "ERROR", "Incorrect component type.");
