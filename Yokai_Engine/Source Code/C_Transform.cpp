@@ -208,10 +208,6 @@ void C_Transform::UpdatePosition()
 	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnPositionUpdate(globalPosition);
-		if (this->GetGameObject()->GetComponentList().at(i)->GetType() == Component::TYPE::CAMERA)
-		{
-			this->CalculateGlobalMatrix();
-		}
 	}
 
 	UpdateBB();
@@ -231,10 +227,6 @@ void C_Transform::UpdateRotation()
 	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
-		if (this->GetGameObject()->GetComponentList().at(i)->GetType() == Component::TYPE::CAMERA)
-		{
-			this->CalculateGlobalMatrix();
-		}
 	}
 
 	UpdateBB();
@@ -277,10 +269,6 @@ void C_Transform::UpdateTransform()
 	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
 	{
 		this->GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
-		if (this->GetGameObject()->GetComponentList().at(i)->GetType() == Component::TYPE::CAMERA)
-		{
-			this->CalculateGlobalMatrix();
-		}
 	}
 
 	UpdateBB();

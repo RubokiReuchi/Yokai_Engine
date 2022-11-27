@@ -10,10 +10,21 @@ C_Camera::C_Camera(GameObject* gameObject) : Component(gameObject, Component::TY
 	lookingDir = Quat::identity;
 	app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix().Decompose(float3(0, 0, 0), lookingDir, float3(0, 0, 0));
 	original_lookingDir = lookingDir;
+	GetGameObject()->GenerateFixedAABB();
 }
 
 C_Camera::~C_Camera()
 {
+}
+
+void C_Camera::Update()
+{
+	float3 points[8];
+	GetGameObject()->global_aabb.GetCornerPoints(points);
+
+	std::vector<float3> lines = PointsToLines_AABB(points);
+
+	app->renderer3D->AddLines(lines, float4(0.905f, 0.851f, 0.0f, 1.0f));
 }
 
 void C_Camera::OnEditor()
@@ -92,4 +103,41 @@ void C_Camera::OnTransformUpdate(float3 pos, float3 scale, float3 rotation)
 Camera* C_Camera::GetCamera()
 {
 	return &app->camera->game_cameras[cameraID];
+}
+
+std::vector<float3> C_Camera::PointsToLines_AABB(float3 points[8])
+{
+	std::vector<float3> lines;
+
+	// face 1
+	lines.push_back(points[0]); // line 1
+	lines.push_back(points[1]);
+	lines.push_back(points[0]); // line 2
+	lines.push_back(points[4]);
+	lines.push_back(points[1]); // line 3
+	lines.push_back(points[5]);
+	lines.push_back(points[4]); // line 4
+	lines.push_back(points[5]);
+
+	// face 2
+	lines.push_back(points[2]); // line 5
+	lines.push_back(points[3]);
+	lines.push_back(points[2]); // line 6
+	lines.push_back(points[6]);
+	lines.push_back(points[6]); // line 7
+	lines.push_back(points[7]);
+	lines.push_back(points[3]); // line 8
+	lines.push_back(points[7]);
+
+	// joints
+	lines.push_back(points[0]); // line 9
+	lines.push_back(points[2]);
+	lines.push_back(points[1]); // line 10
+	lines.push_back(points[3]);
+	lines.push_back(points[4]); // line 11
+	lines.push_back(points[6]);
+	lines.push_back(points[5]); // line 12
+	lines.push_back(points[7]);
+
+	return lines;
 }

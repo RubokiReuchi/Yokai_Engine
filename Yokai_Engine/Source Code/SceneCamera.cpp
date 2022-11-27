@@ -152,6 +152,8 @@ void SceneCamera::CalculateMousePicking()
 	LineSegment picking_ray = cameraFrustum.UnProjectLineSegment(mouse_x * 2, -mouse_y * 2);
 
 	std::vector<GameObject*> go_hitted;
+	GameObject* hitted_cam_go = NULL;
+	float min_cam_dist = 9999;
 	for (auto& go : app->engine_order->game_objects)
 	{
 		if (go.second->GetComponent(Component::TYPE::MESH_RENDERER))
@@ -163,6 +165,23 @@ void SceneCamera::CalculateMousePicking()
 				go_hitted.push_back(go.second);
 			}
 		}
+		else if (go.second->is_camera)
+		{
+			RayCastHit hit;
+			float aux;
+			hit.hit = picking_ray.Intersects(go.second->global_aabb, hit.distance, aux);
+			if (hit.hit && hit.distance < min_cam_dist)
+			{
+				min_cam_dist = hit.distance;
+				hitted_cam_go = go.second;
+			}
+		}
+	}
+
+	if (min_cam_dist < 9999)
+	{
+		app->engine_order->editor->SetSelectedGameObject(hitted_cam_go);
+		return;
 	}
 
 	if (!go_hitted.empty())

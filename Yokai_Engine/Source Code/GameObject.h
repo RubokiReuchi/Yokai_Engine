@@ -102,6 +102,7 @@ public:
 	AABB aabb; // local
 	void GenerateAABB();
 	std::vector<float3> GetAllVerticesPositions(GameObject* go);
+	void GenerateFixedAABB();
 
 	OBB global_obb;
 	AABB global_aabb;

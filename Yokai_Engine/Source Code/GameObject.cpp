@@ -153,3 +153,31 @@ std::vector<float3> GameObject::GetAllVerticesPositions(GameObject* go)
 
 	return vertices_pos;
 }
+
+void GameObject::GenerateFixedAABB()
+{
+	if (!aabb_init) aabb_init = true;
+
+	std::vector<float3> vertices_pos;
+	vertices_pos.push_back(float3(-0.25f, -0.2f, -0.25f));
+	vertices_pos.push_back(float3(0.25f, -0.2f, -0.25f));
+	vertices_pos.push_back(float3(-0.25f, -0.2f, 0.25f));
+	vertices_pos.push_back(float3(0.25f, -0.2f, 0.25f));
+	vertices_pos.push_back(float3(-0.25f, 0.3f, -0.25f));
+	vertices_pos.push_back(float3(0.25f, 0.3f, -0.25f));
+	vertices_pos.push_back(float3(-0.25f, 0.3f, 0.25f));
+	vertices_pos.push_back(float3(0.25f, 0.3f, 0.25f));
+
+	float* v_pos = new float[vertices_pos.size() * 3];
+	for (size_t i = 0; i < vertices_pos.size(); i++)
+	{
+		v_pos[i * 3] = vertices_pos[i].x;
+		v_pos[i * 3 + 1] = vertices_pos[i].y;
+		v_pos[i * 3 + 2] = vertices_pos[i].z;
+	}
+
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)v_pos, vertices_pos.size());
+
+	delete[] v_pos;
+}

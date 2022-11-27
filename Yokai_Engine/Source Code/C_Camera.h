@@ -9,6 +9,8 @@ public:
 	C_Camera(GameObject* gameObject);
 	~C_Camera();
 
+	void Update();
+
 	void OnEditor();
 
 	void OnPositionUpdate(float3 pos) override;
@@ -21,6 +23,8 @@ private:
 	uint cameraID = 0;
 	Quat original_lookingDir;
 	Quat lookingDir;
+
+	std::vector<float3> PointsToLines_AABB(float3 points[8]);
 
 	friend class Serialization;
 };
