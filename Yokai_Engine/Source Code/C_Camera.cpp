@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleCamera3D.h"
 #include "GameObject.h"
+#include "EO_Editor.h"
 
 C_Camera::C_Camera(GameObject* gameObject) : Component(gameObject, Component::TYPE::CAMERA)
 {
@@ -25,6 +26,9 @@ void C_Camera::Update()
 	std::vector<float3> lines = PointsToLines_AABB(points);
 
 	app->renderer3D->AddLines(lines, float4(0.905f, 0.851f, 0.0f, 1.0f));
+
+	GameObject* selected_go = app->engine_order->editor->GetSelectedGameObject();
+	if (selected_go && selected_go->id == GetGameObject()->id) DrawView();
 }
 
 void C_Camera::OnEditor()
@@ -52,6 +56,11 @@ void C_Camera::OnEditor()
 		ImGui::Text("FOV: ");
 		ImGui::SameLine();
 		if (ImGui::DragFloat("##Fov", &temp_fov, 0.1f)) GetCamera()->SetFOV(temp_fov);
+
+		float temp_range = GetCamera()->GetRange();
+		ImGui::Text("Range: ");
+		ImGui::SameLine();
+		if (ImGui::DragFloat("##Camera_Range", &temp_range, 1.0f)) GetCamera()->SetRange(temp_range);
 	}
 	if (popUpOpen)
 	{
@@ -140,4 +149,81 @@ std::vector<float3> C_Camera::PointsToLines_AABB(float3 points[8])
 	lines.push_back(points[7]);
 
 	return lines;
+}
+
+void C_Camera::DrawView()
+{
+	std::vector<float3> lines;
+	std::vector<float3> help_lines;
+	float3 aux[8];
+	float3 points[8];
+	aux[0] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(0) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[1] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(2) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[2] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(4) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[3] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(6) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[4] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(1) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[5] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(3) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[6] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(5) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[7] = app->camera->game_cameras[cameraID].cameraFrustum.CornerPoint(7) - app->camera->game_cameras[cameraID].cameraFrustum.pos;
+
+	points[0] = (aux[4] - aux[0]).Normalized() + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[1] = (aux[5] - aux[1]).Normalized() + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[2] = (aux[6] - aux[2]).Normalized() + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[3] = (aux[7] - aux[3]).Normalized() + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[4] = (aux[4] - aux[0]).Normalized() * 10 + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[5] = (aux[5] - aux[1]).Normalized() * 10 + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[6] = (aux[6] - aux[2]).Normalized() * 10 + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	points[7] = (aux[7] - aux[3]).Normalized() * 10 + app->camera->game_cameras[cameraID].cameraFrustum.pos;
+
+	aux[0] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[1] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[2] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[3] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[4] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[5] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[6] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+	aux[7] += app->camera->game_cameras[cameraID].cameraFrustum.pos;
+
+	// near plane
+	lines.push_back(points[0]);
+	lines.push_back(points[1]);
+	lines.push_back(points[0]);
+	lines.push_back(points[2]);
+	lines.push_back(points[1]);
+	lines.push_back(points[3]);
+	lines.push_back(points[2]);
+	lines.push_back(points[3]);
+
+	// far plane
+	lines.push_back(aux[4]);
+	lines.push_back(aux[5]);
+	lines.push_back(aux[4]);
+	lines.push_back(aux[6]);
+	lines.push_back(aux[5]);
+	lines.push_back(aux[7]);
+	lines.push_back(aux[6]);
+	lines.push_back(aux[7]);
+
+	// joints
+	lines.push_back(points[0]);
+	lines.push_back(aux[4]);
+	lines.push_back(points[1]);
+	lines.push_back(aux[5]);
+	lines.push_back(points[2]);
+	lines.push_back(aux[6]);
+	lines.push_back(points[3]);
+	lines.push_back(aux[7]);
+
+	// help plane
+	help_lines.push_back(points[4]);
+	help_lines.push_back(points[5]);
+	help_lines.push_back(points[4]);
+	help_lines.push_back(points[6]);
+	help_lines.push_back(points[5]);
+	help_lines.push_back(points[7]);
+	help_lines.push_back(points[6]);
+	help_lines.push_back(points[7]);
+
+	app->renderer3D->AddLines(lines, float4(0.905f, 0.533f, 0.0f, 1.0f));
+	app->renderer3D->AddLines(help_lines, float4(0.357f, 0.0f, 0.905f, 1.0f));
 }

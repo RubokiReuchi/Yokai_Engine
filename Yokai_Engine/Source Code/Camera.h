@@ -25,6 +25,9 @@ public:
 	void SetFOV(float fov);
 	float GetFOV() { return FOV; };
 
+	void SetRange(float range);
+	float GetRange() { return range; };
+
 	void CheckGoInCamera();
 
 public:
@@ -36,10 +39,10 @@ protected:
 
 private:
 	float4x4 ViewMatrix, ViewMatrixInverse, ProjectionMatrix;
-	float3 offset;
 	bool changeFOVWithBufferSize;
 	float aspectRatio = 0.0f;
 	float FOV = 60.0f;
+	float range = 1000.0f;
 
 public:
 	Frustum cameraFrustum;

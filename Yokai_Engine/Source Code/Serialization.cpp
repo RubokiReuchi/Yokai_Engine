@@ -169,6 +169,8 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
             SetString(component_object, "Type", std::to_string((int)components[i]->GetType()));
             SetBool(component_object, "Enabled", components[i]->IsEnabled());
             SetInt(component_object, "CameraID", dynamic_cast<C_Camera*>(components[i])->cameraID);
+            SetFloat(component_object, "FOV", dynamic_cast<C_Camera*>(components[i])->GetCamera()->GetFOV());
+            SetFloat(component_object, "CameraRange", dynamic_cast<C_Camera*>(components[i])->GetCamera()->GetRange());
             SetQuat(component_object, "OriginalLookingDirection", dynamic_cast<C_Camera*>(components[i])->original_lookingDir);
             SetQuat(component_object, "LookingDirection", dynamic_cast<C_Camera*>(components[i])->lookingDir);
             break;

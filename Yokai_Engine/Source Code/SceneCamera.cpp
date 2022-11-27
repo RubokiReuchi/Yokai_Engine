@@ -150,7 +150,7 @@ void SceneCamera::CalculateMousePicking()
 	float mouse_x = (((float)app->input->GetMouseX() - app->engine_order->scene_pos.x) / app->engine_order->scene_size.x) - 0.5f;
 	float mouse_y = (((float)app->input->GetMouseY() - app->engine_order->scene_pos.y) / app->engine_order->scene_size.y) - 0.5f;
 	LineSegment picking_ray = cameraFrustum.UnProjectLineSegment(mouse_x * 2, -mouse_y * 2);
-
+	
 	std::vector<GameObject*> go_hitted;
 	GameObject* hitted_cam_go = NULL;
 	float min_cam_dist = 9999;

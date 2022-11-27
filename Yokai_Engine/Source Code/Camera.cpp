@@ -20,7 +20,7 @@ Camera::Camera()
 	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
 
 	cameraFrustum.nearPlaneDistance = 0.01f;
-	cameraFrustum.farPlaneDistance = 1000.0f;
+	cameraFrustum.farPlaneDistance = range;
 
 	cameraFrustum.pos = Position;
 	cameraFrustum.front = Z;
@@ -78,6 +78,12 @@ void Camera::SetFOV(float fov)
 {
 	cameraFrustum.verticalFov = FOV = math::DegToRad(fov);
 	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
+}
+
+void Camera::SetRange(float range)
+{
+	this->range = range;
+	cameraFrustum.farPlaneDistance = range;
 }
 
 void Camera::CheckGoInCamera()

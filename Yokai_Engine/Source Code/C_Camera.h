@@ -25,6 +25,7 @@ private:
 	Quat lookingDir;
 
 	std::vector<float3> PointsToLines_AABB(float3 points[8]);
+	void DrawView();
 
 	friend class Serialization;
 };
