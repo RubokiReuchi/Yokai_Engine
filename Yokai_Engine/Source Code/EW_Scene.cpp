@@ -105,6 +105,28 @@ void EW_Scene::Update()
 	GameObject* go = app->engine_order->editor->GetSelectedGameObject();
 	if (go != NULL)
 	{
+		if (!go->is_camera)
+		{
+			if (guizmo_operation == ImGuizmo::OPERATION::ROTATE_Y)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::ROTATE;
+			}
+			else if (guizmo_operation == ImGuizmo::OPERATION::ROTATE_Z)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::SCALE;
+			}
+		}
+		else if (go->is_camera)
+		{
+			if (guizmo_operation == ImGuizmo::OPERATION::ROTATE)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::ROTATE_Y;
+			}
+			else if (guizmo_operation == ImGuizmo::OPERATION::SCALE)
+			{
+				guizmo_operation = ImGuizmo::OPERATION::ROTATE_Z;
+			}
+		}
 		if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_IDLE)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
@@ -120,21 +142,18 @@ void EW_Scene::Update()
 			{
 				guizmo_operation = ImGuizmo::OPERATION::ROTATE;
 				guizmo_hide = false;
+				if (go->is_camera) guizmo_operation = ImGuizmo::OPERATION::ROTATE_Y;
 			}
 			else if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			{
 				guizmo_operation = ImGuizmo::OPERATION::SCALE;
 				guizmo_hide = false;
+				if (go->is_camera) guizmo_operation = ImGuizmo::OPERATION::ROTATE_Z;
 			}
 			else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			{
 				if (guizmo_mode == ImGuizmo::MODE::WORLD) guizmo_mode = ImGuizmo::MODE::LOCAL;
 				else guizmo_mode = ImGuizmo::MODE::WORLD;
-			}
-
-			if (go->is_camera && guizmo_operation == ImGuizmo::OPERATION::SCALE)
-			{
-				guizmo_hide = true;
 			}
 		}
 
@@ -150,6 +169,10 @@ void EW_Scene::Update()
 			if (guizmo_mode == ImGuizmo::MODE::WORLD && guizmo_operation == ImGuizmo::OPERATION::SCALE)
 			{
 				aux_mode = ImGuizmo::MODE::LOCAL;
+			}
+			else if (guizmo_mode == ImGuizmo::MODE::LOCAL && go->is_camera && (guizmo_operation == ImGuizmo::OPERATION::ROTATE_Y || guizmo_operation == ImGuizmo::OPERATION::ROTATE_Z))
+			{
+				aux_mode = ImGuizmo::MODE::WORLD;
 			}
 			else
 			{
