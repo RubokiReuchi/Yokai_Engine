@@ -216,10 +216,13 @@ void EW_Scene::Update()
 				break;
 			case RE_TYPE::TEXTURE:
 				id = (float)TextureImporter::LoadTexture(dd_file);
-				mr = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER));
-				if (mr != NULL)
+				if (app->engine_order->editor->GetSelectedGameObject())
 				{
-					mr->GetMesh().texture_id = id;
+					mr = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER));
+					if (mr != NULL)
+					{
+						mr->GetMesh().texture_id = id;
+					}
 				}
 				app->engine_order->editor->message = "Texture Loaded";
 				break;
