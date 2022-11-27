@@ -73,11 +73,11 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
     
     // values
     SetString(go_object, "UUID", go->UUID.c_str());
-    if (go->parent != NULL) // excludes root
+    if (go->parent != NULL)
     {
         SetString(go_object, "ParentUUID", go->parent->UUID.c_str());
     }
-    else
+    else // if Root
     {
         SetString(go_object, "ParentUUID", "Root");
     }
@@ -133,7 +133,7 @@ void Serialization::DeSerializeGameObject(JSON_Array* json_array, size_t it)
             go.components_enabled.push_back(GetBool(component_object, "Enabled"));
             go.show_aabb = GetBool(component_object, "ShowAABB");
             go.show_obb = GetBool(component_object, "ShowOBB");
-            //go.mesh_path = GetString(component_object, "MeshPath");
+            go.mesh_path = GetString(component_object, "MeshPath");
             break;
         case 3:
             go.components_type.push_back(3);
@@ -280,7 +280,6 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
     {
         JSON_Value* component_value = json_value_init_object();
         JSON_Object* component_object = json_value_get_object(component_value);
-
         switch (components[i]->GetType())
         {
         case Component::TYPE::MESH_RENDERER:
@@ -288,7 +287,7 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
             SetBool(component_object, "Enabled", components[i]->IsEnabled());
             SetBool(component_object, "ShowAABB", dynamic_cast<C_MeshRenderer*>(components[i])->show_aabb);
             SetBool(component_object, "ShowOBB", dynamic_cast<C_MeshRenderer*>(components[i])->show_obb);
-            //SetString(component_object, "MeshPath", );
+            SetString(component_object, "MeshPath", dynamic_cast<C_MeshRenderer*>(components[i])->GetMeshPath());
             break;
         case Component::TYPE::MATERIAL:
             SetInt(component_object, "Type", (int)components[i]->GetType());

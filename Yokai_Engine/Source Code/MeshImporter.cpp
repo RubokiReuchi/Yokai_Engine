@@ -64,7 +64,7 @@ GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
 	SaveMesh aux_mesh;
 	aux_mesh.YK_LoadMesh(path.c_str());
 
-	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices);
+	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
 	dynamic_cast<C_Material*>(returnGameObject->AddComponent(Component::TYPE::MATERIAL));
 
 	returnGameObject->GenerateAABB();
@@ -107,6 +107,7 @@ const aiScene* MeshImporter::GetAiScene(std::string path)
 
 void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent)
 {
+	std::string file = "";
 	// save custom format
 	if (node->mNumChildren > 1)
 	{
@@ -130,7 +131,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 			}
 		}
 
-		std::string file = MODELS_PATH;
+		file += MODELS_PATH;
 		file += app->file->FS_GetFileName(path, false);
 		file += ".ykmodel";
 
@@ -184,7 +185,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	for (uint i = 0; i < meshNum; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		CreateMesh(mesh, scene, newParent, node->mName, (meshNum > 1 || necessaryNode));
+		CreateMesh(mesh, scene, newParent, node->mName, file, (meshNum > 1 || necessaryNode));
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)
@@ -197,7 +198,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
 
-void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go)
+void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string mesh_path, bool create_go)
 {
 	std::vector<VertexInfo> vertices;
 	std::vector<uint> indices;
@@ -253,7 +254,7 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 	}
 	else
 	{
-		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices);
+		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, mesh_path);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}
 

@@ -86,13 +86,14 @@ void C_MeshRenderer::InitAsInstanciedMesh(uint mesh_id)
 	instance_id = manager->AddMesh(instanceMesh);
 }
 
-void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices)
+void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path)
 {
 	Re_Mesh newMesh;
 	newMesh.InitMeshInfo(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
 
 	mesh_id = app->renderer3D->model_render.GetMapSize() + 2;
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id); // Create a M_Render
+	manager->mesh_path = mesh_path;
 
 	instance_id = manager->InitManageRender(newMesh);
 }
@@ -124,6 +125,12 @@ Re_Mesh& C_MeshRenderer::GetMesh()
 	Re_Mesh& meshReference = manager->GetMap()[instance_id];
 
 	return meshReference;
+}
+
+std::string C_MeshRenderer::GetMeshPath()
+{
+	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
+	return manager->GetMeshPath();
 }
 
 std::vector<float3> C_MeshRenderer::PointsToLines_AABB(float3 points[8])

@@ -145,11 +145,6 @@ uint M_Render::AddMesh(Re_Mesh& mesh)
     return meshID;
 }
 
-std::string M_Render::GetMeshPath()
-{
-
-}
-
 void M_Render::CreateMeshBuffers()
 {
     // Create Vertex Array Object

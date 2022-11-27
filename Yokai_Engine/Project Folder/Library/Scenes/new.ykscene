@@ -1,0 +1,241 @@
+{
+    "SceneCamera": {
+        "CameraMatrix": [
+            0.51399528980255127,
+            -0.21400000154972076,
+            0.83099997043609619,
+            12.246000289916992,
+            0.00020402789232321084,
+            0.96799999475479126,
+            0.24899999797344208,
+            5.2309999465942383,
+            -0.85779291391372681,
+            -0.12800000607967377,
+            0.49799999594688416,
+            6.5349998474121094
+        ]
+    },
+    "GameObjects": [
+        {
+            "UUID": "D9VKDK8QVT2PKAWW",
+            "ParentUUID": "Root",
+            "Name": "Root",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "None",
+            "IsCamera": false,
+            "GameObjectID": 1
+        },
+        {
+            "UUID": "8K8FKIX8UJNGNIEU",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Main Camera",
+            "Position": [
+                5,
+                1.5,
+                0
+            ],
+            "Rotation": [
+                0,
+                -90,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Camera",
+            "IsCamera": true,
+            "GameObjectID": 2,
+            "Components": [
+                {
+                    "Type": 4,
+                    "Enabled": true,
+                    "CameraID": 0,
+                    "FOV": 1.0471975803375244,
+                    "CameraRange": 1000,
+                    "CameraMatrix": [
+                        -1.1920927533992653e-07,
+                        0,
+                        1.0000001192092896,
+                        5,
+                        0,
+                        1,
+                        0,
+                        1.5,
+                        -1,
+                        0,
+                        -1.1920928955078125e-07,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": "BOFY9PVLMVFPY1G1",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "BakerHouse",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "GameObjectID": 3
+        },
+        {
+            "UUID": "ERT9YWSX687YASBE",
+            "ParentUUID": "BOFY9PVLMVFPY1G1",
+            "Name": "Chimney",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "GameObjectID": 4,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Chimney.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Default"
+                }
+            ]
+        },
+        {
+            "UUID": "HMZJF3QJWKY8SB5J",
+            "ParentUUID": "BOFY9PVLMVFPY1G1",
+            "Name": "Baker_house",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "GameObjectID": 5,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Baker_house.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Default"
+                }
+            ]
+        },
+        {
+            "UUID": "LQEU5ANWG5QH42YW",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Cube",
+            "Position": [
+                0,
+                2.7045717239379883,
+                5.4750289916992188
+            ],
+            "Rotation": [
+                -90.000007629394531,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                0.99999785423278809,
+                0.99999785423278809
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "GameObjectID": 6,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": ""
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Default"
+                }
+            ]
+        }
+    ]
+}

@@ -41,7 +41,7 @@ private:
 	static const aiScene* GetAiScene(std::string path);
 
 	static void CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
-	static void CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, bool create_go = false);
+	static void CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string mesh_path, bool create_go = false);
 	static void CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr); // create a copy
 
 	static std::map<std::string, MeshInfo> loadedMeshes;

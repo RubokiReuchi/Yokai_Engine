@@ -14,7 +14,7 @@ public:
 	void OnEditor();
 
 	void InitAsInstanciedMesh(uint mesh_id);
-	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices);
+	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path);
 
 	void OnPositionUpdate(float3 position) override;
 	void OnScaleUpdate(float3 scale) override;
@@ -26,6 +26,8 @@ public:
 	{
 		return mesh_id;
 	}
+
+	std::string GetMeshPath();
 
 private:
 	uint mesh_id;

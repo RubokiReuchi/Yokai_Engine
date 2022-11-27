@@ -28,10 +28,14 @@ public:
 		return total_vertices;
 	}
 
-	std::string GetMeshPath();
+	std::string GetMeshPath()
+	{
+		return mesh_path;
+	}
 
 public:
 	bool initialized = false;
+	std::string mesh_path;
 private:
 	void CreateMeshBuffers();
 
