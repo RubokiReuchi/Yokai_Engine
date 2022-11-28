@@ -133,6 +133,32 @@ std::string C_MeshRenderer::GetMeshPath()
 	return manager->GetMeshPath();
 }
 
+std::string C_MeshRenderer::GetTexture(float texture_id)
+{
+	std::string texture_path;
+
+	for (auto& loaded_tex : M_Texture::loaded_textures)
+	{
+		if (texture_id > 0 && texture_id == loaded_tex.first)
+		{
+			if (loaded_tex.second.name != "Checkers")
+			{
+				texture_path = loaded_tex.second.name;
+			}
+			else
+			{
+				texture_path = "Checkers";
+			}
+		}
+	}
+	if (GetMesh().texture_id == -1)
+	{
+		texture_path = "Default";
+	}
+
+	return texture_path;
+}
+
 std::vector<float3> C_MeshRenderer::PointsToLines_AABB(float3 points[8])
 {
 	std::vector<float3> lines;

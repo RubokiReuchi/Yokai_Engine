@@ -247,17 +247,6 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	}
 
-	// Load into a GameObject and set the mesh render
-	if (create_go)
-	{
-		GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
-	}
-	else
-	{
-		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, mesh_path);
-		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
-	}
-
 	// save custom format
 	std::string file = MESHES_PATH;
 	file += node_name.C_Str();
@@ -268,6 +257,17 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 
 	app->file->FS_Save(file.c_str(), buffer, size, false);
 	RELEASE_ARRAY(buffer);
+
+	// Load into a GameObject and set the mesh render
+	if (create_go)
+	{
+		GameObject* newGameObject = new GameObject(parent, node_name.C_Str());
+	}
+	else
+	{
+		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, file);
+		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
+	}
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)

@@ -108,8 +108,21 @@ void C_Material::OnEditor()
 
 void C_Material::SetTexture(std::string texture)
 {
-	TextureImporter::LoadTexture(texture);
-	std::string selected_texture = texture;
+	if (texture == "Default")
+	{
+		renderer->GetMesh().texture_id = -1;
+		selected_texture = texture;
+	}
+	else if(texture == "Checkers")
+	{
+		renderer->GetMesh().texture_id = (float)TextureImporter::CreateTextureChecker();
+		selected_texture = texture;
+	}
+	else
+	{
+		renderer->GetMesh().texture_id = (float)TextureImporter::LoadTexture(texture);
+		selected_texture = texture;
+	}
 }
 
 Re_Mesh& C_Material::GetMesh()

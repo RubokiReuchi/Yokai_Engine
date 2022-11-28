@@ -28,6 +28,7 @@ public:
 	}
 
 	std::string GetMeshPath();
+	std::string GetTexture(float texture_id);
 
 private:
 	uint mesh_id;

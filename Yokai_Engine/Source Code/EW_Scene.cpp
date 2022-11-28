@@ -208,6 +208,7 @@ void EW_Scene::Update()
 		{
 			float id;
 			C_MeshRenderer* mr = nullptr;
+			C_Material* mat = nullptr;
 			switch (app->file->FS_GetResourceType(dd_file))
 			{
 			case RE_TYPE::MESH:
@@ -219,9 +220,11 @@ void EW_Scene::Update()
 				if (app->engine_order->editor->GetSelectedGameObject())
 				{
 					mr = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER));
+					mat = dynamic_cast<C_Material*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MATERIAL));
 					if (mr != NULL)
 					{
 						mr->GetMesh().texture_id = id;
+						mat->SetTexture(mr->GetTexture(id));
 					}
 				}
 				app->engine_order->editor->message = "Texture Loaded";

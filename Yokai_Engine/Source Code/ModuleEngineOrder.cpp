@@ -41,9 +41,11 @@ bool ModuleEO::Start()
     for (auto& gameObject : game_objects)
     {
         C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(gameObject.second->GetComponent(Component::TYPE::MESH_RENDERER));
+        C_Material* mat = dynamic_cast<C_Material*>(gameObject.second->GetComponent(Component::TYPE::MATERIAL));
         if (c_mr != nullptr)
         {
             c_mr->GetMesh().texture_id = (float)bakerTexture;
+            mat->SetTexture(c_mr->GetTexture(bakerTexture));
         }
     }
 
