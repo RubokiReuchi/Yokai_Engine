@@ -159,7 +159,8 @@ void SceneCamera::CalculateMousePicking()
 	float min_cam_dist = 9999;
 	for (auto& go : app->engine_order->game_objects)
 	{
-		if (go.second->GetComponent(Component::TYPE::MESH_RENDERER))
+		C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(go.second->GetComponent(Component::TYPE::MESH_RENDERER));
+		if (c_mr && c_mr->GetMesh().visible && c_mr->GetMesh().visible_on_editor)
 		{
 			RayCastHit hit;
 			hit.hit = picking_ray.Intersects(go.second->global_aabb);
