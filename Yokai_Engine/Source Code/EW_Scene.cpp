@@ -3,8 +3,6 @@
 #include "EO_Editor.h"
 #include "ModuleInput.h"
 #include "ModuleFile.h"
-#include "MeshImporter.h"
-#include "TextureImporter.h"
 
 #include <math.h>
 
@@ -206,37 +204,10 @@ void EW_Scene::Update()
 		target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect;
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(dd_file.c_str(), target_flags))
 		{
-			float id;
-			C_MeshRenderer* mr = nullptr;
-			C_Material* mat = nullptr;
-			switch (app->file->FS_GetResourceType(dd_file))
-			{
-			case RE_TYPE::MESH:
-				MeshImporter::LoadMesh(dd_file);
-				app->engine_order->editor->message = "Mesh placed";
-				break;
-			case RE_TYPE::TEXTURE:
-				id = (float)TextureImporter::LoadTexture(dd_file);
-				if (app->engine_order->editor->GetSelectedGameObject())
-				{
-					mr = dynamic_cast<C_MeshRenderer*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER));
-					mat = dynamic_cast<C_Material*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MATERIAL));
-					if (mr != NULL)
-					{
-						mr->GetMesh().texture_id = id;
-						mat->SetTexture(mr->GetTexture(id));
-					}
-				}
-				app->engine_order->editor->message = "Texture Loaded";
-				break;
-			case RE_TYPE::UNDEFINED:
-				app->engine_order->editor->message = "Undefined file extension";
-				break;
-			}
+			app->engine_order->editor->message = ResourceManager::LoadResource(dd_file);
 			popUp = true;
 			popUp_cd = 0;
 			ImGui::OpenPopup("Message");
-
 		}
 		ImGui::EndDragDropTarget();
 	}

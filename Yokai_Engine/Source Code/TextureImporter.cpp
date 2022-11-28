@@ -6,6 +6,7 @@
 #include "stb_image/stb_image.cpp"
 #include "Re_Texture.h"
 #include "M_Texture.h"
+#include "ModuleFile.h"
 
 #pragma comment (lib, "DevIL/libx86/DevIL.lib")
 #pragma comment (lib, "DevIL/libx86/ILU.lib")
@@ -26,6 +27,8 @@ uint TextureImporter::LoadTexture(std::string path)
 
 		app->file->FS_Save(file.c_str(), buffer, size, false);
 		RELEASE_ARRAY(buffer);
+
+		app->file->YK_SaveMetaData(file, path);
 	}
 
 	return ImportTexture(texture_path);

@@ -213,6 +213,7 @@
     <ClInclude Include="Source Code\M_Texture.h" />
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\Rect.h" />
+    <ClInclude Include="Source Code\ResourceManager.h" />
     <ClInclude Include="Source Code\Re_Mesh.h" />
     <ClInclude Include="Source Code\Re_Shader.h" />
     <ClInclude Include="Source Code\Re_Texture.h" />
@@ -305,6 +306,7 @@
     <ClCompile Include="Source Code\M_Texture.cpp" />
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Rect.cpp" />
+    <ClCompile Include="Source Code\ResourceManager.cpp" />
     <ClCompile Include="Source Code\Re_Mesh.cpp" />
     <ClCompile Include="Source Code\Re_Shader.cpp" />
     <ClCompile Include="Source Code\Re_Texture.cpp" />

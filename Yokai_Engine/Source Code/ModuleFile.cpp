@@ -349,7 +349,6 @@ void ModuleFile::YK_CreateLibrary()
 	if (!FS_IsDirectory(MESHES_PATH)) PHYSFS_mkdir(MESHES_PATH);
 	if (!FS_IsDirectory(TEXTURES_PATH)) PHYSFS_mkdir(TEXTURES_PATH);
 	if (!FS_IsDirectory(MATERIALS_PATH)) PHYSFS_mkdir(MATERIALS_PATH);
-	if (!FS_IsDirectory(SHADERS_PATH)) PHYSFS_mkdir(SHADERS_PATH);
 	if (!FS_IsDirectory(SCENES_PATH)) PHYSFS_mkdir(SCENES_PATH);
 	if (!FS_IsDirectory(SCRIPTS_PATH)) PHYSFS_mkdir(SCRIPTS_PATH);
 }
@@ -415,4 +414,22 @@ char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std:
 	cursor += bytes;
 
 	return buffer;
+}
+
+void ModuleFile::YK_SaveMetaData(std::string file_name, std::string file_reference)
+{
+	file_name += ".meta";
+	std::ofstream matafile(file_name, std::ofstream::out);
+	if (matafile.is_open())
+	{
+		matafile << file_reference << "\n";
+		matafile.close();
+
+		/*DWORD attributes = GetFileAttributes(file_name.c_str());
+		SetFileAttributes(file_name.c_str(), attributes + FILE_ATTRIBUTE_HIDDEN);*/
+	}
+	else
+	{
+		LOG("Error saving meta data.");
+	}
 }

@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "ResourceManager.h"
 
 #include <string>
 #include <vector>
@@ -14,18 +15,10 @@
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
 #define SCRIPTS_PATH "Library/Scripts/"
-#define SHADERS_PATH "Library/Shaders/"
 #define MATERIALS_PATH "Library/Materials/"
 
 class FileTree;
 struct VertexInfo;
-
-enum class RE_TYPE
-{
-	UNDEFINED,
-	MESH,
-	TEXTURE,
-};
 
 class ModuleFile : public Module
 {
@@ -72,4 +65,6 @@ public:
 	void YK_SaveModel(std::string path, std::vector<std::string> children_paths);
 	std::vector<std::string> YK_LoadModel(std::string path);
 	char* YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices);
+
+	void YK_SaveMetaData(std::string file_name, std::string file_reference);
 };

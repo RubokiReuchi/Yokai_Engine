@@ -95,7 +95,7 @@ bool ModuleRenderer3D::Init()
 	}
 
 	model_render.Init();
-	line_shader = new Re_Shader("Assets/shaders/lines.vertex.shader", "Assets/shaders/lines.fragment.shader");
+	line_shader = new Re_Shader("Shaders/lines.vertex.shader", "Shaders/lines.fragment.shader");
 	InitAABB_Buffer();
 
 	// Projection matrix for

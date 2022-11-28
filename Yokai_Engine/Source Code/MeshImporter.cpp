@@ -5,6 +5,8 @@
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
 #include "ModuleFile.h"
+#include <iostream>
+#include <fstream>
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
@@ -115,19 +117,19 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 		model_paths.push_back(std::to_string(node->mNumChildren));
 		for (size_t i = 0; i < node->mNumChildren; i++)
 		{
-			if (node->mChildren[i]->mNumChildren > 0)
+			if (node->mChildren[i]->mNumChildren > 1)
 			{
-				std::string file = MODELS_PATH;
-				file += node->mChildren[i]->mName.C_Str();
-				file += ".ykmodel";
-				model_paths.push_back(file);
+				std::string model_file = MODELS_PATH;
+				model_file += node->mChildren[i]->mName.C_Str();
+				model_file += ".ykmodel";
+				model_paths.push_back(model_file);
 			}
 			else
 			{
-				std::string file = MESHES_PATH;
-				file += node->mChildren[i]->mName.C_Str();
-				file += ".ykmesh";
-				model_paths.push_back(file);
+				std::string mesh_file = MESHES_PATH;
+				mesh_file += node->mChildren[i]->mName.C_Str();
+				mesh_file += ".ykmesh";
+				model_paths.push_back(mesh_file);
 			}
 		}
 
@@ -136,6 +138,8 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 		file += ".ykmodel";
 
 		app->file->YK_SaveModel(file, model_paths);
+		app->file->YK_SaveMetaData(file, path);
+		path = file;
 	}
 
 	if (node->mNumMeshes == 0 && node->mNumChildren == 1)
@@ -185,7 +189,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	for (uint i = 0; i < meshNum; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		CreateMesh(mesh, scene, newParent, node->mName, file, (meshNum > 1 || necessaryNode));
+		CreateMesh(mesh, scene, newParent, node->mName, path, (meshNum > 1 || necessaryNode));
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)
@@ -198,7 +202,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
 }
 
-void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string mesh_path, bool create_go)
+void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go)
 {
 	std::vector<VertexInfo> vertices;
 	std::vector<uint> indices;
@@ -257,6 +261,9 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 
 	app->file->FS_Save(file.c_str(), buffer, size, false);
 	RELEASE_ARRAY(buffer);
+
+	// save metadata
+	app->file->YK_SaveMetaData(file, parent_path);
 
 	// Load into a GameObject and set the mesh render
 	if (create_go)
