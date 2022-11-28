@@ -18,4 +18,5 @@ public:
 	static std::string LoadResource(std::string path);
 
 	static void CheckRemovedFiles();
+	static void CheckModifiedFiles();
 };

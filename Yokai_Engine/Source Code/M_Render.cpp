@@ -8,7 +8,7 @@ M_Render::M_Render()
 {
     // Create the shaders
     basic_shader = new Re_Shader("Shaders/basic.vertex.shader", "Shaders/basic.fragment.shader");
-    outline_shader = new Re_Shader("Shadersv/outline.vertex.shader", "Shaders/outline.fragment.shader");
+    outline_shader = new Re_Shader("Shaders/outline.vertex.shader", "Shaders/outline.fragment.shader");
 }
 
 M_Render::~M_Render()

@@ -30,6 +30,7 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 
 	YK_CreateLibrary();
 	ResourceManager::CheckRemovedFiles();
+	ResourceManager::CheckModifiedFiles();
 }
 
 ModuleFile::~ModuleFile()

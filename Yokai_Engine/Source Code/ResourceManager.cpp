@@ -66,3 +66,44 @@ void ResourceManager::CheckRemovedFiles()
 
 	RELEASE(folder);
 }
+
+void ResourceManager::CheckModifiedFiles()
+{
+	FileTree* folder = ModuleFile::FS_GetFileTree(MODELS_PATH);
+
+	for (size_t i = 1; i < folder->files.size(); i += 2)
+	{
+		std::string full_path = MODELS_PATH + folder->files[i];
+		if (ModuleFile::FS_GetLastModifyDate(full_path) != ModuleFile::YK_GetMetaInfo(full_path, 2))
+		{
+			remove(full_path.c_str());
+			remove(ModuleFile::FS_RemoveExtension(full_path).c_str());
+		}
+	}
+
+	folder = ModuleFile::FS_GetFileTree(MESHES_PATH);
+
+	for (size_t i = 1; i < folder->files.size(); i += 2)
+	{
+		std::string full_path = MESHES_PATH + folder->files[i];
+		if (ModuleFile::FS_GetLastModifyDate(full_path) != ModuleFile::YK_GetMetaInfo(full_path, 2))
+		{
+			remove(full_path.c_str());
+			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
+		}
+	}
+
+	folder = ModuleFile::FS_GetFileTree(TEXTURES_PATH);
+
+	for (size_t i = 1; i < folder->files.size(); i += 2)
+	{
+		std::string full_path = TEXTURES_PATH + folder->files[i];
+		if (ModuleFile::FS_GetLastModifyDate(full_path) != ModuleFile::YK_GetMetaInfo(full_path, 2))
+		{
+			remove(full_path.c_str());
+			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
+		}
+	}
+
+	RELEASE(folder);
+}
