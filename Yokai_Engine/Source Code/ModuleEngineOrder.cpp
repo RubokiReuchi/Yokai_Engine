@@ -45,7 +45,7 @@ bool ModuleEO::Start()
         if (c_mr != nullptr)
         {
             c_mr->GetMesh().texture_id = (float)bakerTexture;
-            mat->SetTexture(c_mr->GetTexture(bakerTexture));
+            mat->SetTexture(c_mr->GetTexture((float)bakerTexture));
         }
     }
 
