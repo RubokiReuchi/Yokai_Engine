@@ -56,6 +56,7 @@ public:
 	static std::vector<std::string> FS_GetAllFiles(std::string path);
 
 	static std::vector<std::string> FS_RemoveExtensions(std::vector<std::string> paths);
+	static std::string FS_RemoveExtension(std::string path);
 
 	bool new_file = false;
 
@@ -67,4 +68,5 @@ public:
 	char* YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices);
 
 	void YK_SaveMetaData(std::string file_name, std::string file_reference);
+	static std::string YK_GetMetaInfo(std::string path);
 };

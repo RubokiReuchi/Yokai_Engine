@@ -1,8 +1,8 @@
 #include "ModuleFile.h"
 #include "Application.h"
+#include "ResourceManager.h"
 #include "PhysFS/include/physfs.h"
 #include "FileTree.hpp"
-#include <algorithm>
 #include <iostream>
 #include <fstream>
 
@@ -19,6 +19,7 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 	FS_AddPathToFileSystem("D:\\");
 
 	YK_CreateLibrary();
+	ResourceManager::CheckRemovedFiles();
 }
 
 ModuleFile::~ModuleFile()
@@ -342,6 +343,15 @@ std::vector<std::string> ModuleFile::FS_RemoveExtensions(std::vector<std::string
 	return new_paths;
 }
 
+std::string ModuleFile::FS_RemoveExtension(std::string path)
+{
+	std::string new_path;
+	size_t pos = path.find_last_of(".");
+	new_path = path.substr(0, pos);
+
+	return new_path;
+}
+
 void ModuleFile::YK_CreateLibrary()
 {
 	if (!FS_IsDirectory(LIBRARY_PATH)) PHYSFS_mkdir(LIBRARY_PATH);
@@ -425,11 +435,29 @@ void ModuleFile::YK_SaveMetaData(std::string file_name, std::string file_referen
 		matafile << file_reference << "\n";
 		matafile.close();
 
-		/*DWORD attributes = GetFileAttributes(file_name.c_str());
-		SetFileAttributes(file_name.c_str(), attributes + FILE_ATTRIBUTE_HIDDEN);*/
+		// set meta file in hidden
+		DWORD attributes = GetFileAttributes(file_name.c_str());
+		SetFileAttributes(file_name.c_str(), attributes + FILE_ATTRIBUTE_HIDDEN);
 	}
 	else
 	{
 		LOG("Error saving meta data.");
 	}
+}
+
+std::string ModuleFile::YK_GetMetaInfo(std::string path)
+{
+	std::string origin_path;
+
+	std::fstream metafile(path, std::ofstream::in);
+	if (metafile.is_open())
+	{
+		std::getline(metafile, origin_path);
+	}
+	else
+	{
+		LOG("Error reading meta data.");
+	}
+
+	return origin_path;
 }
