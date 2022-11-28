@@ -129,6 +129,7 @@ void ModuleEO::LoadSerializedGO()
 {
     rootGameObject->DeleteGameObject();
     app->camera->game_cameras.clear();
+    app->renderer3D->model_render.CleanMap();
 
     rootGameObject = new GameObject(serialized_go[0]);
     for (size_t i = 1; i < serialized_go.size(); i++)
@@ -159,6 +160,7 @@ void ModuleEO::NewScene()
         child->DeleteGameObject();
     }
     app->camera->game_cameras.clear();
+    app->renderer3D->model_render.CleanMap();
 
     GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
     app->camera->InitNewGameCamera(main_camera);

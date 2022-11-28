@@ -26,6 +26,7 @@ public:
 
 	M_Render* GetRenderManager(uint id);
 	uint GetMapSize() { return render_map.size(); };
+	void CleanMap();
 
 	void Draw();
 

@@ -30,14 +30,15 @@ M_Render* M_ModelRender::GetRenderManager(uint id)
 	return &render_map[id];
 }
 
+void M_ModelRender::CleanMap()
+{
+	render_map.clear();
+}
+
 void M_ModelRender::Draw()
 {
 	for (auto& m_render : render_map)
 	{
-		if (m_render.first == 24)
-		{
-			int y = 0;
-		}
 		m_render.second.Draw();
 	}
 }
