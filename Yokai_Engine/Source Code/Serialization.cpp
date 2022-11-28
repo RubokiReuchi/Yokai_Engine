@@ -45,7 +45,7 @@ void Serialization::YK_LoadScene(std::string path)
 
     JSON_Object* scene_object = json_value_get_object(scene_value);
     
-    //DeSerializeSceneCamera(scene_object);
+    DeSerializeSceneCamera(scene_object);
 
     JSON_Array* gameobjects_array = json_object_get_array(scene_object, "GameObjects");
 
@@ -92,7 +92,10 @@ void Serialization::SerializeGameObject(JSON_Array* json_array, GameObject* go)
 
 void Serialization::DeSerializeSceneCamera(JSON_Object* json_object)
 {
-    float3x4 matrix = GetFloat3x4(json_object, "CameraMatrix");
+    JSON_Value* camera_value = json_object_get_value(json_object, "SceneCamera");
+    JSON_Object* camera_object = json_value_get_object(camera_value);
+
+    float3x4 matrix = GetFloat3x4(camera_object, "CameraMatrix");
     app->camera->sceneCamera.cameraFrustum.SetWorldMatrix(matrix);
 }
 
