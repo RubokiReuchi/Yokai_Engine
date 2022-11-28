@@ -176,6 +176,8 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 	node->mTransformation.Decompose(scaling, rotation, translation);
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
+	std::string aux = node->mName.C_Str();
+	if (aux == "RootNode") scale = float3(100, 100, 100);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 	float3 eulerRot = rot.ToEulerXYZ();
 	eulerRot.x = math::RadToDeg(eulerRot.x);
@@ -199,7 +201,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 
 	// set transform after al child have been added
 	newParent->GenerateAABB();
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos / 100.0f, scale / 100.0f, eulerRot);
 }
 
 void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go)
