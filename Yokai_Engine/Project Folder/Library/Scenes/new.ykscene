@@ -1,18 +1,18 @@
 {
     "SceneCamera": {
         "CameraMatrix": [
-            -0.19206669926643372,
-            -0.25380986928939819,
-            0.94799315929412842,
-            13.24655818939209,
-            0.0003477483696769923,
-            0.96596014499664307,
-            0.25869068503379822,
-            5.2347812652587891,
-            -0.98138177394866943,
-            0.050015538930892944,
-            -0.1854405403137207,
-            -3.9601283073425293
+            0.51399528980255127,
+            -0.21400000154972076,
+            0.83099997043609619,
+            12.246000289916992,
+            0.00020402789232321084,
+            0.96799999475479126,
+            0.24899999797344208,
+            5.2309999465942383,
+            -0.85779291391372681,
+            -0.12800000607967377,
+            0.49799999594688416,
+            6.5349998474121094
         ]
     },
     "GameObjects": [
@@ -41,23 +41,23 @@
             "IsCamera": false
         },
         {
-            "UUID": "CVUW154XY4T1QCVQ",
+            "UUID": "ZT7XCAED5CLSVDHX",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
-                7.0295271873474121,
-                1.500030517578125,
-                -0.59680384397506714
+                5,
+                1.5,
+                0
             ],
             "Rotation": [
-                -90.000358581542969,
-                -72.644386291503906,
-                -90.000816345214844
+                0,
+                -90,
+                0
             ],
             "Scale": [
-                1.0000007152557373,
-                0.99999964237213135,
-                1.0000002384185791
+                1,
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -72,24 +72,24 @@
                     "FOV": 1.0471975803375244,
                     "CameraRange": 1000,
                     "CameraMatrix": [
-                        4.191505468043033e-06,
-                        -0.2983015775680542,
-                        0.95447170734405518,
-                        7.0295271873474121,
-                        -7.417104825435672e-06,
-                        0.9544716477394104,
-                        0.2983015775680542,
-                        1.500030517578125,
+                        -1.1920927533992653e-07,
+                        0,
+                        1.0000001192092896,
+                        5,
+                        0,
+                        1,
+                        0,
+                        1.5,
                         -1,
-                        -8.3297491073608398e-06,
-                        1.7881393432617188e-06,
-                        -0.59680384397506714
+                        0,
+                        -1.1920928955078125e-07,
+                        0
                     ]
                 }
             ]
         },
         {
-            "UUID": "FZ9FHC2JPOLAAVP4",
+            "UUID": "3PL8SGBQNOD374BB",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "BakerHouse",
             "Position": [
@@ -114,8 +114,8 @@
             "IsCamera": false
         },
         {
-            "UUID": "I3FP7IYW9ZDJLMR9",
-            "ParentUUID": "FZ9FHC2JPOLAAVP4",
+            "UUID": "7SRIIN93FZ5CINDG",
+            "ParentUUID": "3PL8SGBQNOD374BB",
             "Name": "Chimney",
             "Position": [
                 0,
@@ -148,13 +148,13 @@
                 {
                     "Type": 3,
                     "Enabled": true,
-                    "SelectedTexturePath": "Checkers"
+                    "SelectedTexturePath": "Library\/Textures\/Baker_house.dds"
                 }
             ]
         },
         {
-            "UUID": "MXU1WPWAZC5SW5LM",
-            "ParentUUID": "FZ9FHC2JPOLAAVP4",
+            "UUID": "AV727MXGXCWL2E7T",
+            "ParentUUID": "3PL8SGBQNOD374BB",
             "Name": "Baker_house",
             "Position": [
                 0,
@@ -187,7 +187,7 @@
                 {
                     "Type": 3,
                     "Enabled": true,
-                    "SelectedTexturePath": "Baker_house"
+                    "SelectedTexturePath": "Library\/Textures\/Baker_house.dds"
                 }
             ]
         }

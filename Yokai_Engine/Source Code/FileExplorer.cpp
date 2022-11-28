@@ -1,4 +1,5 @@
 #include "FileExplorer.h"
+#include "Application.h"
 #include "ModuleFile.h"
 #include "Console.h"
 #include "Serialization.h"
@@ -152,6 +153,7 @@ void FileExplorer::CkeckDirectory(std::string scene_name)
 		if (scene_name != "")
 		{
 			Serialization::YK_LoadScene(scene_name);
+			app->SetSceneName(scene_name);
 			CloseExplorer();
 		}
 	}

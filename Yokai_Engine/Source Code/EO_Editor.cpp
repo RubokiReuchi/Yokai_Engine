@@ -158,7 +158,7 @@ bool EO_Editor::SetMenuBar()
 	{
 		if (ImGui::MenuItem("New Scene"))
 		{
-
+			app->engine_order->NewScene();
 		}
 		if (ImGui::MenuItem("Load Scene"))
 		{
@@ -166,7 +166,14 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Save Scene"))
 		{
-			Serialization::YK_SaveScene();
+			if (app->GetSceneName() == "default")
+			{
+				file_explorer.OpenExplorer("Save As", Explorer::TYPE::SAVE, SCENES_PATH);
+			}
+			else
+			{
+				Serialization::YK_SaveScene();
+			}
 		}
 		if (ImGui::MenuItem("Save Scene As"))
 		{

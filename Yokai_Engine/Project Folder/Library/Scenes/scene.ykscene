@@ -1,16 +1,19 @@
 {
     "SceneCamera": {
-        "Position": [
-            0,
-            0,
-            0
-        ],
-        "Reference": [
-            0,
-            0,
-            0
-        ],
-        "FOV": 1.0471975803375244
+        "CameraMatrix": [
+            0.51399528980255127,
+            -0.21400000154972076,
+            0.83099997043609619,
+            12.246000289916992,
+            0.00020402789232321084,
+            0.96799999475479126,
+            0.24899999797344208,
+            5.2309999465942383,
+            -0.85779291391372681,
+            -0.12800000607967377,
+            0.49799999594688416,
+            6.5349998474121094
+        ]
     },
     "GameObjects": [
         {
@@ -35,11 +38,10 @@
             "Visible": true,
             "VisibleOnEditor": true,
             "Tag": "None",
-            "IsCamera": false,
-            "GameObjectID": 1
+            "IsCamera": false
         },
         {
-            "UUID": "ANKY1EFKRQRCMPXY",
+            "UUID": "UX7GFBMUFQCLAMQV",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -62,31 +64,32 @@
             "VisibleOnEditor": true,
             "Tag": "Camera",
             "IsCamera": true,
-            "GameObjectID": 2,
             "Components": [
                 {
-                    "Type": "4",
+                    "Type": 4,
                     "Enabled": true,
                     "CameraID": 0,
                     "FOV": 1.0471975803375244,
                     "CameraRange": 1000,
-                    "OriginalLookingDirection": [
+                    "CameraMatrix": [
+                        -1.1920927533992653e-07,
+                        0,
+                        1.0000001192092896,
+                        5,
                         0,
                         1,
                         0,
-                        -0
-                    ],
-                    "LookingDirection": [
+                        1.5,
+                        -1,
                         0,
-                        0.70710676908493042,
-                        0,
-                        0.70710676908493042
+                        -1.1920928955078125e-07,
+                        0
                     ]
                 }
             ]
         },
         {
-            "UUID": "ERQ9PLCXJBJLXGR4",
+            "UUID": "X2DY59CGY34ULDS2",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "BakerHouse",
             "Position": [
@@ -108,12 +111,11 @@
             "Visible": true,
             "VisibleOnEditor": true,
             "Tag": "Default",
-            "IsCamera": false,
-            "GameObjectID": 3
+            "IsCamera": false
         },
         {
-            "UUID": "HM6J7SAB2NBU9ZLH",
-            "ParentUUID": "ERQ9PLCXJBJLXGR4",
+            "UUID": "1WRATG9TPFV4WWMF",
+            "ParentUUID": "X2DY59CGY34ULDS2",
             "Name": "Chimney",
             "Position": [
                 0,
@@ -135,24 +137,24 @@
             "VisibleOnEditor": true,
             "Tag": "Default",
             "IsCamera": false,
-            "GameObjectID": 4,
             "Components": [
                 {
-                    "Type": "2",
+                    "Type": 2,
                     "Enabled": true,
                     "ShowAABB": false,
-                    "ShowOBB": false
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Chimney.ykmesh"
                 },
                 {
-                    "Type": "3",
+                    "Type": 3,
                     "Enabled": true,
-                    "SelectedTexturePath": "Default"
+                    "SelectedTexturePath": "Library\/Textures\/Baker_house.dds"
                 }
             ]
         },
         {
-            "UUID": "KPC3WZ7OTZ34SQNM",
-            "ParentUUID": "ERQ9PLCXJBJLXGR4",
+            "UUID": "4ZYKBN669ZNEGNGK",
+            "ParentUUID": "X2DY59CGY34ULDS2",
             "Name": "Baker_house",
             "Position": [
                 0,
@@ -174,18 +176,18 @@
             "VisibleOnEditor": true,
             "Tag": "Default",
             "IsCamera": false,
-            "GameObjectID": 5,
             "Components": [
                 {
-                    "Type": "2",
+                    "Type": 2,
                     "Enabled": true,
                     "ShowAABB": false,
-                    "ShowOBB": false
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Baker_house.ykmesh"
                 },
                 {
-                    "Type": "3",
+                    "Type": 3,
                     "Enabled": true,
-                    "SelectedTexturePath": "Default"
+                    "SelectedTexturePath": "Library\/Textures\/Baker_house.dds"
                 }
             ]
         }

@@ -152,6 +152,22 @@ GameObject* ModuleEO::GetGameObjectByUUID(std::string uuid)
     return NULL;
 }
 
+void ModuleEO::NewScene()
+{
+    for (auto& child : rootGameObject->children)
+    {
+        child->DeleteGameObject();
+    }
+    app->camera->game_cameras.clear();
+
+    GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
+    app->camera->InitNewGameCamera(main_camera);
+    dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(5.0f, 1.5f, 0), float3(1, 1, 1), float3(0, -90, 0));
+    C_Camera* cam = dynamic_cast<C_Camera*>(main_camera->GetComponent(Component::TYPE::CAMERA));
+    float3x4 start_matrix = float3x4(0.0f, 0.0f, 1.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.5f, -1.0f, 0.0f, 0.0f, 0.0f);
+    cam->GetCamera()->cameraFrustum.SetWorldMatrix(start_matrix);
+}
+
 std::string ModuleEO::GenerateUUID()
 {
     std::string uuid = "";
