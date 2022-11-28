@@ -36,7 +36,7 @@ void EW_Hierarchy::Update()
             ImGui::CloseCurrentPopup();
         }
     }
-    DrawGameObjectChildren(gameObjectsReference->at(1), true);
+    DrawGameObjecTree(gameObjectsReference->at(1), true);
 
     if (popUpOpen)
     {
@@ -113,19 +113,19 @@ void EW_Hierarchy::Update()
     ImGui::End();
 }
 
-void EW_Hierarchy::DrawGameObjectChildren(GameObject* gameObject, bool onlyChildren)
+void EW_Hierarchy::DrawGameObjecTree(GameObject* gameObject, bool onlyChildren)
 {
-    if (!onlyChildren) ProcessGameObject(gameObject, 0);
+    if (!onlyChildren) DrawGameObject(gameObject, 0);
     else
     {
         for (size_t i = 0; i < gameObject->children.size(); i++)
         {
-            ProcessGameObject(gameObject->children[i], i);
+            DrawGameObject(gameObject->children[i], i);
         }
     }
 }
 
-void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
+void EW_Hierarchy::DrawGameObject(GameObject* gameObject, int iteration)
 {
     ImGuiTreeNodeFlags node_flags = base_flags;
 
@@ -261,7 +261,7 @@ void EW_Hierarchy::ProcessGameObject(GameObject* gameObject, int iteration)
 
     if (node_open)
     {
-        if (!gameObject->children.empty()) DrawGameObjectChildren(gameObject, true);
+        if (!gameObject->children.empty()) DrawGameObjecTree(gameObject, true);
         ImGui::TreePop();
     }
 }

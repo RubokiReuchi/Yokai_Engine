@@ -16,8 +16,8 @@ public:
 
 	void Update() override;
 
-	void DrawGameObjectChildren(GameObject* gameObject, bool onlyChildren = false);
-	void ProcessGameObject(GameObject* gameObject, int iteration);
+	void DrawGameObjecTree(GameObject* gameObject, bool onlyChildren = false);
+	void DrawGameObject(GameObject* gameObject, int iteration);
 
 private:
 	static const int numSubmenus = 2;

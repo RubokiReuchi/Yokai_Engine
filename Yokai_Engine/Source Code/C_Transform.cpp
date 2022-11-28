@@ -197,17 +197,18 @@ void C_Transform::UpdateBB()
 void C_Transform::UpdatePosition()
 {
 	float3 globalPosition = parentGlobalTransform.position + localTransform.position;
-	// Give current position change to the transform component of every child of this transform's gameobject.
-	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
+
+	// For each child
+	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
 	{
 		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
 		child_transform->OnPositionUpdate(globalPosition);
 	}
 
-	// Give current position change to every component linked to this transform's gameobject.
-	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
+	// For each component, exclude transform component
+	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnPositionUpdate(globalPosition);
+		GetGameObject()->GetComponentList().at(i)->OnPositionUpdate(globalPosition);
 	}
 
 	UpdateBB();
@@ -216,17 +217,18 @@ void C_Transform::UpdatePosition()
 void C_Transform::UpdateRotation()
 {
 	float3 globalRotation = parentGlobalTransform.rotation + localTransform.rotation;
-	// Give current rotation change to the transform component of every child of this transform's gameobject.
-	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
+
+	// For each child
+	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
 	{
 		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
 		child_transform->OnRotationUpdate(globalRotation);
 	}
 
-	// Give current rotation change to every component linked to this transform's gameobject.
-	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
+	// For each component, exclude transform component
+	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
+		GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
 	}
 
 	UpdateBB();
@@ -239,17 +241,17 @@ void C_Transform::UpdateScale()
 	globalScale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
 	globalScale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
 
-	// Give current scale change to the transform component of every child of this transform's gameobject.
-	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
+	// For each child
+	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
 	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
+		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
 		child_transform->OnScaleUpdate(globalScale);
 	}
 
-	// Give current scale change to every component linked to this transform's gameobject.
-	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
+	// For each component, exclude transform component
+	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(globalScale);
+		GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(globalScale);
 	}
 
 	UpdateBB();
@@ -258,17 +260,18 @@ void C_Transform::UpdateScale()
 void C_Transform::UpdateTransform()
 {
 	Transform globalTransform = GetGlobalTransform();
-	// Give current position change to the transform component of every child of this transform's gameobject.
-	for (size_t i = 0; i < this->GetGameObject()->GetChilds().size(); i++)
+
+	// For each child
+	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
 	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
+		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
 		child_transform->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
 	}
 
-	// Give current position change to every component linked to this transform's gameobject. i = 1 so we skip this transform instance
-	for (size_t i = 1; i < this->GetGameObject()->GetComponentList().size(); i++)
+	// For each component, exclude transform component
+	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
 	{
-		this->GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
+		GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
 	}
 
 	UpdateBB();
@@ -278,7 +281,10 @@ void C_Transform::CalculateGlobalMatrix()
 {
 	Transform globalTransform = GetGlobalTransform();
 
-	math::Quat rotation = Quat::FromEulerXYZ(math::DegToRad(globalTransform.rotation.x), math::DegToRad(globalTransform.rotation.y), math::DegToRad(globalTransform.rotation.z));
+	float aux_x = math::DegToRad(globalTransform.rotation.x);
+	float aux_y = math::DegToRad(globalTransform.rotation.y);
+	float aux_z = math::DegToRad(globalTransform.rotation.z);
 
+	math::Quat rotation = Quat::FromEulerXYZ(aux_x, aux_y, aux_z);
 	globalMatrix = float4x4::FromTRS(globalTransform.position, rotation, globalTransform.scale);
 }
