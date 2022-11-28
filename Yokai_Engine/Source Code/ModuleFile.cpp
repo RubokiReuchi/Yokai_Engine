@@ -5,8 +5,18 @@
 #include "FileTree.hpp"
 #include <iostream>
 #include <fstream>
+#include <filesystem>
+#include <chrono>
 
 #pragma comment (lib, "PhysFS/libx86/physfs.lib")
+
+template <typename T>
+std::time_t to_time_t(T t)
+{
+	using namespace std::chrono;
+	auto sctp = time_point_cast<system_clock::duration>(t - T::clock::now() + system_clock::now());
+	return system_clock::to_time_t(sctp);
+}
 
 ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 {
@@ -352,6 +362,17 @@ std::string ModuleFile::FS_RemoveExtension(std::string path)
 	return new_path;
 }
 
+std::string ModuleFile::FS_GetLastModifyDate(std::string path)
+{
+	std::filesystem::file_time_type date = std::filesystem::last_write_time(path);
+	std::time_t aux = to_time_t(date);
+	std::tm* gmt = std::gmtime(&aux);
+	std::stringstream buffer;
+	buffer << std::put_time(gmt, "%A, %d %B %Y %H:%M");
+	std::string formattedFileTime = buffer.str();
+	return formattedFileTime;
+}
+
 void ModuleFile::YK_CreateLibrary()
 {
 	if (!FS_IsDirectory(LIBRARY_PATH)) PHYSFS_mkdir(LIBRARY_PATH);
@@ -432,7 +453,11 @@ void ModuleFile::YK_SaveMetaData(std::string file_name, std::string file_referen
 	std::ofstream matafile(file_name, std::ofstream::out);
 	if (matafile.is_open())
 	{
+		// line 0, path of "parent file"
 		matafile << file_reference << "\n";
+
+		// line 1, last file modification
+		matafile << FS_GetLastModifyDate(file_reference) << "\n";
 		matafile.close();
 
 		// set meta file in hidden
@@ -445,19 +470,30 @@ void ModuleFile::YK_SaveMetaData(std::string file_name, std::string file_referen
 	}
 }
 
-std::string ModuleFile::YK_GetMetaInfo(std::string path)
+std::string ModuleFile::YK_GetMetaInfo(std::string path, int line)
 {
-	std::string origin_path;
+	std::string ret;
+
+	// unhide to allow reading
+	DWORD attributes = GetFileAttributes(path.c_str());
+	SetFileAttributes(path.c_str(), attributes - FILE_ATTRIBUTE_HIDDEN);
 
 	std::fstream metafile(path, std::ofstream::in);
 	if (metafile.is_open())
 	{
-		std::getline(metafile, origin_path);
+		for (int i = 0; i < line; i++)
+		{
+			std::getline(metafile, ret);
+		}
 	}
 	else
 	{
 		LOG("Error reading meta data.");
 	}
 
-	return origin_path;
+	// hide again
+	attributes = GetFileAttributes(path.c_str());
+	SetFileAttributes(path.c_str(), attributes + FILE_ATTRIBUTE_HIDDEN);
+
+	return ret;
 }
