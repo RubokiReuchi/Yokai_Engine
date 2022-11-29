@@ -11,6 +11,7 @@
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 
 std::map<std::string, MeshInfo> MeshImporter::loadedMeshes;
+std::map<std::string, MeshInfo> MeshImporter::loadedCustomMeshes;
 std::map<uint, std::string> MeshImporter::loadedPaths;
 Assimp::Importer MeshImporter::importer;
 GameObject* MeshImporter::returnGameObject = nullptr;
@@ -63,14 +64,14 @@ GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
 	if (!parent) parent = app->engine_order->rootGameObject;
 	returnGameObject = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
-	if (loadedMeshes.find(path) != loadedMeshes.end()) // check if path is loaded
+	if (loadedCustomMeshes.find(path) != loadedCustomMeshes.end()) // check if path is loaded
 	{
-		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedMeshes[path].initialID);
+		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedCustomMeshes[path].initialID);
 	}
 	else
 	{
-		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize();
-		loadedMeshes[path].numOfMeshes = 0;
+		loadedCustomMeshes[path].initialID = app->renderer3D->model_render.GetMapSize();
+		loadedCustomMeshes[path].numOfMeshes = 0;
 
 		SaveMesh aux_mesh;
 		aux_mesh.YK_LoadMesh(path.c_str());
@@ -197,7 +198,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 
 	uint meshNum = node->mNumMeshes;
 
-	loadedMeshes[path].numOfMeshes += meshNum;
+	//loadedMeshes[path].numOfMeshes += meshNum;
 
 	for (uint i = 0; i < meshNum; i++)
 	{
@@ -267,7 +268,7 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 	std::string compare = CheckSameMeshLoaded(vertices, indices);
 	if (compare != "no loaded")
 	{
-		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedMeshes[compare].initialID);
+		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedCustomMeshes[compare].initialID);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 		return;
 	}
@@ -297,8 +298,8 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}
 
-	loadedMeshes[file].initialID = 0;
-	loadedMeshes[file].numOfMeshes = -1;
+	loadedCustomMeshes[file].initialID = loadedCustomMeshes.size();
+	loadedCustomMeshes[file].numOfMeshes = -1;
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)
@@ -364,7 +365,7 @@ void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& fir
 
 std::string MeshImporter::CheckSameMeshLoaded(std::vector<VertexInfo> vertex, std::vector<uint> indices)
 {
-	for (auto& mesh : loadedMeshes)
+	for (auto& mesh : loadedCustomMeshes)
 	{
 		SaveMesh aux;
 		if (mesh.second.initialID == 0 && mesh.second.numOfMeshes == -1)

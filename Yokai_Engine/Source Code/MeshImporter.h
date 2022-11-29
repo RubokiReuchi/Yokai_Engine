@@ -47,6 +47,7 @@ private:
 	static std::string CheckSameMeshLoaded(std::vector<VertexInfo> vertex, std::vector<uint> indices);
 
 	static std::map<std::string, MeshInfo> loadedMeshes;
+	static std::map<std::string, MeshInfo> loadedCustomMeshes;
 	static std::map<uint, std::string> loadedPaths;
 	static Assimp::Importer importer;
 	static GameObject* returnGameObject;
