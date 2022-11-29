@@ -63,10 +63,21 @@ GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
 	if (!parent) parent = app->engine_order->rootGameObject;
 	returnGameObject = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
-	SaveMesh aux_mesh;
-	aux_mesh.YK_LoadMesh(path.c_str());
+	if (loadedMeshes.find(path) != loadedMeshes.end()) // check if path is loaded
+	{
+		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedMeshes[path].initialID);
+	}
+	else
+	{
+		loadedMeshes[path].initialID = app->renderer3D->model_render.GetMapSize();
+		loadedMeshes[path].numOfMeshes = 0;
 
-	dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
+		SaveMesh aux_mesh;
+		aux_mesh.YK_LoadMesh(path.c_str());
+
+		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
+	}
+	
 	returnGameObject->AddComponent(Component::TYPE::MATERIAL);
 
 	returnGameObject->GenerateAABB();

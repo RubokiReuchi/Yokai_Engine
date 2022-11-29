@@ -28,6 +28,11 @@ public:
 		return total_vertices;
 	}
 
+	std::vector<uint> GetIndices()
+	{
+		return total_indices;
+	}
+
 	std::string GetMeshPath()
 	{
 		return mesh_path;
@@ -36,6 +41,8 @@ public:
 public:
 	bool initialized = false;
 	std::string mesh_path;
+	std::vector<VertexInfo> mesh_vertices;
+	std::vector<uint> mesh_indices;
 private:
 	void CreateMeshBuffers();
 
