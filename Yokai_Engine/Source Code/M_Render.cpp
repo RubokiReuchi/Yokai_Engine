@@ -14,6 +14,11 @@ M_Render::M_Render()
 M_Render::~M_Render()
 {
     RELEASE(basic_shader);
+    RELEASE(outline_shader);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &IBO);
+    glDeleteBuffers(1, &MBO);
+    glDeleteBuffers(1, &TBO);
 }
 
 uint M_Render::InitManageRender(Re_Mesh mesh)
@@ -150,12 +155,10 @@ void M_Render::CreateMeshBuffers()
     // Create Vertex Array Object
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
-
     // Create Vertex Buffer Object
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(VertexInfo) * total_vertices.size(), &total_vertices[0], GL_STATIC_DRAW);
-
     // vertex positions
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexInfo), (void*)0);

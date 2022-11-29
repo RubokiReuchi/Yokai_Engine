@@ -56,6 +56,9 @@ public:
 
 	std::map<uint, GameObject*> game_objects;
 	std::vector<GameObject*> delete_queu;
+	bool new_scene = false;
+	bool load_scene = false;
 
 	std::vector<SerializedGO> serialized_go;
+	std::map<std::string, uint> loadedSerializedMeshes;
 };

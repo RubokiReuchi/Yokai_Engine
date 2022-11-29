@@ -501,6 +501,14 @@ char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std:
 void ModuleFile::YK_SaveMetaData(std::string file_name, std::string file_reference)
 {
 	file_name += ".meta";
+
+	// unhide to allow reading
+	DWORD attributes = GetFileAttributes(file_name.c_str());
+	if (attributes & FILE_ATTRIBUTE_HIDDEN)
+	{
+		SetFileAttributes(file_name.c_str(), attributes - FILE_ATTRIBUTE_HIDDEN);
+	}
+
 	std::ofstream matafile(file_name, std::ofstream::out);
 	if (matafile.is_open())
 	{

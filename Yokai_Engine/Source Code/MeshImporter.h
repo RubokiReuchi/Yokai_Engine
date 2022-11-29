@@ -39,6 +39,11 @@ class MeshImporter
 public:
 
 	static GameObject* LoadMesh(std::string path);
+	static void CleanMaps()
+	{
+		loadedMeshes.clear();
+		loadedCustomMeshes.clear();
+	}
 
 private:
 	static GameObject* LoadModelFromYK(std::string path, GameObject* parent = nullptr);
@@ -55,7 +60,6 @@ private:
 
 	static std::map<std::string, MeshInfo> loadedMeshes;
 	static std::map<std::string, MeshInfo> loadedCustomMeshes;
-	static std::map<uint, std::string> loadedPaths;
 	static Assimp::Importer importer;
 	static GameObject* returnGameObject;
 };

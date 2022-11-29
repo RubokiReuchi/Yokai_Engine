@@ -130,6 +130,26 @@ update_status ModuleEO::PreUpdate(float dt)
         RELEASE(delete_queu[i]);
     }
 
+    if (load_scene)
+    {
+        app->renderer3D->model_render.CleanMap();
+
+        rootGameObject = new GameObject(serialized_go[0]);
+        for (size_t i = 1; i < serialized_go.size(); i++)
+        {
+            GameObject* new_go = new GameObject(serialized_go[i]);
+        }
+
+        serialized_go.clear();
+        load_scene = false;
+    }
+
+    if (new_scene)
+    {
+        app->renderer3D->model_render.CleanMap();
+        new_scene = false;
+    }
+
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {
         if (engine_order[i] && engine_order[i]->IsEnabled())
@@ -200,15 +220,8 @@ void ModuleEO::LoadSerializedGO()
 {
     rootGameObject->DeleteGameObject();
     app->camera->game_cameras.clear();
-    app->renderer3D->model_render.CleanMap();
-
-    rootGameObject = new GameObject(serialized_go[0]);
-    for (size_t i = 1; i < serialized_go.size(); i++)
-    {
-        GameObject* new_go = new GameObject(serialized_go[i]);
-    }
-
-    serialized_go.clear();
+    MeshImporter::CleanMaps();
+    load_scene = true;
 }
 
 GameObject* ModuleEO::GetGameObjectByUUID(std::string uuid)
@@ -231,7 +244,8 @@ void ModuleEO::NewScene()
         child->DeleteGameObject();
     }
     app->camera->game_cameras.clear();
-    app->renderer3D->model_render.CleanMap();
+    MeshImporter::CleanMaps();
+    new_scene = true;
 
     GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
     app->camera->InitNewGameCamera(main_camera);

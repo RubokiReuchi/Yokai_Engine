@@ -37,8 +37,21 @@ GameObject::GameObject(SerializedGO go)
 		switch (go.components_type[i])
 		{
 		case 2: // Mesh Renderer
-			aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
-			dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);
+			if (app->engine_order->loadedSerializedMeshes.find(go.mesh_path) != app->engine_order->loadedSerializedMeshes.end()) // check if path is loaded
+			{
+				dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(app->engine_order->loadedSerializedMeshes[go.mesh_path]);
+			}
+			else
+			{
+				app->engine_order->loadedSerializedMeshes[go.mesh_path] = app->renderer3D->model_render.GetMapSize();
+
+				SaveMesh aux_mesh;
+				aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
+
+				dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);
+			}
+			/*aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
+			dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);*/
 			break;
 		case 3: // Material
 			dynamic_cast<C_Material*>(AddComponent(Component::TYPE::MATERIAL))->SetTexture(go.selected_texture);
