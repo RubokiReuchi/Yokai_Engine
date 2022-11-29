@@ -213,7 +213,7 @@ void MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string
 
 	// set transform after al child have been added
 	newParent->GenerateAABB();
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos / 100.0f, scale / 100.0f, eulerRot);
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, {1,1,1}/*pos / 100.0f, scale / 100.0f*/, eulerRot);
 }
 
 void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go)
@@ -328,13 +328,15 @@ void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& fir
 	node->mTransformation.Decompose(scaling, rotation, translation);
 	float3 pos(translation.x, translation.y, translation.z);
 	float3 scale(scaling.x, scaling.y, scaling.z);
+	std::string aux = node->mName.C_Str();
+	if (aux == "RootNode") scale = float3(100, 100, 100);
 	Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
 	float3 eulerRot = rot.ToEulerXYZ();
 	eulerRot.x = math::RadToDeg(eulerRot.x);
 	eulerRot.y = math::RadToDeg(eulerRot.y);
 	eulerRot.z = math::RadToDeg(eulerRot.z);
 	
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos / 100.0f, scale / 100.0f, eulerRot);
 
 	M_ModelRender* renderManager = &app->renderer3D->model_render;
 
@@ -368,11 +370,11 @@ std::string MeshImporter::CheckSameMeshLoaded(std::vector<VertexInfo> vertex, st
 	for (auto& mesh : loadedCustomMeshes)
 	{
 		SaveMesh aux;
-		if (mesh.second.initialID == 0 && mesh.second.numOfMeshes == -1)
+		if (mesh.second.numOfMeshes == -1)
 		{
 			aux.YK_LoadMesh(mesh.first.c_str());
-			if (aux.vertices.size() != vertex.size()) break;
-			if (aux.indices.size() != indices.size()) break;
+			if (aux.vertices.size() != vertex.size()) continue;
+			if (aux.indices.size() != indices.size()) continue;
 			for (size_t i = 0; i < indices.size(); i++)
 			{
 				if (indices[i] != aux.indices[i]) break;
