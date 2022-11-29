@@ -13,8 +13,8 @@ public:
 
 	void OnEditor();
 
-	void InitAsInstanciedMesh(uint mesh_id, float3 position = float3(0, 0, 0), float3 scale = float3(1, 1, 1));
-	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path, float3 position = float3(0, 0, 0), float3 scale = float3(1, 1, 1));
+	void InitAsInstanciedMesh(uint mesh_id);
+	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path);
 
 	void OnPositionUpdate(float3 position) override;
 	void OnScaleUpdate(float3 scale) override;

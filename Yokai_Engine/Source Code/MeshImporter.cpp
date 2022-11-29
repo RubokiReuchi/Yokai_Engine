@@ -39,16 +39,16 @@ GameObject* MeshImporter::LoadModelFromYK(std::string path, GameObject* parent)
 	if (!parent) parent = app->engine_order->rootGameObject;
 	GameObject* new_go = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
-	std::vector<std::string> children_paths = app->file->YK_LoadModel(path);
-	for (int i = 0; i < std::stoi(children_paths[0]); i++)
+	ModelYK children_info = app->file->YK_LoadModel(path);
+	for (size_t i = 0; i < children_info.children_paths.size(); i++)
 	{
-		if (app->file->FS_GetExtension(children_paths[i + 1]) == ".ykmesh")
+		if (app->file->FS_GetExtension(children_info.children_paths[i]) == ".ykmesh")
 		{
-			LoadMeshFromYK(children_paths[i + 1], new_go);
+			LoadMeshFromYK(children_info.children_paths[i], children_info.positions[i], children_info.scales[i], new_go);
 		}
-		else if (app->file->FS_GetExtension(children_paths[i + 1]) == ".ykmodel")
+		else if (app->file->FS_GetExtension(children_info.children_paths[i]) == ".ykmodel")
 		{
-			LoadModelFromYK(children_paths[i + 1], new_go);
+			LoadModelFromYK(children_info.children_paths[i], new_go);
 		}
 	}
 
@@ -59,14 +59,16 @@ GameObject* MeshImporter::LoadModelFromYK(std::string path, GameObject* parent)
 	return new_go;
 }
 
-GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
+GameObject* MeshImporter::LoadMeshFromYK(std::string path, float3 position, float3 scale, GameObject* parent)
 {
 	if (!parent) parent = app->engine_order->rootGameObject;
 	returnGameObject = new GameObject(parent, ModuleFile::FS_GetFileName(path, false));
 
+	C_MeshRenderer* mr = NULL;
 	if (loadedCustomMeshes.find(path) != loadedCustomMeshes.end()) // check if path is loaded
 	{
-		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedCustomMeshes[path].initialID);
+		mr = dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER));
+		mr->InitAsInstanciedMesh(loadedCustomMeshes[path].initialID);
 	}
 	else
 	{
@@ -76,13 +78,14 @@ GameObject* MeshImporter::LoadMeshFromYK(std::string path, GameObject* parent)
 		SaveMesh aux_mesh;
 		aux_mesh.YK_LoadMesh(path.c_str());
 
-		dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
+		mr = dynamic_cast<C_MeshRenderer*>(returnGameObject->AddComponent(Component::TYPE::MESH_RENDERER));
+		mr->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, path);
 	}
 	
 	returnGameObject->AddComponent(Component::TYPE::MATERIAL);
 
 	returnGameObject->GenerateAABB();
-	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+	dynamic_cast<C_Transform*>(returnGameObject->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(position, scale, { 0.0f, 0.0f, 0.0f });
 
 	return returnGameObject;
 }

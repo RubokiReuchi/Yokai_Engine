@@ -424,12 +424,19 @@ ModelYK ModuleFile::YK_LoadModel(std::string path)
 	ModelYK model_info;
 	float3 f_aux;
 
-	for (int i = 1; i < std::stoi(rows[0]); i++)
+	for (int i = 1; i < std::stoi(rows[0]) + 1; i++)
 	{
+		std::string s_aux = rows[i];
+		size_t npos = s_aux.find_first_of(".");
+		s_aux.erase(0, npos);
+		npos = s_aux.find_first_of("$");
+		s_aux.erase(npos, s_aux.length());
+		if (s_aux == ".ykmodel") continue;
+
 		int j = i - 1;
 		// scale z
-		std::string s_aux = rows[i];
-		size_t npos = s_aux.find_last_of("$");
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
 		f_aux.z = std::stof(s_aux.erase(0, npos + 1));
 		rows[i].erase(npos, rows[i].length());
 		// scale y
