@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "ResourceManager.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 #include <string>
 #include <vector>
@@ -19,6 +20,13 @@
 
 class FileTree;
 struct VertexInfo;
+
+struct ModelYK
+{
+	std::vector<std::string> children_paths;
+	std::vector<float3> positions;
+	std::vector<float3> scales;
+};
 
 class ModuleFile : public Module
 {
@@ -65,8 +73,8 @@ public:
 	// custom format
 	void YK_CreateLibrary();
 
-	void YK_SaveModel(std::string path, std::vector<std::string> children_paths);
-	std::vector<std::string> YK_LoadModel(std::string path);
+	void YK_SaveModel(std::string path, std::vector<std::string> children_paths, std::vector<float3> positions, std::vector<float3> scales);
+	ModelYK YK_LoadModel(std::string path);
 	char* YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices);
 
 	void YK_SaveMetaData(std::string file_name, std::string file_reference);

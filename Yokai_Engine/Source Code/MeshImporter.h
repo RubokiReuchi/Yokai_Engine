@@ -19,6 +19,13 @@ struct MeshInfo
 	uint initialID;
 };
 
+struct ModelInfo
+{
+	std::string child_path;
+	float3 position;
+	float3 scale;
+};
+
 struct SaveMesh
 {
 	std::vector<VertexInfo> vertices;
@@ -40,7 +47,7 @@ private:
 
 	static const aiScene* GetAiScene(std::string path);
 
-	static std::vector<std::string> CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
+	static ModelYK CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
 	static std::string CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go = false);
 	static void CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr); // create a copy
 

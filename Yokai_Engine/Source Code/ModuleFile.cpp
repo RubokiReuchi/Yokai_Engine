@@ -385,14 +385,15 @@ void ModuleFile::YK_CreateLibrary()
 	if (!FS_IsDirectory(SCRIPTS_PATH)) PHYSFS_mkdir(SCRIPTS_PATH);
 }
 
-void ModuleFile::YK_SaveModel(std::string path, std::vector<std::string> children_paths)
+void ModuleFile::YK_SaveModel(std::string path, std::vector<std::string> children_paths, std::vector<float3> positions, std::vector<float3> scales)
 {
 	std::ofstream file(path, std::ofstream::out);
 	if (file.is_open())
 	{
-		for (size_t i = 0; i < children_paths.size(); i++)
+		file << children_paths[0] << "\n";
+		for (size_t i = 0; i < children_paths.size() - 1; i++)
 		{
-			file << children_paths[i] << "\n";
+			file << children_paths[i + 1] << "$" << positions[i].x << "$" << positions[i].y << "$" << positions[i].z << "$" << scales[i].x << "$" << scales[i].y << "$" << scales[i].z << "\n";
 		}
 		file.close();
 	}
@@ -402,9 +403,9 @@ void ModuleFile::YK_SaveModel(std::string path, std::vector<std::string> childre
 	}
 }
 
-std::vector<std::string> ModuleFile::YK_LoadModel(std::string path)
+ModelYK ModuleFile::YK_LoadModel(std::string path)
 {
-	std::vector<std::string> ret;
+	std::vector<std::string> rows;
 	std::string line;
 
 	std::fstream file(path, std::ofstream::in);
@@ -412,7 +413,7 @@ std::vector<std::string> ModuleFile::YK_LoadModel(std::string path)
 	{
 		while (std::getline(file, line))
 		{
-			ret.push_back(line);
+			rows.push_back(line);
 		}
 	}
 	else
@@ -420,7 +421,49 @@ std::vector<std::string> ModuleFile::YK_LoadModel(std::string path)
 		LOG("Error loading model.");
 	}
 
-	return ret;
+	ModelYK model_info;
+	float3 f_aux;
+
+	for (int i = 1; i < std::stoi(rows[0]); i++)
+	{
+		int j = i - 1;
+		// scale z
+		std::string s_aux = rows[i];
+		size_t npos = s_aux.find_last_of("$");
+		f_aux.z = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		// scale y
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
+		f_aux.y = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		// scale x
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
+		f_aux.x = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		model_info.scales.push_back(f_aux);
+		// position z
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
+		f_aux.z = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		// position y
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
+		f_aux.y = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		// position x
+		s_aux = rows[i];
+		npos = s_aux.find_last_of("$");
+		f_aux.x = std::stof(s_aux.erase(0, npos + 1));
+		rows[i].erase(npos, rows[i].length());
+		model_info.positions.push_back(f_aux);
+		// path
+		model_info.children_paths.push_back(rows[i]);
+	}
+
+	return model_info;
 }
 
 char* ModuleFile::YK_SaveMesh(uint& size, std::vector<VertexInfo> vertices, std::vector<uint> indices)

@@ -119,38 +119,11 @@ const aiScene* MeshImporter::GetAiScene(std::string path)
 	return scene;
 }
 
-std::vector<std::string> MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent)
+ModelYK MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent)
 {
-	std::string file = "";
-	std::string reference_file = path;
-	std::vector<std::string> model_paths;
-	// save custom format
-	if (node->mNumChildren > 1)
-	{
-		model_paths.push_back(std::to_string(node->mNumChildren));
-		for (size_t i = 0; i < node->mNumChildren; i++)
-		{
-			if (node->mChildren[i]->mNumChildren > 1)
-			{
-				std::string model_file = MODELS_PATH;
-				model_file += node->mChildren[i]->mName.C_Str();
-				model_file += ".ykmodel";
-				model_paths.push_back(model_file);
-			}
-		}
-
-		file += MODELS_PATH;
-		file += app->file->FS_GetFileName(path, false);
-		file += ".ykmodel";
-
-		app->file->YK_SaveModel(file, model_paths);
-		app->file->YK_SaveMetaData(file, reference_file);
-		path = file;
-	}
-
 	if (node->mNumMeshes == 0 && node->mNumChildren == 1)
 	{
-		std::vector<std::string> aux = CreateNewNode(node->mChildren[0], scene, path, parent);
+		ModelYK aux = CreateNewNode(node->mChildren[0], scene, path, parent);
 		return aux;
 	}
 	
@@ -192,20 +165,52 @@ std::vector<std::string> MeshImporter::CreateNewNode(aiNode* node, const aiScene
 
 	uint meshNum = node->mNumMeshes;
 
-	//loadedMeshes[path].numOfMeshes += meshNum;
-	std::vector<std::string> meshes_paths;
+	std::string file = "";
+	std::string reference_file = path;
+	ModelYK model_info;
+	// save custom format
+	if (node->mNumChildren > 1)
+	{
+		model_info.children_paths.push_back(std::to_string(node->mNumChildren));
+		for (size_t i = 0; i < node->mNumChildren; i++)
+		{
+			if (node->mChildren[i]->mNumChildren > 1)
+			{
+				std::string model_file = MODELS_PATH;
+				model_file += node->mChildren[i]->mName.C_Str();
+				model_file += ".ykmodel";
+				model_info.children_paths.push_back(model_file);
+				model_info.positions.push_back(float3(0, 0, 0));
+				model_info.scales.push_back(float3(1, 1, 1));
+			}
+		}
+
+		file += MODELS_PATH;
+		file += app->file->FS_GetFileName(path, false);
+		file += ".ykmodel";
+
+		app->file->YK_SaveModel(file, model_info.children_paths, model_info.positions, model_info.scales);
+		app->file->YK_SaveMetaData(file, reference_file);
+		path = file;
+	}
+
+	ModelYK meshes_info;
 
 	for (uint i = 0; i < meshNum; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		std::string mesh_path = CreateMesh(mesh, scene, newParent, node->mName, path, (meshNum > 1 || necessaryNode));
-		meshes_paths.push_back(mesh_path);
+		meshes_info.children_paths.push_back(mesh_path);
+		meshes_info.positions.push_back(pos / 100.0f);
+		meshes_info.scales.push_back(scale / 100.0f);
 	}
 
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		std::vector<std::string> aux = CreateNewNode(node->mChildren[i], scene, path, newParent);
-		meshes_paths.insert(meshes_paths.end(), aux.begin(), aux.end());
+		ModelYK aux = CreateNewNode(node->mChildren[i], scene, path, newParent);
+		meshes_info.children_paths.insert(meshes_info.children_paths.end(), aux.children_paths.begin(), aux.children_paths.end());
+		meshes_info.positions.insert(meshes_info.positions.end(), aux.positions.begin(), aux.positions.end());
+		meshes_info.scales.insert(meshes_info.scales.end(), aux.scales.begin(), aux.scales.end());
 	}
 
 	// set transform after al child have been added
@@ -215,13 +220,15 @@ std::vector<std::string> MeshImporter::CreateNewNode(aiNode* node, const aiScene
 	// save custom format
 	if (node->mNumChildren > 1)
 	{
-		model_paths.insert(model_paths.end(), meshes_paths.begin(), meshes_paths.end());
+		model_info.children_paths.insert(model_info.children_paths.end(), meshes_info.children_paths.begin(), meshes_info.children_paths.end());
+		model_info.positions.insert(model_info.positions.end(), meshes_info.positions.begin(), meshes_info.positions.end());
+		model_info.scales.insert(model_info.scales.end(), meshes_info.scales.begin(), meshes_info.scales.end());
 
-		app->file->YK_SaveModel(path, model_paths);
+		app->file->YK_SaveModel(path, model_info.children_paths, model_info.positions, model_info.scales);
 		app->file->YK_SaveMetaData(path, reference_file);
 	}
 
-	return meshes_paths;
+	return meshes_info;
 }
 
 std::string MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go)

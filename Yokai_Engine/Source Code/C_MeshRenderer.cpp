@@ -74,22 +74,22 @@ void C_MeshRenderer::OnEditor()
 	}
 }
 
-void C_MeshRenderer::InitAsInstanciedMesh(uint mesh_id)
+void C_MeshRenderer::InitAsInstanciedMesh(uint mesh_id, float3 position, float3 scale)
 {
 	this->mesh_id = mesh_id + 2;
 
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(this->mesh_id);
 
 	Re_Mesh instanceMesh;
-	instanceMesh.InitMeshInfo(manager->mesh_vertices, manager->mesh_indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
+	instanceMesh.InitMeshInfo(manager->mesh_vertices, manager->mesh_indices, position, scale);
 
 	instance_id = manager->AddMesh(instanceMesh);
 }
 
-void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path)
+void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path, float3 position, float3 scale)
 {
 	Re_Mesh newMesh;
-	newMesh.InitMeshInfo(vertices, indices, { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f });
+	newMesh.InitMeshInfo(vertices, indices, position, scale);
 
 	mesh_id = app->renderer3D->model_render.GetMapSize() + 2;
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id); // Create a M_Render
