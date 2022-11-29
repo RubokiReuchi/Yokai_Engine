@@ -36,7 +36,15 @@ bool ModuleEO::Start()
 
     // load street to second deliver
     MeshImporter::LoadMesh("Assets/street.fbx");
-    /*uint bakerTexture = TextureImporter::LoadTexture("Assets/Baker_house.png");
+    uint texture041 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_041.png");
+    uint texture040 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_040.png");
+    uint texture038_037_034_026_022 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_038_037_034_026_022.tga");
+    uint texture036 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_036.tga");
+    uint texture033 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_033.tga");
+    uint texture032_014 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_032_014.tga");
+    uint texture024 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_024.tga");
+    uint texture023 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_023.tga");
+    uint texture017 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_017.tga");
 
     for (auto& gameObject : game_objects)
     {
@@ -44,10 +52,55 @@ bool ModuleEO::Start()
         C_Material* mat = dynamic_cast<C_Material*>(gameObject.second->GetComponent(Component::TYPE::MATERIAL));
         if (c_mr != nullptr)
         {
-            c_mr->GetMesh().texture_id = (float)bakerTexture;
-            mat->SetTexture(c_mr->GetTexture((float)bakerTexture));
+            if (gameObject.second->name == "City_building_041")
+            {
+                c_mr->GetMesh().texture_id = (float)texture041;
+                mat->SetTexture(c_mr->GetTexture((float)texture041));
+            }
+            else if (gameObject.second->name == "City_building_040")
+            {
+                c_mr->GetMesh().texture_id = (float)texture040;
+                mat->SetTexture(c_mr->GetTexture((float)texture040));
+            }
+            else if (gameObject.second->name == "City_building_038" || gameObject.second->name == "City_building_037" 
+                || gameObject.second->name == "City_building_034" || gameObject.second->name == "City_building_026"
+                || gameObject.second->name == "City_building_022")
+            {
+                c_mr->GetMesh().texture_id = (float)texture038_037_034_026_022;
+                mat->SetTexture(c_mr->GetTexture((float)texture038_037_034_026_022));
+            }
+            else if (gameObject.second->name == "City_building_036")
+            {
+                c_mr->GetMesh().texture_id = (float)texture036;
+                mat->SetTexture(c_mr->GetTexture((float)texture036));
+            }
+            else if (gameObject.second->name == "City_building_033")
+            {
+                c_mr->GetMesh().texture_id = (float)texture033;
+                mat->SetTexture(c_mr->GetTexture((float)texture033));
+            }
+            else if (gameObject.second->name == "City_building_032" || gameObject.second->name == "City_building_014")
+            {
+                c_mr->GetMesh().texture_id = (float)texture032_014;
+                mat->SetTexture(c_mr->GetTexture((float)texture032_014));
+            }
+            else if (gameObject.second->name == "City_building_024")
+            {
+                c_mr->GetMesh().texture_id = (float)texture024;
+                mat->SetTexture(c_mr->GetTexture((float)texture024));
+            }
+            else if (gameObject.second->name == "City_building_023")
+            {
+                c_mr->GetMesh().texture_id = (float)texture023;
+                mat->SetTexture(c_mr->GetTexture((float)texture023));
+            }
+            else if (gameObject.second->name == "City_building_017")
+            {
+                c_mr->GetMesh().texture_id = (float)texture017;
+                mat->SetTexture(c_mr->GetTexture((float)texture017));
+            }
         }
-    }*/
+    }
 
     return true;
 }
