@@ -34,9 +34,9 @@ bool ModuleEO::Start()
         }
     }
 
-    // only for first deliver, place the baker house with this texture
-    MeshImporter::LoadMesh("Assets/BakerHouse.fbx");
-    uint bakerTexture = TextureImporter::LoadTexture("Assets/Baker_house.png");
+    // load street to second deliver
+    MeshImporter::LoadMesh("Assets/street.fbx");
+    /*uint bakerTexture = TextureImporter::LoadTexture("Assets/Baker_house.png");
 
     for (auto& gameObject : game_objects)
     {
@@ -47,7 +47,7 @@ bool ModuleEO::Start()
             c_mr->GetMesh().texture_id = (float)bakerTexture;
             mat->SetTexture(c_mr->GetTexture((float)bakerTexture));
         }
-    }
+    }*/
 
     return true;
 }

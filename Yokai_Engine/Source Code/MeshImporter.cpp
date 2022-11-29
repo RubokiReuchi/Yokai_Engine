@@ -210,7 +210,7 @@ std::vector<std::string> MeshImporter::CreateNewNode(aiNode* node, const aiScene
 
 	// set transform after al child have been added
 	newParent->GenerateAABB();
-	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, {1,1,1}/*pos / 100.0f, scale / 100.0f*/, eulerRot);
+	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos / 100.0f, scale / 100.0f, eulerRot);
 
 	// save custom format
 	if (node->mNumChildren > 1)
