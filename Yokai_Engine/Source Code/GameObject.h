@@ -111,6 +111,11 @@ public:
 
 	bool is_camera;
 
+	void Rename(std::string new_name)
+	{
+		name = new_name;
+	}
+
 public:
 	std::vector<Component*> components;
 	std::vector<GameObject*> children;

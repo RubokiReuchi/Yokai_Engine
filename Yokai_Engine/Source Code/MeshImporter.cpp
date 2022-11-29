@@ -286,6 +286,7 @@ std::string MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObj
 	std::string compare = CheckSameMeshLoaded(vertices, indices);
 	if (compare != "no loaded")
 	{
+		parent->Rename(app->file->FS_GetFileName(compare, false));
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedCustomMeshes[compare].initialID);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 		return compare;

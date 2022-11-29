@@ -45,6 +45,9 @@ bool ModuleEO::Start()
     uint texture024 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_024.tga");
     uint texture023 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_023.tga");
     uint texture017 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_017.tga");
+    uint texture_green = TextureImporter::LoadTexture("Assets/StreetTextures/GreenColor.png");
+    uint texture_grey = TextureImporter::LoadTexture("Assets/StreetTextures/GreyColor.png");
+    uint texture_lightgrey = TextureImporter::LoadTexture("Assets/StreetTextures/LightGreyColor.png");
 
     for (auto& gameObject : game_objects)
     {
@@ -98,6 +101,21 @@ bool ModuleEO::Start()
             {
                 c_mr->GetMesh().texture_id = (float)texture017;
                 mat->SetTexture(c_mr->GetTexture((float)texture017));
+            }
+            else if (gameObject.second->name == "Plane001")
+            {
+                c_mr->GetMesh().texture_id = (float)texture_green;
+                mat->SetTexture(c_mr->GetTexture((float)texture_green));
+            }
+            else if (gameObject.second->name == "Object010")
+            {
+                c_mr->GetMesh().texture_id = (float)texture_lightgrey;
+                mat->SetTexture(c_mr->GetTexture((float)texture_lightgrey));
+            }
+            else if (gameObject.second->name == "Line002")
+            {
+                c_mr->GetMesh().texture_id = (float)texture_grey;
+                mat->SetTexture(c_mr->GetTexture((float)texture_grey));
             }
         }
     }
