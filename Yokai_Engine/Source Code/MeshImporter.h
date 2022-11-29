@@ -15,7 +15,7 @@ struct VertexInfo;
 
 struct MeshInfo
 {
-	uint numOfMeshes;
+	int numOfMeshes;
 	uint initialID;
 };
 
@@ -43,6 +43,8 @@ private:
 	static void CreateNewNode(aiNode* node, const aiScene* scene, std::string path, GameObject* parent = nullptr);
 	static void CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* parent, aiString node_name, std::string parent_path, bool create_go = false);
 	static void CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent = nullptr); // create a copy
+
+	static std::string CheckSameMeshLoaded(std::vector<VertexInfo> vertex, std::vector<uint> indices);
 
 	static std::map<std::string, MeshInfo> loadedMeshes;
 	static std::map<uint, std::string> loadedPaths;

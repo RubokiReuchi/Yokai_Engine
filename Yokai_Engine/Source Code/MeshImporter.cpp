@@ -264,6 +264,14 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 	}
 
+	std::string compare = CheckSameMeshLoaded(vertices, indices);
+	if (compare != "no loaded")
+	{
+		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedMeshes[compare].initialID);
+		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
+		return;
+	}
+
 	// save custom format
 	std::string file = MESHES_PATH;
 	file += node_name.C_Str();
@@ -288,6 +296,9 @@ void MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObject* pa
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, file);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}
+
+	loadedMeshes[file].initialID = 0;
+	loadedMeshes[file].numOfMeshes = -1;
 }
 
 void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& firstMeshID, GameObject* parent)
@@ -349,6 +360,40 @@ void MeshImporter::CloneLoadedNode(aiNode* node, const aiScene* scene, uint& fir
 
 	// set transform after al child have been added
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos, { 1.0f, 1.0f, 1.0f }, eulerRot);
+}
+
+std::string MeshImporter::CheckSameMeshLoaded(std::vector<VertexInfo> vertex, std::vector<uint> indices)
+{
+	for (auto& mesh : loadedMeshes)
+	{
+		SaveMesh aux;
+		if (mesh.second.initialID == 0 && mesh.second.numOfMeshes == -1)
+		{
+			aux.YK_LoadMesh(mesh.first.c_str());
+			if (aux.vertices.size() != vertex.size()) break;
+			if (aux.indices.size() != indices.size()) break;
+			for (size_t i = 0; i < indices.size(); i++)
+			{
+				if (indices[i] != aux.indices[i]) break;
+			}
+			for (size_t i = 0; i < vertex.size(); i++)
+			{
+				if (vertex[i].position.x != aux.vertices[i].position.x) break;
+				if (vertex[i].position.y != aux.vertices[i].position.y) break;
+				if (vertex[i].position.z != aux.vertices[i].position.z) break;
+				if (vertex[i].normals.x != aux.vertices[i].normals.x) break;
+				if (vertex[i].normals.y != aux.vertices[i].normals.y) break;
+				if (vertex[i].normals.z != aux.vertices[i].normals.z) break;
+				if (vertex[i].tex_coords.x != aux.vertices[i].tex_coords.x) break;
+				if (vertex[i].tex_coords.y != aux.vertices[i].tex_coords.y) break;
+				if (vertex[i].texture_id != aux.vertices[i].texture_id) break;
+			}
+
+			return mesh.first;
+		}
+	}
+
+	return "no loaded";
 }
 
 void SaveMesh::YK_LoadMesh(const char* path)
