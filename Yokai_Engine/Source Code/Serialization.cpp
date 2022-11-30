@@ -55,6 +55,7 @@ void Serialization::YK_LoadScene(std::string path)
     }
 
     app->engine_order->LoadSerializedGO();
+    json_value_free(scene_value);
 }
 
 void Serialization::SerializeSceneCamera(JSON_Object* json_object)
@@ -347,4 +348,5 @@ void Serialization::LoadSettings()
     SDL_DisplayMode DM;
     SDL_GetCurrentDisplayMode(0, &DM);
     SDL_SetWindowPosition(app->window->window, (DM.w - app->window->width) / 2, (DM.h - app->window->height) / 2);
+    json_value_free(settings_value);
 }
