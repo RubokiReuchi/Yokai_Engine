@@ -56,6 +56,7 @@ void ResourceManager::CheckRemovedFiles()
 		}
 	}
 	
+	RELEASE(folder);
 	folder = ModuleFile::FS_GetFileTree(MESHES_PATH);
 
 	for (size_t i = 1; i < folder->files.size(); i += 2)
@@ -68,6 +69,7 @@ void ResourceManager::CheckRemovedFiles()
 		}
 	}
 
+	RELEASE(folder);
 	folder = ModuleFile::FS_GetFileTree(TEXTURES_PATH);
 
 	for (size_t i = 1; i < folder->files.size(); i += 2)
@@ -97,6 +99,7 @@ void ResourceManager::CheckModifiedFiles()
 		}
 	}
 
+	RELEASE(folder);
 	folder = ModuleFile::FS_GetFileTree(MESHES_PATH);
 
 	for (size_t i = 1; i < folder->files.size(); i += 2)
@@ -109,6 +112,7 @@ void ResourceManager::CheckModifiedFiles()
 		}
 	}
 
+	RELEASE(folder);
 	folder = ModuleFile::FS_GetFileTree(TEXTURES_PATH);
 
 	for (size_t i = 1; i < folder->files.size(); i += 2)
