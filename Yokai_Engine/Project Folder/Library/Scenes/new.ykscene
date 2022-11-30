@@ -41,7 +41,7 @@
             "IsCamera": false
         },
         {
-            "UUID": "O8EEOB6S7TX7OWZ3",
+            "UUID": "4WFRSOEUMURV3V4T",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -89,18 +89,18 @@
             ]
         },
         {
-            "UUID": "RBLODI46P6PGZNT8",
+            "UUID": "81MAHUB86FJ5EM67",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
-            "Name": "GameObject",
+            "Name": "street",
             "Position": [
                 0,
                 0,
                 0
             ],
             "Rotation": [
-                -0,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
@@ -114,23 +114,23 @@
             "IsCamera": false
         },
         {
-            "UUID": "V7ZY3P1JHQHPB7WL",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "BV1K729KWRBEP61C",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_041",
             "Position": [
-                30.695272445678711,
-                0.0084896087646484375,
-                -21.612640380859375
+                30.69529914855957,
+                0.0084896096959710121,
+                -21.612600326538086
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -153,23 +153,23 @@
             ]
         },
         {
-            "UUID": "YA6IJVY5Z39YMXQQ",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "EY7VN96XG34NZWUP",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                -34.679477691650391,
-                -0.011514663696289062,
-                30.643888473510742
+                -34.679500579833984,
+                -0.011514700017869473,
+                30.643899917602539
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -192,23 +192,23 @@
             ]
         },
         {
-            "UUID": "2ECS93VHRF186GK5",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "H3LEDGVB7FVWJFWU",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                -42.807235717773438,
-                -0.011514663696289062,
-                30.643888473510742
+                -42.807201385498047,
+                -0.011514700017869473,
+                30.643899917602539
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -231,23 +231,23 @@
             ]
         },
         {
-            "UUID": "59Q3XATUBRSHH8MA",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "LXRO3MSOQRN6U7Q8",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_038",
             "Position": [
                 -41.648998260498047,
-                -0.0060977935791015625,
-                16.495391845703125
+                -0.006097789853811264,
+                16.495399475097656
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -270,23 +270,23 @@
             ]
         },
         {
-            "UUID": "9CWEF9I824KQSQGN",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "O26ZJTQ1ICFF6PKD",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_037",
             "Position": [
-                -20.317691802978516,
-                -0.0059709548950195312,
-                16.163606643676758
+                -20.317699432373047,
+                -0.0059709497727453709,
+                16.163600921630859
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -309,23 +309,23 @@
             ]
         },
         {
-            "UUID": "CGCW5FFLLNCZBHAS",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "R5DA91NE1O7OPGMI",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_036",
             "Position": [
-                -31.216329574584961,
-                0.0129241943359375,
-                -33.201572418212891
+                -31.216299057006836,
+                0.012924199923872948,
+                -33.20159912109375
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -348,23 +348,23 @@
             ]
         },
         {
-            "UUID": "FBI7TMDXCZ49M1DX",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "VZJSXZLRS1YX1ZGW",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                13.38798713684082,
-                -0.01540374755859375,
-                40.802513122558594
+                13.387999534606934,
+                -0.015403700061142445,
+                40.802501678466797
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -387,23 +387,23 @@
             ]
         },
         {
-            "UUID": "IFWIJTABVCWIXR7B",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "Y4X3F6I5BDQ7CQB2",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_034",
             "Position": [
-                16.04951286315918,
-                -0.0061740875244140625,
-                16.696884155273438
+                16.04949951171875,
+                -0.006174089852720499,
+                16.6968994140625
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -426,23 +426,23 @@
             ]
         },
         {
-            "UUID": "MI3SZ18ONOORHA1G",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "274E4DFP3PIGV95F",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_033",
             "Position": [
-                -32.361492156982422,
-                0.016437530517578125,
-                -42.370418548583984
+                -32.361499786376953,
+                0.016437500715255737,
+                -42.370399475097656
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -465,23 +465,23 @@
             ]
         },
         {
-            "UUID": "PDHBP75161G1S23T",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "53IOTKD3MAAP617K",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_032",
             "Position": [
                 -29.478399276733398,
-                0.0082607269287109375,
-                -21.014093399047852
+                0.0082607297226786613,
+                -21.01409912109375
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -504,23 +504,23 @@
             ]
         },
         {
-            "UUID": "SHNMFE3EXL8A4KWY",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "96O7JRAGDM2YHJ1X",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                -34.679477691650391,
-                -0.01580047607421875,
-                41.835559844970703
+                -34.679500579833984,
+                -0.01580050028860569,
+                41.835601806640625
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -543,23 +543,23 @@
             ]
         },
         {
-            "UUID": "WK3WVLZRGXZJNBQC",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "CA4IZX8SWYU81AU3",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                -42.807235717773438,
-                -0.01580047607421875,
-                41.835559844970703
+                -42.807201385498047,
+                -0.01580050028860569,
+                41.835601806640625
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -582,23 +582,23 @@
             ]
         },
         {
-            "UUID": "ZG97LRXD8ARSYTTH",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "F5ASP5W6NBMHCTWG",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "Object010",
             "Position": [
-                -2.5033509731292725,
-                0.00626373291015625,
-                -15.800835609436035
+                -2.5033500194549561,
+                0.0062637301161885262,
+                -15.800800323486328
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -621,23 +621,23 @@
             ]
         },
         {
-            "UUID": "3JFQAQUPRMJ29LNV",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "I8O3ECUJ7NEQNKRL",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_040",
             "Position": [
-                13.38798713684082,
-                -0.01270294189453125,
-                33.755031585693359
+                13.387999534606934,
+                -0.012702899985015392,
+                33.755001068115234
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -660,23 +660,23 @@
             ]
         },
         {
-            "UUID": "6MT1RXK3IYBBS4H1",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "MCUMVARWYZ6Z73LY",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_026",
             "Position": [
-                31.511884689331055,
+                31.511899948120117,
                 -0.0060787200927734375,
-                16.446014404296875
+                16.445999145507812
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -699,23 +699,23 @@
             ]
         },
         {
-            "UUID": "AIZBG5HG2B3K4UJE",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "P79WKHP9HJX9IUN4",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_024",
             "Position": [
-                -20.57276725769043,
-                -0.052494049072265625,
-                -43.060848236083984
+                -20.572799682617188,
+                -0.052494000643491745,
+                -43.060798645019531
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -738,23 +738,23 @@
             ]
         },
         {
-            "UUID": "DLFL6BETSVUTFEDJ",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "SBG7AOMM9VPITDHH",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_023",
             "Position": [
-                42.130638122558594,
-                0.014568328857421875,
-                -37.493282318115234
+                42.130599975585938,
+                0.014568299986422062,
+                -37.493301391601562
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -777,23 +777,23 @@
             ]
         },
         {
-            "UUID": "GPL5NIC6C8M4Y57W",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "VEMIRVJZR8HSC4BN",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_022",
             "Position": [
-                -20.831319808959961,
-                -0.010282516479492188,
-                27.426488876342773
+                -20.831300735473633,
+                -0.010282499715685844,
+                27.42650032043457
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -816,23 +816,23 @@
             ]
         },
         {
-            "UUID": "JKZFCP9J3KFDANA2",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "Z911G2HCJK92NND1",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_017",
             "Position": [
-                44.260078430175781,
-                -0.0147705078125,
-                39.153713226318359
+                44.260101318359375,
+                -0.014770500361919403,
+                39.153701782226562
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -855,23 +855,23 @@
             ]
         },
         {
-            "UUID": "NO6P2W7WMW7MLF4F",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "3D7B69EX3W1BYE86",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_017",
             "Position": [
-                34.270420074462891,
-                -0.015850067138671875,
-                41.972743988037109
+                34.270401000976562,
+                -0.015850100666284561,
+                41.972698211669922
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -894,23 +894,23 @@
             ]
         },
         {
-            "UUID": "QRK9I349E8YV5XXK",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "6GLMMGCBTHSKIW2J",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_014",
             "Position": [
-                -19.439704895019531,
-                0.01248931884765625,
-                -32.061725616455078
+                -19.439699172973633,
+                0.012489300221204758,
+                -32.061698913574219
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -933,23 +933,23 @@
             ]
         },
         {
-            "UUID": "TMQJ822MWSQ5FORX",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "9KR5CN9ODTKTTO4O",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_036",
             "Position": [
-                -42.288051605224609,
-                0.0129241943359375,
-                -33.201572418212891
+                -42.288101196289062,
+                0.012924199923872948,
+                -33.20159912109375
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -972,23 +972,23 @@
             ]
         },
         {
-            "UUID": "WQ6TW9YZO5IEQ8T3",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "DF7F1L7146D357XT",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_023",
             "Position": [
-                30.134532928466797,
-                0.014568328857421875,
-                -37.493282318115234
+                30.134500503540039,
+                0.014568299986422062,
+                -37.493301391601562
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1011,23 +1011,23 @@
             ]
         },
         {
-            "UUID": "1TC5EFWD7HANAYN8",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "GIDPISVENI5COXR7",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_017",
             "Position": [
-                25.154008865356445,
-                -0.0147705078125,
-                39.153713226318359
+                25.153999328613281,
+                -0.014770500361919403,
+                39.153701782226562
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1050,23 +1050,23 @@
             ]
         },
         {
-            "UUID": "4PIN4MTXYT2WLHIM",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "JMR18ZTREUWLZHTC",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "Plane001",
             "Position": [
-                -0.028602838516235352,
-                0.0002263188362121582,
-                -0.026030540466308594
+                -0.028602799400687218,
+                0.00022631899628322572,
+                -0.026030499488115311
             ],
             "Rotation": [
-                0.017508277669548988,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
-                0.99663525819778442,
-                0.97061645984649658,
-                0.99663525819778442
+                0.99663501977920532,
+                0.97061598300933838,
+                0.99663501977920532
             ],
             "Enabled": true,
             "Visible": true,
@@ -1089,23 +1089,23 @@
             ]
         },
         {
-            "UUID": "7SWXSTIBI6T6W9KR",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "NHXJW6Q5XFOUA8OP",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "Line002",
             "Position": [
-                -2.1597719192504883,
-                0.00092601776123046875,
-                -1.8538362979888916
+                -2.1597700119018555,
+                0.0009260179940611124,
+                -1.8538399934768677
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1128,23 +1128,23 @@
             ]
         },
         {
-            "UUID": "BV39I1GO9QLFGRE5",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "QLCTEDOHPRG4TQIU",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_024",
             "Position": [
-                40.979988098144531,
-                0.0072078704833984375,
-                -18.270818710327148
+                40.979999542236328,
+                0.0072078700177371502,
+                -18.27079963684082
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1167,23 +1167,23 @@
             ]
         },
         {
-            "UUID": "ERHJY7D2S3DORI8A",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "TOI53KLU848D5HK8",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_023",
             "Position": [
-                16.010490417480469,
-                0.014568328857421875,
-                -37.493282318115234
+                16.010499954223633,
+                0.014568299986422062,
+                -37.493301391601562
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1206,23 +1206,23 @@
             ]
         },
         {
-            "UUID": "HUO2OEBEJF6X32AN",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "WJPFSRI8ZGZMG1EE",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_041",
             "Position": [
-                17.707162857055664,
-                0.007892608642578125,
-                -20.05327033996582
+                17.707199096679688,
+                0.0078926095739006996,
+                -20.053300857543945
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,
@@ -1245,23 +1245,23 @@
             ]
         },
         {
-            "UUID": "KY3DDD8R3RX7LS4S",
-            "ParentUUID": "RBLODI46P6PGZNT8",
+            "UUID": "1N4XHXGKISRVZR8R",
+            "ParentUUID": "81MAHUB86FJ5EM67",
             "Name": "City_building_032",
             "Position": [
-                -41.475887298583984,
-                0.0082607269287109375,
-                -21.014093399047852
+                -41.475898742675781,
+                0.0082607297226786613,
+                -21.01409912109375
             ],
             "Rotation": [
-                0.017508279532194138,
                 0,
-                -0
+                0,
+                0
             ],
             "Scale": [
                 1,
-                0.99999988079071045,
-                0.99999988079071045
+                1,
+                1
             ],
             "Enabled": true,
             "Visible": true,

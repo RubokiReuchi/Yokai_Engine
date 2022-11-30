@@ -202,6 +202,7 @@
     <ClInclude Include="Source Code\IconsFontAwesome.h" />
     <ClInclude Include="Source Code\ImGuiHelpers.h" />
     <ClInclude Include="Source Code\Light.h" />
+    <ClInclude Include="Source Code\MemLeaks.h" />
     <ClInclude Include="Source Code\MeshImporter.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleCamera3D.h" />

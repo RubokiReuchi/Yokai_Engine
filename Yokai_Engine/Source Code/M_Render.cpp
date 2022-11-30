@@ -121,8 +121,8 @@ void M_Render::Draw()
 
         // model matrix bind
         glBindBuffer(GL_ARRAY_BUFFER, MBO);
-        void* ptr = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(ptr, &selected_model_matrices.front(), selected_model_matrices.size() * sizeof(float4x4));
+        void* ptr1 = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        memcpy(ptr1, &selected_model_matrices.front(), selected_model_matrices.size() * sizeof(float4x4));
         glUnmapBuffer(GL_ARRAY_BUFFER);
 
         // Draw meshes with texture
