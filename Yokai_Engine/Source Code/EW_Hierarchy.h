@@ -27,7 +27,6 @@ private:
 	EO_Editor* editor = nullptr;
 
 	GameObject* draggingGameObject = nullptr;
-	GameObject* optionedGameObject = nullptr;
 	bool optionsOpen = false; //options popUp
 
 	ImGuiTreeNodeFlags base_flags;

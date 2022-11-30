@@ -93,7 +93,7 @@ void GameObject::Update()
 
 void GameObject::DeleteGameObject()
 {
-	if (app->engine_order->editor->GetSelectedGameObject()) app->engine_order->editor->SetSelectedGameObject(NULL);
+	if (app->engine_order->editor->GetSelectedGameObject() == this) app->engine_order->editor->SetSelectedGameObject(NULL);
 	if (parent) parent->RemoveChild(this);
 	for (size_t i = 1; i < app->engine_order->game_objects.size() + 1; i++)
 	{

@@ -78,27 +78,33 @@ void EW_Hierarchy::Update()
         }
     }
 
+    if (editor->GetSelectedGameObject() && app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && !optionsOpen)
+    {
+        optionsOpen = true;
+        ImGui::OpenPopup("Options");
+        ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+    }
+
     if (optionsOpen)
     {
         ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
         if (ImGui::BeginPopup("Options"))
         {
+            ImGui::Text("GameObject options");
+            ImGui::Separator();
             if (ImGui::Selectable("Create Empty", false, 0, ImVec2(200, 15)))
             {
-                GameObject* newGameObject = new GameObject(optionedGameObject, "Empty GameObject");
-                optionedGameObject = nullptr;
+                GameObject* newGameObject = new GameObject(editor->GetSelectedGameObject(), "Empty GameObject");
                 optionsOpen = false;
             }
             if (ImGui::Selectable("Unparent", false, 0, ImVec2(200, 15)))
             {
-                optionedGameObject->SetParent(app->engine_order->rootGameObject);
-                optionedGameObject = nullptr;
+                editor->GetSelectedGameObject()->SetParent(app->engine_order->rootGameObject);
                 optionsOpen = false;
             }
             if (ImGui::Selectable("Delete", false, 0, ImVec2(200, 15)))
             {
-                optionedGameObject->DeleteGameObject();
-                optionedGameObject = nullptr;
+                editor->GetSelectedGameObject()->DeleteGameObject();
                 optionsOpen = false;
             }
             ImGui::EndPopup();
@@ -141,20 +147,6 @@ void EW_Hierarchy::DrawGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
-            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
-            {
-                optionedGameObject = gameObject;
-                optionsOpen = !optionsOpen;
-                if (optionsOpen)
-                {
-                    ImGui::OpenPopup("Options");
-                    ori = ImGui::GetMousePosOnOpeningCurrentPopup();
-                }
-                else
-                {
-                    ImGui::CloseCurrentPopup();
-                }
-            }
         }
 
         if (ImGui::BeginDragDropSource())
@@ -204,20 +196,6 @@ void EW_Hierarchy::DrawGameObject(GameObject* gameObject, int iteration)
         if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenOverlapped))
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left)) editor->SetSelectedGameObject(gameObject);
-            if (ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
-            {
-                optionedGameObject = gameObject;
-                optionsOpen = !optionsOpen;
-                if (optionsOpen)
-                {
-                    ImGui::OpenPopup("Options");
-                    ori = ImGui::GetMousePosOnOpeningCurrentPopup();
-                }
-                else
-                {
-                    ImGui::CloseCurrentPopup();
-                }
-            }
         }
 
         if (ImGui::BeginDragDropSource())

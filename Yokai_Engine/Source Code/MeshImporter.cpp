@@ -52,7 +52,7 @@ GameObject* MeshImporter::LoadModelFromYK(std::string path, GameObject* parent)
 	}
 
 	// set transform after al child have been added
-	new_go->GenerateAABB();
+	//new_go->GenerateAABB();
 	dynamic_cast<C_Transform*>(new_go->GetComponent(Component::TYPE::TRANSFORM))->SetTransform({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
 
 	return new_go;
