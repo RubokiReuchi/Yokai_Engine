@@ -125,10 +125,13 @@ void FileExplorer::DrawFiles(std::string& scene_name)
 	ImGui::ListBoxHeader("##Files in scenes", ImVec2(ImGui::GetWindowWidth(), 0));
 	for (auto& file : file_paths)
 	{
-		std::string& item_name = file;
-		if (ImGui::Selectable(item_name.c_str()))
+		if (file != app->GetSceneName())
 		{
-			scene_name = file;
+			std::string& item_name = file;
+			if (ImGui::Selectable(item_name.c_str()))
+			{
+				scene_name = file;
+			}
 		}
 	}
 	ImGui::ListBoxFooter();

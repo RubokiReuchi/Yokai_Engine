@@ -1,0 +1,1287 @@
+{
+    "SceneCamera": {
+        "CameraMatrix": [
+            0.51399528980255127,
+            -0.21400000154972076,
+            0.83099997043609619,
+            12.246000289916992,
+            0.00020402789232321084,
+            0.96799999475479126,
+            0.24899999797344208,
+            5.2309999465942383,
+            -0.85779291391372681,
+            -0.12800000607967377,
+            0.49799999594688416,
+            6.5349998474121094
+        ]
+    },
+    "GameObjects": [
+        {
+            "UUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Root",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "None",
+            "IsCamera": false
+        },
+        {
+            "UUID": "UXVVJIP2LR1I7V25",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Main Camera",
+            "Position": [
+                5,
+                1.5,
+                0
+            ],
+            "Rotation": [
+                0,
+                -90,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Camera",
+            "IsCamera": true,
+            "Components": [
+                {
+                    "Type": 4,
+                    "Enabled": true,
+                    "CameraID": 0,
+                    "FOV": 1.0471975803375244,
+                    "CameraRange": 1000,
+                    "CameraMatrix": [
+                        -1.1920927533992653e-07,
+                        0,
+                        1.0000001192092896,
+                        5,
+                        0,
+                        1,
+                        0,
+                        1.5,
+                        -1,
+                        0,
+                        -1.1920928955078125e-07,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "UUID": "Y2B7ZPMFCCSRIF5I",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "GameObject",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                -0,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false
+        },
+        {
+            "UUID": "25HHPWKSVOK126YN",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_041",
+            "Position": [
+                30.695272445678711,
+                0.0084896087646484375,
+                -21.612640380859375
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_041.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_041.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "51NRE4H6M1CADOS2",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                -34.679477691650391,
+                -0.011514663696289062,
+                30.643888473510742
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "842BVAFI6D4JOGU7",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                -42.807235717773438,
+                -0.011514663696289062,
+                30.643888473510742
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "C78LKHCVXPVS8YOK",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_038",
+            "Position": [
+                -41.648998260498047,
+                -0.0060977935791015625,
+                16.495391845703125
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_038.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_038_037_034_026_022.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "F3MVAOA9G1O2JPIP",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_037",
+            "Position": [
+                -20.317691802978516,
+                -0.0059709548950195312,
+                16.163606643676758
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_037.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_038_037_034_026_022.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "I6T7RNYT8LGBU9L3",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_036",
+            "Position": [
+                -31.216329574584961,
+                0.0129241943359375,
+                -33.201572418212891
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_036.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_036.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "LA8PGTV7QX8LDZF8",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                13.38798713684082,
+                -0.01540374755859375,
+                40.802513122558594
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "P5EZ61TKIAZUOI9L",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_034",
+            "Position": [
+                16.04951286315918,
+                -0.0061740875244140625,
+                16.696884155273438
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_034.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_038_037_034_026_022.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "S8SBU8QX2MR4ZABQ",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_033",
+            "Position": [
+                -32.361492156982422,
+                0.016437530517578125,
+                -42.370418548583984
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_033.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_033.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "VCYLCEOASYJDJS54",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_032",
+            "Position": [
+                -29.478399276733398,
+                0.0082607269287109375,
+                -21.014093399047852
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_032.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_032_014.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "YFD41LLNCJBMUJY9",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                -34.679477691650391,
+                -0.01580047607421875,
+                41.835559844970703
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "3BKEQSJ13V3V631M",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                -42.807235717773438,
+                -0.01580047607421875,
+                41.835559844970703
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "6EQP8ZGEM8U5PLVS",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "Object010",
+            "Position": [
+                -2.5033509731292725,
+                0.00626373291015625,
+                -15.800835609436035
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Object010.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/LightGreyColor.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "9I58WXEQEKME1CPX",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_040",
+            "Position": [
+                13.38798713684082,
+                -0.01270294189453125,
+                33.755031585693359
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_040.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_040.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "DDBIM5B4WWFNBVRB",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_026",
+            "Position": [
+                31.511884689331055,
+                -0.0060787200927734375,
+                16.446014404296875
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_026.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_038_037_034_026_022.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "GGPT3CZHOH7WUMLG",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_024",
+            "Position": [
+                -20.57276725769043,
+                -0.052494049072265625,
+                -43.060848236083984
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_024.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_024.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "JKV4SJX27TY665FT",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_023",
+            "Position": [
+                42.130638122558594,
+                0.014568328857421875,
+                -37.493282318115234
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_023.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_023.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "MFBMHPUFY6QFHVHY",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_022",
+            "Position": [
+                -20.831319808959961,
+                -0.010282516479492188,
+                27.426488876342773
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_022.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_038_037_034_026_022.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "QJHXYWSSHIIO1FCC",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_017",
+            "Position": [
+                44.260078430175781,
+                -0.0147705078125,
+                39.153713226318359
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_017.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_017.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "TMV8O4P69TAXC66H",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_017",
+            "Position": [
+                34.270420074462891,
+                -0.015850067138671875,
+                41.972743988037109
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_017.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_017.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "WH2IDBNIS627NO8U",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_014",
+            "Position": [
+                -19.439704895019531,
+                0.01248931884765625,
+                -32.061725616455078
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_014.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_032_014.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "ZLG2U9KVJQTG7G2Z",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_036",
+            "Position": [
+                -42.288051605224609,
+                0.0129241943359375,
+                -33.201572418212891
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_036.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_036.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "4OMCJGI933LPHYVD",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_023",
+            "Position": [
+                30.134532928466797,
+                0.014568328857421875,
+                -37.493282318115234
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_023.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_023.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "7KTM9NFMTFDYSPPJ",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_017",
+            "Position": [
+                25.154008865356445,
+                -0.0147705078125,
+                39.153713226318359
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_017.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_017.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "AN8XPTDYDR58C9SW",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "Plane001",
+            "Position": [
+                -0.028602838516235352,
+                0.0002263188362121582,
+                -0.026030540466308594
+            ],
+            "Rotation": [
+                0.017508277669548988,
+                0,
+                -0
+            ],
+            "Scale": [
+                0.99663525819778442,
+                0.97061645984649658,
+                0.99663525819778442
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Plane001.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/GreenColor.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "DQEGF1AC54XHNZM2",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "Line002",
+            "Position": [
+                -2.1597719192504883,
+                0.00092601776123046875,
+                -1.8538362979888916
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/Line002.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/GreyColor.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "HMSQ58YPNOPQYIGF",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_024",
+            "Position": [
+                40.979988098144531,
+                0.0072078704833984375,
+                -18.270818710327148
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_024.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_024.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "KPY2TFWA71HZIAIK",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_023",
+            "Position": [
+                16.010490417480469,
+                0.014568328857421875,
+                -37.493282318115234
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_023.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_023.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "NTEKBLTNXD9ATSCX",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_041",
+            "Position": [
+                17.707162857055664,
+                0.007892608642578125,
+                -20.05327033996582
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_041.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_041.dds"
+                }
+            ]
+        },
+        {
+            "UUID": "ROKUZSR1HP1J5J63",
+            "ParentUUID": "Y2B7ZPMFCCSRIF5I",
+            "Name": "City_building_032",
+            "Position": [
+                -41.475887298583984,
+                0.0082607269287109375,
+                -21.014093399047852
+            ],
+            "Rotation": [
+                0.017508279532194138,
+                0,
+                -0
+            ],
+            "Scale": [
+                1,
+                0.99999988079071045,
+                0.99999988079071045
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Default",
+            "IsCamera": false,
+            "Components": [
+                {
+                    "Type": 2,
+                    "Enabled": true,
+                    "ShowAABB": false,
+                    "ShowOBB": false,
+                    "MeshPath": "Library\/Meshes\/City_building_032.ykmesh"
+                },
+                {
+                    "Type": 3,
+                    "Enabled": true,
+                    "SelectedTexturePath": "Library\/Textures\/Building_032_014.dds"
+                }
+            ]
+        }
+    ]
+}

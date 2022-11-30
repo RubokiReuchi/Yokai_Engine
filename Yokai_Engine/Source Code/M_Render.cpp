@@ -15,10 +15,11 @@ M_Render::~M_Render()
 {
     RELEASE(basic_shader);
     RELEASE(outline_shader);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &IBO);
-    glDeleteBuffers(1, &MBO);
-    glDeleteBuffers(1, &TBO);
+    glDeleteVertexArrays(1, &VAO); VAO = 0u;
+    glDeleteBuffers(1, &VBO); VBO = 0u;
+    glDeleteBuffers(1, &IBO); IBO = 0u;
+    glDeleteBuffers(1, &MBO); MBO = 0u;
+    glDeleteBuffers(1, &TBO); TBO = 0u;
 }
 
 uint M_Render::InitManageRender(Re_Mesh mesh)
