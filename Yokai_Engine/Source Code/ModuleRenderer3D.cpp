@@ -24,7 +24,9 @@ vsync(true), wireframe(false), exit(false)
 
 // Destructor
 ModuleRenderer3D::~ModuleRenderer3D()
-{}
+{
+	RELEASE(line_shader);
+}
 
 // Called before render is available
 bool ModuleRenderer3D::Init()

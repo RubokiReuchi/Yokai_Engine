@@ -30,10 +30,7 @@ void SceneCamera::UpdateCameraInput(float dt)
 	cameraFrustum.WorldMatrix().Decompose(empty, lookingDir, empty);
 
 	float3 newPos(0, 0, 0);
-	float speed;
-	if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN) fast_move = !fast_move;
-	if (!fast_move)	speed = 1.0f * dt;
-	else speed = 5.0f * dt;
+	float speed = speed_multiplier * dt;
 
 	// Move
 	if (confine_move && app->input->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
@@ -134,9 +131,18 @@ void SceneCamera::UpdateCameraInput(float dt)
 	// zoom in and zoom out
 	if (app->input->GetMouseZ() != 0)
 	{
-		float newFOV = math::RadToDeg(GetFOV()) + (1.5f * -app->input->GetMouseZ());
+		if (app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_IDLE)
+		{
+			float newFOV = math::RadToDeg(GetFOV()) + (1.5f * -app->input->GetMouseZ());
 
-		if (newFOV > 20.0f && newFOV < 160.0f) SetFOV(newFOV);
+			if (newFOV > 20.0f && newFOV < 160.0f) SetFOV(newFOV);
+		}
+		else
+		{
+			speed_multiplier += (app->input->GetMouseZ() / 2.0f);
+			if (speed_multiplier < 1.0f) speed_multiplier = 1.0f;
+			else if (speed_multiplier > 25.0f) speed_multiplier = 25.0f;
+		}
 	}
 
 	// go to selected game object

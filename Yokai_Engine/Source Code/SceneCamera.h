@@ -31,6 +31,6 @@ public:
 private:
 	void Focus(const float3& focusPoint);
 
-	bool fast_move = false;
+	float speed_multiplier = 3.0f;
 
 };

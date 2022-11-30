@@ -29,8 +29,8 @@ ModuleFile::ModuleFile(bool start_enabled) : Module(start_enabled)
 	FS_AddPathToFileSystem("D:\\");
 
 	YK_CreateLibrary();
-	ResourceManager::CheckRemovedFiles();
-	ResourceManager::CheckModifiedFiles();
+	/*ResourceManager::CheckRemovedFiles();
+	ResourceManager::CheckModifiedFiles();*/
 }
 
 ModuleFile::~ModuleFile()

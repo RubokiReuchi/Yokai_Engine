@@ -59,6 +59,8 @@ char* TextureImporter::YK_SaveTexture(uint& size, std::string path)
 	}
 
 	ilDeleteImages(1, &image);
+	delete[] buffer;
+	buffer = nullptr;
 
 	return (char*)data;
 }

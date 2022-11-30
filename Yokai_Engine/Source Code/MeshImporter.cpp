@@ -441,4 +441,7 @@ void SaveMesh::YK_LoadMesh(const char* path)
 	bytes = sizeof(VertexInfo) * num_vertices;
 	memcpy(&vertices[0], cursor, bytes);
 	cursor += bytes;
+
+	delete[] buffer;
+	buffer = nullptr;
 }
