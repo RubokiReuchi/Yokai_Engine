@@ -45,6 +45,8 @@ public:
 	std::vector<uint> mesh_indices;
 private:
 	void CreateMeshBuffers();
+	void ResizeMeshBuffers();
+	int increase_times = 1;
 
 	Re_Shader* basic_shader = nullptr;
 	Re_Shader* outline_shader = nullptr;

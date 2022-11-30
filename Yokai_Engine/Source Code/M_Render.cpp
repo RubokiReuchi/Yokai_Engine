@@ -148,6 +148,11 @@ uint M_Render::AddMesh(Re_Mesh& mesh)
 {
     uint meshID = ++id_counter;
     meshes[meshID] = mesh;
+    if ((int)meshes.size() > (5 * increase_times))
+    {
+        increase_times++;
+        ResizeMeshBuffers();
+    }
     return meshID;
 }
 
@@ -180,7 +185,7 @@ void M_Render::CreateMeshBuffers()
     // Create Model Matrix Buffer Object
     glGenBuffers(1, &MBO);
     glBindBuffer(GL_ARRAY_BUFFER, MBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float4x4) * 1000000, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float4x4) * 5, nullptr, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(VAO);
 
@@ -202,7 +207,7 @@ void M_Render::CreateMeshBuffers()
     // Create TextureID Buffer Object
     glGenBuffers(1, &TBO);
     glBindBuffer(GL_ARRAY_BUFFER, TBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 10000, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 5, nullptr, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(VAO);
 
@@ -211,4 +216,44 @@ void M_Render::CreateMeshBuffers()
     glVertexAttribDivisor(7, 1);
 
     glBindVertexArray(0);
+}
+
+void M_Render::ResizeMeshBuffers()
+{
+    // MBO increase
+    GLint size = sizeof(float4x4) * 5 * increase_times;
+
+    uint AUX = 0;
+    glGenBuffers(1, &AUX);
+    glBindBuffer(GL_ARRAY_BUFFER, AUX);
+    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, MBO);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, AUX);
+    glCopyBufferSubData(GL_ARRAY_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, size);
+
+    glBindBuffer(GL_ARRAY_BUFFER, MBO);
+    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_COPY_READ_BUFFER, AUX);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, MBO);
+    glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, size);
+    
+    // TBO increase
+    size = sizeof(float) * 5 * increase_times;
+
+    glBindBuffer(GL_ARRAY_BUFFER, AUX);
+    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, AUX);
+    glCopyBufferSubData(GL_ARRAY_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, size);
+
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_COPY_READ_BUFFER, AUX);
+    glBindBuffer(GL_COPY_WRITE_BUFFER, TBO);
+    glCopyBufferSubData(GL_COPY_READ_BUFFER, GL_COPY_WRITE_BUFFER, 0, 0, size);
+    glDeleteBuffers(1, &AUX); AUX = 0u;
 }
