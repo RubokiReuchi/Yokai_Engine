@@ -141,12 +141,14 @@ update_status ModuleEO::PreUpdate(float dt)
         }
 
         serialized_go.clear();
+        loadedSerializedMeshes.clear();
         load_scene = false;
     }
 
     if (new_scene)
     {
         app->renderer3D->model_render.CleanMap();
+        app->SetSceneName("defaultnameofstartscene");
         new_scene = false;
     }
 

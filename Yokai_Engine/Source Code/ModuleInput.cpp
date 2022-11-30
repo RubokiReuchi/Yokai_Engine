@@ -131,8 +131,10 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
+#ifndef STANDALONE
 	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
 		return UPDATE_STOP;
+#endif
 
 	return UPDATE_CONTINUE;
 }

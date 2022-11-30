@@ -31,7 +31,7 @@ private:
 	Timer ms_timer;
 	float dt;
 
-	std::string scene_loaded_name = "default";
+	std::string scene_loaded_name = "defaultnameofstartscene";
 
 public:
 
