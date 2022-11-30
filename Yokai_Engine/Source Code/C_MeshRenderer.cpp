@@ -14,8 +14,7 @@ C_MeshRenderer::C_MeshRenderer(GameObject* gameObject) : Component(gameObject, T
 C_MeshRenderer::~C_MeshRenderer()
 {
 	M_Render* manager = app->renderer3D->model_render.GetRenderManager(mesh_id);
-	manager->GetMap()[instance_id].vertices->clear();
-	manager->GetMap()[instance_id].indices->clear();
+	manager->GetMap()[instance_id].CleanUp();
 	manager->GetMap().erase(instance_id);
 	if (manager->GetMap().size() == 0)
 	{

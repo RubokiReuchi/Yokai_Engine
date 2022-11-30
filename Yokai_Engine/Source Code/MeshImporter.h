@@ -39,6 +39,17 @@ class MeshImporter
 public:
 
 	static GameObject* LoadMesh(std::string path);
+	static void RemoveMesh(std::string path)
+	{
+		if (loadedMeshes.find(path) != loadedMeshes.end())
+		{
+			loadedMeshes.erase(path);
+		}
+		if (loadedCustomMeshes.find(path) != loadedCustomMeshes.end())
+		{
+			loadedCustomMeshes.erase(path);
+		}
+	}
 	static void CleanMaps()
 	{
 		loadedMeshes.clear();

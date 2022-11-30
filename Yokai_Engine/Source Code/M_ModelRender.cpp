@@ -32,6 +32,7 @@ M_Render* M_ModelRender::GetRenderManager(uint id)
 
 void M_ModelRender::RemoveRender(uint id)
 {
+	MeshImporter::RemoveMesh(render_map[id].mesh_path);
 	render_map.erase(id);
 }
 

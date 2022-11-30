@@ -67,10 +67,10 @@ void Re_Mesh::Update()
 	update_matrix = false;
 }
 
-void Re_Mesh::InitMeshInfo(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, float3 pos, float3 scale)
+void Re_Mesh::InitMeshInfo(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, float3 pos, float3 scl)
 {
-	this->position = pos;
-	this->scale = scale;
+	position = pos;
+	scale = scl;
 
 	this->vertices = new std::vector<VertexInfo>(vertices);
 	this->indices = new std::vector<uint>(indices);
