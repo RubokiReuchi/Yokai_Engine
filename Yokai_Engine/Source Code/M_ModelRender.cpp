@@ -30,6 +30,11 @@ M_Render* M_ModelRender::GetRenderManager(uint id)
 	return &render_map[id];
 }
 
+void M_ModelRender::RemoveRender(uint id)
+{
+	render_map.erase(id);
+}
+
 void M_ModelRender::CleanMap()
 {
 	render_map.clear();

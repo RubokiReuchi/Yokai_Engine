@@ -96,6 +96,8 @@ uint TextureImporter::ImportTexture(std::string path)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 	ilDeleteImages(1, &image);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	delete[] buffer;
+	buffer = nullptr;
 
 	Re_Texture tex;
 	tex.OpenGL_id = m_renderer_id;
