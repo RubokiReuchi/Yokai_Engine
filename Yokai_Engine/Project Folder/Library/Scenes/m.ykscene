@@ -1,0 +1,92 @@
+{
+    "SceneCamera": {
+        "CameraMatrix": [
+            0.51399528980255127,
+            -0.21400000154972076,
+            0.83099997043609619,
+            12.246000289916992,
+            0.00020402789232321084,
+            0.96799999475479126,
+            0.24899999797344208,
+            5.2309999465942383,
+            -0.85779291391372681,
+            -0.12800000607967377,
+            0.49799999594688416,
+            6.5349998474121094
+        ]
+    },
+    "GameObjects": [
+        {
+            "UUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Root",
+            "Position": [
+                0,
+                0,
+                0
+            ],
+            "Rotation": [
+                0,
+                0,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "None",
+            "IsCamera": false
+        },
+        {
+            "UUID": "GX53FCBRYXEWIOLP",
+            "ParentUUID": "D9VKDK8QVT2PKAWW",
+            "Name": "Main Camera",
+            "Position": [
+                5,
+                1.5,
+                0
+            ],
+            "Rotation": [
+                0,
+                -90,
+                0
+            ],
+            "Scale": [
+                1,
+                1,
+                1
+            ],
+            "Enabled": true,
+            "Visible": true,
+            "VisibleOnEditor": true,
+            "Tag": "Camera",
+            "IsCamera": true,
+            "Components": [
+                {
+                    "Type": 4,
+                    "Enabled": true,
+                    "CameraID": 0,
+                    "FOV": 1.0471975803375244,
+                    "CameraRange": 1000,
+                    "CameraMatrix": [
+                        0,
+                        0,
+                        1,
+                        5,
+                        0,
+                        1,
+                        0,
+                        1.5,
+                        -1,
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        }
+    ]
+}
