@@ -223,6 +223,7 @@ void ModuleEO::LoadSerializedGO()
     rootGameObject->DeleteGameObject();
     app->camera->game_cameras.clear();
     MeshImporter::CleanMaps();
+    M_Texture::DeleteTextures();
     load_scene = true;
 }
 
@@ -247,6 +248,7 @@ void ModuleEO::NewScene()
     }
     app->camera->game_cameras.clear();
     MeshImporter::CleanMaps();
+    M_Texture::DeleteTextures();
     new_scene = true;
 
     GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);

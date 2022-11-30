@@ -50,8 +50,6 @@ GameObject::GameObject(SerializedGO go)
 
 				dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);
 			}
-			/*aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
-			dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);*/
 			break;
 		case 3: // Material
 			dynamic_cast<C_Material*>(AddComponent(Component::TYPE::MATERIAL))->SetTexture(go.selected_texture);

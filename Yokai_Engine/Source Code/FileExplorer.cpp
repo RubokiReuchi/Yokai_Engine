@@ -146,6 +146,7 @@ void FileExplorer::CkeckDirectory(std::string scene_name)
 			if (std::find(directory->files.begin(), directory->files.end(), scene_name + ".ykscene") == directory->files.end()) // file not found
 			{
 				Serialization::YK_SaveScene(scene_name);
+				app->SetSceneName(scene_name);
 				CloseExplorer();
 			}
 			else

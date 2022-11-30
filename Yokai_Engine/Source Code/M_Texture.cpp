@@ -41,3 +41,13 @@ void M_Texture::UnBindTextures()
 		glBindTexture(GL_TEXTURE0 + i, 0); // Unbind every texture
 	}
 }
+
+void M_Texture::DeleteTextures()
+{
+	for (auto& texture : loaded_textures)
+	{
+		glDeleteTextures(1, &texture.first);
+	}
+	loaded_textures.clear();
+	usedPaths.clear();
+}

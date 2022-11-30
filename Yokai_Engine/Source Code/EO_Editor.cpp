@@ -166,7 +166,7 @@ bool EO_Editor::SetMenuBar()
 		}
 		if (ImGui::MenuItem("Save Scene"))
 		{
-			if (app->GetSceneName() == "default")
+			if (app->GetSceneName() == "defaultnameofstartscene")
 			{
 				file_explorer.OpenExplorer("Save As", Explorer::TYPE::SAVE, SCENES_PATH);
 			}

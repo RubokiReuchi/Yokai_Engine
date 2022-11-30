@@ -41,7 +41,7 @@
             "IsCamera": false
         },
         {
-            "UUID": "29WMP36ZP294BD2X",
+            "UUID": "LEC19ZTB2D4FHCGM",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "Main Camera",
             "Position": [
@@ -89,7 +89,7 @@
             ]
         },
         {
-            "UUID": "543W7A3C8M1DLWV3",
+            "UUID": "OIRJY7INTXVPSUAZ",
             "ParentUUID": "D9VKDK8QVT2PKAWW",
             "Name": "GameObject",
             "Position": [
@@ -114,8 +114,8 @@
             "IsCamera": false
         },
         {
-            "UUID": "97I7WH1PZYSM5NQG",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "RDXTGEG1D9NYCM55",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_041",
             "Position": [
                 30.695272445678711,
@@ -153,8 +153,8 @@
             ]
         },
         {
-            "UUID": "CBOILOX3IBKVG6SL",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "VGC55CDE4LF8N57I",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 -34.679477691650391,
@@ -192,8 +192,8 @@
             ]
         },
         {
-            "UUID": "F6313UVFANC5RXMY",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "YKIFUJBQNX7HYV1N",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 -42.807235717773438,
@@ -231,8 +231,8 @@
             ]
         },
         {
-            "UUID": "IA9BR2K1TZ5EBGG4",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "2FWXBQ84EAYQIFU1",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_038",
             "Position": [
                 -41.648998260498047,
@@ -270,8 +270,8 @@
             ]
         },
         {
-            "UUID": "MDFMH1IEKCWNM7IH",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "6J381W6HXMQZT6W6",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_037",
             "Position": [
                 -20.317691802978516,
@@ -309,8 +309,8 @@
             ]
         },
         {
-            "UUID": "P8T5X8FR4WOXXQCM",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "9MAJP433P7I95OQJ",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_036",
             "Position": [
                 -31.216329574584961,
@@ -348,8 +348,8 @@
             ]
         },
         {
-            "UUID": "SC1FNED4U9G7H97Z",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "CHO27BZF8JAINGLO",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 13.38798713684082,
@@ -387,8 +387,8 @@
             ]
         },
         {
-            "UUID": "WFFQDLAHEL8GRZ96",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "FLUCWIXSZV2RYYNT",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_034",
             "Position": [
                 16.04951286315918,
@@ -426,8 +426,8 @@
             ]
         },
         {
-            "UUID": "ZBL12S7U6XZP3J3J",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "JO9NLOU6I8T1APH7",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_033",
             "Position": [
                 -32.361492156982422,
@@ -465,8 +465,8 @@
             ]
         },
         {
-            "UUID": "3EZJJY58O9RYMAWO",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "MKFX3NSJAKMAT9BD",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_032",
             "Position": [
                 -29.478399276733398,
@@ -504,8 +504,8 @@
             ]
         },
         {
-            "UUID": "6H6T862KGTJ8XSQ2",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "PNUGRUHVT5EJ5ZDQ",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 -34.679477691650391,
@@ -543,8 +543,8 @@
             ]
         },
         {
-            "UUID": "ADK5XDZXY6BH9JS7",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "SQ1RH2F9KH6SGI7V",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 -42.807235717773438,
@@ -582,8 +582,8 @@
             ]
         },
         {
-            "UUID": "DGRFECWBQI3QS3MC",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "WMF2X8CM4TX2ZA29",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "Object010",
             "Position": [
                 -2.5033509731292725,
@@ -621,8 +621,8 @@
             ]
         },
         {
-            "UUID": "GK6X4IUNAUUZ4THP",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "ZPLCNFAYU6PBBS4E",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_040",
             "Position": [
                 13.38798713684082,
@@ -660,8 +660,8 @@
             ]
         },
         {
-            "UUID": "JFC9TPJ917N9FCJU",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "3TZVDM7CEIHKLJXR",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_026",
             "Position": [
                 31.511884689331055,
@@ -699,8 +699,8 @@
             ]
         },
         {
-            "UUID": "NJIJAWHMKRFIX4D8",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "6O662S5P529T53RW",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_024",
             "Position": [
                 -20.57276725769043,
@@ -738,8 +738,8 @@
             ]
         },
         {
-            "UUID": "QMWTZ4EZB47R9M7D",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "ARLGJZ2BOE13GTTA",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_023",
             "Position": [
                 42.130638122558594,
@@ -777,8 +777,8 @@
             ]
         },
         {
-            "UUID": "TH3DOABCUGY1KD9Q",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "DVRR8YYNGQSCRCNF",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_022",
             "Position": [
                 -20.831319808959961,
@@ -816,8 +816,8 @@
             ]
         },
         {
-            "UUID": "WLIN6H9PLSQA4W3W",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "GQXAX6W1Y3KLB4HS",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_017",
             "Position": [
                 44.260078430175781,
@@ -855,8 +855,8 @@
             ]
         },
         {
-            "UUID": "1OOXUO6355IJFNXA",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "JUCKFCTEQFDUMMKX",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_017",
             "Position": [
                 34.270420074462891,
@@ -894,8 +894,8 @@
             ]
         },
         {
-            "UUID": "4K3HKV4GWHASQ6ZF",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "NXIV4JJR9R55XDEB",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_014",
             "Position": [
                 -19.439704895019531,
@@ -933,8 +933,8 @@
             ]
         },
         {
-            "UUID": "7N9R2T1SF222AXTS",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "QSWETQG41CWEHW8H",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_036",
             "Position": [
                 -42.288051605224609,
@@ -972,8 +972,8 @@
             ]
         },
         {
-            "UUID": "BQN2Q1Y67ETBLGNX",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "TW4OAXEHKOONRNAU",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_023",
             "Position": [
                 30.134532928466797,
@@ -1011,8 +1011,8 @@
             ]
         },
         {
-            "UUID": "EMTDG8VJPQLKV7PB",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "XZIYZ4BUB1GW364Z",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_017",
             "Position": [
                 25.154008865356445,
@@ -1050,8 +1050,8 @@
             ]
         },
         {
-            "UUID": "HP9VWELVH2DTFQJG",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "1VOAOB97UD86MXX5",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "Plane001",
             "Position": [
                 -0.028602838516235352,
@@ -1089,8 +1089,8 @@
             ]
         },
         {
-            "UUID": "KTF6MLIH1E63QHET",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "4Y3S6I6KLPZFXG1I",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "Line002",
             "Position": [
                 -2.1597719192504883,
@@ -1128,8 +1128,8 @@
             ]
         },
         {
-            "UUID": "OOLHBSGURYXD2ZGY",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "7293VH3X5ARO97UN",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_024",
             "Position": [
                 40.979988098144531,
@@ -1167,8 +1167,8 @@
             ]
         },
         {
-            "UUID": "RRZR1ZD8BBPMDRAC",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "BXNEKN1JWMJXSQO1",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_023",
             "Position": [
                 16.010490417480469,
@@ -1206,8 +1206,8 @@
             ]
         },
         {
-            "UUID": "UV6AI6AK2NHVWA4H",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "E1UO2UXVFYB74HI6",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_041",
             "Position": [
                 17.707162857055664,
@@ -1245,8 +1245,8 @@
             ]
         },
         {
-            "UUID": "XQKK758XLZ95816N",
-            "ParentUUID": "543W7A3C8M1DLWV3",
+            "UUID": "H517Q2V97B3GFZKJ",
+            "ParentUUID": "OIRJY7INTXVPSUAZ",
             "Name": "City_building_032",
             "Position": [
                 -41.475887298583984,
