@@ -31,8 +31,4 @@ private:
 	bool popUp = false;
 	int popUp_cd = 0;
 
-	float4x4 prev_transform;
-	GameObject* prev_go;
-	bool once = false;
-
 };

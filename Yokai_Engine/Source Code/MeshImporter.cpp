@@ -216,7 +216,6 @@ ModelYK MeshImporter::CreateNewNode(aiNode* node, const aiScene* scene, std::str
 	}
 
 	// set transform after al child have been added
-	newParent->GenerateAABB();
 	dynamic_cast<C_Transform*>(newParent->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(pos / 100.0f, scale / 100.0f, eulerRot);
 
 	// save custom format
@@ -312,6 +311,7 @@ std::string MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObj
 	}
 	else
 	{
+		parent->GenerateAABB();
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, file);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
 	}

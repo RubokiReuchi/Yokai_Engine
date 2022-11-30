@@ -95,9 +95,11 @@ void C_Transform::SetTransform(float4x4 matrix)
 	euler_rot.y = math::RadToDeg(euler_rot.y);
 	euler_rot.z = math::RadToDeg(euler_rot.z);
 
-	this->localTransform.position = pos;
-	this->localTransform.scale = scl;
-	this->localTransform.rotation = euler_rot;
+	this->localTransform.position = pos - parentGlobalTransform.position;
+	this->localTransform.scale.x = scl.x / parentGlobalTransform.scale.x;
+	this->localTransform.scale.y = scl.y / parentGlobalTransform.scale.y;
+	this->localTransform.scale.z = scl.z / parentGlobalTransform.scale.z;
+	this->localTransform.rotation = euler_rot - parentGlobalTransform.rotation;
 	UpdateTransform();
 }
 
@@ -224,6 +226,37 @@ void C_Transform::UpdateScale()
 void C_Transform::UpdateTransform()
 {
 	Transform globalTransform = GetGlobalTransform();
+
+	// For each child
+	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
+	{
+		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
+		child_transform->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
+	}
+
+	// For each component, exclude transform component
+	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
+	{
+		GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
+	}
+
+	UpdateBB();
+}
+
+void C_Transform::FixTransform(Transform last_parent_tranform)
+{
+	localTransform.position = localTransform.position - parentGlobalTransform.position + last_parent_tranform.position;
+	localTransform.rotation = localTransform.rotation - parentGlobalTransform.rotation + last_parent_tranform.rotation;
+	localTransform.scale.x = localTransform.scale.x / parentGlobalTransform.scale.x * last_parent_tranform.scale.x;
+	localTransform.scale.y = localTransform.scale.y / parentGlobalTransform.scale.y * last_parent_tranform.scale.y;
+	localTransform.scale.z = localTransform.scale.z / parentGlobalTransform.scale.z * last_parent_tranform.scale.z;
+
+	Transform globalTransform;
+	globalTransform.position = parentGlobalTransform.position + localTransform.position;
+	globalTransform.rotation = parentGlobalTransform.rotation + localTransform.rotation;
+	globalTransform.scale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
+	globalTransform.scale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
+	globalTransform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
 
 	// For each child
 	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)

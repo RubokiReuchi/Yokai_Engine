@@ -49,6 +49,8 @@ private:
 	void UpdateScale();
 	void UpdateTransform();
 
+	void FixTransform(Transform last_parent_tranform);
+
 	void CalculateGlobalMatrix();
 
 private:

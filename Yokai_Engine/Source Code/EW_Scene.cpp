@@ -16,8 +16,6 @@ EW_Scene::EW_Scene()
 	guizmo_operation = ImGuizmo::OPERATION::TRANSLATE;
 	guizmo_mode = ImGuizmo::MODE::WORLD;
 	guizmo_hide = true;
-	prev_transform.SetIdentity();
-	prev_go = NULL;
 }
 
 EW_Scene::~EW_Scene()
@@ -46,16 +44,6 @@ void EW_Scene::Update()
 		app->engine_order->scene_pos.y = ImGui::GetWindowPos().y + ImGui::GetFrameHeight();
 		app->engine_order->scene_size.x = ImGui::GetWindowSize().x;
 		app->engine_order->scene_size.y = ImGui::GetWindowSize().y - ImGui::GetFrameHeight();
-	}
-
-	if (app->camera->updateSceneCamera && prev_go != NULL)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-		{
-			prev_go->transform->SetTransform(prev_transform);
-			prev_transform.SetIdentity();
-			prev_go = NULL;
-		}
 	}
 
 	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
@@ -179,18 +167,8 @@ void EW_Scene::Update()
 
 			if (ImGuizmo::Manipulate(app->camera->sceneCamera.GetViewMatrix(), app->camera->sceneCamera.GetProjectionMatrix(), guizmo_operation, aux_mode, matrix.ptr()) && ImGui::IsWindowHovered())
 			{
-				if (!once)
-				{
-					once = true;
-					prev_transform = go->transform->GetGlobalMatrix();
-					prev_go = go;
-				}
 				matrix.Transpose();
 				go->transform->SetTransform(matrix);
-			}
-			else
-			{
-				once = false;
 			}
 		}
 	}

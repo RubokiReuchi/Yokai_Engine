@@ -132,16 +132,22 @@ bool GameObject::AddChild(GameObject* child)
 
 	children.push_back(child);
 
+	Transform last_parent_tranform;
+	last_parent_tranform.position = float3(0, 0, 0);
+	last_parent_tranform.rotation = float3(0, 0, 0);
+	last_parent_tranform.scale = float3(1, 1, 1);
 	if (child->parent)
 	{
+		GameObject* aux = child->parent;
 		child->parent->RemoveChild(child);
-		child->parent->GenerateAABB(); // recalculate aabb of old parent
+		aux->GenerateAABB(); // recalculate aabb of old parent
+		last_parent_tranform = aux->transform->GetGlobalTransform();
 	}
 
 	child->parent = this;
 	GenerateAABB(); // recalculate aabb of new parent
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
-	child->transform->UpdateTransform();
+	child->transform->FixTransform(last_parent_tranform);
 
 	return true;
 }
@@ -186,12 +192,6 @@ void GameObject::GenerateAABB()
 std::vector<float3> GameObject::GetAllVerticesPositions(GameObject* go)
 {
 	std::vector<float3> vertices_pos;
-
-	for (size_t i = 0; i < go->children.size(); i++)
-	{
-		std::vector<float3> child_vertices_pos = GetAllVerticesPositions(go->children[i]);
-		vertices_pos.insert(vertices_pos.end(), child_vertices_pos.begin(), child_vertices_pos.end());
-	}
 
 	if (go->GetComponent(Component::TYPE::MESH_RENDERER))
 	{
