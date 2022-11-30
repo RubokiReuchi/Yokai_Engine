@@ -32,6 +32,8 @@ struct Explorer
 class FileExplorer
 {
 public:
+	~FileExplorer();
+
 	void OpenExplorer(std::string name, Explorer::TYPE type, std::string path);
 	void DrawExplorer();
 

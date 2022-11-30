@@ -5,6 +5,11 @@
 #include "Serialization.h"
 #include "FileTree.hpp"
 
+FileExplorer::~FileExplorer()
+{
+	RELEASE(directory);
+}
+
 void FileExplorer::InitExplorer(std::string name, Explorer::TYPE type, std::string path)
 {
 	explorer.name = name;

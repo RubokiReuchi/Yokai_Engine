@@ -271,6 +271,8 @@ FileTree* ModuleFile::FS_GetFileTree(std::string path, FileTree* parent)
 		}
 	}
 
+	PHYSFS_freeList(list);
+
 	return ret;
 }
 
@@ -338,6 +340,8 @@ std::vector<std::string> ModuleFile::FS_GetAllFiles(std::string path)
 			ret.push_back(s);
 		}
 	}
+
+	PHYSFS_freeList(list);
 	
 	return ret;
 }
