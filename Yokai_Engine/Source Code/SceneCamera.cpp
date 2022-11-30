@@ -246,3 +246,61 @@ void SceneCamera::Focus(const float3& focusPoint)
 	cameraFrustum.pos = newPos;
 	LookAt(focusPoint);
 }
+
+GameObject* SceneCamera::GetGoInMouse()
+{
+	GameObject* ret = NULL;
+	float mouse_x = (((float)app->input->GetMouseX() - app->engine_order->scene_pos.x) / app->engine_order->scene_size.x) - 0.5f;
+	float mouse_y = (((float)app->input->GetMouseY() - app->engine_order->scene_pos.y) / app->engine_order->scene_size.y) - 0.5f;
+	LineSegment picking_ray = cameraFrustum.UnProjectLineSegment(mouse_x * 2, -mouse_y * 2);
+
+	std::vector<GameObject*> go_hitted;
+	for (auto& go : app->engine_order->game_objects)
+	{
+		C_MeshRenderer* c_mr = dynamic_cast<C_MeshRenderer*>(go.second->GetComponent(Component::TYPE::MESH_RENDERER));
+		if (c_mr && c_mr->GetMesh().visible && c_mr->GetMesh().visible_on_editor)
+		{
+			RayCastHit hit;
+			hit.hit = picking_ray.Intersects(go.second->global_aabb);
+			if (hit.hit)
+			{
+				go_hitted.push_back(go.second);
+			}
+		}
+	}
+
+	if (!go_hitted.empty())
+	{
+		GameObject* hitted_go = NULL;
+		float min_distance = 9999;
+		for (auto& go : go_hitted)
+		{
+			Re_Mesh aux_mesh = dynamic_cast<C_MeshRenderer*>(go->GetComponent(Component::TYPE::MESH_RENDERER))->GetMesh();
+			LineSegment ray = picking_ray;
+			ray.Transform(go->transform->GetGlobalMatrix().Inverted());
+
+			for (size_t i = 0; i < aux_mesh.indices->size(); i += 3)
+			{
+				float3 vertex1_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i)).position);
+				float3 vertex2_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i + 1)).position);
+				float3 vertex3_pos(aux_mesh.vertices->at(aux_mesh.indices->at(i + 2)).position);
+
+				Triangle face(vertex1_pos, vertex2_pos, vertex3_pos);
+
+				RayCastHit hit;
+				hit.hit = ray.Intersects(face, &hit.distance, nullptr);
+				if (hit.hit && hit.distance < min_distance)
+				{
+					min_distance = hit.distance;
+					hitted_go = go;
+				}
+			}
+		}
+
+		go_hitted.clear();
+
+		ret = hitted_go;
+	}
+
+	return ret;
+}

@@ -3,6 +3,7 @@
 #include "Camera.h"
 
 class EO_Editor;
+class GameObject;
 
 struct RayCastHit
 {
@@ -19,6 +20,7 @@ public:
 
 	void UpdateCameraInput(float dt);
 	void CalculateMousePicking();
+	GameObject* GetGoInMouse();
 
 public:
 	EO_Editor* editor = nullptr;

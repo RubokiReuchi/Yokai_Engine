@@ -1,12 +1,16 @@
 #include "ResourceManager.h"
+#include "Application.h"
+#include "SceneCamera.h"
 #include "ModuleFile.h"
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 #include "FileTree.hpp"
+#include "M_Texture.h"
 
 std::string ResourceManager::LoadResource(std::string path)
 {
 	std::string message = "";
+	std::string texture_path = "";
 
 	switch (ModuleFile::FS_GetResourceType(path))
 	{
@@ -15,8 +19,20 @@ std::string ResourceManager::LoadResource(std::string path)
 		message = "Mesh placed";
 		break;
 	case RE_TYPE::TEXTURE:
-		TextureImporter::LoadTexture(path);
-		message = "Texture Loaded";
+		texture_path = TEXTURES_PATH + ModuleFile::FS_GetFileName(path, false) + ".dds";
+		if (M_Texture::usedPaths.find(texture_path) != M_Texture::usedPaths.end())
+		{
+			GameObject* go = app->camera->sceneCamera.GetGoInMouse();
+			if (go != NULL)
+			{
+				dynamic_cast<C_Material*>(go->GetComponent(Component::TYPE::MATERIAL))->SetTexture(texture_path);
+			}
+		}
+		else
+		{
+			TextureImporter::LoadTexture(path);
+			message = "Texture Loaded";
+		}
 		break;
 	case RE_TYPE::UNDEFINED:
 		message = "Undefined file extension";

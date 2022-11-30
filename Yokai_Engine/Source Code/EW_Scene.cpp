@@ -207,7 +207,10 @@ void EW_Scene::Update()
 			app->engine_order->editor->message = ResourceManager::LoadResource(dd_file);
 			popUp = true;
 			popUp_cd = 0;
-			ImGui::OpenPopup("Message");
+			if (app->engine_order->editor->message !=  "")
+			{
+				ImGui::OpenPopup("Message");
+			}
 		}
 		ImGui::EndDragDropTarget();
 	}

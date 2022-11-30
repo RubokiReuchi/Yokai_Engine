@@ -19,4 +19,5 @@ public:
 
 	static void CheckRemovedFiles();
 	static void CheckModifiedFiles();
+	
 };
