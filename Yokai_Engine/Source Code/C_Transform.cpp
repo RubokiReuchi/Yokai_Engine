@@ -63,23 +63,23 @@ void C_Transform::SetPosition(float3 pos)
 	UpdatePosition();
 }
 
-void C_Transform::SetScale(float3 scl)
-{
-	this->localTransform.scale = scl;
-	UpdateScale();
-}
-
 void C_Transform::SetRotation(float3 rot)
 {
 	this->localTransform.rotation = rot;
 	UpdateRotation();
 }
 
+void C_Transform::SetScale(float3 scl)
+{
+	this->localTransform.scale = scl;
+	UpdateScale();
+}
+
 void C_Transform::SetTransform(float3 pos, float3 scl, float3 rot)
 {
 	this->localTransform.position = pos;
-	this->localTransform.scale = scl;
 	this->localTransform.rotation = rot;
+	this->localTransform.scale = scl;
 	UpdateTransform();
 }
 
@@ -99,24 +99,6 @@ void C_Transform::SetTransform(float4x4 matrix)
 	this->localTransform.scale = scl;
 	this->localTransform.rotation = euler_rot;
 	UpdateTransform();
-}
-
-void C_Transform::Translate(float3 translation)
-{
-	this->localTransform.position += translation;
-	UpdatePosition();
-}
-
-void C_Transform::Scale(float3 scale)
-{
-	this->localTransform.scale += scale;
-	UpdateScale();
-}
-
-void C_Transform::Rotate(float3 rotate)
-{
-	this->localTransform.rotation += rotate;
-	UpdateRotation();
 }
 
 void C_Transform::OnPositionUpdate(float3 pos)
@@ -160,24 +142,6 @@ Transform C_Transform::GetGlobalTransform()
 	global_transform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
 
 	return global_transform;
-}
-
-float3 C_Transform::GetForward()
-{
-	CalculateGlobalMatrix();
-	return globalMatrix.RotatePart().Col(2).Normalized();
-}
-
-float3 C_Transform::GetRight()
-{
-	CalculateGlobalMatrix();
-	return globalMatrix.RotatePart().Col(0).Normalized();
-}
-
-float3 C_Transform::GetUp()
-{
-	CalculateGlobalMatrix();
-	return globalMatrix.RotatePart().Col(1).Normalized();
 }
 
 void C_Transform::UpdateBB()

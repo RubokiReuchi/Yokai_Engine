@@ -18,14 +18,10 @@ public:
 	void OnEditor();
 
 	void SetPosition(float3 pos);
-	void SetScale(float3 scl);
 	void SetRotation(float3 rot);
+	void SetScale(float3 scl);
 	void SetTransform(float3 pos, float3 scl, float3 rot);
 	void SetTransform(float4x4 matrix);
-
-	void Translate(float3 translation);
-	void Scale(float3 scale);
-	void Rotate(float3 rotate);
 
 	void OnPositionUpdate(float3 position) override;
 	void OnScaleUpdate(float3 scale) override;
@@ -37,10 +33,6 @@ public:
 	{
 		return globalMatrix;
 	}
-
-	float3 GetForward();
-	float3 GetRight();
-	float3 GetUp();
 
 	void UpdateBB();
 
