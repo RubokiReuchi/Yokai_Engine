@@ -65,29 +65,21 @@ void EW_Project::Update()
         }
     }
     ImGui::SameLine(ImGui::GetWindowWidth() - 220);
-    ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine(); filter.Draw("##Filter", 200);
-    
+    ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine(); 
+    filter.Draw("##Filter", 200);
     ImGui::Separator();
 
-    ImVec2 windowSize = ImGui::GetWindowSize();
-    static float width1 = 200;
-    static float width2 = 1200;
-    static float windowInitX = windowSize.x;
-
-    // Splitter
-    ImGuiH::DrawSplitter(0, 10, &width1, &width2, 200, 275);
-    width2 = (windowSize.x - width1 - 20);
-
     // Left Box
-    ImGui::BeginChild("LeftBox", ImVec2(width1, 0), true);
+    float width = (ImGui::GetWindowSize().x - 220);
+    ImGui::BeginChild("LeftBox", ImVec2(200, 0), true);
     ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
-    DrawTreeNode(fileTree);
+    DrawFileBox(fileTree);
     ImGui::EndChild();
 
     ImGui::SameLine();
     
     // RightBox
-    ImGui::BeginChild("RightBox", ImVec2(width2, 0), true);
+    ImGui::BeginChild("RightBox", ImVec2(width, 0), true);
     if (!filter.IsActive())
     {
         uint rows = 0;
@@ -100,7 +92,7 @@ void EW_Project::Update()
             s += currentNode->directories[i]->name;
             if (ImGui::Button(s.c_str(), ImVec2(120, 120))) new_dir = currentNode->directories[i];
 
-            if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
+            if (8 + 128 * (i + 2 - rows) > width) rows = i + 1;
             else ImGui::SameLine();
         }
         for (size_t i = dir_size; i < currentNode->files.size() + dir_size; i++)
@@ -116,7 +108,7 @@ void EW_Project::Update()
                 ImGui::EndDragDropSource();
             }
 
-            if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
+            if (8 + 128 * (i + 2 - rows) > width) rows = i + 1;
             else ImGui::SameLine();
         }
     }
@@ -139,7 +131,7 @@ void EW_Project::Update()
                     ImGui::EndDragDropSource();
                 }
 
-                if (8 + 128 * (i + 2 - rows) > width2) rows = i + 1;
+                if (8 + 128 * (i + 2 - rows) > width) rows = i + 1;
                 ImGui::SameLine();
             }
         }
@@ -154,19 +146,19 @@ std::string EW_Project::GetCurrentNodePath()
     return currentNode->path;
 }
 
-void EW_Project::DrawTreeNode(FileTree* node)
+void EW_Project::DrawFileBox(FileTree* folder)
 {
-    bool opened = ImGui::TreeNodeEx(node->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow);
-    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) currentNode = node;
+    bool opened = ImGui::TreeNodeEx(folder->name.c_str(), ImGuiTreeNodeFlags_OpenOnArrow);
+    if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) currentNode = folder;
     if (opened)
     {
-        for (size_t i = 0; i < node->directories.size(); i++)
+        for (size_t i = 0; i < folder->directories.size(); i++)
         {
-            DrawTreeNode(node->directories[i]);
+            DrawFileBox(folder->directories[i]);
         }
-        for (size_t i = 0; i < node->files.size(); i++)
+        for (size_t i = 0; i < folder->files.size(); i++)
         {
-            ImGui::Text(node->files[i].c_str());
+            ImGui::Text(folder->files[i].c_str());
         }
         ImGui::TreePop();
     }

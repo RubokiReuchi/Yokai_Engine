@@ -36,7 +36,7 @@ void EW_Hierarchy::Update()
             ImGui::CloseCurrentPopup();
         }
     }
-    DrawGameObjecTree(gameObjectsReference->at(1), true);
+    if (gameObjectsReference->size() > 0) DrawGameObjecTree(gameObjectsReference->at(1), true);
 
     if (popUpOpen)
     {

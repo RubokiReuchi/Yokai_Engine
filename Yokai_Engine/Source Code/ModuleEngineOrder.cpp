@@ -264,6 +264,8 @@ void ModuleEO::NewScene()
     C_Camera* cam = dynamic_cast<C_Camera*>(main_camera->GetComponent(Component::TYPE::CAMERA));
     float3x4 start_matrix = float3x4(0.0f, 0.0f, 1.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.5f, -1.0f, 0.0f, 0.0f, 0.0f);
     cam->GetCamera()->cameraFrustum.SetWorldMatrix(start_matrix);
+
+    Console::LogInConsole("New Scene created.");
 }
 
 std::string ModuleEO::GenerateUUID()

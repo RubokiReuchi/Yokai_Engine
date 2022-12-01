@@ -30,6 +30,8 @@ void Serialization::YK_SaveScene(std::string first_save)
     }
     json_serialize_to_file_pretty(scene_value, save_path.c_str());
     json_value_free(scene_value);
+
+    Console::LogInConsole(save_path + " saved.");
 }
 
 void Serialization::YK_LoadScene(std::string path)
@@ -56,6 +58,8 @@ void Serialization::YK_LoadScene(std::string path)
 
     app->engine_order->LoadSerializedGO();
     json_value_free(scene_value);
+
+    Console::LogInConsole(load_path + " loaded.");
 }
 
 void Serialization::SerializeSceneCamera(JSON_Object* json_object)

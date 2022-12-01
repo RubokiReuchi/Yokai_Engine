@@ -58,7 +58,7 @@ void M_Render::Draw()
             model_matrices.push_back(mesh.second.model_matrix); // Insert matrices of each mesh in this M_Render
             texture_ids.push_back(mesh.second.GL_id);
         }
-        if (app->renderer3D->drawing_scene && mesh.second.is_outlined)
+        if (app->renderer3D->drawing_scene && mesh.second.is_outlined && mesh.second.visible && mesh.second.visible_on_editor && mesh.second.in_camera)
         {
             go_selected = true;
             if (mesh.second.is_outlined_child) go_selected_child = true;
@@ -185,7 +185,7 @@ void M_Render::CreateMeshBuffers()
     // Create Model Matrix Buffer Object
     glGenBuffers(1, &MBO);
     glBindBuffer(GL_ARRAY_BUFFER, MBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float4x4) * 5, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float4x4) * 10, nullptr, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(VAO);
 
@@ -221,7 +221,7 @@ void M_Render::CreateMeshBuffers()
 void M_Render::ResizeMeshBuffers()
 {
     // MBO increase
-    GLint size = sizeof(float4x4) * 5 * increase_times;
+    GLint size = sizeof(float4x4) * 10 * increase_times;
 
     uint AUX = 0;
     glGenBuffers(1, &AUX);

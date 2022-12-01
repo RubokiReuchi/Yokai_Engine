@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "GameObject.h"
+#include "Console.h"
 #include "parson/parson.h"
 
 class GameObject;

@@ -33,8 +33,8 @@ void EW_Console::Update()
 
 	ImGui::Separator();
 
-	const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
-	ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve), false, ImGuiWindowFlags_HorizontalScrollbar);
+	float aux = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+	ImGui::BeginChild("Panel", ImVec2(0, -aux));
 
 	Console::DrawConsoleLog();
 

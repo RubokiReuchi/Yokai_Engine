@@ -85,6 +85,6 @@ int main(int argc, char ** argv)
 
 	delete app;
 	LOG("Exiting game '%s'...\n", TITLE);
-	ReportMemoryLeaks();
+	//ReportMemoryLeaks();
 	return main_return;
 }

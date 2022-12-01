@@ -21,14 +21,17 @@ GameObject* MeshImporter::LoadMesh(std::string path)
 	std::string model_path = MODELS_PATH + ModuleFile::FS_GetFileName(path, false) + ".ykmodel";
 	if (ModuleFile::FS_Exists(mesh_path))
 	{
+		Console::LogInConsole(mesh_path + " loaded.");
 		return LoadMeshFromYK(mesh_path);
 	}
 	else if (ModuleFile::FS_Exists(model_path))
 	{
+		Console::LogInConsole(model_path + " loaded.");
 		return LoadModelFromYK(model_path);
 	}
 	else
 	{
+		Console::LogInConsole(path + " loaded.");
 		return LoadMeshFromFBX(path);
 	}
 }
