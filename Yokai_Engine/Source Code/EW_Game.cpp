@@ -39,25 +39,43 @@ void EW_Game::Update()
 		game_width = game_height * (16.0f / 9.0f);
 	}
 
-	if (ImGui::IsWindowHovered() && !app->engine_order->game->in_game && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
+	if (ImGui::IsWindowHovered() && app->engine_order->game->in_game && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
-		app->engine_order->game->in_game = true;
 		ClipCursor(&window_rect);
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_UP)
+	else if (ImGui::IsWindowHovered() && app->engine_order->game->in_game && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_UP)
 	{
-		app->engine_order->game->in_game = false;
 		ClipCursor(NULL);
 	}
 
 	ImGui::Image((ImTextureID)currentGameCamera->frameBuffer.GetTexture(), ImVec2(game_width, game_height), ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::PopStyleVar();
-	ImGui::End();
 
-	//ImGui::SetNextWindowPos(ImVec2(ImGui::GetWindowPos().x + (ImGui::GetWindowWidth() / 2), ImGui::GetWindowPos().y + 25));
-	ImGui::Begin("Time Control", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize /*| ImGuiWindowFlags_NoMove*/ | ImGuiWindowFlags_NoDocking);
-	
+	ImVec2 save_pos = ImGui::GetWindowPos();
+	ImVec2 save_size = ImGui::GetWindowSize();
+	ImGui::SetNextWindowPos(ImVec2(save_pos.x + (save_size.x / 2) - 54, save_pos.y + 25));
+	ImGui::BeginChild("Time Control", ImVec2(108, 42), ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
+	std::string button1 = ICON_FA_PLAY"##1";
+	if (app->engine_order->game->in_game) button1 = ICON_FA_STOP"##1";
+	if (ImGui::Button((button1.c_str()), ImVec2(25, 25)))
+	{
+		app->engine_order->game->in_game = !app->engine_order->game->in_game;
+		if (!app->engine_order->game->in_game) app->engine_order->game->paused = false;
+	}
+	ImGui::SameLine();
+	std::string button2 = ICON_FA_PAUSE"##2";
+	if (app->engine_order->game->paused) button2 = ICON_FA_PLAY"##2";
+	if (ImGui::Button((button2.c_str()), ImVec2(25, 25)))
+	{
+		if (app->engine_order->game->in_game) app->engine_order->game->paused = !app->engine_order->game->paused;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button((ICON_FA_FORWARD"##3"), ImVec2(25, 25)))
+	{
+		if (app->engine_order->game->paused) app->engine_order->game->tick = true;
+	}
 
+	ImGui::EndChild();
 	ImGui::End();
 }

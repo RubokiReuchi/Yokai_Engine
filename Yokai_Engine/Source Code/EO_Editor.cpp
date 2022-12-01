@@ -111,7 +111,7 @@ void EO_Editor::PostUpdate()
 	ImGui::NewFrame();
 
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-	
+
 	if (!SetMenuBar())
 	{
 		app->renderer3D->exit = true;
