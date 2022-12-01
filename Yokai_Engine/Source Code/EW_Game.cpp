@@ -15,6 +15,8 @@ EW_Game::~EW_Game()
 
 void EW_Game::Update()
 {
+	EO_Game* game = app->engine_order->game;
+
 	// Screen
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
@@ -39,11 +41,11 @@ void EW_Game::Update()
 		game_width = game_height * (16.0f / 9.0f);
 	}
 
-	if (ImGui::IsWindowHovered() && app->engine_order->game->in_game && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
+	if (ImGui::IsWindowHovered() && game->in_game && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
 		ClipCursor(&window_rect);
 	}
-	else if (ImGui::IsWindowHovered() && app->engine_order->game->in_game && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_UP)
+	else if (ImGui::IsWindowHovered() && game->in_game && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_UP)
 	{
 		ClipCursor(NULL);
 	}
@@ -60,20 +62,24 @@ void EW_Game::Update()
 	if (app->engine_order->game->in_game) button1 = ICON_FA_STOP"##1";
 	if (ImGui::Button((button1.c_str()), ImVec2(25, 25)))
 	{
-		app->engine_order->game->in_game = !app->engine_order->game->in_game;
-		if (!app->engine_order->game->in_game) app->engine_order->game->paused = false;
+		if (!game->in_game) game->PlayGame();
+		else game->StopGame();
 	}
 	ImGui::SameLine();
 	std::string button2 = ICON_FA_PAUSE"##2";
 	if (app->engine_order->game->paused) button2 = ICON_FA_PLAY"##2";
 	if (ImGui::Button((button2.c_str()), ImVec2(25, 25)))
 	{
-		if (app->engine_order->game->in_game) app->engine_order->game->paused = !app->engine_order->game->paused;
+		if (game->in_game)
+		{
+			if (!game->paused) game->PauseGame();
+			else game->ContinueGame();
+		}
 	}
 	ImGui::SameLine();
 	if (ImGui::Button((ICON_FA_FORWARD"##3"), ImVec2(25, 25)))
 	{
-		if (app->engine_order->game->paused) app->engine_order->game->tick = true;
+		if (game->paused) game->tick = true;
 	}
 
 	ImGui::EndChild();

@@ -91,11 +91,11 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::UpdateInGame()
+void GameObject::UpdateInGame(float dt)
 {
 	for (auto& component : components)
 	{
-		if (component->IsEnabled()) component->UpdateInGame();
+		if (component->IsEnabled()) component->UpdateInGame(dt);
 	}
 }
 

@@ -176,6 +176,13 @@ update_status ModuleEO::Update(float dt)
 
 update_status ModuleEO::PostUpdate(float dt)
 {
+    for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
+    {
+        if (engine_order[i] && engine_order[i]->IsEnabled())
+        {
+            engine_order[i]->PostUpdate();
+        }
+    }
     return UPDATE_CONTINUE;
 }
 

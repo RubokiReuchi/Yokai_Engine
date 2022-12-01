@@ -21,7 +21,7 @@ public:
 	~GameObject();
 
 	void Update();
-	void UpdateInGame();
+	void UpdateInGame(float dt);
 
 	void DeleteGameObject();
 

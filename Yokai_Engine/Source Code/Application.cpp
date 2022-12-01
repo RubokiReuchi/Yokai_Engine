@@ -43,6 +43,9 @@ bool Application::Init()
 	fpsCap = 60;
 	SetFPS(fpsCap);
 
+	game_timer = new GameTimer;
+	game_timer->realTime_frameCount = SDL_GetTicks();
+
 	bool ret = true;
 
 	// Call Init() in all modules
@@ -96,6 +99,7 @@ update_status Application::Update()
 	}
 
 	dt = ms_timer.getDeltaTime();
+	game_timer->realTime_dt = dt;
 
 	if (dt < fps)
 	{

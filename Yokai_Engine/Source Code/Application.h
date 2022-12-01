@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "Timer.h"
+#include "EO_Game.h"
 #include "Console.h"
 #include "Module.h"
 #include "Serialization.h"
@@ -13,6 +14,8 @@
 #include "ModuleEngineOrder.h"
 
 #include"MathGeoLib/include/Algorithm/Random/LCG.h"
+
+struct GameTimer;
 
 class Application
 {
@@ -34,6 +37,8 @@ private:
 	std::string scene_loaded_name = "defaultnameofstartscene";
 
 public:
+
+	GameTimer* game_timer = nullptr;
 
 	float fps = 1.0f / 60.0f;
 	int fpsCap;

@@ -29,7 +29,7 @@ public:
 	virtual ~Component();
 
 	virtual void Update() {}
-	virtual void UpdateInGame() {}
+	virtual void UpdateInGame(float dt) {}
 
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }
