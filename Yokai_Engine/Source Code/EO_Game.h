@@ -1,7 +1,19 @@
 #pragma once
 
 #include "EO_Base.h"
+#include "ModuleEngineOrder.h"
 #include "GameTimer.h"
+
+class GameObject;
+
+struct GameObjectInfo
+{
+	GameObject* parent = nullptr;
+	std::string name;
+	bool enabled;
+	bool visible;
+	Transform transform;
+};
 
 class EO_Game : public EO_Base
 {
@@ -27,4 +39,9 @@ public:
 	void PauseGame();
 	void ContinueGame();
 	void StopGame();
+
+private:
+	std::map<uint, GameObjectInfo> go_before_play;
+	void SaveGameObject();
+	void ReturnGameObject();
 };

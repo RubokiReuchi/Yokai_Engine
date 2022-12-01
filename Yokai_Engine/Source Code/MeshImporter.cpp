@@ -285,9 +285,9 @@ std::string MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObj
 	if (compare != "no loaded")
 	{
 		parent->Rename(app->file->FS_GetFileName(compare, false));
-		parent->GenerateAABB();
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(loadedCustomMeshes[compare].initialID);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
+		parent->GenerateAABB();
 		return compare;
 	}
 
@@ -312,9 +312,9 @@ std::string MeshImporter::CreateMesh(aiMesh* mesh, const aiScene* scene, GameObj
 	}
 	else
 	{
-		parent->GenerateAABB();
 		dynamic_cast<C_MeshRenderer*>(parent->AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(vertices, indices, file);
 		dynamic_cast<C_Material*>(parent->AddComponent(Component::TYPE::MATERIAL));
+		parent->GenerateAABB();
 	}
 
 	loadedCustomMeshes[file].initialID = loadedCustomMeshes.size();

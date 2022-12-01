@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
 			LOG("-------------- Application Creation --------------");
 			app = new Application();
 			state = MAIN_START;
-			//_CrtSetBreakAlloc(20504);
+			//_CrtSetBreakAlloc(2540);
 			break;
 
 		case MAIN_START:

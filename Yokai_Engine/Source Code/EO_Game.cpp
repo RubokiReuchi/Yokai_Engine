@@ -70,6 +70,7 @@ void EO_Game::PlayGame()
 {
 	in_game = true;
 	timer->time_scale = 1.0f;
+	SaveGameObject();
 }
 
 void EO_Game::PauseGame()
@@ -87,4 +88,46 @@ void EO_Game::StopGame()
 	in_game = false;
 	paused = false;
 	timer->Reset();
+	ReturnGameObject();
+}
+
+void EO_Game::SaveGameObject()
+{
+	for (auto& go : app->engine_order->game_objects)
+	{
+		GameObjectInfo aux;
+		aux.parent = go.second->parent;
+		aux.name = go.second->name;
+		aux.enabled = go.second->enabled;
+		aux.visible = go.second->visible;
+		aux.transform = go.second->transform->GetLocalTransform();
+
+		go_before_play[go.second->id] = aux;
+	}
+}
+
+void EO_Game::ReturnGameObject()
+{
+	for (size_t i = 2; i < go_before_play.size() + 1; i++)
+	{
+		if (go_before_play[i].parent->id != app->engine_order->game_objects[i]->parent->id) app->engine_order->game_objects[i]->SetParent(go_before_play[i].parent);
+		app->engine_order->game_objects[i]->name = go_before_play[i].name;
+		app->engine_order->game_objects[i]->enabled = go_before_play[i].enabled;
+		app->engine_order->game_objects[i]->visible = go_before_play[i].visible;
+
+		if (go_before_play[i].transform.position.x != app->engine_order->game_objects[i]->transform->GetLocalTransform().position.x
+			|| go_before_play[i].transform.position.y != app->engine_order->game_objects[i]->transform->GetLocalTransform().position.y
+			|| go_before_play[i].transform.position.z != app->engine_order->game_objects[i]->transform->GetLocalTransform().position.z
+			|| go_before_play[i].transform.rotation.x != app->engine_order->game_objects[i]->transform->GetLocalTransform().rotation.x
+			|| go_before_play[i].transform.rotation.y != app->engine_order->game_objects[i]->transform->GetLocalTransform().rotation.y
+			|| go_before_play[i].transform.rotation.z != app->engine_order->game_objects[i]->transform->GetLocalTransform().rotation.z
+			|| go_before_play[i].transform.scale.x != app->engine_order->game_objects[i]->transform->GetLocalTransform().scale.x
+			|| go_before_play[i].transform.scale.y != app->engine_order->game_objects[i]->transform->GetLocalTransform().scale.y
+			|| go_before_play[i].transform.scale.z != app->engine_order->game_objects[i]->transform->GetLocalTransform().scale.z)
+		{
+			app->engine_order->game_objects[i]->transform->SetTransform(go_before_play[i].transform.position, go_before_play[i].transform.scale, go_before_play[i].transform.rotation);
+		}
+	}
+
+	go_before_play.clear();
 }

@@ -166,6 +166,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		model_render.Draw();
 	}
 
+	drawing_scene = true;
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	app->engine_order->DrawEO_Editor();

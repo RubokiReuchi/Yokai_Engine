@@ -95,7 +95,7 @@ void EO_Editor::Update()
 
 	app->renderer3D->AddLines(grid, float4(1.0f, 1.0f, 1.0f, 1.0f));
 
-	if (!app->engine_order->game->in_game)
+	if (!app->engine_order->game->in_game || app->renderer3D->drawing_scene)
 	{
 		for (auto& go : app->engine_order->game_objects)
 		{
