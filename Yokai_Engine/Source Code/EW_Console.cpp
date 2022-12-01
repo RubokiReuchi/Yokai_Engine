@@ -5,11 +5,6 @@ EW_Console::EW_Console()
 {
 	window_name = "Console";
 	enabled = true;
-
-	Console::LogInConsole("Window Console Start");
-	Console::LogInConsole("PHYSFS::Inizializated");
-	Console::LogInConsole("ImGui::Inizializated");
-	Console::LogInConsole("DevIL::Inizializated");
 }
 
 EW_Console::~EW_Console()

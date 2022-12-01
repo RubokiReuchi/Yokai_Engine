@@ -120,7 +120,7 @@ const aiScene* MeshImporter::GetAiScene(std::string path)
 	{
 		LOG("ERROR::ASSIMP::%s", importer.GetErrorString());
 	}
-	Console::LogInConsole("ASSIMP::Scene loaded from path: " + path);
+	
 	return scene;
 }
 

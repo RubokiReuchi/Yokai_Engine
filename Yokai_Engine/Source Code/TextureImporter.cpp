@@ -18,17 +18,14 @@ uint TextureImporter::LoadTexture(std::string path)
 	if (!ModuleFile::FS_Exists(texture_path))
 	{
 		// save custom format
-		std::string file = TEXTURES_PATH;
-		file += app->file->FS_GetFileName(path, false);
-		file += ".dds";
-
 		uint size = 0;
 		char* buffer = YK_SaveTexture(size, path);
 
-		app->file->FS_Save(file.c_str(), buffer, size, false);
+		app->file->FS_Save(texture_path.c_str(), buffer, size, false);
 		RELEASE_ARRAY(buffer);
 
-		app->file->YK_SaveMetaData(file, path);
+		app->file->YK_SaveMetaData(texture_path, path);
+		Console::LogInConsole(texture_path + " created.");
 	}
 
 	return ImportTexture(texture_path);
@@ -105,6 +102,8 @@ uint TextureImporter::ImportTexture(std::string path)
 
 	M_Texture::loaded_textures[m_renderer_id] = tex; // Add loaded texture inside M_texture
 	M_Texture::usedPaths[path] = m_renderer_id;
+	
+	Console::LogInConsole(path + " loaded.");
 
 	return m_renderer_id;
 }
