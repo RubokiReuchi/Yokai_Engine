@@ -91,6 +91,14 @@ void GameObject::Update()
 	}
 }
 
+void GameObject::UpdateInGame()
+{
+	for (auto& component : components)
+	{
+		if (component->IsEnabled()) component->UpdateInGame();
+	}
+}
+
 void GameObject::DeleteGameObject()
 {
 	if (app->engine_order->editor->GetSelectedGameObject() == this) app->engine_order->editor->SetSelectedGameObject(NULL);

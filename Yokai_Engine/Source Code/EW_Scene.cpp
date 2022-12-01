@@ -25,6 +25,7 @@ EW_Scene::~EW_Scene()
 void EW_Scene::Update()
 {
 	// Screen
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
 	
 	scene_camera->active = true;
@@ -46,7 +47,7 @@ void EW_Scene::Update()
 		app->engine_order->scene_size.y = ImGui::GetWindowSize().y - ImGui::GetFrameHeight();
 	}
 
-	ImVec2 gameDimensions = ImGui::GetContentRegionAvail();
+	ImVec2 gameDimensions = ImGui::GetWindowSize();
 
 	if (gameDimensions.x != scene_width || gameDimensions.y != scene_height)
 	{
@@ -224,5 +225,7 @@ void EW_Scene::Update()
 			app->engine_order->editor->message = "";
 		}
 	}
+
+	ImGui::PopStyleVar();
 	ImGui::End();
 }

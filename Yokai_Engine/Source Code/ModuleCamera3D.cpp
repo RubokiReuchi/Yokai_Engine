@@ -34,6 +34,7 @@ bool ModuleCamera3D::Start()
 		camera.second.frameBuffer.SetBufferInfo();
 		camera.second.frameBuffer.SetDimensions(app->window->width, app->window->height);
 		camera.second.changeFOVWithBufferSize = false;
+		camera.second.ChangeAspectRatio(16.0f / 9.0f);
 	}
 
 	return true;

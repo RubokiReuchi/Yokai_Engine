@@ -29,6 +29,7 @@ public:
 	virtual ~Component();
 
 	virtual void Update() {}
+	virtual void UpdateInGame() {}
 
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }

@@ -10,6 +10,7 @@
 #include <random>
 
 class EO_Editor;
+class EO_Game;
 
 enum class EO_NUM
 {
@@ -47,6 +48,7 @@ public:
 public:
 	EO_Base* engine_order[(uint)EO_NUM::NUM_EO_TYPE] = { nullptr };
 	EO_Editor* editor = nullptr;
+	EO_Game* game = nullptr;
 	ImVec2 scene_pos;
 	ImVec2 scene_size;
 

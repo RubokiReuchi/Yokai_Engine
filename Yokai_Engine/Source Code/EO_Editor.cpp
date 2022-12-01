@@ -1,4 +1,5 @@
 #include "EO_Editor.h"
+#include "EO_Game.h"
 #include "ModuleEngineOrder.h"
 #include "Application.h"
 #include "ModuleWindow.h"
@@ -94,9 +95,12 @@ void EO_Editor::Update()
 
 	app->renderer3D->AddLines(grid, float4(1.0f, 1.0f, 1.0f, 1.0f));
 
-	for (auto& go : app->engine_order->game_objects)
+	if (!app->engine_order->game->in_game)
 	{
-		go.second->Update();
+		for (auto& go : app->engine_order->game_objects)
+		{
+			go.second->Update();
+		}
 	}
 }
 
@@ -107,7 +111,7 @@ void EO_Editor::PostUpdate()
 	ImGui::NewFrame();
 
 	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-
+	
 	if (!SetMenuBar())
 	{
 		app->renderer3D->exit = true;

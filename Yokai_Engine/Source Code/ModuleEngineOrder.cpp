@@ -24,7 +24,7 @@ bool ModuleEO::Init()
 bool ModuleEO::Start()
 {
     engine_order[(uint)EO_NUM::EDITOR] = editor = new EO_Editor();
-    engine_order[(uint)EO_NUM::GAME] = new EO_Game();
+    engine_order[(uint)EO_NUM::GAME] = game = new EO_Game();
 
     for (int i = 0; i < (uint)EO_NUM::NUM_EO_TYPE; i++)
     {

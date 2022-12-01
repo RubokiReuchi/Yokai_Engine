@@ -18,4 +18,8 @@ public:
 	void PostUpdate();
 
 	void CleanUp();
+
+	bool in_game = false;
+	bool paused = false;
+	bool tick = false;
 };

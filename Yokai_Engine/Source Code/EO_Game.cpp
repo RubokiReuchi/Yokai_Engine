@@ -23,7 +23,25 @@ void EO_Game::PreUpdate()
 {}
 
 void EO_Game::Update()
-{}
+{
+	// game logic
+	if (in_game && !paused)
+	{
+		for (auto& go : app->engine_order->game_objects)
+		{
+			go.second->UpdateInGame();
+		}
+	}
+
+	if (tick)
+	{
+		for (auto& go : app->engine_order->game_objects)
+		{
+			go.second->UpdateInGame();
+		}
+		tick = false;
+	}
+}
 
 
 void EO_Game::PostUpdate()

@@ -5,6 +5,7 @@
 #include "ModuleEngineOrder.h"
 #include "ModuleFile.h"
 #include "EO_Editor.h"
+#include "EO_Game.h"
 
 #include "ImGui/imgui_impl_sdl.h"
 
@@ -132,8 +133,8 @@ update_status ModuleInput::PreUpdate(float dt)
 	}
 
 #ifndef STANDALONE
-	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
-		return UPDATE_STOP;
+	if (!app->engine_order->game->in_game && keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP) quit = true;
+	if(quit == true) return UPDATE_STOP;
 #endif
 
 	return UPDATE_CONTINUE;

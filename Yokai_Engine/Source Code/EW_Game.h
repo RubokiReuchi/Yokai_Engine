@@ -21,4 +21,6 @@ private:
 
 	Camera* currentGameCamera = nullptr;
 	float game_width, game_height;
+
+	RECT window_rect;
 };
