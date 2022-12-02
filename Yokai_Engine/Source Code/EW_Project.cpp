@@ -115,6 +115,13 @@ void EW_Project::Update()
                 open_file = true;
                 ResourceManager::OpenResource(file_path);
             }
+            if (ImGui::IsItemHovered() && app->input->GetKey(SDL_SCANCODE_DELETE) == KEY_UP && !comfirm_popUp)
+            {
+                ImGui::OpenPopup("Confirm Delete");
+                comfirm_popUp = true;
+                file_to_delete = currentNode->path + currentNode->files[i - dir_size];
+                ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+            }
 
             if (8 + 128 * (i + 2 - rows) > width) rows = i + 1;
             else ImGui::SameLine();
@@ -144,6 +151,37 @@ void EW_Project::Update()
             }
         }
     }
+
+    // confirm popUp
+    if (comfirm_popUp)
+    {
+        ImGui::SetNextWindowSize(ImVec2(150.0f, 75.0f));
+        if (ImGui::BeginPopup("Confirm Delete"))
+        {
+            ImGuiH::TextAlignOnLine("Delete file?");
+            if (ImGuiH::ButtonAlignOnLine("Confirm"))
+            {
+                ResourceManager::DeleteResource(file_to_delete);
+                file_to_delete = "";
+                app->file->new_file = true;
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGuiH::ButtonAlignOnLine("Cancel"))
+            {
+                comfirm_popUp = false;
+                file_to_delete = "";
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+        if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(150.0f, 75.0f)))
+        {
+            comfirm_popUp = false;
+            file_to_delete = "";
+            ImGui::CloseCurrentPopup();
+        }
+    }
+
     ImGui::EndChild();
     if (new_dir) currentNode = new_dir;
 	ImGui::End();

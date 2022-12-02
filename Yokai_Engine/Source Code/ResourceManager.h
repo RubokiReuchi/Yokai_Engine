@@ -22,6 +22,7 @@ public:
 	static void CheckModifiedFiles();
 
 	static void OpenResource(std::string path);
+	static void DeleteResource(std::string path);
 
 private:
 	static std::string BuildPath(std::string path);

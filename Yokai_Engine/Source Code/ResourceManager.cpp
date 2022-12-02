@@ -162,3 +162,10 @@ void ResourceManager::OpenResource(std::string path)
 	std::string open_path = BuildPath(path);
 	system(open_path.c_str());
 }
+
+void ResourceManager::DeleteResource(std::string path)
+{
+	remove(path.c_str());
+	Console::LogInConsole(path + " deleted.");
+	CheckRemovedFiles();
+}

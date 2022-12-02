@@ -132,10 +132,10 @@ update_status ModuleInput::PreUpdate(float dt)
 		}
 	}
 
-#ifndef STANDALONE
+#ifndef DEBUG
 	if (!app->engine_order->game->in_game && keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP) quit = true;
-	if(quit == true) return UPDATE_STOP;
 #endif
+	if (quit == true) return UPDATE_STOP;
 
 	return UPDATE_CONTINUE;
 }

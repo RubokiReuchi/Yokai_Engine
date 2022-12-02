@@ -26,4 +26,7 @@ private:
 	std::vector<std::string> allFiles;
 
 	bool open_file = false;
+	bool comfirm_popUp = false;
+	ImVec2 ori;
+	std::string file_to_delete = "";
 };
