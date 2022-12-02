@@ -13,6 +13,7 @@ struct GameObjectInfo
 	bool enabled;
 	bool visible;
 	Transform transform;
+	std::string texture_path = "donthavetexture";
 };
 
 class EO_Game : public EO_Base

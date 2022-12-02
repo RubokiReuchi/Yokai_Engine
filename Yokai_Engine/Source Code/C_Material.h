@@ -13,6 +13,10 @@ public:
 	void OnEditor();
 
 	void SetTexture(std::string texture);
+	std::string GetTexture()
+	{
+		return selected_texture;
+	}
 
 	Re_Mesh& GetMesh();
 

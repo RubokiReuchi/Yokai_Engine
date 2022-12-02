@@ -101,6 +101,8 @@ void EO_Game::SaveGameObject()
 		aux.enabled = go.second->enabled;
 		aux.visible = go.second->visible;
 		aux.transform = go.second->transform->GetLocalTransform();
+		C_Material* mat = dynamic_cast<C_Material*>(go.second->GetComponent(Component::TYPE::MATERIAL));
+		if (mat != NULL) aux.texture_path = mat->GetTexture();
 
 		go_before_play[go.second->id] = aux;
 	}
@@ -126,6 +128,11 @@ void EO_Game::ReturnGameObject()
 			|| go_before_play[i].transform.scale.z != app->engine_order->game_objects[i]->transform->GetLocalTransform().scale.z)
 		{
 			app->engine_order->game_objects[i]->transform->SetTransform(go_before_play[i].transform.position, go_before_play[i].transform.scale, go_before_play[i].transform.rotation);
+		}
+
+		if (go_before_play[i].texture_path != "donthavetexture") // default value
+		{
+			dynamic_cast<C_Material*>(app->engine_order->game_objects[i]->GetComponent(Component::TYPE::MATERIAL))->SetTexture(go_before_play[i].texture_path);
 		}
 	}
 

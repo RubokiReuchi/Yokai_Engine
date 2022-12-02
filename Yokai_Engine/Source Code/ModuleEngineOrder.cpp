@@ -35,7 +35,7 @@ bool ModuleEO::Start()
     }
 
     // load street to second deliver
-    /*MeshImporter::LoadMesh("Assets/street.fbx");
+    MeshImporter::LoadMesh("Assets/street.fbx");
     uint texture041 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_041.png");
     uint texture040 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_040.png");
     uint texture038_037_034_026_022 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_038_037_034_026_022.tga");
@@ -118,7 +118,7 @@ bool ModuleEO::Start()
                 mat->SetTexture(c_mr->GetTexture((float)texture_grey));
             }
         }
-    }*/
+    }
 
     return true;
 }
