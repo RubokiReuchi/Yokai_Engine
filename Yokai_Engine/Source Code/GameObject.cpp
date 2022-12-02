@@ -37,6 +37,11 @@ GameObject::GameObject(SerializedGO go)
 		switch (go.components_type[i])
 		{
 		case 2: // Mesh Renderer
+			if (!ModuleFile::FS_Exists(go.mesh_path))
+			{
+				Console::LogInConsole(go.mesh_path + " not found.");
+				break;
+			}
 			if (app->engine_order->loadedSerializedMeshes.find(go.mesh_path) != app->engine_order->loadedSerializedMeshes.end()) // check if path is loaded
 			{
 				dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsInstanciedMesh(app->engine_order->loadedSerializedMeshes[go.mesh_path]);
@@ -52,6 +57,12 @@ GameObject::GameObject(SerializedGO go)
 			}
 			break;
 		case 3: // Material
+			if (!ModuleFile::FS_Exists(go.mesh_path)) break;
+			if (!ModuleFile::FS_Exists(go.selected_texture))
+			{
+				Console::LogInConsole(go.selected_texture + " not found.");
+				break;
+			}
 			dynamic_cast<C_Material*>(AddComponent(Component::TYPE::MATERIAL))->SetTexture(go.selected_texture);
 			break;
 		case 4: // Camera

@@ -66,8 +66,8 @@ void ResourceManager::CheckRemovedFiles()
 		if (!ModuleFile::FS_Exists(ModuleFile::YK_GetMetaInfo(full_path, 1)))
 		{
 			remove(full_path.c_str());
-			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
-			Console::LogInConsole(ModuleFile::FS_GetFileName(full_path, false) + " delete.");
+			remove(ModuleFile::FS_RemoveExtension(full_path).c_str());
+			Console::LogInConsole(ModuleFile::FS_RemoveExtension(full_path) + " delete.");
 		}
 	}
 
@@ -80,8 +80,8 @@ void ResourceManager::CheckRemovedFiles()
 		if (!ModuleFile::FS_Exists(ModuleFile::YK_GetMetaInfo(full_path, 1)))
 		{
 			remove(full_path.c_str());
-			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
-			Console::LogInConsole(ModuleFile::FS_GetFileName(full_path, false) + " delete.");
+			remove(ModuleFile::FS_RemoveExtension(full_path).c_str());
+			Console::LogInConsole(ModuleFile::FS_RemoveExtension(full_path) + " delete.");
 		}
 	}
 
@@ -112,8 +112,8 @@ void ResourceManager::CheckModifiedFiles()
 		if (ModuleFile::FS_GetLastModifyDate(ModuleFile::YK_GetMetaInfo(full_path, 1)) != ModuleFile::YK_GetMetaInfo(full_path, 2))
 		{
 			remove(full_path.c_str());
-			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
-			Console::LogInConsole(ModuleFile::FS_GetFileName(full_path, false) + " delete.");
+			remove(ModuleFile::FS_RemoveExtension(full_path).c_str());
+			Console::LogInConsole(ModuleFile::FS_RemoveExtension(full_path) + " delete.");
 		}
 	}
 
@@ -126,8 +126,8 @@ void ResourceManager::CheckModifiedFiles()
 		if (ModuleFile::FS_GetLastModifyDate(ModuleFile::YK_GetMetaInfo(full_path, 1)) != ModuleFile::YK_GetMetaInfo(full_path, 2))
 		{
 			remove(full_path.c_str());
-			remove(ModuleFile::FS_GetFileName(full_path, false).c_str());
-			Console::LogInConsole(ModuleFile::FS_GetFileName(full_path, false) + " delete.");
+			remove(ModuleFile::FS_RemoveExtension(full_path).c_str());
+			Console::LogInConsole(ModuleFile::FS_RemoveExtension(full_path) + " delete.");
 		}
 	}
 
