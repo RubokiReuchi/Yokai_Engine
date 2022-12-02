@@ -7,6 +7,9 @@
 #include "FileTree.hpp"
 #include "M_Texture.h"
 
+#define VAL(str) #str
+#define TOSTRING(str) VAL(str)
+
 std::string ResourceManager::LoadResource(std::string path)
 {
 	std::string message = "";
@@ -132,4 +135,30 @@ void ResourceManager::CheckModifiedFiles()
 	}
 
 	RELEASE(folder);
+}
+
+std::string ResourceManager::BuildPath(std::string path)//system("\"C:\\Users\\jayor\\Desktop\\hola.text\"");
+{
+	std::string new_path = "";
+	std::string aux;
+	size_t n = std::count(path.begin(), path.end(), '/');
+	size_t npos;
+
+	for (size_t i = 0; i < n; i++)
+	{
+		npos = path.find_first_of("/");
+		aux = path;
+		new_path += aux.erase(npos, path.length()) + "\\";
+	}
+	npos = path.find_last_of("/");
+	aux = path;
+	new_path += aux.erase(0, npos + 1);
+
+	return new_path;
+}
+
+void ResourceManager::OpenResource(std::string path)
+{
+	std::string open_path = BuildPath(path);
+	system(open_path.c_str());
 }

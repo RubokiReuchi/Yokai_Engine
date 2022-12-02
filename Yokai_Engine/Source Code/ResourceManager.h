@@ -20,5 +20,10 @@ public:
 
 	static void CheckRemovedFiles();
 	static void CheckModifiedFiles();
+
+	static void OpenResource(std::string path);
+
+private:
+	static std::string BuildPath(std::string path);
 	
 };

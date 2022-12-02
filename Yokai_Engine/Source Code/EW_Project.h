@@ -24,4 +24,6 @@ private:
 	FileTree* currentNode = nullptr;
 
 	std::vector<std::string> allFiles;
+
+	bool open_file = false;
 };

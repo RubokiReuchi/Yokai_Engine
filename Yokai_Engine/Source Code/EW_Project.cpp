@@ -1,6 +1,7 @@
 #include "EW_Project.h"
 #include "EO_Editor.h"
 #include "ModuleFile.h"
+#include "ResourceManager.h"
 #include "FileTree.hpp"
 #include "ImGuiHelpers.h"
 
@@ -51,6 +52,7 @@ void EW_Project::Update()
 
 	// Project
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse);
+    open_file = false;
     FileTree* new_dir = nullptr;
 
     // Filter
@@ -106,6 +108,12 @@ void EW_Project::Update()
                 ImGui::SetDragDropPayload(file_path.c_str(), &i, sizeof(std::string));
                 app->engine_order->editor->dd_file = file_path;
                 ImGui::EndDragDropSource();
+            }
+            if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left) && !open_file)
+            {
+                std::string file_path = currentNode->path + currentNode->files[i - dir_size];
+                open_file = true;
+                ResourceManager::OpenResource(file_path);
             }
 
             if (8 + 128 * (i + 2 - rows) > width) rows = i + 1;
