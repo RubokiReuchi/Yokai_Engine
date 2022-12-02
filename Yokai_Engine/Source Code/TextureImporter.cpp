@@ -102,6 +102,7 @@ uint TextureImporter::ImportTexture(std::string path)
 
 	M_Texture::loaded_textures[m_renderer_id] = tex; // Add loaded texture inside M_texture
 	M_Texture::usedPaths[path] = m_renderer_id;
+	M_Texture::texture_image[ModuleFile::FS_GetFileName(path, false)] = m_renderer_id;
 	
 	Console::LogInConsole(path + " loaded.");
 

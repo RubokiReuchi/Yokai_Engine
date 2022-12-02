@@ -4,6 +4,7 @@
 #include "M_ModelRender.h"
 #include "Re_Mesh.h"
 #include "TextureImporter.h"
+#include "M_Texture.h"
 
 C_Material::C_Material(GameObject* gameObject) : Component(gameObject, TYPE::MATERIAL)
 {
@@ -98,6 +99,10 @@ void C_Material::OnEditor()
 				i++;
 			}
 			ImGui::EndCombo();
+		}
+		if (M_Texture::texture_image.find(selected_texture) != M_Texture::texture_image.end())
+		{
+			ImGui::Image((ImTextureID)M_Texture::texture_image[selected_texture], ImVec2(100, 100), ImVec2(0, 1), ImVec2(1, 0));
 		}
 	}
 	if (popUpOpen)

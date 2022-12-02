@@ -56,7 +56,7 @@ void EW_Game::Update()
 	ImVec2 save_pos = ImGui::GetWindowPos();
 	ImVec2 save_size = ImGui::GetWindowSize();
 	ImGui::SetNextWindowPos(ImVec2(save_pos.x + (save_size.x / 2) - 54, save_pos.y + 25));
-	ImGui::BeginChild("Time Control", ImVec2(108, 42), ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+	ImGui::BeginChild("Time Control", ImVec2(108, 42), false, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
 	std::string button1 = ICON_FA_PLAY"##1";
 	if (app->engine_order->game->in_game) button1 = ICON_FA_STOP"##1";

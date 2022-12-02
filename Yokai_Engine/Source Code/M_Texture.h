@@ -26,5 +26,6 @@ public:
 	static uint bindedTextures;
 	static std::map<uint, Re_Texture> loaded_textures;
 	static std::map<std::string, uint> usedPaths;
+	static std::map<std::string, uint> texture_image;
 	static std::vector<BindedTextureInfo> bindedTexturesInfo;
 };

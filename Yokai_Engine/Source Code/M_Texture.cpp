@@ -7,6 +7,7 @@
 
 std::map<uint, Re_Texture> M_Texture::loaded_textures;
 std::map<std::string, uint> M_Texture::usedPaths;
+std::map<std::string, uint> M_Texture::texture_image;
 std::vector<M_Texture::BindedTextureInfo> M_Texture::bindedTexturesInfo;
 uint M_Texture::bindedTextures = 0;
 
@@ -44,6 +45,7 @@ void M_Texture::UnBindTextures()
 
 void M_Texture::DeleteTextures()
 {
+	texture_image.clear();
 	for (auto& texture : loaded_textures)
 	{
 		glDeleteTextures(1, &texture.first);
