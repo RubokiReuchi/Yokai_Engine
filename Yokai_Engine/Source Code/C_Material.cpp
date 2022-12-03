@@ -42,13 +42,8 @@ void C_Material::OnEditor()
 			{
 				if (loaded_tex.second.name != "Checkers")
 				{
-					size_t npos = loaded_tex.second.name.find_last_of("/") + 1;
-					std::string file_name = loaded_tex.second.name;
 					ImGui::Text(loaded_tex.second.name.c_str());
-					file_name = file_name.substr(npos);
-					npos = file_name.find_last_of(".");
-					file_name.erase(npos, 9);
-					selected_texture = file_name;
+					selected_texture = loaded_tex.second.name;
 				}
 				else
 				{
@@ -62,8 +57,22 @@ void C_Material::OnEditor()
 			ImGui::Text("NULL");
 			selected_texture = "Default";
 		}
+
+		std::string selected_texture_name;
+		if (selected_texture != "Checkers" && selected_texture != "Default")
+		{
+			size_t npos = selected_texture.find_last_of("/") + 1;
+			selected_texture_name = selected_texture;
+			selected_texture_name = selected_texture_name.substr(npos);
+			npos = selected_texture_name.find_last_of(".");
+			selected_texture_name.erase(npos, 9);
+		}
+		else
+		{
+			selected_texture_name = selected_texture;
+		}
 		
-		if (ImGui::BeginCombo("Select Texture", selected_texture.c_str(), ImGuiComboFlags_HeightSmall))
+		if (ImGui::BeginCombo("Select Texture", selected_texture_name.c_str(), ImGuiComboFlags_HeightSmall))
 		{
 			bool is_selected = (selected_texture == "Default");
 			if (ImGui::Selectable("Default", is_selected))
@@ -89,10 +98,10 @@ void C_Material::OnEditor()
 				file_name = file_name.substr(npos);
 				npos = file_name.find_last_of(".");
 				file_name.erase(npos, 9);
-				is_selected = (selected_texture == file_name);
+				is_selected = (selected_texture_name == file_name);
 				if (ImGui::Selectable(file_name.c_str(), is_selected))
 				{
-					selected_texture = file_name;
+					selected_texture = texture.second.name;
 					if (is_selected) ImGui::SetItemDefaultFocus();
 					GetMesh().texture_id = (float)std::stoi(id_names[i]);
 				}
