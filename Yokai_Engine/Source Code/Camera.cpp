@@ -7,21 +7,17 @@ Camera::Camera()
 {
 	CalculateViewMatrix();
 
+	Position = float3(0.0f, 0.0f, 0.0f);
 	X = float3(1.0f, 0.0f, 0.0f);
 	Y = float3(0.0f, 1.0f, 0.0f);
 	Z = float3(0.0f, 0.0f, 1.0f);
 
-	Position = float3(0.0f, 0.0f, 0.0f);
-	Reference = float3(0.0f, 0.0f, 0.0f);
-
+	cameraFrustum.nearPlaneDistance = 0.1f;
+	cameraFrustum.farPlaneDistance = range;
 	cameraFrustum.type = math::FrustumType::PerspectiveFrustum;
 	cameraFrustum.verticalFov = FOV = math::DegToRad(60.0f);
-	aspectRatio = 1.7f;
-	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);
-
-	cameraFrustum.nearPlaneDistance = 0.01f;
-	cameraFrustum.farPlaneDistance = range;
-
+	aspectRatio = (16.0f / 9.0f);
+	cameraFrustum.horizontalFov = 2.0f * atanf(tanf(cameraFrustum.verticalFov / 2.0f) * aspectRatio);	
 	cameraFrustum.pos = Position;
 	cameraFrustum.front = Z;
 	cameraFrustum.up = Y;
@@ -31,16 +27,16 @@ Camera::~Camera()
 {
 }
 
-void Camera::LookAt(const float3& Spot)
+void Camera::LookAt(const float3& objective)
 {
-	cameraFrustum.front = (Spot - cameraFrustum.pos).Normalized();
-	float3 X = float3(0, 1, 0).Cross(cameraFrustum.front).Normalized();
-	cameraFrustum.up = cameraFrustum.front.Cross(X);
+	cameraFrustum.front = (objective - cameraFrustum.pos).Normalized();
+	float3 aux = float3(0, 1, 0).Cross(cameraFrustum.front).Normalized();
+	cameraFrustum.up = cameraFrustum.front.Cross(aux);
 }
 
-void Camera::Move(const float3& Movement)
+void Camera::Move(const float3& movement)
 {
-	cameraFrustum.pos += Movement;
+	cameraFrustum.pos += movement;
 }
 
 float* Camera::GetViewMatrix()

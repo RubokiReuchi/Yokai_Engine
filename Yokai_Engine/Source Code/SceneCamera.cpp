@@ -43,7 +43,6 @@ void SceneCamera::UpdateCameraInput(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += cameraFrustum.WorldRight() * speed;
 		
 		Position += newPos;
-		Reference += newPos;
 
 		cameraFrustum.pos += newPos;
 
@@ -245,12 +244,11 @@ void SceneCamera::CalculateMousePicking()
 	
 }
 
-void SceneCamera::Focus(const float3& focusPoint)
+void SceneCamera::Focus(const float3& objective)
 {
-	float3 newPos = focusPoint;
-	newPos += float3(4.0f, 0.0f, 2.0f);
+	float3 newPos = objective + float3(4.0f, 0.0f, 2.0f);
 	cameraFrustum.pos = newPos;
-	LookAt(focusPoint);
+	LookAt(objective);
 }
 
 GameObject* SceneCamera::GetGoInMouse()

@@ -29,7 +29,7 @@ public:
 	bool confine_pan = false;
 
 private:
-	void Focus(const float3& focusPoint);
+	void Focus(const float3& objective);
 
 	float speed_multiplier = 3.0f;
 

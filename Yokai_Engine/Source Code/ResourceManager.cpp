@@ -160,7 +160,7 @@ std::string ResourceManager::BuildPath(std::string path)//system("\"C:\\Users\\j
 void ResourceManager::OpenResource(std::string path)
 {
 	std::string open_path = BuildPath(path);
-	system(open_path.c_str());
+	ShellExecute(NULL, "open", open_path.c_str(), NULL, NULL, SW_HIDE);
 }
 
 void ResourceManager::DeleteResource(std::string path)

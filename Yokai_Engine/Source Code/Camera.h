@@ -10,8 +10,8 @@ public:
 	Camera();
 	~Camera();
 
-	void LookAt(const float3& Spot);
-	void Move(const float3& Movement);
+	void LookAt(const float3& objective);
+	void Move(const float3& movement);
 	float* GetViewMatrix();
 	float* GetProjectionMatrix();
 
@@ -31,7 +31,7 @@ public:
 	void CheckGoInCamera();
 
 public:
-	float3 X, Y, Z, Position, Reference;
+	float3 X, Y, Z, Position;
 	bool active = true;
 	FrameBuffer frameBuffer;
 protected:
