@@ -185,9 +185,17 @@ bool EO_Editor::SetMenuBar()
 		}
 		ImGui::EndMenu();
 	}
-	if (ImGui::BeginMenu("Edit"))
+	if (ImGui::BeginMenu("CHECK")) // FOR second deliver
 	{
-
+		ImGui::Checkbox("Frustrum Culling", &app->renderer3D->view_frustrum_culling);
+		if (ImGui::Button("LOG loaded meshes"))
+		{
+			MeshImporter::LogLoadedMeshes();
+		}
+		if (ImGui::Button("LOG loaded textures"))
+		{
+			M_Texture::LogLoadedTextures();
+		}
 		ImGui::EndMenu();
 	}
 	if (ImGui::BeginMenu("View"))
@@ -196,15 +204,6 @@ bool EO_Editor::SetMenuBar()
 
 		if (ImGui::Checkbox("Cull Face", &app->renderer3D->cull_face))
 			(app->renderer3D->cull_face) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-
-		if (ImGui::Checkbox("Lighting", &app->renderer3D->lighting))
-			(app->renderer3D->lighting) ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
-
-		if (ImGui::Checkbox("Color Material", &app->renderer3D->color_material))
-			(app->renderer3D->color_material) ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
-
-		if (ImGui::Checkbox("Texture 2D", &app->renderer3D->texture_2d))
-			(app->renderer3D->texture_2d) ? glEnable(GL_TEXTURE_2D) : glDisable(GL_TEXTURE_2D);
 		ImGui::EndMenu();
 	}
 	if (ImGui::BeginMenu("Windows"))

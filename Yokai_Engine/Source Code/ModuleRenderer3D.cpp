@@ -160,7 +160,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 		app->camera->currentDrawingCamera = app->camera->activeGameCamera;
 		drawing_scene = false;
-		app->camera->currentDrawingCamera->CheckGoInCamera();
+		if (!view_frustrum_culling) // FOR second deliver
+		{
+			app->camera->currentDrawingCamera->CheckGoInCamera();
+		}
 
 		app->engine_order->DrawEO();
 		model_render.Draw();

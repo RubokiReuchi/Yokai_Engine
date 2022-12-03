@@ -56,4 +56,7 @@ public:
 
 	// trigger exit
 	bool exit;
+
+	// FOR second deliver
+	bool view_frustrum_culling = false;
 };

@@ -448,3 +448,18 @@ void SaveMesh::YK_LoadMesh(const char* path)
 	delete[] buffer;
 	buffer = nullptr;
 }
+
+// FOR second deliver
+void MeshImporter::LogLoadedMeshes()
+{
+	Console::LogInConsole("Normal meshes loaded----------");
+	for (auto& mesh : loadedMeshes)
+	{
+		Console::LogInConsole(mesh.first + " is loaded.");
+	}
+	Console::LogInConsole("Custom meshes loaded----------");
+	for (auto& mesh : loadedCustomMeshes)
+	{
+		Console::LogInConsole(mesh.first + " is loaded.");
+	}
+}

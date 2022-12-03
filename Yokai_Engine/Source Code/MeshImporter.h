@@ -56,6 +56,9 @@ public:
 		loadedCustomMeshes.clear();
 	}
 
+	// FOR second deliver
+	static void LogLoadedMeshes();
+
 private:
 	static GameObject* LoadModelFromYK(std::string path, GameObject* parent = nullptr);
 	static GameObject* LoadMeshFromYK(std::string path, float3 position = float3(0, 0, 0), float3 scale = float3(1, 1, 1), GameObject* parent = nullptr);
