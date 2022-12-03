@@ -21,9 +21,9 @@ C_Camera::~C_Camera()
 void C_Camera::Update()
 {
 	float3 points[8];
-	GetGameObject()->global_aabb.GetCornerPoints(points);
+	GetGameObject()->global_obb.GetCornerPoints(points);
 
-	std::vector<float3> lines = PointsToLines_AABB(points);
+	std::vector<float3> lines = PointsToLines_OBB(points);
 
 	app->renderer3D->AddLines(lines, float4(0.905f, 0.851f, 0.0f, 1.0f));
 
@@ -114,7 +114,7 @@ Camera* C_Camera::GetCamera()
 	return &app->camera->game_cameras[cameraID];
 }
 
-std::vector<float3> C_Camera::PointsToLines_AABB(float3 points[8])
+std::vector<float3> C_Camera::PointsToLines_OBB(float3 points[8])
 {
 	std::vector<float3> lines;
 
