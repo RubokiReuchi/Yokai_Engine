@@ -58,7 +58,7 @@ GameObject::GameObject(SerializedGO go)
 			break;
 		case 3: // Material
 			if (!ModuleFile::FS_Exists(go.mesh_path)) break;
-			if (!ModuleFile::FS_Exists(go.selected_texture))
+			if (!ModuleFile::FS_Exists(go.selected_texture) && go.selected_texture != "Checkers" && go.selected_texture != "Default")
 			{
 				Console::LogInConsole(go.selected_texture + " not found.");
 				break;
