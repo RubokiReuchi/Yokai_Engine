@@ -19,6 +19,8 @@
 # include <cstdint> // std::uintXX_t
 # include <utility> // std::move
 
+struct Pin;
+
 
 //------------------------------------------------------------------------------
 # define IMGUI_NODE_EDITOR_VERSION      "0.9.2"
@@ -288,6 +290,7 @@ void End();
 
 void BeginNode(NodeId id);
 void BeginPin(PinId id, PinKind kind);
+void NH_BeginPin(Pin& pin, PinKind kind);
 void PinRect(const ImVec2& a, const ImVec2& b);
 void PinPivotRect(const ImVec2& a, const ImVec2& b);
 void PinPivotSize(const ImVec2& size);

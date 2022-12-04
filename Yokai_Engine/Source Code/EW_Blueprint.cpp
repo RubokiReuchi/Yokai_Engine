@@ -30,14 +30,15 @@ void EW_Blueprint::Update()
     Pin a_inPin(unique_id++, "-> In", PinType::Float);
     Pin a_outPin(unique_id++, "-> Out", PinType::Float);
 
+    // create one NODE version 1
     BP::BeginNode(nodeA_id);
     ImGui::Text("Node A");
-    BP::BeginPin(a_inPin.id, BP::PinKind::Input);
-    NodeEditorH::PinIcon(a_inPin, NodeEditorH::IsPinLinked(a_inPin.id, links), 255);
+    BP::NH_BeginPin(a_inPin, BP::PinKind::Input);
+    NH::PinIcon(a_inPin, NH::IsPinLinked(a_inPin.id, links), 255);
     BP::EndPin();
     ImGui::SameLine(55);
-    BP::BeginPin(a_outPin.id, BP::PinKind::Output);
-    NodeEditorH::PinIcon(a_outPin, NodeEditorH::IsPinLinked(a_outPin.id, links), 255);
+    BP::NH_BeginPin(a_outPin, BP::PinKind::Output);
+    NH::PinIcon(a_outPin, NH::IsPinLinked(a_outPin.id, links), 255);
     BP::EndPin();
     BP::EndNode();
 
@@ -47,12 +48,12 @@ void EW_Blueprint::Update()
 
     BP::BeginNode(nodeB_id);
     ImGui::Text("Node B");
-    BP::BeginPin(b_inPin.id, BP::PinKind::Input);
-    NodeEditorH::PinIcon(b_inPin, NodeEditorH::IsPinLinked(b_inPin.id, links), 255);
+    BP::NH_BeginPin(b_inPin, BP::PinKind::Input);
+    NH::PinIcon(b_inPin, NH::IsPinLinked(b_inPin.id, links), 255);
     BP::EndPin();
     ImGui::SameLine(55);
-    BP::BeginPin(b_outPin.id, BP::PinKind::Output);
-    NodeEditorH::PinIcon(b_outPin, NodeEditorH::IsPinLinked(b_outPin.id, links), 255);
+    BP::NH_BeginPin(b_outPin, BP::PinKind::Output);
+    NH::PinIcon(b_outPin, NH::IsPinLinked(b_outPin.id, links), 255);
     BP::EndPin();
     BP::EndNode();
 
@@ -61,30 +62,26 @@ void EW_Blueprint::Update()
         BP::Link(link.id, link.input_id, link.output_id, link.color);
     }
 
+    // create links
     if (BP::BeginCreate())
     {
         BP::PinId inputPinId, outputPinId;
         if (BP::QueryNewLink(&inputPinId, &outputPinId))
         {
+            Pin aux = NH::GetPinByID(inputPinId);
             if (inputPinId && outputPinId)
             {
-                if (BP::AcceptNewItem())
+                if (BP::AcceptNewItem() && NH::CanLink(aux, NH::GetPinByID(outputPinId)))
                 {
-                    for (auto& pin : BluePrint::pins)
-                    {
-                        if (pin.id == inputPinId)
-                        {
-                            links.push_back(LinkInfo(BP::LinkId(nextLinkId++), inputPinId, outputPinId, pin.type));
-                            BP::Link(links.back().id, links.back().input_id, links.back().output_id);
-                        }
-                    }
+                    links.push_back(LinkInfo(BP::LinkId(nextLinkId++), inputPinId, outputPinId, aux.type));
+                    BP::Link(links.back().id, links.back().input_id, links.back().output_id);
                 }
             }
         }
     }
     BP::EndCreate();
 
-
+    // delete links
     if (BP::BeginDelete())
     {
         BP::LinkId deletedLinkId;
@@ -108,6 +105,6 @@ void EW_Blueprint::Update()
 	BP::End();
 
 	BP::SetCurrentEditor(NULL);
-
+    BluePrint::pins.clear();
 	ImGui::End();
 }

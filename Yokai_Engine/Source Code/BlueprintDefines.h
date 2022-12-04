@@ -19,7 +19,8 @@ enum class PinType
     String,
     Object,
     Function,
-    Delegate
+    Delegate,
+    None
 };
 
 enum class NodeType
@@ -37,7 +38,7 @@ struct Node;
 class BluePrint
 {
 public:
-    static ImVector<Pin> pins;
+    static ImVector<Pin*> pins;
 
 };
 

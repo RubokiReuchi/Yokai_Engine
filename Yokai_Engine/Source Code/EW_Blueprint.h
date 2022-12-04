@@ -7,7 +7,6 @@
 #include "ImGuiNodeEditor/utilities/widgets.h"
 
 namespace BP = ax::NodeEditor;
-namespace WG = ax::Widgets;
 
 struct Node;
 struct LinkInfo;

@@ -15,7 +15,7 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
-namespace NodeEditorH
+namespace NH
 {
 	// BP
 	void BeginColumn();
@@ -23,6 +23,8 @@ namespace NodeEditorH
 	void EndColumn();
 
 	bool IsPinLinked(PinId id, ImVector<LinkInfo> links);
+	Pin GetPinByID(PinId id);
+	bool CanLink(Pin a, Pin b);
 
 	// WG
 	ImColor GetIconColor(PinType type);

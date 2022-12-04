@@ -1,24 +1,24 @@
 #include "BlueprintHelpers.h"
 
 // BP
-void NodeEditorH::BeginColumn()
+void NH::BeginColumn()
 {
     ImGui::BeginGroup();
 }
 
-void NodeEditorH::NextColumn()
+void NH::NextColumn()
 {
     ImGui::EndGroup();
     ImGui::SameLine();
     ImGui::BeginGroup();
 }
 
-void NodeEditorH::EndColumn()
+void NH::EndColumn()
 {
     ImGui::EndGroup();
 }
 
-bool NodeEditorH::IsPinLinked(PinId id, ImVector<LinkInfo> links)
+bool NH::IsPinLinked(PinId id, ImVector<LinkInfo> links)
 {
     if (!id) return false;
 
@@ -30,8 +30,32 @@ bool NodeEditorH::IsPinLinked(PinId id, ImVector<LinkInfo> links)
     return false;
 }
 
+Pin NH::GetPinByID(PinId id)
+{
+    for (auto& pin : BluePrint::pins)
+    {
+        if (pin->id == id)
+        {
+            return *pin;
+        }
+    }
+
+    Pin fail(0, "failed", PinType::None);
+    return fail;
+}
+
+bool NH::CanLink(Pin a, Pin b)
+{
+    if (a.type == b.type && a.kind != b.kind/* && a.node->id != b.node->id*/)
+    {
+        return true;
+    }
+        
+    return false;
+}
+
 // WG
-ImColor NodeEditorH::GetIconColor(PinType type)
+ImColor NH::GetIconColor(PinType type)
 {
     switch (type)
     {
@@ -44,10 +68,11 @@ ImColor NodeEditorH::GetIconColor(PinType type)
     case PinType::Object: return ImColor(51, 150, 215);
     case PinType::Function: return ImColor(218, 0, 183);
     case PinType::Delegate: return ImColor(255, 48, 48);
+    case PinType::None: return ImColor(0, 0, 0);
     }
 }
 
-void NodeEditorH::PinIcon(Pin& pin, bool connected, int alpha)
+void NH::PinIcon(Pin& pin, bool connected, int alpha)
 {
     IconType iconType;
     ImColor color = GetIconColor(pin.type);
