@@ -14,6 +14,7 @@
 #include "EW_Performance.h"
 #include "EW_Project.h"
 #include "EW_Console.h"
+#include "EW_Blueprint.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -75,6 +76,7 @@ void EO_Editor::Start()
 	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
 	editor_windows[(uint)EW_TYPE::CONSOLE] = new EW_Console();
 	editor_windows[(uint)EW_TYPE::PROJECT] = new EW_Project();
+	editor_windows[(uint)EW_TYPE::BLUEPRINT] = new EW_Blueprint();
 }
 
 void EO_Editor::PreUpdate()

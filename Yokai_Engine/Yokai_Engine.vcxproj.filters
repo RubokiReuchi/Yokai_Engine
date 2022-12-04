@@ -61,6 +61,18 @@
     <Filter Include="Sources\Tools\Json">
       <UniqueIdentifier>{f70546db-b6b2-431e-a987-95c87ebedd3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGuiNodeEditor">
+      <UniqueIdentifier>{7dc6f080-cb4f-4f93-b951-1e295e96ba8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts">
+      <UniqueIdentifier>{1578d9cf-e718-4192-9edd-ecf59d062730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tools\ImGuiNodeEditor\utilities">
+      <UniqueIdentifier>{5400a660-b7e0-4ab8-a3e5-1047aff275b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Helpers\Blueprints">
+      <UniqueIdentifier>{d2d117e1-f932-4637-96ef-5df1f916495b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -438,6 +450,39 @@
     <ClInclude Include="Source Code\GameTimer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\crude_json.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_bezier_math.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_canvas.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_extra_math.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_internal.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EW_Blueprint.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\drawing.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BlueprintHelpers.h">
+      <Filter>Sources\Helpers\Blueprints</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BlueprintDefines.h">
+      <Filter>Sources\Helpers\Blueprints</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -710,6 +755,33 @@
     <ClCompile Include="Source Code\ResourceManager.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\crude_json.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_canvas.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_api.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EW_Blueprint.cpp">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\drawing.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BlueprintHelpers.cpp">
+      <Filter>Sources\Helpers\Blueprints</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BlueprintDefines.cpp">
+      <Filter>Sources\Helpers\Blueprints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\KDTree.inl">
@@ -729,6 +801,15 @@
     </None>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_bezier_math.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_extra_math.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_internal.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

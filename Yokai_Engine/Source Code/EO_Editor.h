@@ -19,6 +19,7 @@ enum class EW_TYPE
 	INSPECTOR,
 	CONSOLE,
 	PROJECT,
+	BLUEPRINT,
 	NUM_EW_TYPE, // number of EditorWindows types
 };
 
