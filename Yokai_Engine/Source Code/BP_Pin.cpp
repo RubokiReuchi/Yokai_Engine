@@ -2,7 +2,7 @@
 #include "BP_Link.h"
 #include "BlueprintHelpers.h"
 
-BP_Pin::BP_Pin(int id, const char* name, PinType type, BluePrint* bp) : id(id), name(name), type(type), blue_print(bp)
+BP_Pin::BP_Pin(int id, const char* name, TYPE type, BluePrint* bp) : id(id), name(name), type(type), blue_print(bp)
 {
 	
 }

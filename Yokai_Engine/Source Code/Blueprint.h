@@ -18,6 +18,9 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
+class BP_Node;
+class BP_Link;
+
 class BluePrint
 {
     BluePrint(std::string name);
@@ -25,7 +28,7 @@ class BluePrint
 
     void Update(float dt);
 
-    BP_Pin* GetPinByID(PinId id);
+    //BP_Pin* GetPinByID(PinId id);
 
 public:
 

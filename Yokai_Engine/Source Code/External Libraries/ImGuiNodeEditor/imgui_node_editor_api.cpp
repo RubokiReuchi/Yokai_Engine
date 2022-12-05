@@ -12,7 +12,7 @@
 # include "imgui_node_editor_internal.h"
 # include <algorithm>
 
-#include "../BlueprintDefines.h"
+#include "../BP_Pin.h"
 
 
 //------------------------------------------------------------------------------
@@ -155,11 +155,11 @@ void ax::NodeEditor::BeginPin(PinId id, PinKind kind)
     s_Editor->GetNodeBuilder().BeginPin(id, kind);
 }
 
-void ax::NodeEditor::NH_BeginPin(Pin& pin, PinKind kind)
-{
-    pin.kind = kind;
-    s_Editor->GetNodeBuilder().BeginPin(pin.id, kind);
-}
+//void ax::NodeEditor::NH_BeginPin(BP_Pin& pin, PinKind kind)
+//{
+//    pin.kind = kind;
+//    s_Editor->GetNodeBuilder().BeginPin(pin.id, kind);
+//}
 
 void ax::NodeEditor::PinRect(const ImVec2& a, const ImVec2& b)
 {

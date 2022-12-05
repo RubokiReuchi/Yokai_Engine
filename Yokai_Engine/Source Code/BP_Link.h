@@ -18,7 +18,7 @@ class BluePrint;
 class BP_Link
 {
 public:
-    BP_Link(LinkId id, PinId input_id, PinId output_id, PinType type);
+    BP_Link(LinkId id, PinId input_id, PinId output_id/*, BP_Pin::TYPE type*/);
     virtual ~BP_Link();
 
 public:

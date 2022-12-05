@@ -14,6 +14,8 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
+class BP_Pin;
+
 namespace NH
 {
 	// BP
@@ -24,6 +26,6 @@ namespace NH
 	bool CanLink(BP_Pin a, BP_Pin b);
 
 	// WG
-	ImColor GetIconColor(PinType type);
+	ImColor GetIconColor(BP_Pin::TYPE type);
 	void PinIcon(BP_Pin& pin, bool connected, int alpha);
 }

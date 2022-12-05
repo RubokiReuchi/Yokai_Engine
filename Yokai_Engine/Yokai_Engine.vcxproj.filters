@@ -492,6 +492,9 @@
     <ClInclude Include="Source Code\BlueprintHelpers.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\C_Blueprint.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -799,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\BlueprintHelpers.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\C_Blueprint.cpp">
+      <Filter>Sources\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

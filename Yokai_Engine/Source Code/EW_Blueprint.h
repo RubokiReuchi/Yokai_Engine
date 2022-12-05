@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorWindow.h"
+#include "BluePrint.h"
 
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGui/imgui_internal.h"
@@ -8,9 +9,7 @@
 
 namespace BP = ax::NodeEditor;
 
-struct Node;
-struct LinkInfo;
-struct Pin;
+class GameObject;
 
 class EW_Blueprint : public EditorWindow
 {
@@ -22,9 +21,9 @@ public:
 	void Update() override;
 
 private:
+
+	BluePrint* current_blueprint = nullptr;
+	bool blueprint_blocked = false;
 	BP::EditorContext* context;
-	ImVector<Node> nodes;
-	ImVector<LinkInfo> links;
-	ImVector<Pin> pins;
 	int nextLinkId = 100;
 };

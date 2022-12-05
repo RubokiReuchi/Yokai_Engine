@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "BP_Pin.h"
 
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGuiNodeEditor/utilities/widgets.h"
@@ -12,20 +13,19 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
-class BP_Pin;
 class BluePrint;
-
-enum class NodeType
-{
-    CORE, // activate the worm
-    SIMPLE,
-    CONVERSOR, // variable change
-};
 
 class BP_Node
 {
 public:
-    BP_Node(int id, const char* name, NodeType type, ImColor color = ImColor(255, 255, 255));
+    enum class TYPE
+    {
+        CORE, // activate the worm
+        SIMPLE,
+        CONVERSOR, // variable change
+    };
+
+    BP_Node(int id, const char* name, TYPE type, ImColor color = ImColor(255, 255, 255));
     virtual ~BP_Node();
 
 public:
@@ -34,7 +34,7 @@ public:
     std::vector<BP_Pin> inputs;
     std::vector<BP_Pin> outputs;
     ImColor color;
-    NodeType type;
+    TYPE type;
 
     BluePrint* blue_print = nullptr;
 };

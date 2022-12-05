@@ -5,6 +5,7 @@
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
 #include "C_Camera.h"
+#include "C_Blueprint.h"
 #include "Globals.h"
 
 #include <vector>
@@ -41,6 +42,9 @@ public:
 			break;
 		case Component::TYPE::CAMERA:
 			new_component = new C_Camera(this);
+			break;
+		case Component::TYPE::BLUEPRINT:
+			new_component = new C_Blueprint(this);
 			break;
 		default:
 			LOG("component type error");

@@ -29,19 +29,19 @@ bool NH::CanLink(BP_Pin a, BP_Pin b)
 }
 
 // WG
-ImColor NH::GetIconColor(PinType type)
+ImColor NH::GetIconColor(BP_Pin::TYPE type)
 {
     switch (type)
     {
     default:
-    case PinType::Executable: return ImColor(255, 255, 255);
-    case PinType::Bool: return ImColor(220, 48, 48);
-    case PinType::Int: return ImColor(68, 201, 156);
-    case PinType::Float: return ImColor(147, 226, 74);
-    case PinType::String: return ImColor(124, 21, 153);
-    case PinType::Object: return ImColor(51, 150, 215);
-    case PinType::Function: return ImColor(218, 0, 183);
-    case PinType::None: return ImColor(0, 0, 0);
+    case BP_Pin::TYPE::Executable: return ImColor(255, 255, 255);
+    case BP_Pin::TYPE::Bool: return ImColor(220, 48, 48);
+    case BP_Pin::TYPE::Int: return ImColor(68, 201, 156);
+    case BP_Pin::TYPE::Float: return ImColor(147, 226, 74);
+    case BP_Pin::TYPE::String: return ImColor(124, 21, 153);
+    case BP_Pin::TYPE::Object: return ImColor(51, 150, 215);
+    case BP_Pin::TYPE::Function: return ImColor(218, 0, 183);
+    case BP_Pin::TYPE::None: return ImColor(0, 0, 0);
     }
 }
 
@@ -52,13 +52,13 @@ void NH::PinIcon(BP_Pin& pin, bool connected, int alpha)
     color.Value.w = alpha / 255.0f;
     switch (pin.type)
     {
-    case PinType::Executable:     iconType = IconType::Flow;   break;
-    case PinType::Bool:     iconType = IconType::Circle; break;
-    case PinType::Int:      iconType = IconType::Circle; break;
-    case PinType::Float:    iconType = IconType::Circle; break;
-    case PinType::String:   iconType = IconType::Circle; break;
-    case PinType::Object:   iconType = IconType::Circle; break;
-    case PinType::Function: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Executable:     iconType = IconType::Flow;   break;
+    case BP_Pin::TYPE::Bool:     iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Int:      iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Float:    iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::String:   iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Object:   iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Function: iconType = IconType::Circle; break;
     default:
         return;
     }

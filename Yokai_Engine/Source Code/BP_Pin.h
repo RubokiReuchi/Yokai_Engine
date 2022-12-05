@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "Blueprint.h"
+#include "BP_Node.h"
 
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGuiNodeEditor/utilities/widgets.h"
@@ -13,22 +14,25 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
-enum class PinType
-{
-    Executable,
-    Bool,
-    Int,
-    Float,
-    String,
-    Object,
-    Function,
-    None
-};
+class BP_Node;
+class BluePrint;
 
 class BP_Pin
 {
 public:
-    BP_Pin(int id, const char* name, PinType type, BluePrint* bp);
+    enum class TYPE
+    {
+        Executable,
+        Bool,
+        Int,
+        Float,
+        String,
+        Object,
+        Function,
+        None
+    };
+
+    BP_Pin(int id, const char* name, TYPE type, BluePrint* bp);
     virtual ~BP_Pin();
 
     bool IsPinLinked(PinId id);
@@ -36,7 +40,7 @@ public:
 public:
     PinId id;
     std::string name;
-    PinType type;
+    TYPE type;
     PinKind kind;
 
     BP_Node* node = nullptr;

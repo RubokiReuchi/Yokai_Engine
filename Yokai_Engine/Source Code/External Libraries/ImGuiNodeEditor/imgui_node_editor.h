@@ -19,7 +19,7 @@
 # include <cstdint> // std::uintXX_t
 # include <utility> // std::move
 
-struct Pin;
+class BP_Pin;
 
 
 //------------------------------------------------------------------------------
@@ -290,7 +290,7 @@ void End();
 
 void BeginNode(NodeId id);
 void BeginPin(PinId id, PinKind kind);
-void NH_BeginPin(Pin& pin, PinKind kind);
+//void NH_BeginPin(BP_Pin& pin, PinKind kind);
 void PinRect(const ImVec2& a, const ImVec2& b);
 void PinPivotRect(const ImVec2& a, const ImVec2& b);
 void PinPivotSize(const ImVec2& size);

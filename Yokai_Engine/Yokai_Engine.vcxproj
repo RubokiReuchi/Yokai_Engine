@@ -111,6 +111,7 @@
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
     <ClInclude Include="Source Code\Console.h" />
+    <ClInclude Include="Source Code\C_Blueprint.h" />
     <ClInclude Include="Source Code\C_Camera.h" />
     <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
     <ClCompile Include="Source Code\Console.cpp" />
+    <ClCompile Include="Source Code\C_Blueprint.cpp" />
     <ClCompile Include="Source Code\C_Camera.cpp" />
     <ClCompile Include="Source Code\C_Material.cpp" />
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />

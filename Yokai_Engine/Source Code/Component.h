@@ -22,6 +22,7 @@ public:
 		MESH_RENDERER,
 		MATERIAL,
 		CAMERA,
+		BLUEPRINT,
 		NUM_OF_COMPS,
 	};
 
