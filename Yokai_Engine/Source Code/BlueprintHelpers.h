@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Globals.h"
-#include "BlueprintDefines.h"
+#include "BP_Node.h"
+#include "BP_Pin.h"
+#include "BP_Link.h"
 
-#include "ImGui/imgui.h"
-#include "ImGui/imgui_impl_sdl.h"
-#include "ImGui/imgui_impl_opengl3.h"
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGuiNodeEditor/utilities/widgets.h"
 
@@ -22,11 +21,9 @@ namespace NH
 	void NextColumn();
 	void EndColumn();
 
-	bool IsPinLinked(PinId id, ImVector<LinkInfo> links);
-	Pin GetPinByID(PinId id);
-	bool CanLink(Pin a, Pin b);
+	bool CanLink(BP_Pin a, BP_Pin b);
 
 	// WG
 	ImColor GetIconColor(PinType type);
-	void PinIcon(Pin& pin, bool connected, int alpha);
+	void PinIcon(BP_Pin& pin, bool connected, int alpha);
 }

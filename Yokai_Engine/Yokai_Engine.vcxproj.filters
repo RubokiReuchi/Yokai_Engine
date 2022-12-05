@@ -70,8 +70,8 @@
     <Filter Include="Sources\Tools\ImGuiNodeEditor\utilities">
       <UniqueIdentifier>{5400a660-b7e0-4ab8-a3e5-1047aff275b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Helpers\Blueprints">
-      <UniqueIdentifier>{d2d117e1-f932-4637-96ef-5df1f916495b}</UniqueIdentifier>
+    <Filter Include="Sources\BlueprintScripts\Components">
+      <UniqueIdentifier>{7928eafd-74ae-4871-a30e-c11ab255560c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -477,11 +477,20 @@
     <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.h">
       <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\BlueprintHelpers.h">
-      <Filter>Sources\Helpers\Blueprints</Filter>
+    <ClInclude Include="Source Code\BP_Node.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\BlueprintDefines.h">
-      <Filter>Sources\Helpers\Blueprints</Filter>
+    <ClInclude Include="Source Code\BP_Pin.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BP_Link.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Blueprint.h">
+      <Filter>Sources\BlueprintScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BlueprintHelpers.h">
+      <Filter>Sources\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -776,11 +785,20 @@
     <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.cpp">
       <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\BlueprintHelpers.cpp">
-      <Filter>Sources\Helpers\Blueprints</Filter>
+    <ClCompile Include="Source Code\BP_Node.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\BlueprintDefines.cpp">
-      <Filter>Sources\Helpers\Blueprints</Filter>
+    <ClCompile Include="Source Code\BP_Pin.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BP_Link.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Blueprint.cpp">
+      <Filter>Sources\BlueprintScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BlueprintHelpers.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

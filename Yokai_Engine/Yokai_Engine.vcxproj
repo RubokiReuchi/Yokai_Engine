@@ -102,8 +102,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h" />
-    <ClInclude Include="Source Code\BlueprintDefines.h" />
+    <ClInclude Include="Source Code\Blueprint.h" />
     <ClInclude Include="Source Code\BlueprintHelpers.h" />
+    <ClInclude Include="Source Code\BP_Link.h" />
+    <ClInclude Include="Source Code\BP_Node.h" />
+    <ClInclude Include="Source Code\BP_Pin.h" />
     <ClInclude Include="Source Code\Camera.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Component.h" />
@@ -239,8 +242,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp" />
-    <ClCompile Include="Source Code\BlueprintDefines.cpp" />
+    <ClCompile Include="Source Code\Blueprint.cpp" />
     <ClCompile Include="Source Code\BlueprintHelpers.cpp" />
+    <ClCompile Include="Source Code\BP_Link.cpp" />
+    <ClCompile Include="Source Code\BP_Node.cpp" />
+    <ClCompile Include="Source Code\BP_Pin.cpp" />
     <ClCompile Include="Source Code\Camera.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Component.cpp" />
