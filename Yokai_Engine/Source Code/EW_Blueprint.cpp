@@ -68,16 +68,16 @@ void EW_Blueprint::Update()
             {
                 BP::NH_BeginPin(input_pin, BP::PinKind::Input);
                 NH::PinIcon(input_pin, input_pin.IsPinLinked());
-                if (input_pin.IsPinLinked() && input_pin.input_text)
+                if (input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
                 {
                     std::string aux = "##" + std::to_string(unique_id);
-                    switch (input_pin.text_type)
+                    switch (input_pin.box_type)
                     {
-                    case BP_Pin::TextType::COMBO:
+                    case BP_Pin::BoxType::COMBO:
                         break;
-                    case BP_Pin::TextType::STRING:
+                    case BP_Pin::BoxType::STRING:
                         break;
-                    case BP_Pin::TextType::GAMEOBJECT:
+                    case BP_Pin::BoxType::GAMEOBJECT:
                         break;
                     }
                 }
@@ -143,7 +143,7 @@ void EW_Blueprint::Update()
 
         // create node
         BP::Suspend();
-        if (ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+        if (ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN)
         {
             ImGui::OpenPopup("New Node");
             popUpOpen = true;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+//#include "GameObject.h"
 #include "Blueprint.h"
 #include "BP_Node.h"
 
@@ -16,6 +17,7 @@ using namespace ax::Drawing;
 
 class BP_Node;
 class BluePrint;
+class GameObject;
 
 class BP_Pin
 {
@@ -32,7 +34,7 @@ public:
         None
     };
 
-    enum class TextType
+    enum class BoxType
     {
         NONE,
         COMBO,
@@ -40,7 +42,7 @@ public:
         GAMEOBJECT
     };
 
-    BP_Pin(int id, const char* name, TYPE type, BluePrint* bp, bool input_text = false, TextType text_type = TextType::NONE);
+    BP_Pin(int id, const char* name, TYPE type, BluePrint* bp, BoxType box_type = BoxType::NONE);
     virtual ~BP_Pin();
 
     bool IsPinLinked();
@@ -50,8 +52,12 @@ public:
     std::string name;
     TYPE type;
     PinKind kind;
-    bool input_text; // only if kind input
-    TextType text_type;
+
+    // only if kind input
+    BoxType box_type;
+    std::vector<std::string> combo_box;
+    std::string string_box;
+    GameObject* go = nullptr;
 
     BP_Node* node = nullptr;
     BluePrint* blue_print = nullptr;

@@ -6,7 +6,7 @@ DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node(id, "Press
 {
 	key = SDL_SCANCODE_UNKNOWN;
 	int unique_id = 1;
-	BP_Pin key_pin(unique_id++, "Key", BP_Pin::TYPE::String, bp, true, BP_Pin::TextType::COMBO);
+	BP_Pin key_pin(unique_id++, "Key", BP_Pin::TYPE::String, bp, BP_Pin::BoxType::COMBO);
 	inputs.push_back(key_pin);
 	BP_Pin send_pin(unique_id++, "", BP_Pin::TYPE::Executable, bp);
 	outputs.push_back(send_pin);
