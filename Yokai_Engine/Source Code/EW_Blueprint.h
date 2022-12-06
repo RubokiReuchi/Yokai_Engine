@@ -20,6 +20,11 @@ public:
 
 	void Update() override;
 
+	std::map<std::string, BP_Node*>& GetNodeList()
+	{
+		return node_list;
+	}
+
 private:
 
 	BluePrint* current_blueprint = nullptr;
@@ -34,4 +39,6 @@ private:
 	void DisplayNodes();
 
 	BP_Pin* GetPinByID(PinId id);
+
+	std::map<std::string, BP_Node*> node_list;
 };

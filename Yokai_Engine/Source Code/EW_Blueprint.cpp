@@ -3,7 +3,6 @@
 #include "BlueprintHelpers.h"
 #include "ImGuiHelpers.h"
 
-
 EW_Blueprint::EW_Blueprint()
 {
 	window_name = "Blueprint";

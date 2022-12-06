@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Globals.h"
-//#include "GameObject.h"
 #include "Blueprint.h"
 #include "BP_Node.h"
 
