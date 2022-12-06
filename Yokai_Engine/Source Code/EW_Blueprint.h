@@ -27,5 +27,11 @@ private:
 	BP::EditorContext* context;
 	int nextLinkId = 100;
 
+	bool popUpOpen = false; //create node popUp
+	ImVec2 ori;
+
+	ImGuiTextFilter filter;
+	void DisplayNodes();
+
 	BP_Pin* GetPinByID(PinId id);
 };

@@ -34,7 +34,7 @@ bool ModuleEO::Start()
         }
     }
 
-    // load street to second deliver
+    /////////// load street
     MeshImporter::LoadMesh("Assets/street.fbx");
     uint texture041 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_041.png");
     uint texture040 = TextureImporter::LoadTexture("Assets/StreetTextures/Building_040.png");
@@ -48,6 +48,8 @@ bool ModuleEO::Start()
     uint texture_green = TextureImporter::LoadTexture("Assets/StreetTextures/GreenColor.png");
     uint texture_grey = TextureImporter::LoadTexture("Assets/StreetTextures/GreyColor.png");
     uint texture_lightgrey = TextureImporter::LoadTexture("Assets/StreetTextures/LightGreyColor.png");
+
+    MeshImporter::LoadMesh("Assets/cube.fbx"); ////// test cube
 
     for (auto& gameObject : game_objects)
     {
@@ -118,7 +120,14 @@ bool ModuleEO::Start()
                 mat->SetTexture(c_mr->GetTexture((float)texture_grey));
             }
         }
+
+        if (gameObject.second->name == "cube")
+        {
+            gameObject.second->AddComponent(Component::TYPE::BLUEPRINT);
+            editor->SetSelectedGameObject(gameObject.second);
+        }
     }
+    //////////////
 
     return true;
 }

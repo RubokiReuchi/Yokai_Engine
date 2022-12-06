@@ -73,6 +73,15 @@
     <Filter Include="Sources\BlueprintScripts\Components">
       <UniqueIdentifier>{7928eafd-74ae-4871-a30e-c11ab255560c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes">
+      <UniqueIdentifier>{1def8537-f021-440f-a3c1-e8a7f16bc6d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes">
+      <UniqueIdentifier>{b6a8f7ec-d7d8-46d8-8337-952cda5ee398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode">
+      <UniqueIdentifier>{b250a790-3990-4b86-ba07-accdd2f97ead}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -495,6 +504,9 @@
     <ClInclude Include="Source Code\C_Blueprint.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\CoreNode.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -805,6 +817,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\C_Blueprint.cpp">
       <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\CoreNode.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

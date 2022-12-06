@@ -9,6 +9,8 @@ public:
 	C_Blueprint(GameObject* gameObject);
 	virtual ~C_Blueprint() override;
 
+	void UpdateInGame(float dt);
+
 	void OnEditor();
 
 	BluePrint* GetBluePrint()

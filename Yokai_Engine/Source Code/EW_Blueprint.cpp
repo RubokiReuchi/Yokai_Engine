@@ -96,13 +96,10 @@ void EW_Blueprint::Update()
             if (BP::QueryNewLink(&inputPinId, &outputPinId))
             {
                 BP_Pin* aux = GetPinByID(inputPinId);
-                if (inputPinId && outputPinId)
+                if (BP::AcceptNewItem() && NH::CanLink(aux, GetPinByID(outputPinId)))
                 {
-                    if (BP::AcceptNewItem() && NH::CanLink(aux, GetPinByID(outputPinId)))
-                    {
-                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type));
-                        current_blueprint->links.push_back(new_link);
-                    }
+                    BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type));
+                    current_blueprint->links.push_back(new_link);
                 }
             }
         }
@@ -132,14 +129,80 @@ void EW_Blueprint::Update()
         BP::EndDelete();
 
         // create node
+        BP::Suspend();
+        if (ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Right))
+        {
+            ImGui::OpenPopup("New Node");
+            popUpOpen = true;
+            ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+        }
+        if (popUpOpen)
+        {
+            ImGui::SetNextWindowSize(ImVec2(200.0f, 250.0f));
+            if (ImGui::BeginPopup("New Node"))
+            {
+                DisplayNodes();
+                ImGui::EndPopup();
+            }
+            if (!ImGuiH::CheckMouseInPopUp(ori, ImVec2(200.0f, 250.0f)))
+            {
+                popUpOpen = false;
+                ImGui::CloseCurrentPopup();
+            }
+        }
+        BP::Resume();
         
-
         // delete node
+        if (BP::BeginDelete())
+        {
+            BP::NodeId deletedNodeId;
+            while (BP::QueryDeletedNode(&deletedNodeId))
+            {
+                if (BP::AcceptDeletedItem())
+                {
+                    std::vector<BP_Node*>::iterator it;
+                    for (auto& node : current_blueprint->nodes)
+                    {
+                        if (node->id == deletedNodeId)
+                        {
+                            it = std::find(current_blueprint->nodes.begin(), current_blueprint->nodes.end(), node);
+                            current_blueprint->nodes.erase(it);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        BP::EndDelete();
     }
 
     BP::End();
 	BP::SetCurrentEditor(NULL);
+
 	ImGui::End();
+}
+
+void EW_Blueprint::DisplayNodes()
+{
+    //ImGui::AlignTextToFramePadding();
+    //ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
+    //filter.Draw("##Filter");
+    //std::string nodeNames[numNodes] = { "Camera", "Blueprint" };
+    //for (int i = 0; i < numNodes; i++)
+    //{
+    //    std::string name = nodeNames[i];
+    //    if (filter.PassFilter(name.c_str()))
+    //    {
+    //        if (ImGui::Selectable(name.c_str()))
+    //        {
+    //            switch (i)
+    //            {
+    //            case 0: /*selectGameobject->AddComponent(Component::TYPE::CAMERA);*/ break;
+    //            case 1: /*selectGameobject->AddComponent(Component::TYPE::BLUEPRINT);*/ break;
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 BP_Pin* EW_Blueprint::GetPinByID(PinId id)

@@ -11,6 +11,11 @@ C_Blueprint::~C_Blueprint()
 	
 }
 
+void C_Blueprint::UpdateInGame(float dt)
+{
+	blueprint->Update(dt);
+}
+
 void C_Blueprint::OnEditor()
 {
 	ImGui::AlignTextToFramePadding();

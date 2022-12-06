@@ -48,6 +48,10 @@ void EW_Inspector::Update()
 		{
 			dynamic_cast<C_Transform*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::TRANSFORM))->OnEditor();
 		}
+		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::BLUEPRINT) != NULL)
+		{
+			dynamic_cast<C_Blueprint*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::BLUEPRINT))->OnEditor();
+		}
 		if (editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER) != NULL)
 		{
 			dynamic_cast<C_MeshRenderer*>(editor->GetSelectedGameObject()->GetComponent(Component::TYPE::MESH_RENDERER))->OnEditor();
