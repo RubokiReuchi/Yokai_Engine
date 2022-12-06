@@ -77,16 +77,13 @@ void EW_Blueprint::Update()
                     case BP_Pin::BoxType::COMBO:
                         ImGui::SameLine();
                         ImGui::SetNextItemWidth(40);
-                        
-                        if (ImGui::BeginCombo("##Node Combo", input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
+                        if (BP::BeginNodeCombo("##Node Combo", input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
                         {
-                            //BP::Suspend();
                             for (size_t i = 0; i < input_pin.combo_box.size(); i++)
                             {
                                 if (ImGui::Selectable(input_pin.combo_box[i].c_str())) input_pin.string_box = input_pin.combo_box[i];
                             }
-                            //BP::Resume();
-                            ImGui::EndCombo();
+                            BP::EndNodeCombo();
                         }
                         break;
                     case BP_Pin::BoxType::STRING:
