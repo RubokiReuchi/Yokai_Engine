@@ -17,7 +17,7 @@ https://github.com/RubokiReuchi/Yokai_Engine
 - Right Click + D --> move camera to back.
 - Right Click + Q --> move camera to down.
 - Right Click + E--> move camera to up.
-- Left Shift --> Toggle camera movement speed.
+- Right Click + mouse wheel --> increase/decrease camera movement speed.
 - Middle Click and Drag --> pan camera.
 - Right Click and Drag + Left Alt --> orbit arround selected game object.
 - Mouse wheel up and down --> zoom.
