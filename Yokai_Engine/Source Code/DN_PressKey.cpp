@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
-DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : CoreNode(id, "Press Key", pos, ImColor(200, 0, 0), bp)
+DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node(id, "Press Key", BP_Node::TYPE::CORE, pos, ImColor(200, 0, 0), bp)
 {
 	key = SDL_SCANCODE_UNKNOWN;
 	int unique_id = 1;
@@ -19,7 +19,6 @@ DN_PressKey::~DN_PressKey()
 
 void DN_PressKey::Update(float dt)
 {
-	key = inputs[0].text;
 	if (app->input->GetKey(key) == KEY_DOWN) // on press
 	{
 

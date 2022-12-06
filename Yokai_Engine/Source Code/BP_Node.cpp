@@ -9,3 +9,8 @@ BP_Node::~BP_Node()
 {
 
 }
+
+void BP_Node::Update(float dt)
+{
+
+}

@@ -111,7 +111,7 @@ void EW_Blueprint::Update()
                 BP_Pin* aux = GetPinByID(inputPinId);
                 if (BP::AcceptNewItem() && NH::CanLink(aux, GetPinByID(outputPinId)))
                 {
-                    BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type));
+                    BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type), current_blueprint);
                     current_blueprint->links.push_back(new_link);
                 }
             }

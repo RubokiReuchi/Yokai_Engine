@@ -28,6 +28,8 @@ public:
     BP_Node(int id, const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp);
     virtual ~BP_Node();
 
+    virtual void Update(float dt);
+
 public:
     NodeId id;
     std::string name;
