@@ -1,9 +1,9 @@
 #include "C_Blueprint.h"
 #include "Application.h"
 
-C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::MATERIAL)
+C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::BLUEPRINT)
 {
-	
+	blueprint = new BluePrint("Default");
 }
 
 C_Blueprint::~C_Blueprint()
@@ -27,7 +27,7 @@ void C_Blueprint::OnEditor()
 	}
 	if (no_collapsed)
 	{
-		
+		ImGuiH::InputText("##Name", &blueprint->name);
 	}
 	if (popUpOpen)
 	{

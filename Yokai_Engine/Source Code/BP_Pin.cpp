@@ -12,10 +12,12 @@ BP_Pin::~BP_Pin()
 
 }
 
-bool BP_Pin::IsPinLinked(PinId id)
+bool BP_Pin::IsPinLinked()
 {
 	for (auto& link : blue_print->links)
 	{
-		if (link->input_id == id || link->output_id == id) return true;
+		if (link->input_id == this->id || link->output_id == this->id) return true;
 	}
+
+	return false;
 }

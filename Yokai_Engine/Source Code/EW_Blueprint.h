@@ -26,4 +26,6 @@ private:
 	bool blueprint_blocked = false;
 	BP::EditorContext* context;
 	int nextLinkId = 100;
+
+	BP_Pin* GetPinByID(PinId id);
 };

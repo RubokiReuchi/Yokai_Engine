@@ -18,9 +18,9 @@ void NH::EndColumn()
     ImGui::EndGroup();
 }
 
-bool NH::CanLink(BP_Pin a, BP_Pin b)
+bool NH::CanLink(BP_Pin* a, BP_Pin* b)
 {
-    if (a.type == b.type && a.kind != b.kind && a.node->id != b.node->id)
+    if (a->type == b->type && a->kind != b->kind && a->node->id != b->node->id)
     {
         return true;
     }
@@ -45,7 +45,7 @@ ImColor NH::GetIconColor(BP_Pin::TYPE type)
     }
 }
 
-void NH::PinIcon(BP_Pin& pin, bool connected, int alpha)
+void NH::PinIcon(BP_Pin& pin, bool connected, float alpha)
 {
     IconType iconType;
     ImColor color = GetIconColor(pin.type);
@@ -63,5 +63,5 @@ void NH::PinIcon(BP_Pin& pin, bool connected, int alpha)
         return;
     }
 
-    ax::Widgets::Icon(ImVec2(24, 24), iconType, connected, color, ImColor(32, 32, 32, alpha));
+    ax::Widgets::Icon(ImVec2(24, 24), iconType, connected, color, ImVec4(32, 32, 32, alpha));
 }

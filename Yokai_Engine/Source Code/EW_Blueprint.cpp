@@ -11,6 +11,7 @@ EW_Blueprint::EW_Blueprint()
 
 	BP::Config config;
 	config.SettingsFile = "Config/node.json";
+    config.NavigateButtonIndex = 2;
 	context = BP::CreateEditor(&config);
 }
 
@@ -53,86 +54,100 @@ void EW_Blueprint::Update()
 
     if (current_blueprint)
     {
-        //int unique_id = 1;
+        int unique_id = 1;
 
-        //BP::NodeId nodeA_id = unique_id++;
-        //Pin a_inPin(unique_id++, "-> In", PinType::Float);
-        //Pin a_outPin(unique_id++, "-> Out", PinType::Float);
+        for (auto& node : current_blueprint->nodes)
+        {
+            BP::NodeId node_id = unique_id++;
+            BP::SetNodePosition(node_id, node->position);
+            BP::BeginNode(node_id);
+            ImGui::Text(node->name.c_str());
 
-        //// create one NODE version 1
-        //BP::BeginNode(nodeA_id);
-        //ImGui::Text("Node A");
-        //BP::NH_BeginPin(a_inPin, BP::PinKind::Input);
-        //NH::PinIcon(a_inPin, NH::IsPinLinked(a_inPin.id, links), 255);
-        //BP::EndPin();
-        //ImGui::SameLine(55);
-        //BP::NH_BeginPin(a_outPin, BP::PinKind::Output);
-        //NH::PinIcon(a_outPin, NH::IsPinLinked(a_outPin.id, links), 255);
-        //BP::EndPin();
-        //BP::EndNode();
+            NH::BeginColumn();
+            for (auto& input_pin : node->inputs)
+            {
+                BP::NH_BeginPin(input_pin, BP::PinKind::Input);
+                NH::PinIcon(input_pin, input_pin.IsPinLinked());
+                BP::EndPin();
+                NH::NextColumn();
+            }
+            NH::EndColumn();
 
-        //BP::NodeId nodeB_id = unique_id++;
-        //Pin b_inPin(unique_id++, "-> In", PinType::Float);
-        //Pin b_outPin(unique_id++, "-> Out", PinType::Float);
+            NH::BeginColumn();
+            for (auto& output_pin : node->outputs)
+            {
+                BP::NH_BeginPin(output_pin, BP::PinKind::Output);
+                NH::PinIcon(output_pin, output_pin.IsPinLinked());
+                BP::EndPin();
+                NH::NextColumn();
+            }
+            NH::EndColumn();
+        }
 
-        //BP::BeginNode(nodeB_id);
-        //ImGui::Text("Node B");
-        //BP::NH_BeginPin(b_inPin, BP::PinKind::Input);
-        //NH::PinIcon(b_inPin, NH::IsPinLinked(b_inPin.id, links), 255);
-        //BP::EndPin();
-        //ImGui::SameLine(55);
-        //BP::NH_BeginPin(b_outPin, BP::PinKind::Output);
-        //NH::PinIcon(b_outPin, NH::IsPinLinked(b_outPin.id, links), 255);
-        //BP::EndPin();
-        //BP::EndNode();
+        for (auto& link : current_blueprint->links)
+        {
+            BP::Link(link->id, link->input_id, link->output_id, link->color);
+        }
 
-        //for (auto& link : links)
-        //{
-        //    BP::Link(link.id, link.input_id, link.output_id, link.color);
-        //}
+        // create links
+        if (BP::BeginCreate())
+        {
+            BP::PinId inputPinId, outputPinId;
+            if (BP::QueryNewLink(&inputPinId, &outputPinId))
+            {
+                BP_Pin* aux = GetPinByID(inputPinId);
+                if (inputPinId && outputPinId)
+                {
+                    if (BP::AcceptNewItem() && NH::CanLink(aux, GetPinByID(outputPinId)))
+                    {
+                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type));
+                        current_blueprint->links.push_back(new_link);
+                    }
+                }
+            }
+        }
+        BP::EndCreate();
 
-        //// create links
-        //if (BP::BeginCreate())
-        //{
-        //    BP::PinId inputPinId, outputPinId;
-        //    if (BP::QueryNewLink(&inputPinId, &outputPinId))
-        //    {
-        //        Pin aux = NH::GetPinByID(inputPinId);
-        //        if (inputPinId && outputPinId)
-        //        {
-        //            if (BP::AcceptNewItem() && NH::CanLink(aux, NH::GetPinByID(outputPinId)))
-        //            {
-        //                links.push_back(LinkInfo(BP::LinkId(nextLinkId++), inputPinId, outputPinId, aux.type));
-        //                BP::Link(links.back().id, links.back().input_id, links.back().output_id);
-        //            }
-        //        }
-        //    }
-        //}
-        //BP::EndCreate();
+        // delete links
+        if (BP::BeginDelete())
+        {
+            BP::LinkId deletedLinkId;
+            while (BP::QueryDeletedLink(&deletedLinkId))
+            {
+                if (BP::AcceptDeletedItem())
+                {
+                    std::vector<BP_Link*>::iterator it;
+                    for (auto& link : current_blueprint->links)
+                    {
+                        if (link->id == deletedLinkId)
+                        {
+                            it = std::find(current_blueprint->links.begin(), current_blueprint->links.end(), link);
+                            current_blueprint->links.erase(it);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        BP::EndDelete();
 
-        //// delete links
-        //if (BP::BeginDelete())
-        //{
-        //    BP::LinkId deletedLinkId;
-        //    while (BP::QueryDeletedLink(&deletedLinkId))
-        //    {
-        //        if (BP::AcceptDeletedItem())
-        //        {
-        //            for (auto& link : links)
-        //            {
-        //                if (link.id == deletedLinkId)
-        //                {
-        //                    links.erase(&link);
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-        //BP::EndDelete();
+        // create node
+        
+
+        // delete node
     }
 
     BP::End();
 	BP::SetCurrentEditor(NULL);
 	ImGui::End();
+}
+
+BP_Pin* EW_Blueprint::GetPinByID(PinId id)
+{
+    for (auto& pin : current_blueprint->pins)
+    {
+        if (pin->id == id) return pin;
+    }
+
+    return NULL;
 }

@@ -26,6 +26,6 @@ private:
 	ImVec2 ori;
 
 	ImGuiTextFilter filter;
-	static const int numComponents = 3;
+	static const int numComponents = (int)Component::TYPE::NUM_OF_COMPS - 1;
 	void DisplayComponents();
 };

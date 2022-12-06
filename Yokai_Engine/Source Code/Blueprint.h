@@ -28,8 +28,6 @@ class BluePrint
 
     void Update(float dt);
 
-    //BP_Pin* GetPinByID(PinId id);
-
 public:
 
     std::string name;
@@ -38,4 +36,5 @@ public:
     std::vector<BP_Pin*> pins;
     std::vector<BP_Link*> links;
 
+    friend class C_Blueprint;
 };

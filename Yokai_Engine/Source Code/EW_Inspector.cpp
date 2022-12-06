@@ -108,8 +108,8 @@ void EW_Inspector::DisplayComponents()
 	ImGui::AlignTextToFramePadding();
 	ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
 	filter.Draw("##Filter");
-	std::string componentNames[numComponents - 2] = { "Camera" };
-	for (int i = 0; i < (numComponents - 2); i++)
+	std::string componentNames[numComponents - 3] = { "Camera", "Blueprint" };
+	for (int i = 0; i < (numComponents - 3); i++)
 	{
 		std::string name = componentNames[i];
 		if (filter.PassFilter(name.c_str()))
@@ -118,7 +118,8 @@ void EW_Inspector::DisplayComponents()
 			{
 				switch (i)
 				{
-				case 0: dynamic_cast<Camera*>(selectGameobject->AddComponent(Component::TYPE::CAMERA)); break;
+				case 0: selectGameobject->AddComponent(Component::TYPE::CAMERA); break;
+				case 1: selectGameobject->AddComponent(Component::TYPE::BLUEPRINT); break;
 				}
 			}
 		}

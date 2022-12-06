@@ -25,7 +25,7 @@ public:
         CONVERSOR, // variable change
     };
 
-    BP_Node(int id, const char* name, TYPE type, ImColor color = ImColor(255, 255, 255));
+    BP_Node(int id, const char* name, TYPE type, ImVec2 pos, ImColor color = ImColor(255, 255, 255));
     virtual ~BP_Node();
 
 public:
@@ -35,6 +35,8 @@ public:
     std::vector<BP_Pin> outputs;
     ImColor color;
     TYPE type;
+
+    ImVec2 position;
 
     BluePrint* blue_print = nullptr;
 };

@@ -23,9 +23,9 @@ namespace NH
 	void NextColumn();
 	void EndColumn();
 
-	bool CanLink(BP_Pin a, BP_Pin b);
+	bool CanLink(BP_Pin* a, BP_Pin* b);
 
 	// WG
 	ImColor GetIconColor(BP_Pin::TYPE type);
-	void PinIcon(BP_Pin& pin, bool connected, int alpha);
+	void PinIcon(BP_Pin& pin, bool connected, float alpha = 255.0f);
 }

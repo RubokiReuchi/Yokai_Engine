@@ -44,7 +44,14 @@ public:
 			new_component = new C_Camera(this);
 			break;
 		case Component::TYPE::BLUEPRINT:
-			new_component = new C_Blueprint(this);
+			if (!GetComponent(Component::TYPE::BLUEPRINT))
+			{
+				new_component = new C_Blueprint(this);
+			}
+			else
+			{
+				return NULL;
+			}
 			break;
 		default:
 			LOG("component type error");

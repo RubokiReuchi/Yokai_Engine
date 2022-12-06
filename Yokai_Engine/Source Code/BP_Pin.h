@@ -35,7 +35,7 @@ public:
     BP_Pin(int id, const char* name, TYPE type, BluePrint* bp);
     virtual ~BP_Pin();
 
-    bool IsPinLinked(PinId id);
+    bool IsPinLinked();
 
 public:
     PinId id;

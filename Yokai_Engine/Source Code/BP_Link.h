@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Globals.h"
-#include "BP_Pin.h"
 
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGuiNodeEditor/utilities/widgets.h"
@@ -18,7 +17,7 @@ class BluePrint;
 class BP_Link
 {
 public:
-    BP_Link(LinkId id, PinId input_id, PinId output_id/*, BP_Pin::TYPE type*/);
+    BP_Link(LinkId id, PinId input_id, PinId output_id, ImColor color);
     virtual ~BP_Link();
 
 public:
