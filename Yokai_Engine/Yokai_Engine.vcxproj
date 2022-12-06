@@ -116,6 +116,7 @@
     <ClInclude Include="Source Code\C_Material.h" />
     <ClInclude Include="Source Code\C_MeshRenderer.h" />
     <ClInclude Include="Source Code\C_Transform.h" />
+    <ClInclude Include="Source Code\DN_Includes.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />

@@ -30,6 +30,7 @@ class BluePrint
 
 public:
 
+    int unique_id = 1;
     std::string name;
 
     std::vector<BP_Node*> nodes;

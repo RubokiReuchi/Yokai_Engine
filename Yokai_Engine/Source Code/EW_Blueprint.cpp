@@ -2,11 +2,14 @@
 #include "EO_Editor.h"
 #include "BlueprintHelpers.h"
 #include "ImGuiHelpers.h"
+#include "DN_Includes.h"
 
 EW_Blueprint::EW_Blueprint()
 {
 	window_name = "Blueprint";
 	enabled = true;
+
+    FillNodeList();
 
 	BP::Config config;
 	config.SettingsFile = "Config/node.json";
@@ -53,11 +56,9 @@ void EW_Blueprint::Update()
 
     if (current_blueprint)
     {
-        int unique_id = 1;
-
         for (auto& node : current_blueprint->nodes)
         {
-            BP::NodeId node_id = unique_id++;
+            BP::NodeId node_id = node->id;
             BP::SetNodePosition(node_id, node->position);
             BP::BeginNode(node_id);
             ImGui::Text(node->name.c_str());
@@ -67,12 +68,26 @@ void EW_Blueprint::Update()
             {
                 BP::NH_BeginPin(input_pin, BP::PinKind::Input);
                 NH::PinIcon(input_pin, input_pin.IsPinLinked());
-                if (input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
+                BP::EndPin();
+                // input box if not linked
+                if (!input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
                 {
-                    std::string aux = "##" + std::to_string(unique_id);
                     switch (input_pin.box_type)
                     {
                     case BP_Pin::BoxType::COMBO:
+                        ImGui::SameLine();
+                        ImGui::SetNextItemWidth(40);
+                        
+                        if (ImGui::BeginCombo("##Node Combo", input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
+                        {
+                            //BP::Suspend();
+                            for (size_t i = 0; i < input_pin.combo_box.size(); i++)
+                            {
+                                if (ImGui::Selectable(input_pin.combo_box[i].c_str())) input_pin.string_box = input_pin.combo_box[i];
+                            }
+                            //BP::Resume();
+                            ImGui::EndCombo();
+                        }
                         break;
                     case BP_Pin::BoxType::STRING:
                         break;
@@ -80,7 +95,6 @@ void EW_Blueprint::Update()
                         break;
                     }
                 }
-                BP::EndPin();
                 NH::NextColumn();
             }
             NH::EndColumn();
@@ -94,6 +108,8 @@ void EW_Blueprint::Update()
                 NH::NextColumn();
             }
             NH::EndColumn();
+
+            BP::EndNode();
         }
 
         for (auto& link : current_blueprint->links)
@@ -196,25 +212,24 @@ void EW_Blueprint::Update()
 
 void EW_Blueprint::DisplayNodes()
 {
-    //ImGui::AlignTextToFramePadding();
-    //ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
-    //filter.Draw("##Filter");
-    //std::string nodeNames[numNodes] = { "Camera", "Blueprint" };
-    //for (int i = 0; i < numNodes; i++)
-    //{
-    //    std::string name = nodeNames[i];
-    //    if (filter.PassFilter(name.c_str()))
-    //    {
-    //        if (ImGui::Selectable(name.c_str()))
-    //        {
-    //            switch (i)
-    //            {
-    //            case 0: /*selectGameobject->AddComponent(Component::TYPE::CAMERA);*/ break;
-    //            case 1: /*selectGameobject->AddComponent(Component::TYPE::BLUEPRINT);*/ break;
-    //            }
-    //        }
-    //    }
-    //}
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
+    filter.Draw("##Filter");
+    for (auto& node : node_list)
+    {
+        if (filter.PassFilter(node.c_str()))
+        {
+            if (ImGui::Selectable(node.c_str()))
+            {
+                BP_Node* new_node = NULL;
+
+                if (node == "Press Key") new_node = new DN_PressKey(current_blueprint->unique_id++, ori, current_blueprint);
+
+                current_blueprint->nodes.push_back(new_node);
+                popUpOpen = false;
+            }
+        }
+    }
 }
 
 BP_Pin* EW_Blueprint::GetPinByID(PinId id)
@@ -225,4 +240,9 @@ BP_Pin* EW_Blueprint::GetPinByID(PinId id)
     }
 
     return NULL;
+}
+
+void EW_Blueprint::FillNodeList()
+{
+    node_list.push_back("Press Key");
 }

@@ -78,7 +78,7 @@ void EW_Hierarchy::Update()
         }
     }
 
-    if (!app->engine_order->game->in_game && editor->GetSelectedGameObject() && app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && !optionsOpen)
+    if (ImGui::IsWindowHovered() && !app->engine_order->game->in_game && editor->GetSelectedGameObject() && app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN && !optionsOpen)
     {
         optionsOpen = true;
         ImGui::OpenPopup("Options");
