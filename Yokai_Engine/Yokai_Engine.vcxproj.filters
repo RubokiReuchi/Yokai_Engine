@@ -507,6 +507,9 @@
     <ClInclude Include="Source Code\CoreNode.h">
       <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_PressKey.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -820,6 +823,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\CoreNode.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_PressKey.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

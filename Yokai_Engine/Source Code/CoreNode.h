@@ -5,7 +5,7 @@
 class CoreNode : public BP_Node
 {
 public:
-	CoreNode(int id, const char* name, ImVec2 pos, ImColor color = ImColor(255, 255, 255));
+	CoreNode(int id, const char* name, ImVec2 pos, ImColor color, BluePrint* bp);
 	virtual ~CoreNode() override;
 
 	virtual void Update(float dt);

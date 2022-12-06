@@ -68,6 +68,19 @@ void EW_Blueprint::Update()
             {
                 BP::NH_BeginPin(input_pin, BP::PinKind::Input);
                 NH::PinIcon(input_pin, input_pin.IsPinLinked());
+                if (input_pin.IsPinLinked() && input_pin.input_text)
+                {
+                    std::string aux = "##" + std::to_string(unique_id);
+                    switch (input_pin.text_type)
+                    {
+                    case BP_Pin::TextType::COMBO:
+                        break;
+                    case BP_Pin::TextType::STRING:
+                        break;
+                    case BP_Pin::TextType::GAMEOBJECT:
+                        break;
+                    }
+                }
                 BP::EndPin();
                 NH::NextColumn();
             }

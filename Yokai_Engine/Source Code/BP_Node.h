@@ -25,7 +25,7 @@ public:
         CONVERSOR, // variable change
     };
 
-    BP_Node(int id, const char* name, TYPE type, ImVec2 pos, ImColor color = ImColor(255, 255, 255));
+    BP_Node(int id, const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp);
     virtual ~BP_Node();
 
 public:

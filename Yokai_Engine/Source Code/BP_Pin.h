@@ -32,7 +32,15 @@ public:
         None
     };
 
-    BP_Pin(int id, const char* name, TYPE type, BluePrint* bp);
+    enum class TextType
+    {
+        NONE,
+        COMBO,
+        STRING,
+        GAMEOBJECT
+    };
+
+    BP_Pin(int id, const char* name, TYPE type, BluePrint* bp, bool input_text = false, TextType text_type = TextType::NONE);
     virtual ~BP_Pin();
 
     bool IsPinLinked();
@@ -42,6 +50,8 @@ public:
     std::string name;
     TYPE type;
     PinKind kind;
+    bool input_text; // only if kind input
+    TextType text_type;
 
     BP_Node* node = nullptr;
     BluePrint* blue_print = nullptr;
