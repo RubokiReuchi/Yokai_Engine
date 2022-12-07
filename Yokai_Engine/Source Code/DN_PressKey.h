@@ -3,7 +3,7 @@
 #include "BP_Node.h"
 #include "SDL/include/SDL.h"
 
-class DN_PressKey : public BP_Node
+class DN_PressKey : public BP_Node<std::string>
 {
 public:
 	DN_PressKey(int id, ImVec2 pos, BluePrint* bp);
@@ -13,4 +13,6 @@ public:
 
 private:
 	SDL_Scancode key;
+
+
 };

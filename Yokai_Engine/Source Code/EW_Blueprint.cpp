@@ -229,16 +229,6 @@ void EW_Blueprint::DisplayNodes()
     }
 }
 
-BP_Pin* EW_Blueprint::GetPinByID(PinId id)
-{
-    for (auto& pin : current_blueprint->pins)
-    {
-        if (pin->id == id) return pin;
-    }
-
-    return NULL;
-}
-
 void EW_Blueprint::FillNodeList()
 {
     node_list.push_back("Press Key");

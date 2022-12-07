@@ -28,6 +28,16 @@ bool NH::CanLink(BP_Pin* a, BP_Pin* b)
     return false;
 }
 
+BP_Pin* NH::GetPinByID(PinId id, BluePrint* bp)
+{
+    for (auto& pin : bp->pins)
+    {
+        if (pin->id == id) return pin;
+    }
+
+    return NULL;
+}
+
 // WG
 ImColor NH::GetIconColor(BP_Pin::TYPE type)
 {

@@ -15,6 +15,7 @@ using namespace ax::Drawing;
 
 class BluePrint;
 
+template<typename T>
 class BP_Node
 {
 public:
@@ -29,6 +30,8 @@ public:
     virtual ~BP_Node();
 
     virtual void Update(float dt);
+
+    T info;
 
 public:
     NodeId id;

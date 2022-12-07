@@ -33,8 +33,6 @@ private:
 	ImGuiTextFilter filter;
 	void DisplayNodes();
 
-	BP_Pin* GetPinByID(PinId id);
-
 	void FillNodeList();
 	std::vector<std::string> node_list;
 };

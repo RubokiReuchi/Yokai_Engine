@@ -21,3 +21,24 @@ bool BP_Pin::IsPinLinked()
 
 	return false;
 }
+
+BP_Pin* BP_Pin::GetOpositePin()
+{
+	for (auto& link : blue_print->links)
+	{
+		if (this->kind == PinKind::Input)
+		{
+			if (this->id == link->input_id)
+			{
+				return NH::GetPinByID(link->output_id, blue_print);
+			}
+		}
+		else
+		{
+			if (this->id == link->output_id)
+			{
+				return NH::GetPinByID(link->input_id, blue_print);
+			}
+		}
+	}
+}

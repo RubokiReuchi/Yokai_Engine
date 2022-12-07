@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
-DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node(id, "Press Key", BP_Node::TYPE::CORE, pos, ImColor(200, 0, 0), bp)
+DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node<std::string>(id, "Press Key", BP_Node::TYPE::CORE, pos, ImColor(200, 0, 0), bp)
 {
 	key = SDL_SCANCODE_UNKNOWN;
 	int unique_id = 1;
@@ -12,8 +12,10 @@ DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node(id, "Press
 	key_pin.combo_box.insert(key_pin.combo_box.begin(), std::begin(combo_options), std::end(combo_options));
 	key_pin.string_box = "A";
 	inputs.push_back(key_pin);
-	BP_Pin send_pin(unique_id++, "", BP_Pin::TYPE::Executable, bp);
-	outputs.push_back(send_pin);
+	BP_Pin send_pin1(unique_id++, "Press", BP_Pin::TYPE::Executable, bp);
+	outputs.push_back(send_pin1);
+	BP_Pin send_pin2(unique_id++, "Release", BP_Pin::TYPE::Executable, bp);
+	outputs.push_back(send_pin2);
 }
 
 DN_PressKey::~DN_PressKey()
@@ -23,12 +25,22 @@ DN_PressKey::~DN_PressKey()
 
 void DN_PressKey::Update(float dt)
 {
-	if (app->input->GetKey(key) == KEY_DOWN) // on press
+	if (inputs[0].IsPinLinked())
 	{
-
+		std::string aux = inputs[0].GetOpositePin()->node->info;
+		key = SDL_GetScancodeFromName(aux.c_str());
 	}
-	else if (app->input->GetKey(key) == KEY_UP) // on release
+	else
 	{
+		key = SDL_GetScancodeFromName(inputs[0].string_box.c_str());
+	}
 
+	if (app->input->GetKey(key) == KEY_DOWN && outputs[0].IsPinLinked()) // on press
+	{
+		outputs[0].GetOpositePin()->node->SetInfo(true);
+	}
+	else if (app->input->GetKey(key) == KEY_UP && outputs[1].IsPinLinked()) // on release
+	{
+		outputs[1].GetOpositePin()->node->SetInfo(true);
 	}
 }

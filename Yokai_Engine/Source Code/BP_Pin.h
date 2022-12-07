@@ -45,6 +45,7 @@ public:
     virtual ~BP_Pin();
 
     bool IsPinLinked();
+    BP_Pin* GetOpositePin();
 
 public:
     PinId id;

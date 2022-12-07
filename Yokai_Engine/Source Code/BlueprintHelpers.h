@@ -24,6 +24,7 @@ namespace NH
 	void EndColumn();
 
 	bool CanLink(BP_Pin* a, BP_Pin* b);
+	BP_Pin* GetPinByID(PinId id, BluePrint* bp);
 
 	// WG
 	ImColor GetIconColor(BP_Pin::TYPE type);
