@@ -516,6 +516,15 @@
     <ClInclude Include="Source Code\DN_Includes.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_Bool.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Float.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Int.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -831,6 +840,15 @@
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\DN_String.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Bool.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Float.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Int.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
     </ClCompile>
   </ItemGroup>

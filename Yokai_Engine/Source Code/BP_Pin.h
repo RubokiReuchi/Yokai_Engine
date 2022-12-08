@@ -38,6 +38,7 @@ public:
         NONE,
         COMBO,
         STRING,
+        NUMBER,
         GAMEOBJECT
     };
 
@@ -48,6 +49,7 @@ public:
     BP_Pin* GetOpositePin();
 
 public:
+    int id_as_int;
     PinId id;
     std::string name;
     TYPE type;

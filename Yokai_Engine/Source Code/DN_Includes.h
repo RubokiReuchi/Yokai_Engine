@@ -5,6 +5,9 @@
 
 // variable
 #include "DN_String.h"
+#include "DN_Bool.h"
+#include "DN_Float.h"
+#include "DN_Int.h"
 
 // action
 

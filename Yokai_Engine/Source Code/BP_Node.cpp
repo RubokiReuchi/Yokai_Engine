@@ -4,7 +4,8 @@
 BP_Node::BP_Node(const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp)
 	: name(name), type(type), position(pos), color(color), blue_print(bp)
 {
-	id = blue_print->unique_id++;
+	id_as_int = blue_print->unique_id++;
+	id = id_as_int;
 }
 
 BP_Node::~BP_Node()

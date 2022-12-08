@@ -83,10 +83,12 @@ void EW_Blueprint::Update()
                 // input box if not linked
                 if (!input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
                 {
+                    std::string aux_text = "";
                     switch (input_pin.box_type)
                     {
                     case BP_Pin::BoxType::COMBO:
-                        if (BP::BeginNodeCombo("##Node Combo", input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
+                        aux_text = "##Node Combo" + std::to_string(input_pin.id_as_int);
+                        if (BP::BeginNodeCombo(aux_text.c_str(), input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
                         {
                             for (size_t i = 0; i < input_pin.combo_box.size(); i++)
                             {
@@ -96,10 +98,16 @@ void EW_Blueprint::Update()
                         }
                         break;
                     case BP_Pin::BoxType::STRING:
-                        ImGuiH::InputText("##Node String", &input_pin.string_box);
+                        aux_text = "##Node String" + std::to_string(input_pin.id_as_int);
+                        ImGuiH::InputText(aux_text.c_str(), &input_pin.string_box);
+                        break;
+                    case BP_Pin::BoxType::NUMBER:
+                        aux_text = "##Node Number" + std::to_string(input_pin.id_as_int);
+                        ImGuiH::InputText(aux_text.c_str(), &input_pin.string_box, ImGuiInputTextFlags_CharsScientific);
                         break;
                     case BP_Pin::BoxType::GAMEOBJECT:
-                        if (ImGui::Button("##Node GameObject"))
+                        aux_text = "##Node Object" + std::to_string(input_pin.id_as_int);
+                        if (ImGui::Button(aux_text.c_str()))
                         {
 
                         }
@@ -284,6 +292,9 @@ void EW_Blueprint::DisplayNodes()
                     BP_Node* new_node = NULL;
 
                     if (node == "String") new_node = new DN_String(canvas_ori, current_blueprint);
+                    if (node == "Boolean") new_node = new DN_Bool(canvas_ori, current_blueprint);
+                    if (node == "Float") new_node = new DN_Float(canvas_ori, current_blueprint);
+                    if (node == "Integer") new_node = new DN_Int(canvas_ori, current_blueprint);
 
                     if (new_node != NULL)
                     {
@@ -326,6 +337,9 @@ void EW_Blueprint::FillNodeList()
 
     // variable
     aux.push_back("String");
+    aux.push_back("Boolean");
+    aux.push_back("Float");
+    aux.push_back("Integer");
 
     node_list.push_back(aux);
     aux.clear();

@@ -38,6 +38,7 @@ public:
 
 public:
     bool init = false;
+    int id_as_int;
     NodeId id;
     std::string name;
     std::vector<BP_Pin> inputs;
