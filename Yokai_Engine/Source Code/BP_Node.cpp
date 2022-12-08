@@ -16,3 +16,8 @@ void BP_Node::Update(float dt)
 {
 
 }
+
+void BP_Node::Activate(float dt)
+{
+
+}

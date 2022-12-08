@@ -53,11 +53,12 @@ public:
     TYPE type;
     PinKind kind;
 
-    // only if kind input
+    ////// only if kind input
     BoxType box_type;
     std::vector<std::string> combo_box;
     std::string string_box;
     GameObject* go = nullptr;
+    ////////
 
     BP_Node* node = nullptr;
     BluePrint* blue_print = nullptr;

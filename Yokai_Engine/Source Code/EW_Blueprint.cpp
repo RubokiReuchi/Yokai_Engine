@@ -59,7 +59,11 @@ void EW_Blueprint::Update()
         for (auto& node : current_blueprint->nodes)
         {
             BP::NodeId node_id = node->id;
-            BP::SetNodePosition(node_id, node->position);
+            if (!node->init)
+            {
+                BP::SetNodePosition(node_id, node->position);
+                node->init = true;
+            }
             BP::BeginNode(node_id);
             ImGui::Text(node->name.c_str());
 
@@ -67,16 +71,18 @@ void EW_Blueprint::Update()
             for (auto& input_pin : node->inputs)
             {
                 BP::NH_BeginPin(input_pin, BP::PinKind::Input);
+                //BP::PushStyleColor(BP::StyleColor_NodeSelRect, ImVec4(node->color));
                 NH::PinIcon(input_pin, input_pin.IsPinLinked());
                 BP::EndPin();
+                NH::HelpText(input_pin.name);
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(40);
                 // input box if not linked
                 if (!input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
                 {
                     switch (input_pin.box_type)
                     {
                     case BP_Pin::BoxType::COMBO:
-                        ImGui::SameLine();
-                        ImGui::SetNextItemWidth(40);
                         if (BP::BeginNodeCombo("##Node Combo", input_pin.string_box.c_str(), ImGuiComboFlags_HeightSmall))
                         {
                             for (size_t i = 0; i < input_pin.combo_box.size(); i++)
@@ -92,20 +98,20 @@ void EW_Blueprint::Update()
                         break;
                     }
                 }
-                NH::NextColumn();
+                //BP::PopStyleColor();
             }
             NH::EndColumn();
-
+            ImGui::SameLine();
             NH::BeginColumn();
             for (auto& output_pin : node->outputs)
             {
                 BP::NH_BeginPin(output_pin, BP::PinKind::Output);
                 NH::PinIcon(output_pin, output_pin.IsPinLinked());
                 BP::EndPin();
-                NH::NextColumn();
+                NH::HelpText(output_pin.name);
             }
             NH::EndColumn();
-
+            
             BP::EndNode();
         }
 
@@ -120,8 +126,8 @@ void EW_Blueprint::Update()
             BP::PinId inputPinId, outputPinId;
             if (BP::QueryNewLink(&inputPinId, &outputPinId))
             {
-                BP_Pin* aux = GetPinByID(inputPinId);
-                if (BP::AcceptNewItem() && NH::CanLink(aux, GetPinByID(outputPinId)))
+                BP_Pin* aux = NH::GetPinByID(inputPinId, current_blueprint);
+                if (BP::AcceptNewItem() && NH::CanLink(aux, NH::GetPinByID(outputPinId, current_blueprint)))
                 {
                     BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type), current_blueprint);
                     current_blueprint->links.push_back(new_link);

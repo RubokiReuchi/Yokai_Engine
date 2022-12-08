@@ -18,6 +18,20 @@ void NH::EndColumn()
     ImGui::EndGroup();
 }
 
+void NH::HelpText(std::string text)
+{
+    if (ImGui::IsItemHovered())
+    {
+        Suspend();
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+        ImGui::TextUnformatted(text.c_str());
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+        Resume();
+    }
+}
+
 bool NH::CanLink(BP_Pin* a, BP_Pin* b)
 {
     if (a->type == b->type && a->kind != b->kind && a->node->id != b->node->id)

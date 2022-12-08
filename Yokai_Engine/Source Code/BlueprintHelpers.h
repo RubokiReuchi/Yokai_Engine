@@ -23,6 +23,8 @@ namespace NH
 	void NextColumn();
 	void EndColumn();
 
+	void HelpText(std::string text);
+
 	bool CanLink(BP_Pin* a, BP_Pin* b);
 	BP_Pin* GetPinByID(PinId id, BluePrint* bp);
 

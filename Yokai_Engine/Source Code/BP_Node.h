@@ -15,7 +15,6 @@ using namespace ax::Drawing;
 
 class BluePrint;
 
-template<typename T>
 class BP_Node
 {
 public:
@@ -31,9 +30,14 @@ public:
 
     virtual void Update(float dt);
 
-    T info;
+    virtual void Activate(float dt);
+
+    // variables depends of the node content type
+    std::string info_as_name;
+
 
 public:
+    bool init = false;
     NodeId id;
     std::string name;
     std::vector<BP_Pin> inputs;

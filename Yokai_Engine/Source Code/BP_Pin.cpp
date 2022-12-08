@@ -41,4 +41,6 @@ BP_Pin* BP_Pin::GetOpositePin()
 			}
 		}
 	}
+
+	return NULL;
 }
