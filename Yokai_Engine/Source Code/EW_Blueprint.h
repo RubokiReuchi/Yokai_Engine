@@ -34,5 +34,5 @@ private:
 	void DisplayNodes();
 
 	void FillNodeList();
-	std::vector<std::string> node_list;
+	std::vector<std::vector<std::string>> node_list;
 };

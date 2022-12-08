@@ -218,24 +218,56 @@ void EW_Blueprint::DisplayNodes()
     ImGui::AlignTextToFramePadding();
     ImGui::Text(ICON_FA_MAGNIFYING_GLASS); ImGui::SameLine();
     filter.Draw("##Filter");
-    for (auto& node : node_list)
+
+    // input
+    if (ImGui::CollapsingHeader("Input"))
     {
-        if (filter.PassFilter(node.c_str()))
+        for (auto& node : node_list[0])
         {
-            if (ImGui::Selectable(node.c_str()))
+            if (filter.PassFilter(node.c_str()))
             {
-                BP_Node* new_node = NULL;
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
 
-                if (node == "Press Key") new_node = new DN_PressKey(current_blueprint->unique_id++, ori, current_blueprint);
+                    if (node == "Press Key") new_node = new DN_PressKey(current_blueprint->unique_id++, ori, current_blueprint);
 
-                current_blueprint->nodes.push_back(new_node);
-                popUpOpen = false;
+                    current_blueprint->nodes.push_back(new_node);
+                    popUpOpen = false;
+                }
             }
         }
+    }
+    // variable
+    if (ImGui::CollapsingHeader("Variable"))
+    {
+
+    }
+    // action
+    if (ImGui::CollapsingHeader("Action"))
+    {
+
+    }
+    // modify
+    if (ImGui::CollapsingHeader("Modify"))
+    {
+
     }
 }
 
 void EW_Blueprint::FillNodeList()
 {
-    node_list.push_back("Press Key");
+    // input
+    std::vector<std::string> aux;
+    aux.push_back("Press Key");
+
+    node_list.push_back(aux);
+
+    // variable
+
+
+    // action
+
+
+    // modify
 }
