@@ -2,6 +2,7 @@
 
 #include "EO_Base.h"
 #include "EditorWindow.h"
+#include "EW_Hierarchy.h"
 #include "EW_Project.h"
 #include "EW_Console.h"
 #include "FileExplorer.h"
@@ -53,6 +54,11 @@ public:
 	EW_Project* GetProjectWindow()
 	{
 		return dynamic_cast<EW_Project*>(editor_windows[(uint)EW_TYPE::PROJECT]);
+	}
+
+	EW_Hierarchy* GetHierarchyWindow()
+	{
+		return dynamic_cast<EW_Hierarchy*>(editor_windows[(uint)EW_TYPE::HIERARCHY]);
 	}
 
 private:

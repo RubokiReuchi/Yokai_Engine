@@ -19,6 +19,15 @@ public:
 	void DrawGameObjecTree(GameObject* gameObject, bool onlyChildren = false);
 	void DrawGameObject(GameObject* gameObject, int iteration);
 
+	GameObject* GetDraggingGO()
+	{
+		return draggingGameObject;
+	}
+	void NullDraggingGO()
+	{
+		draggingGameObject = nullptr;
+	}
+
 private:
 	static const int numSubmenus = 2;
 	static const int numPrimitives = 5;

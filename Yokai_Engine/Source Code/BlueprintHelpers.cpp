@@ -76,13 +76,14 @@ void NH::PinIcon(BP_Pin& pin, bool connected, float alpha)
     color.Value.w = alpha / 255.0f;
     switch (pin.type)
     {
-    case BP_Pin::TYPE::Executable:     iconType = IconType::Flow;   break;
-    case BP_Pin::TYPE::Bool:     iconType = IconType::Circle; break;
-    case BP_Pin::TYPE::Int:      iconType = IconType::Circle; break;
-    case BP_Pin::TYPE::Float:    iconType = IconType::Circle; break;
-    case BP_Pin::TYPE::String:   iconType = IconType::Circle; break;
-    case BP_Pin::TYPE::Object:   iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Executable: iconType = IconType::Flow;   break;
+    case BP_Pin::TYPE::Bool: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Int: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Float: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::String: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Object: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::Function: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::None: return; break;
     default:
         return;
     }

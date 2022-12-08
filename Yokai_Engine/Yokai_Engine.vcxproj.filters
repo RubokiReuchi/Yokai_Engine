@@ -82,6 +82,9 @@
     <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode">
       <UniqueIdentifier>{b250a790-3990-4b86-ba07-accdd2f97ead}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode">
+      <UniqueIdentifier>{db1a9abf-272b-4035-b7d7-3dd938a94553}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -504,11 +507,14 @@
     <ClInclude Include="Source Code\C_Blueprint.h">
       <Filter>Sources\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\CoreNode.h">
-      <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\DN_PressKey.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_String.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Includes.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -821,11 +827,11 @@
     <ClCompile Include="Source Code\C_Blueprint.cpp">
       <Filter>Sources\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\CoreNode.cpp">
-      <Filter>Sources\BlueprintScripts\NodeTypes</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\DN_PressKey.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_String.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

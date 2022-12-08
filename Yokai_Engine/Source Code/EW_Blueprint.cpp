@@ -93,8 +93,25 @@ void EW_Blueprint::Update()
                         }
                         break;
                     case BP_Pin::BoxType::STRING:
+                        ImGuiH::InputText("##Node String", &input_pin.string_box);
                         break;
                     case BP_Pin::BoxType::GAMEOBJECT:
+                        if (ImGui::Button("##Node GameObject"))
+                        {
+
+                        }
+                        if (ImGui::BeginDragDropTarget() && app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
+                        {
+                            ImGuiDragDropFlags target_flags = 0;
+                            target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;
+                            target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect;
+                            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(input_pin.go->name.c_str(), target_flags))
+                            {
+                                input_pin.go = app->engine_order->editor->GetHierarchyWindow()->GetDraggingGO();
+                                app->engine_order->editor->GetHierarchyWindow()->NullDraggingGO();
+                            }
+                            ImGui::EndDragDropTarget();
+                        }
                         break;
                     }
                 }
@@ -166,6 +183,9 @@ void EW_Blueprint::Update()
             ImGui::OpenPopup("New Node");
             popUpOpen = true;
             ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+            BP::Resume();
+            canvas_ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+            BP::Suspend();
         }
         if (popUpOpen)
         {
@@ -230,9 +250,20 @@ void EW_Blueprint::DisplayNodes()
                 {
                     BP_Node* new_node = NULL;
 
-                    if (node == "Press Key") new_node = new DN_PressKey(current_blueprint->unique_id++, ori, current_blueprint);
+                    if (node == "Press Key") new_node = new DN_PressKey(canvas_ori, current_blueprint);
 
-                    current_blueprint->nodes.push_back(new_node);
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
                     popUpOpen = false;
                 }
             }
@@ -241,7 +272,32 @@ void EW_Blueprint::DisplayNodes()
     // variable
     if (ImGui::CollapsingHeader("Variable"))
     {
+        for (auto& node : node_list[1])
+        {
+            if (filter.PassFilter(node.c_str()))
+            {
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
 
+                    if (node == "String") new_node = new DN_String(canvas_ori, current_blueprint);
+
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
+                    popUpOpen = false;
+                }
+            }
+        }
     }
     // action
     if (ImGui::CollapsingHeader("Action"))
@@ -257,14 +313,19 @@ void EW_Blueprint::DisplayNodes()
 
 void EW_Blueprint::FillNodeList()
 {
-    // input
     std::vector<std::string> aux;
+
+    // input
     aux.push_back("Press Key");
 
     node_list.push_back(aux);
+    aux.clear();
 
     // variable
+    aux.push_back("String");
 
+    node_list.push_back(aux);
+    aux.clear();
 
     // action
 

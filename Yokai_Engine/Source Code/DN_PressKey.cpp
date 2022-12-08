@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
-DN_PressKey::DN_PressKey(int id, ImVec2 pos, BluePrint* bp) : BP_Node(id, "Press Key", BP_Node::TYPE::CORE, pos, ImColor(200, 0, 0), bp)
+DN_PressKey::DN_PressKey(ImVec2 pos, BluePrint* bp) : BP_Node("Press Key", BP_Node::TYPE::CORE, pos, ImColor(200, 0, 0), bp)
 {
 	key = SDL_SCANCODE_UNKNOWN;
 	BP_Pin key_pin(bp->unique_id++, "Key", BP_Pin::TYPE::String, bp, BP_Pin::BoxType::COMBO);

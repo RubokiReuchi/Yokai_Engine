@@ -118,6 +118,7 @@
     <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\DN_Includes.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
+    <ClInclude Include="Source Code\DN_String.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="Source Code\C_MeshRenderer.cpp" />
     <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\DN_PressKey.cpp" />
+    <ClCompile Include="Source Code\DN_String.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />
