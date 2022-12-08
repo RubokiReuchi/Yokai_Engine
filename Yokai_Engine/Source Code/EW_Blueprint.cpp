@@ -70,12 +70,15 @@ void EW_Blueprint::Update()
             NH::BeginColumn();
             for (auto& input_pin : node->inputs)
             {
-                BP::NH_BeginPin(input_pin, BP::PinKind::Input);
                 //BP::PushStyleColor(BP::StyleColor_NodeSelRect, ImVec4(node->color));
-                NH::PinIcon(input_pin, input_pin.IsPinLinked());
-                BP::EndPin();
-                NH::HelpText(input_pin.name);
-                ImGui::SameLine();
+                if (input_pin.type != BP_Pin::TYPE::None)
+                {
+                    BP::NH_BeginPin(input_pin, BP::PinKind::Input);
+                    NH::PinIcon(input_pin, input_pin.IsPinLinked());
+                    BP::EndPin();
+                    NH::HelpText(input_pin.name);
+                    ImGui::SameLine();
+                }
                 ImGui::SetNextItemWidth(40);
                 // input box if not linked
                 if (!input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)

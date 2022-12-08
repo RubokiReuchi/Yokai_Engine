@@ -30,8 +30,6 @@ private:
 	bool popUpOpen = false; //create node popUp
 	ImVec2 ori, canvas_ori;
 
-	void CreateNodes();
-	std::string create_node = "";
 	ImGuiTextFilter filter;
 	void DisplayNodes();
 

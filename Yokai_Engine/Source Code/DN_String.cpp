@@ -4,7 +4,7 @@
 
 DN_String::DN_String(ImVec2 pos, BluePrint* bp) : BP_Node("String", BP_Node::TYPE::SIMPLE, pos, ImColor(124, 21, 153), bp)
 {
-	BP_Pin key_pin(bp->unique_id++, "", BP_Pin::TYPE::Bool, bp, BP_Pin::BoxType::STRING);
+	BP_Pin key_pin(bp->unique_id++, "", BP_Pin::TYPE::None, bp, BP_Pin::BoxType::STRING);
 	key_pin.string_box = "";
 	key_pin.node = this;
 	inputs.push_back(key_pin);
