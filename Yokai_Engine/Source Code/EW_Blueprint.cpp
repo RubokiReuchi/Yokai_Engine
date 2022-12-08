@@ -64,13 +64,13 @@ void EW_Blueprint::Update()
                 BP::SetNodePosition(node_id, node->position);
                 node->init = true;
             }
+            BP::PushStyleColor(BP::StyleColor_NodeBorder, ImVec4(node->color.Value.x, node->color.Value.y, node->color.Value.z, 200));
             BP::BeginNode(node_id);
             ImGui::Text(node->name.c_str());
 
             NH::BeginColumn();
             for (auto& input_pin : node->inputs)
             {
-                //BP::PushStyleColor(BP::StyleColor_NodeSelRect, ImVec4(node->color));
                 if (input_pin.type != BP_Pin::TYPE::None)
                 {
                     BP::NH_BeginPin(input_pin, BP::PinKind::Input);
@@ -118,7 +118,6 @@ void EW_Blueprint::Update()
                         break;
                     }
                 }
-                //BP::PopStyleColor();
             }
             NH::EndColumn();
             ImGui::SameLine();
@@ -133,6 +132,7 @@ void EW_Blueprint::Update()
             NH::EndColumn();
             
             BP::EndNode();
+            BP::PopStyleColor();
         }
 
         for (auto& link : current_blueprint->links)
