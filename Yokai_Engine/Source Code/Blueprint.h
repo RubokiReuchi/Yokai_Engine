@@ -37,5 +37,7 @@ public:
     std::vector<BP_Pin*> pins;
     std::vector<BP_Link*> links;
 
+    bool info_saved_in_nodes = false;
+
     friend class C_Blueprint;
 };

@@ -1,6 +1,5 @@
 #include "DN_Bool.h"
 #include "Application.h"
-#include "ModuleInput.h"
 
 DN_Bool::DN_Bool(ImVec2 pos, BluePrint* bp) : BP_Node("Boolean", BP_Node::TYPE::SIMPLE, pos, ImColor(220, 48, 48), bp)
 {

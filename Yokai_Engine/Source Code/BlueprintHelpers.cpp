@@ -36,9 +36,28 @@ bool NH::CanLink(BP_Pin* a, BP_Pin* b)
 {
     if (a->type == b->type && a->kind != b->kind && a->node->id != b->node->id)
     {
-        if (a->kind == PinKind::Input && !a->IsPinLinked()) return true;
-        else if (b->kind == PinKind::Input && !b->IsPinLinked()) return true;
-        else return false;
+        if (a->kind == PinKind::Input)
+        {
+            if (a->type == BP_Pin::TYPE::Executable || !a->IsPinLinked())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (b->kind == PinKind::Input)
+        {
+            if (b->type == BP_Pin::TYPE::Executable || !b->IsPinLinked())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
         
     return false;

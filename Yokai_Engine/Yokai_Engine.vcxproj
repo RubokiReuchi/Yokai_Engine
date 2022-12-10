@@ -121,6 +121,7 @@
     <ClInclude Include="Source Code\DN_Includes.h" />
     <ClInclude Include="Source Code\DN_Int.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
+    <ClInclude Include="Source Code\DN_PrintString.h" />
     <ClInclude Include="Source Code\DN_String.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="Source Code\DN_Float.cpp" />
     <ClCompile Include="Source Code\DN_Int.cpp" />
     <ClCompile Include="Source Code\DN_PressKey.cpp" />
+    <ClCompile Include="Source Code\DN_PrintString.cpp" />
     <ClCompile Include="Source Code\DN_String.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />

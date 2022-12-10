@@ -1,6 +1,5 @@
 #include "DN_String.h"
 #include "Application.h"
-#include "ModuleInput.h"
 
 DN_String::DN_String(ImVec2 pos, BluePrint* bp) : BP_Node("String", BP_Node::TYPE::SIMPLE, pos, ImColor(124, 21, 153), bp)
 {
@@ -16,4 +15,9 @@ DN_String::DN_String(ImVec2 pos, BluePrint* bp) : BP_Node("String", BP_Node::TYP
 DN_String::~DN_String()
 {
 
+}
+
+void DN_String::SaveInNode()
+{
+	info_as_name = inputs[0].string_box;
 }

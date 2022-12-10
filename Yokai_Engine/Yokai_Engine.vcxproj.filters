@@ -85,6 +85,9 @@
     <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode">
       <UniqueIdentifier>{db1a9abf-272b-4035-b7d7-3dd938a94553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode">
+      <UniqueIdentifier>{19a69beb-1fc2-4dfd-824d-5dbe6ef14398}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -525,6 +528,9 @@
     <ClInclude Include="Source Code\DN_Int.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_PrintString.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -850,6 +856,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_Int.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_PrintString.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

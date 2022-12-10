@@ -157,8 +157,16 @@ void EW_Blueprint::Update()
                 BP_Pin* aux = NH::GetPinByID(inputPinId, current_blueprint);
                 if (BP::AcceptNewItem() && NH::CanLink(aux, NH::GetPinByID(outputPinId, current_blueprint)))
                 {
-                    BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type), current_blueprint);
-                    current_blueprint->links.push_back(new_link);
+                    if (aux->kind == PinKind::Input)
+                    {
+                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type), current_blueprint);
+                        current_blueprint->links.push_back(new_link);
+                    }
+                    else
+                    {
+                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), outputPinId, inputPinId, NH::GetIconColor(aux->type), current_blueprint);
+                        current_blueprint->links.push_back(new_link);
+                    }
                 }
             }
         }
@@ -316,7 +324,32 @@ void EW_Blueprint::DisplayNodes()
     // action
     if (ImGui::CollapsingHeader("Action"))
     {
+        for (auto& node : node_list[2])
+        {
+            if (filter.PassFilter(node.c_str()))
+            {
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
 
+                    if (node == "Print String") new_node = new DN_PrintString(canvas_ori, current_blueprint);
+
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
+                    popUpOpen = false;
+                }
+            }
+        }
     }
     // modify
     if (ImGui::CollapsingHeader("Modify"))
@@ -345,7 +378,10 @@ void EW_Blueprint::FillNodeList()
     aux.clear();
 
     // action
+    aux.push_back("Print String");
 
+    node_list.push_back(aux);
+    aux.clear();
 
     // modify
 }

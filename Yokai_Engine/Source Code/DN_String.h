@@ -9,6 +9,8 @@ public:
 	DN_String(ImVec2 pos, BluePrint* bp);
 	virtual ~DN_String() override;
 
+	void SaveInNode();
+
 private:
 
 };

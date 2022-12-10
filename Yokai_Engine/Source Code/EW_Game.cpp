@@ -63,7 +63,7 @@ void EW_Game::Update()
 	if (ImGui::Button((button1.c_str()), ImVec2(25, 25)))
 	{
 		if (!game->in_game) game->PlayGame();
-		else game->StopGame();
+		else { game->StopGame(); ClipCursor(NULL); }
 	}
 	ImGui::SameLine();
 	std::string button2 = ICON_FA_PAUSE"##2";

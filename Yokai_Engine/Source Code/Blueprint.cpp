@@ -15,6 +15,15 @@ BluePrint::~BluePrint()
 
 void BluePrint::Update(float dt)
 {
+	if (!info_saved_in_nodes)
+	{
+		for (auto& node : nodes)
+		{
+			node->SaveInNode();
+		}
+		info_saved_in_nodes = true;
+	}
+
 	for (auto& node : nodes)
 	{
 		if (node->type == BP_Node::TYPE::CORE)  node->Update(dt);

@@ -22,3 +22,8 @@ void BP_Node::Activate(float dt)
 {
 
 }
+
+void BP_Node::SaveInNode()
+{
+
+}

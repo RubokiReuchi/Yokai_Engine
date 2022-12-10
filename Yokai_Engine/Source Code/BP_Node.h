@@ -32,6 +32,8 @@ public:
 
     virtual void Activate(float dt);
 
+    virtual void SaveInNode();
+
     // variables depends of the node content type
     std::string info_as_name;
 

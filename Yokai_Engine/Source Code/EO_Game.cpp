@@ -134,6 +134,12 @@ void EO_Game::ReturnGameObject()
 		{
 			dynamic_cast<C_Material*>(app->engine_order->game_objects[i]->GetComponent(Component::TYPE::MATERIAL))->SetTexture(go_before_play[i].texture_path);
 		}
+
+		C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(app->engine_order->game_objects[i]->GetComponent(Component::TYPE::BLUEPRINT));
+		if (c_bp != NULL)
+		{
+			c_bp->GetBluePrint()->info_saved_in_nodes = false;
+		}
 	}
 
 	go_before_play.clear();
