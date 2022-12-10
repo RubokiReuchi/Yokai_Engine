@@ -3,7 +3,7 @@
 
 C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::BLUEPRINT)
 {
-	blueprint = new BluePrint("Default");
+	blueprint = new BluePrint("Default", gameObject);
 }
 
 C_Blueprint::~C_Blueprint()

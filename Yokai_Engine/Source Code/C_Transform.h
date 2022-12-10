@@ -41,6 +41,14 @@ public:
 		return localTransform;
 	}
 
+	void Translate(float3 translation);
+	void Scale(float3 scale);
+	void Rotate(float3 rotate);
+
+	float3 GetForward();
+	float3 GetRight();
+	float3 GetUp();
+
 private:
 	Transform localTransform;
 

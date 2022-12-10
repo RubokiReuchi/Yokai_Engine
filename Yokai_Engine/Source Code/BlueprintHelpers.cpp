@@ -83,6 +83,7 @@ ImColor NH::GetIconColor(BP_Pin::TYPE type)
     case BP_Pin::TYPE::Bool: return ImColor(220, 48, 48);
     case BP_Pin::TYPE::Int: return ImColor(68, 201, 156);
     case BP_Pin::TYPE::Float: return ImColor(147, 226, 74);
+    case BP_Pin::TYPE::Vector3: return ImColor(226, 0, 74);
     case BP_Pin::TYPE::String: return ImColor(124, 21, 153);
     case BP_Pin::TYPE::Object: return ImColor(51, 150, 215);
     case BP_Pin::TYPE::Function: return ImColor(218, 0, 183);
@@ -101,6 +102,7 @@ void NH::PinIcon(BP_Pin& pin, bool connected, float alpha)
     case BP_Pin::TYPE::Bool: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::Int: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::Float: iconType = IconType::Circle; break;
+    case BP_Pin::TYPE::Vector3: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::String: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::Object: iconType = IconType::Circle; break;
     case BP_Pin::TYPE::Function: iconType = IconType::Circle; break;

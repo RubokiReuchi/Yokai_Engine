@@ -13,3 +13,9 @@
 #include "DN_PrintString.h"
 
 // modify
+#include "DN_Translate.h"
+
+// get value
+#include "DN_GetForward.h"
+#include "DN_GetUp.h"
+#include "DN_GetRight.h"

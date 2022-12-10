@@ -16,3 +16,8 @@ DN_Float::~DN_Float()
 {
 
 }
+
+void DN_Float::SaveInNode()
+{
+	info_as_name = std::stof(inputs[0].string_box);
+}

@@ -9,6 +9,8 @@ public:
 	DN_Float(ImVec2 pos, BluePrint* bp);
 	virtual ~DN_Float() override;
 
+	void SaveInNode();
+
 private:
 
 };

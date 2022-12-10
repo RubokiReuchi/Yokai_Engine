@@ -3,11 +3,11 @@
 #include "BP_Node.h"
 #include "SDL/include/SDL.h"
 
-class DN_Bool : public BP_Node
+class DN_GetUp : public BP_Node
 {
 public:
-	DN_Bool(ImVec2 pos, BluePrint* bp);
-	virtual ~DN_Bool() override;
+	DN_GetUp(ImVec2 pos, BluePrint* bp);
+	virtual ~DN_GetUp() override;
 
 	void SaveInNode();
 

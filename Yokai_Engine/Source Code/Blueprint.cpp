@@ -1,7 +1,7 @@
 #include "Blueprint.h"
 #include "BlueprintHelpers.h"
 
-BluePrint::BluePrint(std::string name) : name(name)
+BluePrint::BluePrint(std::string name, GameObject* go) : name(name), go(go)
 {
 	
 }

@@ -16,3 +16,8 @@ DN_Int::~DN_Int()
 {
 
 }
+
+void DN_Int::SaveInNode()
+{
+	info_as_number = std::stoi(inputs[0].string_box);
+}

@@ -160,6 +160,42 @@ void C_Transform::UpdateBB()
 	go->global_aabb.Enclose(go->global_obb);
 }
 
+void C_Transform::Translate(float3 translation)
+{
+	this->localTransform.position += translation;
+	UpdatePosition();
+}
+
+void C_Transform::Scale(float3 scale)
+{
+	this->localTransform.scale += scale;
+	UpdateScale();
+}
+
+void C_Transform::Rotate(float3 rotate)
+{
+	this->localTransform.rotation += rotate;
+	UpdateRotation();
+}
+
+float3 C_Transform::GetForward()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(2).Normalized();
+}
+
+float3 C_Transform::GetRight()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(0).Normalized();
+}
+
+float3 C_Transform::GetUp()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(1).Normalized();
+}
+
 void C_Transform::UpdatePosition()
 {
 	float3 globalPosition = parentGlobalTransform.position + localTransform.position;

@@ -18,12 +18,14 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
+class GameObject;
+
 class BP_Node;
 class BP_Link;
 
 class BluePrint
 {
-    BluePrint(std::string name);
+    BluePrint(std::string name, GameObject* go);
     ~BluePrint();
 
     void Update(float dt);
@@ -38,6 +40,8 @@ public:
     std::vector<BP_Link*> links;
 
     bool info_saved_in_nodes = false;
+
+    GameObject* go = nullptr;
 
     friend class C_Blueprint;
 };

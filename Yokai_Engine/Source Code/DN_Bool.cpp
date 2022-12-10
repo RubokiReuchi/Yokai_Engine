@@ -18,3 +18,15 @@ DN_Bool::~DN_Bool()
 {
 
 }
+
+void DN_Bool::SaveInNode()
+{
+	if (inputs[0].string_box == "True")
+	{
+		info_as_boolean = true;
+	}
+	else
+	{
+		info_as_boolean = false;;
+	}
+}

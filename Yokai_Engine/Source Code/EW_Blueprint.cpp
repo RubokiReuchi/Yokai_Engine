@@ -77,12 +77,12 @@ void EW_Blueprint::Update()
                     NH::PinIcon(input_pin, input_pin.IsPinLinked());
                     BP::EndPin();
                     NH::HelpText(input_pin.name);
-                    ImGui::SameLine();
                 }
                 ImGui::SetNextItemWidth(40);
                 // input box if not linked
                 if (!input_pin.IsPinLinked() && input_pin.box_type != BP_Pin::BoxType::NONE)
                 {
+                    if (input_pin.type != BP_Pin::TYPE::None) ImGui::SameLine();
                     std::string aux_text = "";
                     switch (input_pin.box_type)
                     {
@@ -106,19 +106,17 @@ void EW_Blueprint::Update()
                         ImGuiH::InputText(aux_text.c_str(), &input_pin.string_box, ImGuiInputTextFlags_CharsScientific);
                         break;
                     case BP_Pin::BoxType::GAMEOBJECT:
-                        aux_text = "##Node Object" + std::to_string(input_pin.id_as_int);
-                        if (ImGui::Button(aux_text.c_str()))
+                        if (input_pin.go_box != NULL) aux_text = input_pin.go_box->name + "##Node Object" + std::to_string(input_pin.id_as_int);
+                        else aux_text = "##Node Object" + std::to_string(input_pin.id_as_int);
+                        if (ImGui::Button(aux_text.c_str(), ImVec2(40, 0)))
                         {
 
                         }
                         if (ImGui::BeginDragDropTarget() && app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
                         {
-                            ImGuiDragDropFlags target_flags = 0;
-                            target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;
-                            target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect;
-                            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(input_pin.go->name.c_str(), target_flags))
+                            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(app->engine_order->editor->GetHierarchyWindow()->GetDraggingGO()->name.c_str()))
                             {
-                                input_pin.go = app->engine_order->editor->GetHierarchyWindow()->GetDraggingGO();
+                                input_pin.go_box = app->engine_order->editor->GetHierarchyWindow()->GetDraggingGO();
                                 app->engine_order->editor->GetHierarchyWindow()->NullDraggingGO();
                             }
                             ImGui::EndDragDropTarget();
@@ -354,7 +352,64 @@ void EW_Blueprint::DisplayNodes()
     // modify
     if (ImGui::CollapsingHeader("Modify"))
     {
+        for (auto& node : node_list[3])
+        {
+            if (filter.PassFilter(node.c_str()))
+            {
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
 
+                    if (node == "Translate") new_node = new DN_Translate(canvas_ori, current_blueprint);
+
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
+                    popUpOpen = false;
+                }
+            }
+        }
+    }
+    // get value
+    if (ImGui::CollapsingHeader("Get Value"))
+    {
+        for (auto& node : node_list[4])
+        {
+            if (filter.PassFilter(node.c_str()))
+            {
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
+
+                    if (node == "Get Forward") new_node = new DN_GetForward(canvas_ori, current_blueprint);
+                    if (node == "Get Up") new_node = new DN_GetUp(canvas_ori, current_blueprint);
+                    if (node == "Get Right") new_node = new DN_GetRight(canvas_ori, current_blueprint);
+
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
+                    popUpOpen = false;
+                }
+            }
+        }
     }
 }
 
@@ -384,4 +439,16 @@ void EW_Blueprint::FillNodeList()
     aux.clear();
 
     // modify
+    aux.push_back("Translate");
+
+    node_list.push_back(aux);
+    aux.clear();
+
+    // get value
+    aux.push_back("Get Forward");
+    aux.push_back("Get Up");
+    aux.push_back("Get Right");
+
+    node_list.push_back(aux);
+    aux.clear();
 }

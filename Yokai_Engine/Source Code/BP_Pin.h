@@ -27,6 +27,7 @@ public:
         Bool,
         Int,
         Float,
+        Vector3,
         String,
         Object,
         Function,
@@ -59,7 +60,7 @@ public:
     BoxType box_type;
     std::vector<std::string> combo_box;
     std::string string_box;
-    GameObject* go = nullptr;
+    GameObject* go_box = nullptr;
     ////////
 
     BP_Node* node = nullptr;

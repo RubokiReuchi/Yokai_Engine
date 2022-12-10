@@ -88,6 +88,12 @@
     <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode">
       <UniqueIdentifier>{19a69beb-1fc2-4dfd-824d-5dbe6ef14398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode">
+      <UniqueIdentifier>{85f8444d-30bf-4f4a-ba72-e27972d3a1ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode">
+      <UniqueIdentifier>{7b9927ba-3135-4a7a-bac4-388c7a1ac357}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -531,6 +537,18 @@
     <ClInclude Include="Source Code\DN_PrintString.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_Translate.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetForward.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetRight.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetUp.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -859,6 +877,18 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_PrintString.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Translate.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetForward.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetRight.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetUp.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

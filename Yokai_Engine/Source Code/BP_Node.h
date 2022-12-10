@@ -5,6 +5,7 @@
 
 #include "ImGuiNodeEditor/imgui_node_editor.h"
 #include "ImGuiNodeEditor/utilities/widgets.h"
+#include "MathGeoLib/include/MathGeoLib.h"
 
 #include <string>
 #include <vector>
@@ -13,6 +14,7 @@ using namespace ax::NodeEditor;
 using namespace ax::Widgets;
 using namespace ax::Drawing;
 
+class GameObject;
 class BluePrint;
 
 class BP_Node
@@ -36,7 +38,10 @@ public:
 
     // variables depends of the node content type
     std::string info_as_name;
-
+    float info_as_number;
+    float3 info_as_vector3;
+    bool info_as_boolean;
+    GameObject* info_as_go = nullptr;
 
 public:
     bool init = false;
