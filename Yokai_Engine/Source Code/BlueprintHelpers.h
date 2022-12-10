@@ -25,7 +25,7 @@ namespace NH
 
 	void HelpText(std::string text);
 
-	bool CanLink(BP_Pin* a, BP_Pin* b);
+	bool CanLink(BP_Pin* input, BP_Pin* output);
 	BP_Pin* GetPinByID(PinId id, BluePrint* bp);
 
 	// WG

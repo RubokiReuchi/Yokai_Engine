@@ -32,9 +32,9 @@ void NH::HelpText(std::string text)
     }
 }
 
-bool NH::CanLink(BP_Pin* a, BP_Pin* b)
+bool NH::CanLink(BP_Pin* input, BP_Pin* output)
 {
-    if (a->type == b->type && a->kind != b->kind && a->node->id != b->node->id)
+    if (input->type == output->type && input->kind != output->kind && input->node->id != output->node->id)
     {
         return true;
     }

@@ -187,19 +187,6 @@ bool EO_Editor::SetMenuBar()
 		}
 		ImGui::EndMenu();
 	}
-	if (ImGui::BeginMenu("CHECK")) // FOR second deliver
-	{
-		ImGui::Checkbox("Frustrum Culling", &app->renderer3D->view_frustrum_culling);
-		if (ImGui::Button("LOG loaded meshes"))
-		{
-			MeshImporter::LogLoadedMeshes();
-		}
-		if (ImGui::Button("LOG loaded textures"))
-		{
-			M_Texture::LogLoadedTextures();
-		}
-		ImGui::EndMenu();
-	}
 	if (ImGui::BeginMenu("View"))
 	{
 		ImGui::Checkbox("Wireframe", &app->renderer3D->wireframe);

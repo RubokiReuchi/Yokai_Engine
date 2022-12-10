@@ -23,9 +23,6 @@ public:
 
 	static void DeleteTextures();
 
-	// FOR second deliver
-	static void LogLoadedTextures();
-
 	static uint bindedTextures;
 	static std::map<uint, Re_Texture> loaded_textures;
 	static std::map<std::string, uint> usedPaths;
