@@ -561,6 +561,9 @@
     <ClInclude Include="Source Code\DN_Multiplication3.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_GetDeltaTime.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -910,6 +913,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_Multiplication3.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetDeltaTime.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

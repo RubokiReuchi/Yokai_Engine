@@ -31,7 +31,6 @@ public:
 
 	virtual void Update() {}
 	virtual void UpdateInGame(float dt) {}
-	//virtual void PostUpdate() {}
 
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }

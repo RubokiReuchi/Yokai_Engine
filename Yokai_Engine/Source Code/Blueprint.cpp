@@ -26,6 +26,11 @@ void BluePrint::Update(float dt)
 
 	for (auto& node : nodes)
 	{
+		if (node->type == BP_Node::TYPE::PRIORITY)  node->Update(dt);
+	}
+
+	for (auto& node : nodes)
+	{
 		if (node->type == BP_Node::TYPE::CORE)  node->Update(dt);
 	}
 }

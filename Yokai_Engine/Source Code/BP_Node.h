@@ -25,6 +25,7 @@ public:
         CORE, // activate the worm
         SIMPLE,
         CONVERSOR, // variable change
+        PRIORITY,
     };
 
     BP_Node(const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp);

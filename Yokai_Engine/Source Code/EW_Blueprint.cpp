@@ -393,6 +393,7 @@ void EW_Blueprint::DisplayNodes()
                 {
                     BP_Node* new_node = NULL;
 
+                    if (node == "Get Delta Time") new_node = new DN_GetDeltaTime(canvas_ori, current_blueprint);
                     if (node == "Get Forward") new_node = new DN_GetForward(canvas_ori, current_blueprint);
                     if (node == "Get Up") new_node = new DN_GetUp(canvas_ori, current_blueprint);
                     if (node == "Get Right") new_node = new DN_GetRight(canvas_ori, current_blueprint);
@@ -480,6 +481,7 @@ void EW_Blueprint::FillNodeList()
     aux.clear();
 
     // get value
+    aux.push_back("Get Delta Time");
     aux.push_back("Get Forward");
     aux.push_back("Get Up");
     aux.push_back("Get Right");

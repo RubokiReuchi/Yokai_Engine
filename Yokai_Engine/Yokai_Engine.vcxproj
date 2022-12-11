@@ -118,6 +118,7 @@
     <ClInclude Include="Source Code\C_Transform.h" />
     <ClInclude Include="Source Code\DN_Bool.h" />
     <ClInclude Include="Source Code\DN_Float.h" />
+    <ClInclude Include="Source Code\DN_GetDeltaTime.h" />
     <ClInclude Include="Source Code\DN_GetForward.h" />
     <ClInclude Include="Source Code\DN_GetRight.h" />
     <ClInclude Include="Source Code\DN_GetUp.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="Source Code\C_Transform.cpp" />
     <ClCompile Include="Source Code\DN_Bool.cpp" />
     <ClCompile Include="Source Code\DN_Float.cpp" />
+    <ClCompile Include="Source Code\DN_GetDeltaTime.cpp" />
     <ClCompile Include="Source Code\DN_GetForward.cpp" />
     <ClCompile Include="Source Code\DN_GetRight.cpp" />
     <ClCompile Include="Source Code\DN_GetUp.cpp" />
