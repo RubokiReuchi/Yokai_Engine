@@ -127,6 +127,8 @@ void EW_Blueprint::Update()
             }
             NH::EndColumn();
             ImGui::SameLine();
+            ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+            ImGui::SameLine();
             NH::BeginColumn();
             for (auto& output_pin : node->outputs)
             {
@@ -301,6 +303,7 @@ void EW_Blueprint::DisplayNodes()
                     if (node == "Boolean") new_node = new DN_Bool(canvas_ori, current_blueprint);
                     if (node == "Float") new_node = new DN_Float(canvas_ori, current_blueprint);
                     if (node == "Integer") new_node = new DN_Int(canvas_ori, current_blueprint);
+                    if (node == "Game Object") new_node = new DN_GO(canvas_ori, current_blueprint);
 
                     if (new_node != NULL)
                     {
@@ -411,6 +414,37 @@ void EW_Blueprint::DisplayNodes()
             }
         }
     }
+    // operation
+    if (ImGui::CollapsingHeader("Operation"))
+    {
+        for (auto& node : node_list[5])
+        {
+            if (filter.PassFilter(node.c_str()))
+            {
+                if (ImGui::Selectable(node.c_str()))
+                {
+                    BP_Node* new_node = NULL;
+
+                    if (node == "Multiply") new_node = new DN_Multiplication(canvas_ori, current_blueprint);
+                    if (node == "Multiply Vector3") new_node = new DN_Multiplication3(canvas_ori, current_blueprint);
+
+                    if (new_node != NULL)
+                    {
+                        for (auto& pin : new_node->inputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        for (auto& pin : new_node->outputs)
+                        {
+                            current_blueprint->pins.push_back(&pin);
+                        }
+                        current_blueprint->nodes.push_back(new_node);
+                    }
+                    popUpOpen = false;
+                }
+            }
+        }
+    }
 }
 
 void EW_Blueprint::FillNodeList()
@@ -428,6 +462,7 @@ void EW_Blueprint::FillNodeList()
     aux.push_back("Boolean");
     aux.push_back("Float");
     aux.push_back("Integer");
+    aux.push_back("Game Object");
 
     node_list.push_back(aux);
     aux.clear();
@@ -448,6 +483,13 @@ void EW_Blueprint::FillNodeList()
     aux.push_back("Get Forward");
     aux.push_back("Get Up");
     aux.push_back("Get Right");
+
+    node_list.push_back(aux);
+    aux.clear();
+
+    // operation
+    aux.push_back("Multiply");
+    aux.push_back("Multiply Vector3");
 
     node_list.push_back(aux);
     aux.clear();

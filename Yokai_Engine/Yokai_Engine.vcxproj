@@ -121,8 +121,11 @@
     <ClInclude Include="Source Code\DN_GetForward.h" />
     <ClInclude Include="Source Code\DN_GetRight.h" />
     <ClInclude Include="Source Code\DN_GetUp.h" />
+    <ClInclude Include="Source Code\DN_GO.h" />
     <ClInclude Include="Source Code\DN_Includes.h" />
     <ClInclude Include="Source Code\DN_Int.h" />
+    <ClInclude Include="Source Code\DN_Multiplication.h" />
+    <ClInclude Include="Source Code\DN_Multiplication3.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
     <ClInclude Include="Source Code\DN_PrintString.h" />
     <ClInclude Include="Source Code\DN_String.h" />
@@ -273,7 +276,10 @@
     <ClCompile Include="Source Code\DN_GetForward.cpp" />
     <ClCompile Include="Source Code\DN_GetRight.cpp" />
     <ClCompile Include="Source Code\DN_GetUp.cpp" />
+    <ClCompile Include="Source Code\DN_GO.cpp" />
     <ClCompile Include="Source Code\DN_Int.cpp" />
+    <ClCompile Include="Source Code\DN_Multiplication.cpp" />
+    <ClCompile Include="Source Code\DN_Multiplication3.cpp" />
     <ClCompile Include="Source Code\DN_PressKey.cpp" />
     <ClCompile Include="Source Code\DN_PrintString.cpp" />
     <ClCompile Include="Source Code\DN_String.cpp" />

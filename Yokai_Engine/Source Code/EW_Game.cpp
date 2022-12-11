@@ -24,6 +24,8 @@ void EW_Game::Update()
 	window_rect.bottom = (LONG)(ImGui::GetWindowPos().y + ImGui::GetWindowHeight() - 4);
 	window_rect.left = (LONG)(ImGui::GetWindowPos().x + 4);
 	window_rect.right = (LONG)(ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - 4);
+
+	window_hovered = ImGui::IsWindowHovered();
 	
 	currentGameCamera->active = true;
 	app->camera->updateGameCamera = (bool)ImGui::IsWindowHovered();

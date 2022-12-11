@@ -1,5 +1,6 @@
 #include "C_Blueprint.h"
 #include "Application.h"
+#include "EO_Editor.h"
 
 C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::BLUEPRINT)
 {
@@ -13,7 +14,7 @@ C_Blueprint::~C_Blueprint()
 
 void C_Blueprint::UpdateInGame(float dt)
 {
-	blueprint->Update(dt);
+	if (app->engine_order->editor->GetGameWindow()->window_hovered) blueprint->Update(dt);
 }
 
 void C_Blueprint::OnEditor()

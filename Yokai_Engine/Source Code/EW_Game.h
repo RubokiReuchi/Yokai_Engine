@@ -17,6 +17,8 @@ public:
 		currentGameCamera->active = active;
 	}
 
+	bool window_hovered = false;
+
 private:
 
 	Camera* currentGameCamera = nullptr;

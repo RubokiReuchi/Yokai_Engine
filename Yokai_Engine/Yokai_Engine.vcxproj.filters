@@ -94,6 +94,9 @@
     <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode">
       <UniqueIdentifier>{7b9927ba-3135-4a7a-bac4-388c7a1ac357}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode">
+      <UniqueIdentifier>{d1869404-33f1-4fd9-b378-a512de9c95f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -549,6 +552,15 @@
     <ClInclude Include="Source Code\DN_GetUp.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_GO.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Multiplication.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Multiplication3.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -889,6 +901,15 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_GetUp.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GO.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Multiplication.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Multiplication3.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

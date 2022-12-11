@@ -8,6 +8,7 @@
 #include "DN_Bool.h"
 #include "DN_Float.h"
 #include "DN_Int.h"
+#include "DN_GO.h"
 
 // action
 #include "DN_PrintString.h"
@@ -19,3 +20,7 @@
 #include "DN_GetForward.h"
 #include "DN_GetUp.h"
 #include "DN_GetRight.h"
+
+// operation
+#include "DN_Multiplication.h"
+#include "DN_Multiplication3.h"

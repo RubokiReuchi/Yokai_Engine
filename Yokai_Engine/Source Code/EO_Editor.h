@@ -4,6 +4,7 @@
 #include "EditorWindow.h"
 #include "EW_Hierarchy.h"
 #include "EW_Project.h"
+#include "EW_Game.h"
 #include "EW_Console.h"
 #include "FileExplorer.h"
 
@@ -59,6 +60,11 @@ public:
 	EW_Hierarchy* GetHierarchyWindow()
 	{
 		return dynamic_cast<EW_Hierarchy*>(editor_windows[(uint)EW_TYPE::HIERARCHY]);
+	}
+
+	EW_Game* GetGameWindow()
+	{
+		return dynamic_cast<EW_Game*>(editor_windows[(uint)EW_TYPE::GAME]);
 	}
 
 private:
