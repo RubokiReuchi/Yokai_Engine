@@ -17,12 +17,15 @@ class BluePrint;
 class BP_Link
 {
 public:
-    BP_Link(LinkId id, PinId input_id, PinId output_id, ImColor color, BluePrint* bp);
+    BP_Link(int id, int input_id, int output_id, ImColor color, BluePrint* bp);
     virtual ~BP_Link();
 
 public:
+    int id_as_int;
     LinkId id;
+    int input_id_as_int;
     PinId input_id;
+    int output_id_as_int;
     PinId output_id;
     ImColor color;
 

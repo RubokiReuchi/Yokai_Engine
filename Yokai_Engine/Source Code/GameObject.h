@@ -13,6 +13,8 @@
 
 class C_Transform;
 struct SerializedGO;
+struct SerializedNode;
+struct SerializedLink;
 
 class GameObject
 {
@@ -25,6 +27,9 @@ public:
 	void UpdateInGame(float dt);
 
 	void DeleteGameObject();
+
+	void AddSerializedNode(SerializedNode node, BluePrint* bp);
+	void AddSerializedLink(SerializedLink link, BluePrint* bp);
 
 	Component* AddComponent(Component::TYPE type)
 	{

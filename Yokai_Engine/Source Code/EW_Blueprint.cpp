@@ -2,7 +2,6 @@
 #include "EO_Editor.h"
 #include "BlueprintHelpers.h"
 #include "ImGuiHelpers.h"
-#include "DN_Includes.h"
 
 EW_Blueprint::EW_Blueprint()
 {
@@ -154,17 +153,18 @@ void EW_Blueprint::Update()
             BP::PinId inputPinId, outputPinId;
             if (BP::QueryNewLink(&inputPinId, &outputPinId))
             {
-                BP_Pin* aux = NH::GetPinByID(inputPinId, current_blueprint);
-                if (BP::AcceptNewItem() && NH::CanLink(aux, NH::GetPinByID(outputPinId, current_blueprint)))
+                BP_Pin* aux_input = NH::GetPinByID(inputPinId, current_blueprint);
+                BP_Pin* aux_output = NH::GetPinByID(outputPinId, current_blueprint);
+                if (BP::AcceptNewItem() && NH::CanLink(aux_input, aux_output))
                 {
-                    if (aux->kind == PinKind::Input)
+                    if (aux_input->kind == PinKind::Input)
                     {
-                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), inputPinId, outputPinId, NH::GetIconColor(aux->type), current_blueprint);
+                        BP_Link* new_link = new BP_Link(nextLinkId++, aux_input->id_as_int, aux_output->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
                         current_blueprint->links.push_back(new_link);
                     }
                     else
                     {
-                        BP_Link* new_link = new BP_Link(BP::LinkId(nextLinkId++), outputPinId, inputPinId, NH::GetIconColor(aux->type), current_blueprint);
+                        BP_Link* new_link = new BP_Link(nextLinkId++, aux_output->id_as_int, aux_input->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
                         current_blueprint->links.push_back(new_link);
                     }
                 }
@@ -267,22 +267,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "Press Key") new_node = new DN_PressKey(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }
@@ -297,26 +282,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "String") new_node = new DN_String(canvas_ori, current_blueprint);
-                    if (node == "Boolean") new_node = new DN_Bool(canvas_ori, current_blueprint);
-                    if (node == "Float") new_node = new DN_Float(canvas_ori, current_blueprint);
-                    if (node == "Integer") new_node = new DN_Int(canvas_ori, current_blueprint);
-                    if (node == "Game Object") new_node = new DN_GO(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }
@@ -331,22 +297,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "Print String") new_node = new DN_PrintString(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }
@@ -361,22 +312,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "Translate") new_node = new DN_Translate(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }
@@ -391,25 +327,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "Get Delta Time") new_node = new DN_GetDeltaTime(canvas_ori, current_blueprint);
-                    if (node == "Get Forward") new_node = new DN_GetForward(canvas_ori, current_blueprint);
-                    if (node == "Get Up") new_node = new DN_GetUp(canvas_ori, current_blueprint);
-                    if (node == "Get Right") new_node = new DN_GetRight(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }
@@ -424,23 +342,7 @@ void EW_Blueprint::DisplayNodes()
             {
                 if (ImGui::Selectable(node.c_str()))
                 {
-                    BP_Node* new_node = NULL;
-
-                    if (node == "Multiply") new_node = new DN_Multiplication(canvas_ori, current_blueprint);
-                    if (node == "Multiply Vector3") new_node = new DN_Multiplication3(canvas_ori, current_blueprint);
-
-                    if (new_node != NULL)
-                    {
-                        for (auto& pin : new_node->inputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        for (auto& pin : new_node->outputs)
-                        {
-                            current_blueprint->pins.push_back(&pin);
-                        }
-                        current_blueprint->nodes.push_back(new_node);
-                    }
+                    current_blueprint->CreateNode(node, canvas_ori);
                     popUpOpen = false;
                 }
             }

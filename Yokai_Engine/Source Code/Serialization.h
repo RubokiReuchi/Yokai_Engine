@@ -7,6 +7,30 @@
 
 class GameObject;
 
+struct SerializedNode
+{
+	int id;
+	std::string name;
+	std::vector<int> inputs_id;
+	std::vector<std::string> inputs_box;
+	std::vector<int> outputs_id;
+	ImVec2 pos;
+
+	std::string info_as_name;
+	float info_as_number;
+	float3 info_as_vector3;
+	bool info_as_boolean;
+	std::string go_UUID;
+};
+
+struct SerializedLink
+{
+	int id;
+	int input_id;
+	int output_id;
+	float3 color;
+};
+
 struct SerializedGO
 {
 	std::string UUID;
@@ -35,6 +59,10 @@ struct SerializedGO
 	float camera_range;
 	float3x4 camera_matrix;
 
+	int unique_id;
+	std::string bp_name;
+	std::vector<SerializedNode> nodes;
+	std::vector<SerializedLink> links;
 };
 
 class Serialization
@@ -67,5 +95,10 @@ private:
 	static float3x4 GetFloat3x4(JSON_Object* json_object, std::string variable);
 
 	static void CheckComponents(JSON_Object* json_object, std::vector<Component*> components);
+
+	static void SerializeNodes(JSON_Object* json_object, std::vector<BP_Node*> nodes);
+	static void SerializeLinks(JSON_Object* json_object, std::vector<BP_Link*> links);
+	static void DeSerializeNodes(JSON_Object* json_object, std::vector<SerializedNode>* nodes);
+	static void DeSerializeLinks(JSON_Object* json_object, std::vector<SerializedLink>* links);
 
 };
