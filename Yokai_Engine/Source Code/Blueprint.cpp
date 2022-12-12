@@ -104,16 +104,16 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 	else if (node_name == "Game Object") new_node = new DN_GO(pos, this, inputs_id[0], outputs_id[0], go_UUID);
 
 	// action
-	else if (node_name == "Print String") new_node = new DN_PrintString(pos, this);
+	else if (node_name == "Print String") new_node = new DN_PrintString(pos, this, inputs_id[0], inputs_id[1], input_box[0]);
 
 	// modify
-	else if (node_name == "Translate") new_node = new DN_Translate(pos, this);
+	else if (node_name == "Translate") new_node = new DN_Translate(pos, this, inputs_id[0], inputs_id[1], inputs_id[2]);
 
 	// get value
-	else if (node_name == "Get Delta Time") new_node = new DN_GetDeltaTime(pos, this);
-	else if (node_name == "Get Forward") new_node = new DN_GetForward(pos, this);
-	else if (node_name == "Get Up") new_node = new DN_GetUp(pos, this);
-	else if (node_name == "Get Right") new_node = new DN_GetRight(pos, this);
+	else if (node_name == "Get Delta Time") new_node = new DN_GetDeltaTime(pos, this, outputs_id[0]);
+	else if (node_name == "Get Forward") new_node = new DN_GetForward(pos, this, inputs_id[0], outputs_id[0], go_UUID);
+	else if (node_name == "Get Up") new_node = new DN_GetUp(pos, this, inputs_id[0], outputs_id[0], go_UUID);
+	else if (node_name == "Get Right") new_node = new DN_GetRight(pos, this, inputs_id[0], outputs_id[0], go_UUID);
 
 	// operation
 	else if (node_name == "Multiply") new_node = new DN_Multiplication(pos, this);
