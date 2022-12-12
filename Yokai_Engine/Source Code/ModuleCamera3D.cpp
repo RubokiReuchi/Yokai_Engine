@@ -1,6 +1,7 @@
 #include "ModuleCamera3D.h"
 #include "Application.h"
 #include "C_Camera.h"
+#include "EO_Editor.h"
 
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Geometry/Plane.h"
@@ -81,6 +82,7 @@ void ModuleCamera3D::InitNewGameCamera(GameObject* go)
 {
 	C_Camera* camera = dynamic_cast<C_Camera*>(go->AddComponent(Component::TYPE::CAMERA));
 	currentDrawingCamera = activeGameCamera = camera->GetCamera();
+	app->engine_order->editor->GetGameWindow()->SetCurrentGameCamera(activeGameCamera);
 
 	camera->GetCamera()->frameBuffer.SetBufferInfo();
 	camera->GetCamera()->frameBuffer.SetDimensions(app->window->width, app->window->height);

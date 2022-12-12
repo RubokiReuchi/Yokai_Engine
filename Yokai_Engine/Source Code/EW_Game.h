@@ -16,6 +16,10 @@ public:
 	{
 		currentGameCamera->active = active;
 	}
+	void SetCurrentGameCamera(Camera* cam)
+	{
+		currentGameCamera = cam;
+	}
 
 	bool window_hovered = false;
 
