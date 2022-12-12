@@ -9,7 +9,14 @@ C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::B
 
 C_Blueprint::~C_Blueprint()
 {
-	
+	for (auto& node : blueprint->nodes)
+	{
+		RELEASE(node);
+	}
+	for (auto& link : blueprint->links)
+	{
+		RELEASE(link);
+	}
 }
 
 void C_Blueprint::UpdateInGame(float dt)

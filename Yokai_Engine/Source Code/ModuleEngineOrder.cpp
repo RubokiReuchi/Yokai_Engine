@@ -138,6 +138,7 @@ update_status ModuleEO::PreUpdate(float dt)
     {
         RELEASE(delete_queu[i]);
     }
+    delete_queu.clear();
 
     if (load_scene)
     {
@@ -263,9 +264,9 @@ GameObject* ModuleEO::GetGameObjectByUUID(std::string uuid)
 
 void ModuleEO::NewScene()
 {
-    for (auto& child : rootGameObject->children)
+    while (rootGameObject->children.size() > 0)
     {
-        child->DeleteGameObject();
+        rootGameObject->children[0]->DeleteGameObject();
     }
     app->camera->game_cameras.clear();
     MeshImporter::CleanMaps();
