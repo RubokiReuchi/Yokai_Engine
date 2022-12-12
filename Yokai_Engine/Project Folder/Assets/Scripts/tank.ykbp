@@ -1,0 +1,31 @@
+{
+    "UniqueID": 6,
+    "BlueprintName": "tank",
+    "Nodes": [
+        {
+            "NodeID": 1,
+            "NodeName": "Press Key",
+            "Inputs": [
+                {
+                    "InputPin0": 2,
+                    "InputPinBox0": "A",
+                    "InputPinBoxGO0": "0"
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 3
+                },
+                {
+                    "OutputPin1": 4
+                },
+                {
+                    "OutputPin2": 5
+                }
+            ],
+            "NodePosX": -825,
+            "NodePosY": 631
+        }
+    ],
+    "Links": []
+}

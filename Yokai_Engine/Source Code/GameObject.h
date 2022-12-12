@@ -31,6 +31,7 @@ public:
 
 	void AddSerializedNode(SerializedNode node, BluePrint* bp);
 	void AddSerializedLink(SerializedLink link, BluePrint* bp);
+	void ProcessSerializedBlueprint(SerializedGO go, BluePrint* bp);
 
 	Component* AddComponent(Component::TYPE type)
 	{

@@ -163,6 +163,20 @@ void GameObject::AddSerializedLink(SerializedLink link, BluePrint* bp)
 	bp->CreateLink(link.id, link.input_id, link.output_id, link.color);
 }
 
+void GameObject::ProcessSerializedBlueprint(SerializedGO go, BluePrint* bp)
+{
+	bp->unique_id = go.unique_id;
+	bp->name = go.bp_name;
+	for (size_t i = 0; i < go.nodes.size(); i++)
+	{
+		AddSerializedNode(go.nodes[i], bp);
+	}
+	for (size_t i = 0; i < go.links.size(); i++)
+	{
+		AddSerializedLink(go.links[i], bp);
+	}
+}
+
 bool GameObject::AddChild(GameObject* child)
 {
 	if (child->parent == this)

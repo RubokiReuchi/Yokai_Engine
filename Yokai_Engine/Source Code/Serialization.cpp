@@ -508,3 +508,42 @@ void Serialization::LoadSettings()
     SDL_SetWindowPosition(app->window->window, (DM.w - app->window->width) / 2, (DM.h - app->window->height) / 2);
     json_value_free(settings_value);
 }
+
+void Serialization::SerializeBlueprint(BluePrint* bp, std::string save_path)
+{
+    JSON_Value* bp_value = json_value_init_object();
+    JSON_Object* bp_object = json_value_get_object(bp_value);
+
+    SetInt(bp_object, "UniqueID", bp->unique_id);
+    SetString(bp_object, "BlueprintName", bp->name);
+    SerializeNodes(bp_object, bp->nodes);
+    SerializeLinks(bp_object, bp->links);
+
+    json_serialize_to_file_pretty(bp_value, save_path.c_str());
+    json_value_free(bp_value);
+    Console::LogInConsole(bp->name + " exported.");
+}
+
+void Serialization::DeSerializeBlueprint(SerializedGO* go, std::string load_path)
+{
+    JSON_Value* bp_value = json_parse_file(load_path.c_str());
+
+    if (bp_value == NULL)
+    {
+        Console::LogInConsole("Error loading  " + load_path + " blueprint.");
+        return;
+    }
+
+    JSON_Object* bp_object = json_value_get_object(bp_value);
+
+    go->unique_id = GetInt(bp_object, "UniqueID");
+    go->bp_name = GetString(bp_object, "BlueprintName");
+    DeSerializeNodes(bp_object, &go->nodes);
+    DeSerializeLinks(bp_object, &go->links);
+
+    json_value_free(bp_value);
+
+
+
+    Console::LogInConsole(load_path + " loaded.");
+}

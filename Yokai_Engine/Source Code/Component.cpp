@@ -18,6 +18,13 @@ void Component::ComponentOptions(bool undestructable)
 	{
 		ImGui::Text("Component Options");
 		ImGui::Separator();
+		if (this->GetType() == Component::TYPE::BLUEPRINT)
+		{
+			if (ImGui::Selectable("Export Blueprint"))
+			{
+				dynamic_cast<C_Blueprint*>(this)->ExportBlueprint();
+			}
+		}
 		if (!undestructable)
 		{
 			if (ImGui::Selectable("Destroy Component"))

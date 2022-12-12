@@ -1,6 +1,7 @@
 #include "C_Blueprint.h"
 #include "Application.h"
 #include "EO_Editor.h"
+#include "Serialization.h"
 
 C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::BLUEPRINT)
 {
@@ -49,6 +50,20 @@ void C_Blueprint::OnEditor()
 	}
 	if (popUpOpen)
 	{
-		ComponentOptions(true);
+		ComponentOptions(false);
 	}
+}
+
+void C_Blueprint::ExportBlueprint()
+{
+	std::string save_path = "Assets/Scripts/" + blueprint->name + ".ykbp";
+	Serialization::SerializeBlueprint(blueprint, save_path);
+}
+
+void C_Blueprint::LoadBlueprint(std::string path)
+{
+	SerializedGO go;
+	Serialization::DeSerializeBlueprint(&go, path);
+
+	GetGameObject()->ProcessSerializedBlueprint(go, blueprint);
 }

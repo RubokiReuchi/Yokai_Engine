@@ -16,6 +16,7 @@
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
 #define MATERIALS_PATH "Library/Materials/"
+#define SCRIPT_PATH "Library/Scripts/"
 
 class FileTree;
 struct VertexInfo;

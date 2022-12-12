@@ -19,6 +19,9 @@ public:
 		return blueprint;
 	}
 
+	void ExportBlueprint();
+	void LoadBlueprint(std::string path);
+
 private:
 	
 	BluePrint* blueprint = nullptr;

@@ -6,6 +6,7 @@
 #include "parson/parson.h"
 
 class GameObject;
+class BluePrint;
 
 struct SerializedNode
 {
@@ -67,6 +68,9 @@ public:
 	static void YK_LoadScene(std::string path);
 	static void SaveSettings();
 	static void LoadSettings();
+
+	static void SerializeBlueprint(BluePrint* bp, std::string save_path);
+	static void DeSerializeBlueprint(SerializedGO* go, std::string load_path);
 
 private:
 	static void SerializeSceneCamera(JSON_Object* json_object);
