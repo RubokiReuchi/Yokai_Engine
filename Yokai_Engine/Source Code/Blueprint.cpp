@@ -115,8 +115,8 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 	else if (node_name == "Get Right") new_node = new DN_GetRight(pos, this, inputs_id[0], outputs_id[0], input_go_UUID[0]);
 
 	// operation
-	else if (node_name == "Multiply") new_node = new DN_Multiplication(pos, this);
-	else if (node_name == "Multiply Vector3") new_node = new DN_Multiplication3(pos, this);
+	else if (node_name == "Multiply") new_node = new DN_Multiplication(pos, this, inputs_id[0], inputs_id[1], outputs_id[0]);
+	else if (node_name == "Multiply Vector3") new_node = new DN_Multiplication3(pos, this, inputs_id[0], inputs_id[1], outputs_id[0]);
 
 	if (new_node != NULL)
 	{
