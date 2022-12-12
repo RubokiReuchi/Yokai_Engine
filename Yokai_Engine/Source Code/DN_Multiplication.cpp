@@ -1,7 +1,7 @@
 #include "DN_Multiplication.h"
 #include "Application.h"
 
-DN_Multiplication::DN_Multiplication(ImVec2 pos, BluePrint* bp) : BP_Node("Multiply", BP_Node::TYPE::SIMPLE, pos, ImColor(100, 0, 228), bp)
+DN_Multiplication::DN_Multiplication(ImVec2 pos, BluePrint* bp) : BP_Node("Multiply", BP_Node::TYPE::PRIORITY, pos, ImColor(100, 0, 228), bp)
 {
 	BP_Pin ask1_pin(bp->unique_id++, "First Value", BP_Pin::TYPE::Float, bp);
 	ask1_pin.node = this;
@@ -19,7 +19,7 @@ DN_Multiplication::~DN_Multiplication()
 
 }
 
-void DN_Multiplication::SaveInNode()
+void DN_Multiplication::Update(float dt)
 {
 	info_as_number = inputs[0].GetOpositePin()->node->info_as_number * inputs[1].GetOpositePin()->node->info_as_number;
 }

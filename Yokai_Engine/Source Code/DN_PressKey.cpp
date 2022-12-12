@@ -15,12 +15,15 @@ DN_PressKey::DN_PressKey(ImVec2 pos, BluePrint* bp) : BP_Node("Press Key", BP_No
 	BP_Pin send_pin1(bp->unique_id++, "Press", BP_Pin::TYPE::Executable, bp);
 	send_pin1.node = this;
 	outputs.push_back(send_pin1);
-	BP_Pin send_pin2(bp->unique_id++, "Release", BP_Pin::TYPE::Executable, bp);
+	BP_Pin send_pin2(bp->unique_id++, "Hold", BP_Pin::TYPE::Executable, bp);
 	send_pin2.node = this;
 	outputs.push_back(send_pin2);
+	BP_Pin send_pin3(bp->unique_id++, "Release", BP_Pin::TYPE::Executable, bp);
+	send_pin3.node = this;
+	outputs.push_back(send_pin3);
 }
 
-DN_PressKey::DN_PressKey(ImVec2 pos, BluePrint* bp, int key_pin_id, int send_pin1_id, int send_pin2_id, std::string box) : BP_Node("Press Key", BP_Node::TYPE::CORE, pos, ImColor(125, 0, 0), bp, "", 0.0f, float3(0, 0, 0), true, NULL)
+DN_PressKey::DN_PressKey(ImVec2 pos, BluePrint* bp, int key_pin_id, int send_pin1_id, int send_pin2_id, int send_pin3_id, std::string box) : BP_Node("Press Key", BP_Node::TYPE::CORE, pos, ImColor(125, 0, 0), bp)
 {
 	key = SDL_SCANCODE_UNKNOWN;
 	BP_Pin key_pin(key_pin_id, "Key", BP_Pin::TYPE::String, bp, BP_Pin::BoxType::COMBO);
@@ -33,9 +36,12 @@ DN_PressKey::DN_PressKey(ImVec2 pos, BluePrint* bp, int key_pin_id, int send_pin
 	BP_Pin send_pin1(send_pin1_id, "Press", BP_Pin::TYPE::Executable, bp);
 	send_pin1.node = this;
 	outputs.push_back(send_pin1);
-	BP_Pin send_pin2(send_pin2_id, "Release", BP_Pin::TYPE::Executable, bp);
+	BP_Pin send_pin2(send_pin2_id, "Hold", BP_Pin::TYPE::Executable, bp);
 	send_pin2.node = this;
 	outputs.push_back(send_pin2);
+	BP_Pin send_pin3(send_pin3_id, "Release", BP_Pin::TYPE::Executable, bp);
+	send_pin3.node = this;
+	outputs.push_back(send_pin3);
 }
 
 DN_PressKey::~DN_PressKey()
@@ -59,8 +65,12 @@ void DN_PressKey::Update(float dt)
 	{
 		outputs[0].GetOpositePin()->node->Activate(dt);
 	}
-	else if (app->input->GetKey(key) == KEY_UP && outputs[1].IsPinLinked()) // on release
+	else if (app->input->GetKey(key) == KEY_REPEAT && outputs[1].IsPinLinked()) // on hold
 	{
 		outputs[1].GetOpositePin()->node->Activate(dt);
+	}
+	else if (app->input->GetKey(key) == KEY_UP && outputs[2].IsPinLinked()) // on release
+	{
+		outputs[2].GetOpositePin()->node->Activate(dt);
 	}
 }

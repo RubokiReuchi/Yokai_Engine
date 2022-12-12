@@ -29,7 +29,6 @@ public:
     };
 
     BP_Node(const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp);
-    BP_Node(const char* name, TYPE type, ImVec2 pos, ImColor color, BluePrint* bp, std::string info_as_name, float info_as_number, float3 info_as_vector3, bool info_as_boolean, GameObject* info_as_go);
     virtual ~BP_Node();
 
     virtual void Update(float dt);
@@ -37,6 +36,8 @@ public:
     virtual void Activate(float dt);
 
     virtual void SaveInNode();
+
+    virtual void OnLoad();
 
     // variables depends of the node content type
     std::string info_as_name = "";

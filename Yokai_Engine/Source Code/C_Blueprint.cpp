@@ -17,6 +17,11 @@ void C_Blueprint::UpdateInGame(float dt)
 	if (app->engine_order->editor->GetGameWindow()->window_hovered) blueprint->Update(dt);
 }
 
+void C_Blueprint::OnLoad()
+{
+	blueprint->OnLoad();
+}
+
 void C_Blueprint::OnEditor()
 {
 	ImGui::AlignTextToFramePadding();

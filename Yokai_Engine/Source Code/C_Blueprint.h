@@ -10,6 +10,7 @@ public:
 	virtual ~C_Blueprint() override;
 
 	void UpdateInGame(float dt);
+	void OnLoad();
 
 	void OnEditor();
 

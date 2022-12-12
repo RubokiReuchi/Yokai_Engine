@@ -31,6 +31,7 @@ public:
     ~BluePrint();
 
     void Update(float dt);
+    void OnLoad();
 
     void CreateNode(std::string node_name, ImVec2 pos);
     void CreateNode(std::string node_name, ImVec2 pos, std::vector<int> inputs_id, std::vector<std::string> input_box, std::vector<int> outputs_id, std::string info_as_name,

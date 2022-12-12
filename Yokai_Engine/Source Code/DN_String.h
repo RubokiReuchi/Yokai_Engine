@@ -7,6 +7,7 @@ class DN_String : public BP_Node
 {
 public:
 	DN_String(ImVec2 pos, BluePrint* bp);
+	DN_String(ImVec2 pos, BluePrint* bp, int ask_pin_id, int send_pin_id, std::string box);
 	virtual ~DN_String() override;
 
 	void SaveInNode();

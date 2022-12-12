@@ -25,6 +25,7 @@ public:
 
 	void Update();
 	void UpdateInGame(float dt);
+	void OnLoad();
 
 	void DeleteGameObject();
 
