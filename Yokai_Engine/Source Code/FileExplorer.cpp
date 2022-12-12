@@ -3,6 +3,7 @@
 #include "ModuleFile.h"
 #include "Console.h"
 #include "Serialization.h"
+#include "EO_Editor.h"
 #include "FileTree.hpp"
 
 FileExplorer::~FileExplorer()
@@ -15,7 +16,7 @@ void FileExplorer::InitExplorer(std::string name, Explorer::TYPE type, std::stri
 	explorer.name = name;
 	explorer.type = type;
 	explorer.path = path;
-	explorer.scene_name = "";
+	explorer.file_name = "";
 }
 
 void FileExplorer::ClearExplorer()
@@ -23,7 +24,7 @@ void FileExplorer::ClearExplorer()
 	explorer.name = "name";
 	explorer.type = Explorer::TYPE::UNINICIALIZED;
 	explorer.path = "";
-	explorer.scene_name = "";
+	explorer.file_name = "";
 }
 
 void FileExplorer::OpenExplorer(std::string name, Explorer::TYPE type, std::string path)
@@ -33,7 +34,7 @@ void FileExplorer::OpenExplorer(std::string name, Explorer::TYPE type, std::stri
 		InitExplorer(name, type, path);
 		explorer.opened = true;
 
-		directory = ModuleFile::FS_GetFileTree(SCENES_PATH);
+		directory = ModuleFile::FS_GetFileTree(path);
 	}
 	else Console::LogInConsole("Explorer " + explorer.name + " already open.");
 }
@@ -62,10 +63,12 @@ void FileExplorer::DrawExplorer()
 		return;
 		break;
 	case Explorer::TYPE::SAVE:
-		explorer_confirm = "Save Scene";
+		if (explorer.path == SCENES_PATH) { explorer_confirm = "Save Scene"; explorer.option = Explorer::OPTION::SCENE; }
+		else if (explorer.path == SCRIPTS_PATH) { explorer_confirm = "Export"; explorer.option = Explorer::OPTION::SCRIPT; }
 		break;
 	case Explorer::TYPE::LOAD:
-		explorer_confirm = "Load Scene";
+		if (explorer.path == SCENES_PATH) { explorer_confirm = "Load Scene"; explorer.option = Explorer::OPTION::SCENE; }
+		else if (explorer.path == SCRIPTS_PATH) { explorer_confirm = "Import"; explorer.option = Explorer::OPTION::SCRIPT; }
 		break;
 	}
 
@@ -77,16 +80,16 @@ void FileExplorer::DrawExplorer()
 	ImVec2 end = ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowWidth(), ImGui::GetItemRectMax().y);
 	start.y = end.y;
 	ImGui::GetWindowDrawList()->AddLine(start, end, ImColor(0.824f, 0.824f, 0.824f, 1.0f), 1.0f);
-	DrawFiles(explorer.scene_name);
+	DrawFiles(explorer.file_name);
 	ImGui::Text("File Name:");
 	ImGui::SameLine();
 	if (explorer.type == Explorer::TYPE::LOAD) textinput_flags = ImGuiInputTextFlags_ReadOnly;
-	ImGuiH::InputText("##Name", &explorer.scene_name, textinput_flags);
+	ImGuiH::InputText("##Name", &explorer.file_name, textinput_flags);
 	
 	ImGui::SameLine();
 	if (ImGuiH::ButtonAlignOnLine(explorer_confirm.c_str(), 1.0f))
 	{
-		CkeckDirectory(explorer.scene_name);
+		CkeckDirectory(explorer.file_name);
 	}
 
 	// confirm popUp
@@ -98,7 +101,14 @@ void FileExplorer::DrawExplorer()
 			ImGuiH::TextAlignOnLine("Overwrite file?");
 			if (ImGuiH::ButtonAlignOnLine("Confirm"))
 			{
-				Serialization::YK_SaveScene(explorer.scene_name);
+				if (explorer.option == Explorer::OPTION::SCENE)
+				{
+					Serialization::YK_SaveScene(explorer.file_name);
+				}
+				else if (explorer.option == Explorer::OPTION::SCRIPT)
+				{
+					dynamic_cast<C_Blueprint*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::BLUEPRINT))->ExportBlueprint(explorer.file_name);
+				}
 				ImGui::CloseCurrentPopup();
 				CloseExplorer();
 			}
@@ -119,51 +129,89 @@ void FileExplorer::DrawExplorer()
 	ImGui::End();
 }
 
-void FileExplorer::DrawFiles(std::string& scene_name)
+void FileExplorer::DrawFiles(std::string& file_name)
 {
 	std::vector<std::string> file_paths = ModuleFile::FS_RemoveExtensions(directory->files);
-	ImGui::ListBoxHeader("##Files in scenes", ImVec2(ImGui::GetWindowWidth(), 0));
-	for (auto& file : file_paths)
+	if (ImGui::ListBoxHeader("##Files in path", ImVec2(ImGui::GetWindowWidth(), 0)))
 	{
-		if (file != app->GetSceneName() || explorer.type == Explorer::TYPE::SAVE)
+		for (auto& file : file_paths)
 		{
-			std::string& item_name = file;
-			if (ImGui::Selectable(item_name.c_str()))
+			if (explorer.option == Explorer::OPTION::SCENE)
 			{
-				scene_name = file;
+				if (file != app->GetSceneName() || explorer.type == Explorer::TYPE::SAVE)
+				{
+					std::string& item_name = file;
+					if (ImGui::Selectable(item_name.c_str()))
+					{
+						file_name = file;
+					}
+				}
+			}
+			else if (explorer.option == Explorer::OPTION::SCRIPT)
+			{
+				std::string& item_name = file;
+				if (ImGui::Selectable(item_name.c_str()))
+				{
+					file_name = file;
+				}
 			}
 		}
+		ImGui::ListBoxFooter();
 	}
-	ImGui::ListBoxFooter();
 }
 
-void FileExplorer::CkeckDirectory(std::string scene_name)
+void FileExplorer::CkeckDirectory(std::string file_name)
 {
 	if (explorer.type == Explorer::TYPE::SAVE)
 	{
-		if (scene_name != "")
+		if (file_name != "")
 		{
-			if (std::find(directory->files.begin(), directory->files.end(), scene_name + ".ykscene") == directory->files.end()) // file not found
+			if (explorer.option == Explorer::OPTION::SCENE)
 			{
-				Serialization::YK_SaveScene(scene_name);
-				app->SetSceneName(scene_name);
-				CloseExplorer();
+				if (std::find(directory->files.begin(), directory->files.end(), file_name + ".ykscene") == directory->files.end()) // file not found
+				{
+					Serialization::YK_SaveScene(file_name);
+					app->SetSceneName(file_name);
+					CloseExplorer();
+				}
+				else
+				{
+					ImGui::OpenPopup("Confirm Save");
+					comfirm_popUp = true;
+					ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+				}
 			}
-			else
+			else if (explorer.option == Explorer::OPTION::SCRIPT)
 			{
-				ImGui::OpenPopup("Confirm Save");
-				comfirm_popUp = true;
-				ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+				if (std::find(directory->files.begin(), directory->files.end(), file_name + ".ykbp") == directory->files.end()) // file not found
+				{
+					dynamic_cast<C_Blueprint*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::BLUEPRINT))->ExportBlueprint(file_name);
+					CloseExplorer();
+				}
+				else
+				{
+					ImGui::OpenPopup("Confirm Save");
+					comfirm_popUp = true;
+					ori = ImGui::GetMousePosOnOpeningCurrentPopup();
+				}
 			}
 		}
 	}
 	else if (explorer.type == Explorer::TYPE::LOAD)
 	{
-		if (scene_name != "")
+		if (file_name != "")
 		{
-			Serialization::YK_LoadScene(scene_name);
-			app->SetSceneName(scene_name);
-			CloseExplorer();
+			if (explorer.option == Explorer::OPTION::SCENE)
+			{
+				Serialization::YK_LoadScene(file_name);
+				app->SetSceneName(file_name);
+				CloseExplorer();
+			}
+			else if (explorer.option == Explorer::OPTION::SCRIPT)
+			{
+				dynamic_cast<C_Blueprint*>(app->engine_order->editor->GetSelectedGameObject()->GetComponent(Component::TYPE::BLUEPRINT))->LoadBlueprint(file_name);
+				CloseExplorer();
+			}
 		}
 	}
 }

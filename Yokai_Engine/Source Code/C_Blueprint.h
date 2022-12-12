@@ -19,8 +19,11 @@ public:
 		return blueprint;
 	}
 
-	void ExportBlueprint();
-	void LoadBlueprint(std::string path);
+	void ExportBlueprint(std::string file_name);
+	void LoadBlueprint(std::string file_name);
+
+	bool IsBlueprintEmpty();
+	void ResetBlueprint();
 
 private:
 	

@@ -124,8 +124,7 @@ bool ModuleEO::Start()
         if (gameObject.second->name == "cube")
         {
             C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
-            std::string aux = "Assets/Scripts/tank.ykbp";
-            if (ModuleFile::FS_Exists(aux)) c_bp->LoadBlueprint(aux);
+            if (ModuleFile::FS_Exists("Assets/Scripts/tank.ykbp")) c_bp->LoadBlueprint("tank");
             editor->SetSelectedGameObject(gameObject.second);
         }
     }

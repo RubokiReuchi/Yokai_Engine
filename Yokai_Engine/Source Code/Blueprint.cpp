@@ -10,8 +10,9 @@ BluePrint::BluePrint(std::string name, GameObject* go) : name(name), go(go)
 BluePrint::~BluePrint()
 {
 	for (auto& node : nodes) RELEASE(node);
-	for (auto& pin : pins) RELEASE(pin);
+	nodes.clear();
 	for (auto& link : links) RELEASE(link);
+	links.clear();
 }
 
 void BluePrint::Update(float dt)

@@ -9,6 +9,7 @@
 #include <vector>
 
 #define ASSETS_PATH "Assets/"
+#define SCRIPTS_PATH "Assets/Scripts/"
 
 #define LIBRARY_PATH "Library/"
 #define MODELS_PATH "Library/Models/"
@@ -16,7 +17,6 @@
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
 #define MATERIALS_PATH "Library/Materials/"
-#define SCRIPT_PATH "Library/Scripts/"
 
 class FileTree;
 struct VertexInfo;

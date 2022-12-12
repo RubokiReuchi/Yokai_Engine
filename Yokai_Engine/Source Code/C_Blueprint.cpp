@@ -10,14 +10,7 @@ C_Blueprint::C_Blueprint(GameObject* gameObject) : Component(gameObject, TYPE::B
 
 C_Blueprint::~C_Blueprint()
 {
-	for (auto& node : blueprint->nodes)
-	{
-		RELEASE(node);
-	}
-	for (auto& link : blueprint->links)
-	{
-		RELEASE(link);
-	}
+	RELEASE(blueprint);
 }
 
 void C_Blueprint::UpdateInGame(float dt)
@@ -54,16 +47,31 @@ void C_Blueprint::OnEditor()
 	}
 }
 
-void C_Blueprint::ExportBlueprint()
+void C_Blueprint::ExportBlueprint(std::string file_name)
 {
-	std::string save_path = "Assets/Scripts/" + blueprint->name + ".ykbp";
+	std::string save_path = "Assets/Scripts/" + file_name + ".ykbp";
 	Serialization::SerializeBlueprint(blueprint, save_path);
 }
 
-void C_Blueprint::LoadBlueprint(std::string path)
+void C_Blueprint::LoadBlueprint(std::string file_name)
 {
 	SerializedGO go;
-	Serialization::DeSerializeBlueprint(&go, path);
+	std::string load_path = "Assets/Scripts/" + file_name + ".ykbp";
+	Serialization::DeSerializeBlueprint(&go, load_path);
 
 	GetGameObject()->ProcessSerializedBlueprint(go, blueprint);
+}
+
+bool C_Blueprint::IsBlueprintEmpty()
+{
+	if (blueprint->nodes.empty() && blueprint->links.empty()) return true;
+	else return false;
+}
+
+void C_Blueprint::ResetBlueprint()
+{
+	for (auto& node : blueprint->nodes) RELEASE(node);
+	blueprint->nodes.clear();
+	for (auto& link : blueprint->links) RELEASE(link);
+	blueprint->links.clear();
 }

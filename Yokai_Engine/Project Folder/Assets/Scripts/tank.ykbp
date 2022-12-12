@@ -1,9 +1,9 @@
 {
-    "UniqueID": 6,
+    "UniqueID": 10,
     "BlueprintName": "tank",
     "Nodes": [
         {
-            "NodeID": 1,
+            "NodeID": 6,
             "NodeName": "Press Key",
             "Inputs": [
                 {
@@ -25,7 +25,36 @@
             ],
             "NodePosX": -825,
             "NodePosY": 631
+        },
+        {
+            "NodeID": 7,
+            "NodeName": "String",
+            "Inputs": [
+                {
+                    "InputPin0": 8,
+                    "InputPinBox0": "D",
+                    "InputPinBoxGO0": "0"
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 9
+                }
+            ],
+            "NodePosX": -1100,
+            "NodePosY": 603
         }
     ],
-    "Links": []
+    "Links": [
+        {
+            "LinkID": 100,
+            "InputID": 2,
+            "OutputID": 9,
+            "Color": [
+                0.48627454042434692,
+                0.08235294371843338,
+                0.60000002384185791
+            ]
+        }
+    ]
 }

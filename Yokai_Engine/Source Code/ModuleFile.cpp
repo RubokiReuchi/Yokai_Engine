@@ -386,7 +386,6 @@ void ModuleFile::YK_CreateLibrary()
 	if (!FS_IsDirectory(TEXTURES_PATH)) PHYSFS_mkdir(TEXTURES_PATH);
 	if (!FS_IsDirectory(MATERIALS_PATH)) PHYSFS_mkdir(MATERIALS_PATH);
 	if (!FS_IsDirectory(SCENES_PATH)) PHYSFS_mkdir(SCENES_PATH);
-	if (!FS_IsDirectory(SCRIPT_PATH)) PHYSFS_mkdir(SCRIPT_PATH);
 }
 
 void ModuleFile::YK_SaveModel(std::string path, std::vector<std::string> children_paths, std::vector<float3> positions, std::vector<float3> scales)

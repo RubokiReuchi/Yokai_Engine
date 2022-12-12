@@ -45,6 +45,8 @@ public:
 		return selected_go;
 	}
 
+	FileExplorer file_explorer;
+
 	// Fonts
 	ImFont* default_font;
 	ImFont* arial_font_30;
@@ -76,6 +78,4 @@ private:
 	bool SetMenuBar();
 
 	void SetOutline(GameObject* selected_game_object, GameObject* game_object);
-
-	FileExplorer file_explorer;
 };
