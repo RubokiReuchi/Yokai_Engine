@@ -137,6 +137,8 @@ void EW_Blueprint::Update()
                 NH::HelpText(output_pin.name);
             }
             NH::EndColumn();
+
+            node->position = BP::GetNodePosition(node_id);
             
             BP::EndNode();
             BP::PopStyleColor();
