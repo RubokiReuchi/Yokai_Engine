@@ -149,6 +149,11 @@ update_status ModuleEO::PreUpdate(float dt)
             GameObject* new_go = new GameObject(serialized_go[i]);
         }
 
+        for (auto& go : game_objects)
+        {
+            go.second->OnLoad();
+        }
+
         serialized_go.clear();
         loadedSerializedMeshes.clear();
         load_scene = false;

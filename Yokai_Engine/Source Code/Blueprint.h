@@ -34,8 +34,7 @@ public:
     void OnLoad();
 
     void CreateNode(std::string node_name, ImVec2 pos);
-    void CreateNode(std::string node_name, ImVec2 pos, std::vector<int> inputs_id, std::vector<std::string> input_box, std::vector<int> outputs_id, std::string info_as_name,
-        float info_as_number, float3 info_as_vector3, bool info_as_boolean, std::string go_UUID);
+    void CreateNode(std::string node_name, ImVec2 pos, std::vector<int> inputs_id, std::vector<std::string> input_box, std::vector<std::string> input_go_UUID, std::vector<int> outputs_id);
 
     void CreateLink(int id, int input_id, int output_id, float3 color);
 

@@ -155,7 +155,7 @@ void GameObject::DeleteGameObject()
 
 void GameObject::AddSerializedNode(SerializedNode node, BluePrint* bp)
 {
-	bp->CreateNode(node.name, node.pos, node.inputs_id, node.inputs_box, node.outputs_id, node.info_as_name, node.info_as_number, node.info_as_vector3, node.info_as_boolean, node.go_UUID);
+	bp->CreateNode(node.name, node.pos, node.inputs_id, node.inputs_box, node.inputs_go_UUID, node.outputs_id);
 }
 
 void GameObject::AddSerializedLink(SerializedLink link, BluePrint* bp)

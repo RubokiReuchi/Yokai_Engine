@@ -15,7 +15,6 @@
 #define MESHES_PATH "Library/Meshes/"
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
-#define SCRIPTS_PATH "Library/Scripts/"
 #define MATERIALS_PATH "Library/Materials/"
 
 class FileTree;

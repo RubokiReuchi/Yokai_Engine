@@ -88,8 +88,7 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos)
 	}
 }
 
-void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> inputs_id, std::vector<std::string> input_box, std::vector<int> outputs_id, std::string info_as_name,
-	float info_as_number, float3 info_as_vector3, bool info_as_boolean, std::string go_UUID)
+void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> inputs_id, std::vector<std::string> input_box, std::vector<std::string> input_go_UUID, std::vector<int> outputs_id)
 {
 	BP_Node* new_node = NULL;
 
@@ -101,7 +100,7 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 	else if (node_name == "Boolean") new_node = new DN_Bool(pos, this, inputs_id[0], outputs_id[0], input_box[0]);
 	else if (node_name == "Float") new_node = new DN_Float(pos, this, inputs_id[0], outputs_id[0], input_box[0]);
 	else if (node_name == "Integer") new_node = new DN_Int(pos, this, inputs_id[0], outputs_id[0], input_box[0]);
-	else if (node_name == "Game Object") new_node = new DN_GO(pos, this, inputs_id[0], outputs_id[0], go_UUID);
+	else if (node_name == "Game Object") new_node = new DN_GO(pos, this, inputs_id[0], outputs_id[0], input_go_UUID[0]);
 
 	// action
 	else if (node_name == "Print String") new_node = new DN_PrintString(pos, this, inputs_id[0], inputs_id[1], input_box[0]);
@@ -111,9 +110,9 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 
 	// get value
 	else if (node_name == "Get Delta Time") new_node = new DN_GetDeltaTime(pos, this, outputs_id[0]);
-	else if (node_name == "Get Forward") new_node = new DN_GetForward(pos, this, inputs_id[0], outputs_id[0], go_UUID);
-	else if (node_name == "Get Up") new_node = new DN_GetUp(pos, this, inputs_id[0], outputs_id[0], go_UUID);
-	else if (node_name == "Get Right") new_node = new DN_GetRight(pos, this, inputs_id[0], outputs_id[0], go_UUID);
+	else if (node_name == "Get Forward") new_node = new DN_GetForward(pos, this, inputs_id[0], outputs_id[0], input_go_UUID[0]);
+	else if (node_name == "Get Up") new_node = new DN_GetUp(pos, this, inputs_id[0], outputs_id[0], input_go_UUID[0]);
+	else if (node_name == "Get Right") new_node = new DN_GetRight(pos, this, inputs_id[0], outputs_id[0], input_go_UUID[0]);
 
 	// operation
 	else if (node_name == "Multiply") new_node = new DN_Multiplication(pos, this);

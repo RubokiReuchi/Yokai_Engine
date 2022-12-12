@@ -354,6 +354,15 @@ void Serialization::SerializeNodes(JSON_Object* json_object, std::vector<BP_Node
             SetInt(input_object, aux, node->inputs[i].id_as_int);
             aux = "InputPinBox" + std::to_string(i);
             SetString(input_object, aux, node->inputs[i].string_box);
+            aux = "InputPinBoxGO" + std::to_string(i);
+            if (node->inputs[i].go_box != NULL)
+            {
+                SetString(input_object, aux, node->inputs[i].go_box->UUID);
+            }
+            else
+            {
+                SetString(input_object, aux, "0");
+            }
 
             json_array_append_value(inputs_array, input_value);
         }
@@ -375,19 +384,6 @@ void Serialization::SerializeNodes(JSON_Object* json_object, std::vector<BP_Node
 
         SetFloat(node_object, "NodePosX", node->position.x);
         SetFloat(node_object, "NodePosY", node->position.y);
-
-        SetString(node_object, "InfoAsName", node->info_as_name);
-        SetFloat(node_object, "InfoAsNumber", node->info_as_number);
-        SetFloat3(node_object, "InfoAsVector", node->info_as_vector3);
-        SetBool(node_object, "InfoAsBool", node->info_as_boolean);
-        if (node->info_as_go != NULL)
-        {
-            SetString(node_object, "InfoAsGO", node->info_as_go->UUID);
-        }
-        else
-        {
-            SetString(node_object, "InfoAsGO", "0");
-        }
 
         json_array_append_value(nodes_array, node_value);
     }
@@ -435,6 +431,8 @@ void Serialization::DeSerializeNodes(JSON_Object* go_object, std::vector<Seriali
             node.inputs_id.push_back(GetInt(input_object, aux));
             aux = "InputPinBox" + std::to_string(i);
             node.inputs_box.push_back(GetString(input_object, aux));
+            aux = "InputPinBoxGO" + std::to_string(i);
+            node.inputs_go_UUID.push_back(GetString(input_object, aux));
         }
 
         JSON_Array* outputs_array = json_object_get_array(node_object, "Outputs");
@@ -447,11 +445,6 @@ void Serialization::DeSerializeNodes(JSON_Object* go_object, std::vector<Seriali
         }
 
         node.pos = ImVec2(GetFloat(node_object, "NodePosX"), GetFloat(node_object, "NodePosY"));
-        node.info_as_name = GetString(node_object, "InfoAsName");
-        node.info_as_number = GetFloat(node_object, "InfoAsNumber");
-        node.info_as_vector3 = GetFloat3(node_object, "InfoAsVector");
-        node.info_as_boolean = GetBool(node_object, "InfoAsBool");
-        node.go_UUID = GetString(node_object, "InfoAsGO");
 
         nodes->push_back(node);
     }

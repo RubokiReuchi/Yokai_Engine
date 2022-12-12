@@ -13,14 +13,9 @@ struct SerializedNode
 	std::string name;
 	std::vector<int> inputs_id;
 	std::vector<std::string> inputs_box;
+	std::vector<std::string> inputs_go_UUID;
 	std::vector<int> outputs_id;
 	ImVec2 pos;
-
-	std::string info_as_name;
-	float info_as_number;
-	float3 info_as_vector3;
-	bool info_as_boolean;
-	std::string go_UUID;
 };
 
 struct SerializedLink
