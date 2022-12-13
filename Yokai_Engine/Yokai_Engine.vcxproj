@@ -125,6 +125,8 @@
     <ClInclude Include="Source Code\DN_GO.h" />
     <ClInclude Include="Source Code\DN_Includes.h" />
     <ClInclude Include="Source Code\DN_Int.h" />
+    <ClInclude Include="Source Code\DN_MouseMotionX.h" />
+    <ClInclude Include="Source Code\DN_MouseMotionY.h" />
     <ClInclude Include="Source Code\DN_Multiplication.h" />
     <ClInclude Include="Source Code\DN_Multiplication3.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
@@ -282,6 +284,8 @@
     <ClCompile Include="Source Code\DN_GetUp.cpp" />
     <ClCompile Include="Source Code\DN_GO.cpp" />
     <ClCompile Include="Source Code\DN_Int.cpp" />
+    <ClCompile Include="Source Code\DN_MouseMotionX.cpp" />
+    <ClCompile Include="Source Code\DN_MouseMotionY.cpp" />
     <ClCompile Include="Source Code\DN_Multiplication.cpp" />
     <ClCompile Include="Source Code\DN_Multiplication3.cpp" />
     <ClCompile Include="Source Code\DN_PressKey.cpp" />

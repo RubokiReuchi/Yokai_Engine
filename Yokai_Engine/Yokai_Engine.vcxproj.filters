@@ -570,6 +570,12 @@
     <ClInclude Include="Source Code\DN_Vector3.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_MouseMotionX.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_MouseMotionY.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -928,6 +934,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_Vector3.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_MouseMotionX.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_MouseMotionY.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

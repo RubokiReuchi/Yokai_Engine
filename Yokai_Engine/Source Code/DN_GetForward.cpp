@@ -42,6 +42,7 @@ void DN_GetForward::Update(float dt)
 
 void DN_GetForward::OnLoad()
 {
+	if (serialized_go_ID == -1) return;
 	inputs[0].go_box = app->engine_order->game_objects[serialized_go_ID];
 	serialized_go_ID = -1;
 }

@@ -2,6 +2,8 @@
 
 // input
 #include "DN_PressKey.h"
+#include "DN_MouseMotionX.h"
+#include "DN_MouseMotionY.h"
 
 // variable
 #include "DN_String.h"

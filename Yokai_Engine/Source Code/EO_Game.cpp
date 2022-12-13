@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "EO_Editor.h"
 
 #include "ModuleFile.h"
 
@@ -31,7 +32,7 @@ void EO_Game::Update()
 	// game logic
 	if (in_game)
 	{
-		if (!paused)
+		if (!paused && app->engine_order->editor->GetGameWindow()->mouse_confined)
 		{
 			timer->frameCount++;
 			timer->time += timer->realTime_dt;

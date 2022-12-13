@@ -374,6 +374,8 @@ void EW_Blueprint::FillNodeList()
 
     // input
     aux.push_back("Press Key");
+    aux.push_back("Mouse Motion X");
+    aux.push_back("Mouse Motion Y");
 
     node_list.push_back(aux);
     aux.clear();

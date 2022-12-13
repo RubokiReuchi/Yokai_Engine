@@ -51,6 +51,8 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos)
 
 	// input
 	if (node_name == "Press Key") new_node = new DN_PressKey(pos, this);
+	if (node_name == "Mouse Motion X") new_node = new DN_MouseMotionX(pos, this);
+	if (node_name == "Mouse Motion Y") new_node = new DN_MouseMotionY(pos, this);
 
 	// variable
 	else if (node_name == "String") new_node = new DN_String(pos, this);
@@ -98,6 +100,8 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 
 	// input
 	if (node_name == "Press Key") new_node = new DN_PressKey(pos, this, inputs_id[0], outputs_id[0], outputs_id[1], outputs_id[2], input_box[0]);
+	if (node_name == "Mouse Motion X") new_node = new DN_MouseMotionX(pos, this, outputs_id[0], outputs_id[1]);
+	if (node_name == "Mouse Motion Y") new_node = new DN_MouseMotionY(pos, this, outputs_id[0], outputs_id[1]);
 
 	// variable
 	else if (node_name == "String") new_node = new DN_String(pos, this, inputs_id[0], outputs_id[0], input_box[0]);

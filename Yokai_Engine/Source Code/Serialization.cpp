@@ -367,7 +367,7 @@ void Serialization::SerializeNodes(JSON_Object* json_object, std::vector<BP_Node
             }
             else
             {
-                SetString(input_object, aux, "-1");
+                SetInt(input_object, aux, -1);
             }
 
             json_array_append_value(inputs_array, input_value);
