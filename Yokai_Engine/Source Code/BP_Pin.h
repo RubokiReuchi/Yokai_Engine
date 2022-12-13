@@ -40,6 +40,7 @@ public:
         COMBO,
         STRING,
         NUMBER,
+        NUMBER3,
         GAMEOBJECT
     };
 
@@ -48,6 +49,7 @@ public:
 
     bool IsPinLinked();
     BP_Pin* GetOpositePin();
+    std::vector<BP_Pin*> GetOpositesPins();
 
 public:
     int id_as_int;
@@ -60,6 +62,7 @@ public:
     BoxType box_type;
     std::vector<std::string> combo_box;
     std::string string_box;
+    std::vector<std::string> vector3_box;
     GameObject* go_box = nullptr;
     ////////
 

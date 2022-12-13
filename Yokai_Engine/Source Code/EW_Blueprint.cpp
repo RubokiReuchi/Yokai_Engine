@@ -104,6 +104,14 @@ void EW_Blueprint::Update()
                         aux_text = "##Node Number" + std::to_string(input_pin.id_as_int);
                         ImGuiH::InputText(aux_text.c_str(), &input_pin.string_box, ImGuiInputTextFlags_CharsScientific);
                         break;
+                    case BP_Pin::BoxType::NUMBER3:
+                        aux_text = "##Node NumberThreeOne" + std::to_string(input_pin.id_as_int);
+                        ImGuiH::InputText(aux_text.c_str(), &input_pin.vector3_box[0], ImGuiInputTextFlags_CharsScientific);
+                        aux_text = "##Node NumberThreeTwo" + std::to_string(input_pin.id_as_int); ImGui::SetNextItemWidth(40);
+                        ImGuiH::InputText(aux_text.c_str(), &input_pin.vector3_box[1], ImGuiInputTextFlags_CharsScientific);
+                        aux_text = "##Node NumberThreeThree" + std::to_string(input_pin.id_as_int); ImGui::SetNextItemWidth(40);
+                        ImGuiH::InputText(aux_text.c_str(), &input_pin.vector3_box[2], ImGuiInputTextFlags_CharsScientific);
+                        break;
                     case BP_Pin::BoxType::GAMEOBJECT:
                         if (input_pin.go_box != NULL) aux_text = input_pin.go_box->name + "##Node Object" + std::to_string(input_pin.id_as_int);
                         else aux_text = "##Node Object" + std::to_string(input_pin.id_as_int);
@@ -161,12 +169,12 @@ void EW_Blueprint::Update()
                 {
                     if (aux_input->kind == PinKind::Input)
                     {
-                        BP_Link* new_link = new BP_Link(nextLinkId++, aux_input->id_as_int, aux_output->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
+                        BP_Link* new_link = new BP_Link(current_blueprint->unique_id++, aux_input->id_as_int, aux_output->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
                         current_blueprint->links.push_back(new_link);
                     }
                     else
                     {
-                        BP_Link* new_link = new BP_Link(nextLinkId++, aux_output->id_as_int, aux_input->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
+                        BP_Link* new_link = new BP_Link(current_blueprint->unique_id++, aux_output->id_as_int, aux_input->id_as_int, NH::GetIconColor(aux_input->type), current_blueprint);
                         current_blueprint->links.push_back(new_link);
                     }
                 }
@@ -366,6 +374,7 @@ void EW_Blueprint::FillNodeList()
     aux.push_back("String");
     aux.push_back("Boolean");
     aux.push_back("Float");
+    aux.push_back("Vector3");
     aux.push_back("Integer");
     aux.push_back("Game Object");
 
@@ -380,6 +389,7 @@ void EW_Blueprint::FillNodeList()
 
     // modify
     aux.push_back("Translate");
+    aux.push_back("Rotate");
 
     node_list.push_back(aux);
     aux.clear();

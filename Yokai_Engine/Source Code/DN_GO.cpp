@@ -11,7 +11,7 @@ DN_GO::DN_GO(ImVec2 pos, BluePrint* bp) : BP_Node("Game Object", BP_Node::TYPE::
 	outputs.push_back(send_pin);
 }
 
-DN_GO::DN_GO(ImVec2 pos, BluePrint* bp, int ask_pin_id, int send_pin_id, std::string go_UUID) : BP_Node("Game Object", BP_Node::TYPE::SIMPLE, pos, ImColor(51, 150, 215), bp)
+DN_GO::DN_GO(ImVec2 pos, BluePrint* bp, int ask_pin_id, int send_pin_id, int go_ID) : BP_Node("Game Object", BP_Node::TYPE::SIMPLE, pos, ImColor(51, 150, 215), bp)
 {
 	BP_Pin ask_pin(ask_pin_id, "", BP_Pin::TYPE::None, bp, BP_Pin::BoxType::GAMEOBJECT);
 	ask_pin.node = this;
@@ -20,7 +20,7 @@ DN_GO::DN_GO(ImVec2 pos, BluePrint* bp, int ask_pin_id, int send_pin_id, std::st
 	send_pin.node = this;
 	outputs.push_back(send_pin);
 
-	serialized_go_UUID = go_UUID;
+	serialized_go_ID = go_ID;
 }
 
 DN_GO::~DN_GO()
@@ -35,6 +35,6 @@ void DN_GO::SaveInNode()
 
 void DN_GO::OnLoad()
 {
-	inputs[0].go_box = app->engine_order->GetGameObjectByUUID(serialized_go_UUID);
-	serialized_go_UUID = "";
+	inputs[0].go_box = app->engine_order->game_objects[serialized_go_ID];
+	serialized_go_ID = -1;
 }

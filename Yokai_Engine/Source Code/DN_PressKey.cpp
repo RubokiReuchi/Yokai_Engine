@@ -61,16 +61,29 @@ void DN_PressKey::Update(float dt)
 		key = SDL_GetScancodeFromName(inputs[0].string_box.c_str());
 	}
 
+	std::vector<BP_Pin*> aux_pins;
 	if (app->input->GetKey(key) == KEY_DOWN && outputs[0].IsPinLinked()) // on press
 	{
-		outputs[0].GetOpositePin()->node->Activate(dt);
+		aux_pins = outputs[0].GetOpositesPins();
+		for (auto& pin : aux_pins)
+		{
+			pin->node->Activate(dt);
+		}
 	}
 	else if (app->input->GetKey(key) == KEY_REPEAT && outputs[1].IsPinLinked()) // on hold
 	{
-		outputs[1].GetOpositePin()->node->Activate(dt);
+		aux_pins = outputs[1].GetOpositesPins();
+		for (auto& pin : aux_pins)
+		{
+			pin->node->Activate(dt);
+		}
 	}
 	else if (app->input->GetKey(key) == KEY_UP && outputs[2].IsPinLinked()) // on release
 	{
-		outputs[2].GetOpositePin()->node->Activate(dt);
+		aux_pins = outputs[2].GetOpositesPins();
+		for (auto& pin : aux_pins)
+		{
+			pin->node->Activate(dt);
+		}
 	}
 }

@@ -564,6 +564,12 @@
     <ClInclude Include="Source Code\DN_GetDeltaTime.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\DN_Rotate.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Vector3.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -916,6 +922,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_GetDeltaTime.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Rotate.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Vector3.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

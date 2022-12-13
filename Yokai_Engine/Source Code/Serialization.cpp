@@ -354,14 +354,20 @@ void Serialization::SerializeNodes(JSON_Object* json_object, std::vector<BP_Node
             SetInt(input_object, aux, node->inputs[i].id_as_int);
             aux = "InputPinBox" + std::to_string(i);
             SetString(input_object, aux, node->inputs[i].string_box);
+            aux = "InputPinBox0Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[0]);
+            aux = "InputPinBox1Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[1]);
+            aux = "InputPinBox2Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[2]);
             aux = "InputPinBoxGO" + std::to_string(i);
             if (node->inputs[i].go_box != NULL)
             {
-                SetString(input_object, aux, node->inputs[i].go_box->UUID);
+                SetInt(input_object, aux, node->inputs[i].go_box->id);
             }
             else
             {
-                SetString(input_object, aux, "0");
+                SetString(input_object, aux, "-1");
             }
 
             json_array_append_value(inputs_array, input_value);
@@ -431,8 +437,14 @@ void Serialization::DeSerializeNodes(JSON_Object* go_object, std::vector<Seriali
             node.inputs_id.push_back(GetInt(input_object, aux));
             aux = "InputPinBox" + std::to_string(i);
             node.inputs_box.push_back(GetString(input_object, aux));
+            aux = "InputPinBox0Vector3" + std::to_string(i);
+            node.inputs_vector3_box0.push_back(GetString(input_object, aux));
+            aux = "InputPinBox1Vector3" + std::to_string(i);
+            node.inputs_vector3_box1.push_back(GetString(input_object, aux));
+            aux = "InputPinBox2Vector3" + std::to_string(i);
+            node.inputs_vector3_box2.push_back(GetString(input_object, aux));
             aux = "InputPinBoxGO" + std::to_string(i);
-            node.inputs_go_UUID.push_back(GetString(input_object, aux));
+            node.inputs_go_ID.push_back(GetInt(input_object, aux));
         }
 
         JSON_Array* outputs_array = json_object_get_array(node_object, "Outputs");

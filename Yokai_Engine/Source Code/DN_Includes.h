@@ -7,6 +7,7 @@
 #include "DN_String.h"
 #include "DN_Bool.h"
 #include "DN_Float.h"
+#include "DN_Vector3.h"
 #include "DN_Int.h"
 #include "DN_GO.h"
 
@@ -15,6 +16,7 @@
 
 // modify
 #include "DN_Translate.h"
+#include "DN_Rotate.h"
 
 // get value
 #include "DN_GetDeltaTime.h"

@@ -25,7 +25,6 @@ private:
 	BluePrint* current_blueprint = nullptr;
 	bool blueprint_blocked = false;
 	BP::EditorContext* context;
-	int nextLinkId = 100;
 
 	bool popUpOpen = false; //create node popUp
 	ImVec2 ori, canvas_ori;

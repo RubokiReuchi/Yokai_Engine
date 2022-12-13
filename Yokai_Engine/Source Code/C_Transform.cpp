@@ -175,6 +175,9 @@ void C_Transform::Scale(float3 scale)
 void C_Transform::Rotate(float3 rotate)
 {
 	this->localTransform.rotation += rotate;
+	if (this->localTransform.rotation.x > 360.0f) this->localTransform.rotation.x -= 360.0f;
+	if (this->localTransform.rotation.y > 360.0f) this->localTransform.rotation.y -= 360.0f;
+	if (this->localTransform.rotation.z > 360.0f) this->localTransform.rotation.z -= 360.0f;
 	UpdateRotation();
 }
 

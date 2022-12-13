@@ -129,8 +129,10 @@
     <ClInclude Include="Source Code\DN_Multiplication3.h" />
     <ClInclude Include="Source Code\DN_PressKey.h" />
     <ClInclude Include="Source Code\DN_PrintString.h" />
+    <ClInclude Include="Source Code\DN_Rotate.h" />
     <ClInclude Include="Source Code\DN_String.h" />
     <ClInclude Include="Source Code\DN_Translate.h" />
+    <ClInclude Include="Source Code\DN_Vector3.h" />
     <ClInclude Include="Source Code\EditorWindow.h" />
     <ClInclude Include="Source Code\EO_Base.h" />
     <ClInclude Include="Source Code\EO_Editor.h" />
@@ -284,8 +286,10 @@
     <ClCompile Include="Source Code\DN_Multiplication3.cpp" />
     <ClCompile Include="Source Code\DN_PressKey.cpp" />
     <ClCompile Include="Source Code\DN_PrintString.cpp" />
+    <ClCompile Include="Source Code\DN_Rotate.cpp" />
     <ClCompile Include="Source Code\DN_String.cpp" />
     <ClCompile Include="Source Code\DN_Translate.cpp" />
+    <ClCompile Include="Source Code\DN_Vector3.cpp" />
     <ClCompile Include="Source Code\EditorWindow.cpp" />
     <ClCompile Include="Source Code\EO_Base.cpp" />
     <ClCompile Include="Source Code\EO_Editor.cpp" />

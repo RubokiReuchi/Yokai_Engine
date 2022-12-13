@@ -14,7 +14,10 @@ struct SerializedNode
 	std::string name;
 	std::vector<int> inputs_id;
 	std::vector<std::string> inputs_box;
-	std::vector<std::string> inputs_go_UUID;
+	std::vector<std::string> inputs_vector3_box0;
+	std::vector<std::string> inputs_vector3_box1;
+	std::vector<std::string> inputs_vector3_box2;
+	std::vector<int> inputs_go_ID;
 	std::vector<int> outputs_id;
 	ImVec2 pos;
 };
