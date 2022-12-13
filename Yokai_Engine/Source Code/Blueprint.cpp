@@ -143,3 +143,15 @@ void BluePrint::CreateLink(int id, int input_id, int output_id, float3 color)
 	BP_Link* new_link = new BP_Link(id, input_id, output_id, ImColor(color.x, color.y, color.z), this);
 	this->links.push_back(new_link);
 }
+
+void BluePrint::DestroyConectedLinks(PinId pin_id)
+{
+	for (auto& link : links)
+	{
+		if (link->input_id == pin_id || link->output_id == pin_id)
+		{
+			std::vector<BP_Link*>::iterator it = std::find(links.begin(), links.end(), link);
+			links.erase(it);
+		}
+	}
+}

@@ -39,6 +39,8 @@ public:
 
     void CreateLink(int id, int input_id, int output_id, float3 color);
 
+    void DestroyConectedLinks(PinId pin_id);
+
 public:
 
     int unique_id = 1;

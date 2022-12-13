@@ -245,6 +245,14 @@ void EW_Blueprint::Update()
                     {
                         if (node->id == deletedNodeId)
                         {
+                            for (auto& input : node->inputs)
+                            {
+                                current_blueprint->DestroyConectedLinks(input.id);
+                            }
+                            for (auto& output : node->outputs)
+                            {
+                                current_blueprint->DestroyConectedLinks(output.id);
+                            }
                             it = std::find(current_blueprint->nodes.begin(), current_blueprint->nodes.end(), node);
                             current_blueprint->nodes.erase(it);
                             break;
