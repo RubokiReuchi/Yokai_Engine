@@ -21,6 +21,17 @@ void C_Blueprint::UpdateInGame(float dt)
 void C_Blueprint::OnLoad()
 {
 	blueprint->OnLoad();
+	for (auto& node : blueprint->nodes)
+	{
+		for (auto& input : node->inputs)
+		{
+			input.kind = PinKind::Input;
+		}
+		for (auto& output : node->outputs)
+		{
+			output.kind = PinKind::Output;
+		}
+	}
 }
 
 void C_Blueprint::OnEditor()

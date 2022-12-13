@@ -49,7 +49,8 @@ bool ModuleEO::Start()
     uint texture_grey = TextureImporter::LoadTexture("Assets/StreetTextures/GreyColor.png");
     uint texture_lightgrey = TextureImporter::LoadTexture("Assets/StreetTextures/LightGreyColor.png");
 
-    MeshImporter::LoadMesh("Assets/cube.fbx"); ////// test cube
+    MeshImporter::LoadMesh("Assets/Tank/Base.fbx");
+    MeshImporter::LoadMesh("Assets/Tank/Canon.fbx");
 
     for (auto& gameObject : game_objects)
     {
@@ -121,15 +122,26 @@ bool ModuleEO::Start()
             }
         }
 
-        if (gameObject.second->name == "cube")
+        if (gameObject.second->name == "Base")
         {
+            gameObject.second->AddChild(app->engine_order->game_objects[gameObject.second->id + 1]);
+
             C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
             if (ModuleFile::FS_Exists("Assets/Scripts/tank.ykbp")) c_bp->LoadBlueprint("tank");
             editor->SetSelectedGameObject(gameObject.second);
             gameObject.second->OnLoad();
+
+        }
+        else if (gameObject.second->name == "Canon")
+        {
+            gameObject.second->transform->Translate(float3(0, 2, 0));
+            gameObject.second->AddChild(app->engine_order->game_objects[2]);
+
+            C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
+            if (ModuleFile::FS_Exists("Assets/Scripts/canon.ykbp")) c_bp->LoadBlueprint("canon");
+            gameObject.second->OnLoad();
         }
     }
-    //////////////
 
     return true;
 }
