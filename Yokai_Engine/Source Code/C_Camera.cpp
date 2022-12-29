@@ -77,7 +77,7 @@ void C_Camera::OnPositionUpdate(float3 pos)
 void C_Camera::OnRotationUpdate(float3 rotation)
 {
 	Quat rotx = Quat::identity;
-	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(rotation.x));
+	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(-rotation.x));
 	Quat roty = Quat::identity;
 	roty.SetFromAxisAngle({ 0.0f, 1.0f, 0.0f }, math::DegToRad(rotation.y));
 	Quat rotz = Quat::identity;
@@ -96,7 +96,7 @@ void C_Camera::OnTransformUpdate(float3 pos, float3 scale, float3 rotation)
 	app->camera->game_cameras[cameraID].CalculateViewMatrix();
 
 	Quat rotx = Quat::identity;
-	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(rotation.x));
+	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(-rotation.x));
 	Quat roty = Quat::identity;
 	roty.SetFromAxisAngle({ 0.0f, 1.0f, 0.0f }, math::DegToRad(rotation.y));
 	Quat rotz = Quat::identity;
