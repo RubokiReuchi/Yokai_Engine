@@ -212,7 +212,7 @@ bool GameObject::AddChild(GameObject* child)
 	child->parent = this;
 	GenerateAABB(); // recalculate aabb of new parent
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
-	child->transform->FixTransform(last_parent_tranform);
+	//child->transform->FixTransform(last_parent_tranform);
 
 	return true;
 }

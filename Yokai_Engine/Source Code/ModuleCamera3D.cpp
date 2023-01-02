@@ -23,7 +23,7 @@ bool ModuleCamera3D::Start()
 	// Create GameObject with camera and transform components
 	GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
 	C_Camera* camera = dynamic_cast<C_Camera*>(main_camera->AddComponent(Component::TYPE::CAMERA));
-	dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(0.0f, 3.7f, -3.7f), float3(1, 1, 1), float3(8, 0, 0));
+	dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(0.0f, 2.0f, -3.7f), float3(1, 1, 1), float3(8, 0, 0));
 	currentDrawingCamera = activeGameCamera = camera->GetCamera();
 
 	sceneCamera.frameBuffer.SetBufferInfo();
