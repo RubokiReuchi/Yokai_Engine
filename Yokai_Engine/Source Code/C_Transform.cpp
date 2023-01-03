@@ -133,11 +133,12 @@ Transform C_Transform::GetGlobalTransform()
 	}
 
 	Transform global_transform;
-	global_transform.position = parentGlobalTransform.position + localTransform.position;
-	global_transform.rotation = parentGlobalTransform.rotation + localTransform.rotation;
-	global_transform.scale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
-	global_transform.scale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
-	global_transform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
+	float3 pos, rot, scl;
+	Quat rot_q;
+	GetGlobalMatrix().Decompose(global_transform.position, rot_q, global_transform.scale);
+	rot = rot_q.ToEulerXYZ();
+
+	global_transform.rotation =  float3(rot.x * RADTODEG, rot.y * RADTODEG, rot.z * RADTODEG);
 
 	return global_transform;
 }

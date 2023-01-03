@@ -16,15 +16,21 @@ struct SerializedGO;
 struct SerializedNode;
 struct SerializedLink;
 
+enum class TempGoType
+{
+	NONE,
+	PROJECTIL,
+};
+
 class GameObject
 {
 public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
 	GameObject(SerializedGO go);
-	~GameObject();
+	virtual ~GameObject();
 
 	void Update();
-	void UpdateInGame(float dt);
+	virtual void UpdateInGame(float dt);
 	void OnLoad();
 
 	void DeleteGameObject();
@@ -130,6 +136,8 @@ public:
 
 	bool is_camera;
 
+	void Disable();
+
 	void Rename(std::string new_name)
 	{
 		name = new_name;
@@ -140,6 +148,8 @@ public:
 	std::vector<GameObject*> children;
 
 	GameObject* parent = nullptr;
+
+	TempGoType temp_type = TempGoType::NONE;
 
 	uint id = 0; // id = 0 is an invalid id, id = 1 is the world(root)
 	std::string UUID = "-1";

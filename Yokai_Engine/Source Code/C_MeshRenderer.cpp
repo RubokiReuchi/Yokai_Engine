@@ -24,6 +24,15 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
+	if (!GetGameObject()->enabled)
+	{
+		GetMesh().visible = false;
+	}
+	else if (GetGameObject()->visible)
+	{
+		GetMesh().visible = true;
+	}
+
 	float3 pos, rot, scl;
 	Quat rot_q;
 	GetGameObject()->transform->GetGlobalMatrix().Decompose(pos, rot_q, scl);

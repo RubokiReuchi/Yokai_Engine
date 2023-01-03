@@ -132,6 +132,7 @@
     <ClInclude Include="Source Code\DN_PressKey.h" />
     <ClInclude Include="Source Code\DN_PrintString.h" />
     <ClInclude Include="Source Code\DN_Rotate.h" />
+    <ClInclude Include="Source Code\DN_SpawnProjectile.h" />
     <ClInclude Include="Source Code\DN_String.h" />
     <ClInclude Include="Source Code\DN_Translate.h" />
     <ClInclude Include="Source Code\DN_Vector3.h" />
@@ -257,6 +258,7 @@
     <ClInclude Include="Source Code\Re_Texture.h" />
     <ClInclude Include="Source Code\SceneCamera.h" />
     <ClInclude Include="Source Code\Serialization.h" />
+    <ClInclude Include="Source Code\TempGameObject.h" />
     <ClInclude Include="Source Code\TextureImporter.h" />
     <ClInclude Include="Source Code\Timer.h" />
   </ItemGroup>
@@ -291,6 +293,7 @@
     <ClCompile Include="Source Code\DN_PressKey.cpp" />
     <ClCompile Include="Source Code\DN_PrintString.cpp" />
     <ClCompile Include="Source Code\DN_Rotate.cpp" />
+    <ClCompile Include="Source Code\DN_SpawnProjectile.cpp" />
     <ClCompile Include="Source Code\DN_String.cpp" />
     <ClCompile Include="Source Code\DN_Translate.cpp" />
     <ClCompile Include="Source Code\DN_Vector3.cpp" />
@@ -381,6 +384,7 @@
     <ClCompile Include="Source Code\Re_Texture.cpp" />
     <ClCompile Include="Source Code\SceneCamera.cpp" />
     <ClCompile Include="Source Code\Serialization.cpp" />
+    <ClCompile Include="Source Code\TempGameObject.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

@@ -15,6 +15,7 @@
 
 // action
 #include "DN_PrintString.h"
+#include "DN_SpawnProjectile.h"
 
 // modify
 #include "DN_Translate.h"

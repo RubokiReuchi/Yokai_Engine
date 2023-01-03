@@ -393,6 +393,7 @@ void EW_Blueprint::FillNodeList()
 
     // action
     aux.push_back("Print String");
+    aux.push_back("Spawn Projectile");
 
     node_list.push_back(aux);
     aux.clear();

@@ -576,6 +576,12 @@
     <ClInclude Include="Source Code\DN_MouseMotionY.h">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\TempGameObject.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_SpawnProjectile.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -940,6 +946,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\DN_MouseMotionY.cpp">
       <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\TempGameObject.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_SpawnProjectile.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

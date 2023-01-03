@@ -64,6 +64,7 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos)
 
 	// action
 	else if (node_name == "Print String") new_node = new DN_PrintString(pos, this);
+	else if (node_name == "Spawn Projectile") new_node = new DN_SpawnProjectile(pos, this);
 
 	// modify
 	else if (node_name == "Translate") new_node = new DN_Translate(pos, this);
@@ -113,6 +114,7 @@ void BluePrint::CreateNode(std::string node_name, ImVec2 pos, std::vector<int> i
 
 	// action
 	else if (node_name == "Print String") new_node = new DN_PrintString(pos, this, inputs_id[0], inputs_id[1], input_box[0]);
+	else if (node_name == "Spawn Projectile") new_node = new DN_SpawnProjectile(pos, this, inputs_id[0], inputs_id[1], inputs_id[2], inputs_id[3], outputs_id[0]);
 
 	// modify
 	else if (node_name == "Translate") new_node = new DN_Translate(pos, this, inputs_id[0], inputs_id[1], inputs_id[2]);

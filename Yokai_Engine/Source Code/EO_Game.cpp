@@ -144,4 +144,12 @@ void EO_Game::ReturnGameObject()
 	}
 
 	go_before_play.clear();
+
+	for (auto& go : app->engine_order->game_objects)
+	{
+		if (go.second->temp_type != TempGoType::NONE)
+		{
+			go.second->DeleteGameObject();
+		}
+	}
 }

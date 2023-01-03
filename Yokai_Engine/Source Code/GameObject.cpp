@@ -300,3 +300,13 @@ void GameObject::GenerateFixedAABB()
 
 	delete[] v_pos;
 }
+
+void GameObject::Disable()
+{
+	this->enabled = false;
+
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		children[i]->Disable();
+	}
+}
