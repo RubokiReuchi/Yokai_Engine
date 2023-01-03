@@ -145,11 +145,19 @@ void EO_Game::ReturnGameObject()
 
 	go_before_play.clear();
 
+	std::vector<GameObject*> temp_go;
 	for (auto& go : app->engine_order->game_objects)
 	{
 		if (go.second->temp_type != TempGoType::NONE)
 		{
-			go.second->DeleteGameObject();
+			temp_go.push_back(go.second);
 		}
+	}
+
+	while (!temp_go.empty())
+	{
+		temp_go[0]->DeleteGameObject();
+		std::vector<GameObject*>::iterator it = std::find(temp_go.begin(), temp_go.end(), temp_go[0]);
+		temp_go.erase(it);
 	}
 }
