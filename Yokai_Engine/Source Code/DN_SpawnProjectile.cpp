@@ -50,7 +50,7 @@ void DN_SpawnProjectile::Activate(float dt)
 {
 	if (inputs[0].IsPinLinked() && inputs[1].IsPinLinked() && inputs[2].IsPinLinked())
 	{
-		TempGameObject* projectile = new TempGameObject(inputs[0].GetOpositePin()->node->info_as_go, TempGoType::PROJECTIL, inputs[2].GetOpositePin()->node->info_as_number, inputs[1].GetOpositePin()->node->info_as_number, "Projectile");
+		TempGameObject* projectile = new TempGameObject(app->engine_order->rootGameObject, inputs[0].GetOpositePin()->node->info_as_go->transform->GetGlobalTransform(), TempGoType::PROJECTIL, inputs[2].GetOpositePin()->node->info_as_number, inputs[1].GetOpositePin()->node->info_as_number, "Projectile");
 		GameObject* sphere = MeshImporter::LoadMesh("Assets/sphere.fbx");
 		sphere->SetParent(projectile);
 		sphere->name = "Bullet";
