@@ -118,6 +118,7 @@ void C_Transform::SetTransform(float4x4 matrix)
 	euler_rot.y = math::RadToDeg(euler_rot.y);
 	euler_rot.z = math::RadToDeg(euler_rot.z);
 
+	parentGlobalTransform = GetGameObject()->parent->transform->GetGlobalTransform();
 	this->localTransform.position = pos - parentGlobalTransform.position;
 	this->localTransform.scale.x = scl.x / parentGlobalTransform.scale.x;
 	this->localTransform.scale.y = scl.y / parentGlobalTransform.scale.y;
