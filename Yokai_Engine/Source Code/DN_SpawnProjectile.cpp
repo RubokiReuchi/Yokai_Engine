@@ -52,6 +52,7 @@ void DN_SpawnProjectile::Activate(float dt)
 	{
 		TempGameObject* projectile = new TempGameObject(app->engine_order->rootGameObject, inputs[0].GetOpositePin()->node->info_as_go->transform->GetGlobalTransform(), TempGoType::PROJECTIL, inputs[2].GetOpositePin()->node->info_as_number, inputs[1].GetOpositePin()->node->info_as_number, "Projectile");
 		GameObject* sphere = MeshImporter::LoadMesh("Assets/sphere.fbx");
+		sphere->transform->SetScale({ 0.2f, 0.2f, 0.2f });
 		sphere->SetParent(projectile);
 		sphere->name = "Bullet";
 	}
