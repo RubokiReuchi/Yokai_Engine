@@ -55,6 +55,7 @@ void DN_SpawnProjectile::Activate(float dt)
 		sphere->transform->SetScale({ 0.2f, 0.2f, 0.2f });
 		sphere->SetParent(projectile);
 		sphere->name = "Bullet";
+		projectile->Update();
 	}
 	else
 	{
