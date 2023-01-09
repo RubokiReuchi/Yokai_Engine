@@ -15,6 +15,8 @@ Application::~Application()
 	}
 
 	list_modules.clear();
+
+	RELEASE(game_timer);
 }
 
 bool Application::Init()

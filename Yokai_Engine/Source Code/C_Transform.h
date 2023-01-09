@@ -15,6 +15,8 @@ public:
 	C_Transform(GameObject* gameObject);
 	~C_Transform();
 
+	void Update();
+
 	void OnEditor();
 
 	void SetPosition(float3 pos);
@@ -22,11 +24,6 @@ public:
 	void SetScale(float3 scl);
 	void SetTransform(float3 pos, float3 scl, float3 rot);
 	void SetTransform(float4x4 matrix);
-
-	void OnPositionUpdate(float3 position) override;
-	void OnScaleUpdate(float3 scale) override;
-	void OnRotationUpdate(float3 rotation) override;
-	void OnTransformUpdate(float3 position, float3 scale, float3 rotation) override;
 
 	Transform GetGlobalTransform();
 	float4x4 GetGlobalMatrix()
@@ -41,15 +38,16 @@ public:
 		return localTransform;
 	}
 
+	void Translate(float3 translation);
+	void Scale(float3 scale);
+	void Rotate(float3 rotate);
+
+	float3 GetForward();
+	float3 GetRight();
+	float3 GetUp();
+
 private:
 	Transform localTransform;
-
-	void UpdatePosition();
-	void UpdateRotation();
-	void UpdateScale();
-	void UpdateTransform();
-
-	void FixTransform(Transform last_parent_tranform);
 
 	void CalculateGlobalMatrix();
 

@@ -5,6 +5,7 @@
 #include "C_MeshRenderer.h"
 #include "C_Material.h"
 #include "C_Camera.h"
+#include "C_Blueprint.h"
 #include "Globals.h"
 
 #include <vector>
@@ -12,18 +13,31 @@
 
 class C_Transform;
 struct SerializedGO;
+struct SerializedNode;
+struct SerializedLink;
+
+enum class TempGoType
+{
+	NONE,
+	PROJECTIL,
+};
 
 class GameObject
 {
 public:
 	GameObject(GameObject* parent, std::string name = "Default", std::string tag = "Default", bool is_camera = false);
 	GameObject(SerializedGO go);
-	~GameObject();
+	virtual ~GameObject();
 
 	void Update();
-	void UpdateInGame(float dt);
+	virtual void UpdateInGame(float dt);
+	void OnLoad();
 
 	void DeleteGameObject();
+
+	void AddSerializedNode(SerializedNode node, BluePrint* bp);
+	void AddSerializedLink(SerializedLink link, BluePrint* bp);
+	void ProcessSerializedBlueprint(SerializedGO go, BluePrint* bp);
 
 	Component* AddComponent(Component::TYPE type)
 	{
@@ -41,6 +55,16 @@ public:
 			break;
 		case Component::TYPE::CAMERA:
 			new_component = new C_Camera(this);
+			break;
+		case Component::TYPE::BLUEPRINT:
+			if (!GetComponent(Component::TYPE::BLUEPRINT))
+			{
+				new_component = new C_Blueprint(this);
+			}
+			else
+			{
+				return NULL;
+			}
 			break;
 		default:
 			LOG("component type error");
@@ -112,6 +136,8 @@ public:
 
 	bool is_camera;
 
+	void Disable();
+
 	void Rename(std::string new_name)
 	{
 		name = new_name;
@@ -122,6 +148,8 @@ public:
 	std::vector<GameObject*> children;
 
 	GameObject* parent = nullptr;
+
+	TempGoType temp_type = TempGoType::NONE;
 
 	uint id = 0; // id = 0 is an invalid id, id = 1 is the world(root)
 	std::string UUID = "-1";

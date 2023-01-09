@@ -14,6 +14,7 @@
 #include "EW_Performance.h"
 #include "EW_Project.h"
 #include "EW_Console.h"
+#include "EW_Blueprint.h"
 
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
@@ -75,6 +76,7 @@ void EO_Editor::Start()
 	editor_windows[(uint)EW_TYPE::INSPECTOR] = new EW_Inspector();
 	editor_windows[(uint)EW_TYPE::CONSOLE] = new EW_Console();
 	editor_windows[(uint)EW_TYPE::PROJECT] = new EW_Project();
+	editor_windows[(uint)EW_TYPE::BLUEPRINT] = new EW_Blueprint();
 }
 
 void EO_Editor::PreUpdate()
@@ -99,7 +101,12 @@ void EO_Editor::Update()
 	{
 		for (auto& go : app->engine_order->game_objects)
 		{
-			go.second->Update();
+			if (!go.second->is_camera) go.second->Update();
+		}
+
+		for (auto& go : app->engine_order->game_objects)
+		{
+			if (go.second->is_camera) go.second->Update();
 		}
 	}
 }
@@ -182,19 +189,6 @@ bool EO_Editor::SetMenuBar()
 		if (ImGui::MenuItem("Save Scene As"))
 		{
 			file_explorer.OpenExplorer("Save As", Explorer::TYPE::SAVE, SCENES_PATH);
-		}
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("CHECK")) // FOR second deliver
-	{
-		ImGui::Checkbox("Frustrum Culling", &app->renderer3D->view_frustrum_culling);
-		if (ImGui::Button("LOG loaded meshes"))
-		{
-			MeshImporter::LogLoadedMeshes();
-		}
-		if (ImGui::Button("LOG loaded textures"))
-		{
-			M_Texture::LogLoadedTextures();
 		}
 		ImGui::EndMenu();
 	}

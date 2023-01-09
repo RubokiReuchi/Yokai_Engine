@@ -1,6 +1,7 @@
 #include "ModuleCamera3D.h"
 #include "Application.h"
 #include "C_Camera.h"
+#include "EO_Editor.h"
 
 #include "MathGeoLib/include/Math/float3.h"
 #include "MathGeoLib/include/Geometry/Plane.h"
@@ -22,7 +23,7 @@ bool ModuleCamera3D::Start()
 	// Create GameObject with camera and transform components
 	GameObject* main_camera = new GameObject(app->engine_order->rootGameObject, "Main Camera", "Camera", true);
 	C_Camera* camera = dynamic_cast<C_Camera*>(main_camera->AddComponent(Component::TYPE::CAMERA));
-	dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(5.0f, 1.5f, 0), float3(1, 1, 1), float3(0, -90, 0));
+	dynamic_cast<C_Transform*>(main_camera->GetComponent(Component::TYPE::TRANSFORM))->SetTransform(float3(0.0f, 5.0f, -9.5f), float3(1, 1, 1), float3(8, 0, 0));
 	currentDrawingCamera = activeGameCamera = camera->GetCamera();
 
 	sceneCamera.frameBuffer.SetBufferInfo();
@@ -81,6 +82,7 @@ void ModuleCamera3D::InitNewGameCamera(GameObject* go)
 {
 	C_Camera* camera = dynamic_cast<C_Camera*>(go->AddComponent(Component::TYPE::CAMERA));
 	currentDrawingCamera = activeGameCamera = camera->GetCamera();
+	app->engine_order->editor->GetGameWindow()->SetCurrentGameCamera(activeGameCamera);
 
 	camera->GetCamera()->frameBuffer.SetBufferInfo();
 	camera->GetCamera()->frameBuffer.SetDimensions(app->window->width, app->window->height);

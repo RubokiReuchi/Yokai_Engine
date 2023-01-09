@@ -1,0 +1,413 @@
+{
+    "UniqueID": 207,
+    "BlueprintName": "Canon",
+    "Nodes": [
+        {
+            "NodeID": 195,
+            "NodeName": "Mouse Motion X",
+            "Inputs": [],
+            "Outputs": [
+                {
+                    "OutputPin0": 2
+                },
+                {
+                    "OutputPin1": 3
+                }
+            ],
+            "NodePosX": 252,
+            "NodePosY": 655
+        },
+        {
+            "NodeID": 196,
+            "NodeName": "Float",
+            "Inputs": [
+                {
+                    "InputPin0": 8,
+                    "InputPinBox0": "-5",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 9
+                }
+            ],
+            "NodePosX": 420,
+            "NodePosY": 543
+        },
+        {
+            "NodeID": 197,
+            "NodeName": "Game Object",
+            "Inputs": [
+                {
+                    "InputPin0": 11,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": 35
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 12
+                }
+            ],
+            "NodePosX": 52,
+            "NodePosY": 703
+        },
+        {
+            "NodeID": 198,
+            "NodeName": "Rotate",
+            "Inputs": [
+                {
+                    "InputPin0": 14,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                },
+                {
+                    "InputPin1": 15,
+                    "InputPinBox1": "",
+                    "InputPinBox0Vector31": "",
+                    "InputPinBox1Vector31": "",
+                    "InputPinBox2Vector31": "",
+                    "InputPinBoxGO1": -1
+                },
+                {
+                    "InputPin2": 16,
+                    "InputPinBox2": "",
+                    "InputPinBox0Vector32": "",
+                    "InputPinBox1Vector32": "",
+                    "InputPinBox2Vector32": "",
+                    "InputPinBoxGO2": -1
+                }
+            ],
+            "Outputs": [],
+            "NodePosX": 668,
+            "NodePosY": 627
+        },
+        {
+            "NodeID": 199,
+            "NodeName": "Get Delta Time",
+            "Inputs": [],
+            "Outputs": [
+                {
+                    "OutputPin0": 22
+                }
+            ],
+            "NodePosX": 44,
+            "NodePosY": 799
+        },
+        {
+            "NodeID": 200,
+            "NodeName": "Multiply",
+            "Inputs": [
+                {
+                    "InputPin0": 34,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                },
+                {
+                    "InputPin1": 35,
+                    "InputPinBox1": "",
+                    "InputPinBox0Vector31": "",
+                    "InputPinBox1Vector31": "",
+                    "InputPinBox2Vector31": "",
+                    "InputPinBoxGO1": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 36
+                }
+            ],
+            "NodePosX": 420,
+            "NodePosY": 655
+        },
+        {
+            "NodeID": 201,
+            "NodeName": "Multiply",
+            "Inputs": [
+                {
+                    "InputPin0": 42,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                },
+                {
+                    "InputPin1": 43,
+                    "InputPinBox1": "",
+                    "InputPinBox0Vector31": "",
+                    "InputPinBox1Vector31": "",
+                    "InputPinBox2Vector31": "",
+                    "InputPinBoxGO1": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 44
+                }
+            ],
+            "NodePosX": 540,
+            "NodePosY": 611
+        },
+        {
+            "NodeID": 202,
+            "NodeName": "Press Key",
+            "Inputs": [
+                {
+                    "InputPin0": 99,
+                    "InputPinBox0": "E",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 100
+                },
+                {
+                    "OutputPin1": 101
+                },
+                {
+                    "OutputPin2": 102
+                }
+            ],
+            "NodePosX": -100,
+            "NodePosY": 443
+        },
+        {
+            "NodeID": 203,
+            "NodeName": "Float",
+            "Inputs": [
+                {
+                    "InputPin0": 104,
+                    "InputPinBox0": "1.5",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 105
+                }
+            ],
+            "NodePosX": -92,
+            "NodePosY": 571
+        },
+        {
+            "NodeID": 204,
+            "NodeName": "Float",
+            "Inputs": [
+                {
+                    "InputPin0": 107,
+                    "InputPinBox0": "3",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 108
+                }
+            ],
+            "NodePosX": -92,
+            "NodePosY": 635
+        },
+        {
+            "NodeID": 205,
+            "NodeName": "Spawn Projectile",
+            "Inputs": [
+                {
+                    "InputPin0": 110,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "",
+                    "InputPinBox1Vector30": "",
+                    "InputPinBox2Vector30": "",
+                    "InputPinBoxGO0": -1
+                },
+                {
+                    "InputPin1": 111,
+                    "InputPinBox1": "",
+                    "InputPinBox0Vector31": "",
+                    "InputPinBox1Vector31": "",
+                    "InputPinBox2Vector31": "",
+                    "InputPinBoxGO1": -1
+                },
+                {
+                    "InputPin2": 112,
+                    "InputPinBox2": "",
+                    "InputPinBox0Vector32": "",
+                    "InputPinBox1Vector32": "",
+                    "InputPinBox2Vector32": "",
+                    "InputPinBoxGO2": -1
+                },
+                {
+                    "InputPin3": 113,
+                    "InputPinBox3": "",
+                    "InputPinBox0Vector33": "",
+                    "InputPinBox1Vector33": "",
+                    "InputPinBox2Vector33": "",
+                    "InputPinBoxGO3": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 114
+                }
+            ],
+            "NodePosX": 92,
+            "NodePosY": 431
+        },
+        {
+            "NodeID": 206,
+            "NodeName": "Vector3",
+            "Inputs": [
+                {
+                    "InputPin0": 174,
+                    "InputPinBox0": "",
+                    "InputPinBox0Vector30": "0",
+                    "InputPinBox1Vector30": "1",
+                    "InputPinBox2Vector30": "0",
+                    "InputPinBoxGO0": -1
+                }
+            ],
+            "Outputs": [
+                {
+                    "OutputPin0": 175
+                }
+            ],
+            "NodePosX": 420,
+            "NodePosY": 427
+        }
+    ],
+    "Links": [
+        {
+            "LinkID": 45,
+            "InputID": 42,
+            "OutputID": 9,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 46,
+            "InputID": 34,
+            "OutputID": 2,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 47,
+            "InputID": 43,
+            "OutputID": 36,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 48,
+            "InputID": 14,
+            "OutputID": 44,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 49,
+            "InputID": 16,
+            "OutputID": 3,
+            "Color": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "LinkID": 50,
+            "InputID": 35,
+            "OutputID": 22,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 115,
+            "InputID": 110,
+            "OutputID": 12,
+            "Color": [
+                0.20000001788139343,
+                0.58823531866073608,
+                0.84313732385635376
+            ]
+        },
+        {
+            "LinkID": 116,
+            "InputID": 113,
+            "OutputID": 100,
+            "Color": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "LinkID": 117,
+            "InputID": 111,
+            "OutputID": 105,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 118,
+            "InputID": 112,
+            "OutputID": 108,
+            "Color": [
+                0.57647061347961426,
+                0.88627457618713379,
+                0.29019609093666077
+            ]
+        },
+        {
+            "LinkID": 176,
+            "InputID": 15,
+            "OutputID": 175,
+            "Color": [
+                0.88627457618713379,
+                0,
+                0.29019609093666077
+            ]
+        }
+    ]
+}

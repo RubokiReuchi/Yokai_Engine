@@ -6,6 +6,29 @@
 #include "parson/parson.h"
 
 class GameObject;
+class BluePrint;
+
+struct SerializedNode
+{
+	int id;
+	std::string name;
+	std::vector<int> inputs_id;
+	std::vector<std::string> inputs_box;
+	std::vector<std::string> inputs_vector3_box0;
+	std::vector<std::string> inputs_vector3_box1;
+	std::vector<std::string> inputs_vector3_box2;
+	std::vector<int> inputs_go_ID;
+	std::vector<int> outputs_id;
+	ImVec2 pos;
+};
+
+struct SerializedLink
+{
+	int id;
+	int input_id;
+	int output_id;
+	float3 color;
+};
 
 struct SerializedGO
 {
@@ -35,6 +58,10 @@ struct SerializedGO
 	float camera_range;
 	float3x4 camera_matrix;
 
+	int unique_id;
+	std::string bp_name;
+	std::vector<SerializedNode> nodes;
+	std::vector<SerializedLink> links;
 };
 
 class Serialization
@@ -44,6 +71,9 @@ public:
 	static void YK_LoadScene(std::string path);
 	static void SaveSettings();
 	static void LoadSettings();
+
+	static void SerializeBlueprint(BluePrint* bp, std::string save_path);
+	static void DeSerializeBlueprint(SerializedGO* go, std::string load_path);
 
 private:
 	static void SerializeSceneCamera(JSON_Object* json_object);
@@ -67,5 +97,10 @@ private:
 	static float3x4 GetFloat3x4(JSON_Object* json_object, std::string variable);
 
 	static void CheckComponents(JSON_Object* json_object, std::vector<Component*> components);
+
+	static void SerializeNodes(JSON_Object* json_object, std::vector<BP_Node*> nodes);
+	static void SerializeLinks(JSON_Object* json_object, std::vector<BP_Link*> links);
+	static void DeSerializeNodes(JSON_Object* json_object, std::vector<SerializedNode>* nodes);
+	static void DeSerializeLinks(JSON_Object* json_object, std::vector<SerializedLink>* links);
 
 };

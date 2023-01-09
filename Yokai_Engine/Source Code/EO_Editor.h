@@ -2,7 +2,9 @@
 
 #include "EO_Base.h"
 #include "EditorWindow.h"
+#include "EW_Hierarchy.h"
 #include "EW_Project.h"
+#include "EW_Game.h"
 #include "EW_Console.h"
 #include "FileExplorer.h"
 
@@ -19,6 +21,7 @@ enum class EW_TYPE
 	INSPECTOR,
 	CONSOLE,
 	PROJECT,
+	BLUEPRINT,
 	NUM_EW_TYPE, // number of EditorWindows types
 };
 
@@ -42,6 +45,8 @@ public:
 		return selected_go;
 	}
 
+	FileExplorer file_explorer;
+
 	// Fonts
 	ImFont* default_font;
 	ImFont* arial_font_30;
@@ -54,6 +59,16 @@ public:
 		return dynamic_cast<EW_Project*>(editor_windows[(uint)EW_TYPE::PROJECT]);
 	}
 
+	EW_Hierarchy* GetHierarchyWindow()
+	{
+		return dynamic_cast<EW_Hierarchy*>(editor_windows[(uint)EW_TYPE::HIERARCHY]);
+	}
+
+	EW_Game* GetGameWindow()
+	{
+		return dynamic_cast<EW_Game*>(editor_windows[(uint)EW_TYPE::GAME]);
+	}
+
 private:
 
 	EditorWindow* editor_windows[(uint)EW_TYPE::NUM_EW_TYPE] = { nullptr };
@@ -63,6 +78,4 @@ private:
 	bool SetMenuBar();
 
 	void SetOutline(GameObject* selected_game_object, GameObject* game_object);
-
-	FileExplorer file_explorer;
 };

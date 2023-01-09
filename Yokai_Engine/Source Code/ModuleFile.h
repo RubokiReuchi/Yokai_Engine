@@ -9,13 +9,13 @@
 #include <vector>
 
 #define ASSETS_PATH "Assets/"
+#define SCRIPTS_PATH "Assets/Scripts/"
 
 #define LIBRARY_PATH "Library/"
 #define MODELS_PATH "Library/Models/"
 #define MESHES_PATH "Library/Meshes/"
 #define TEXTURES_PATH "Library/Textures/"
 #define SCENES_PATH "Library/Scenes/"
-#define SCRIPTS_PATH "Library/Scripts/"
 #define MATERIALS_PATH "Library/Materials/"
 
 class FileTree;

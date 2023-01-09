@@ -31,6 +31,8 @@ GameObject::GameObject(SerializedGO go)
 
 	// components
 	SaveMesh aux_mesh;
+	C_Camera* cam = NULL;
+	BluePrint* bp = NULL;
 
 	for (size_t i = 0; i < go.components_type.size(); i++)
 	{
@@ -50,7 +52,6 @@ GameObject::GameObject(SerializedGO go)
 			{
 				app->engine_order->loadedSerializedMeshes[go.mesh_path] = app->renderer3D->model_render.GetMapSize();
 
-				SaveMesh aux_mesh;
 				aux_mesh.YK_LoadMesh(go.mesh_path.c_str());
 
 				dynamic_cast<C_MeshRenderer*>(AddComponent(Component::TYPE::MESH_RENDERER))->InitAsNewMesh(aux_mesh.vertices, aux_mesh.indices, go.mesh_path);
@@ -67,10 +68,23 @@ GameObject::GameObject(SerializedGO go)
 			break;
 		case 4: // Camera
 			app->camera->InitNewGameCamera(this);
-			C_Camera* cam = dynamic_cast<C_Camera*>(GetComponent(Component::TYPE::CAMERA));
+			cam = dynamic_cast<C_Camera*>(GetComponent(Component::TYPE::CAMERA));
 			cam->GetCamera()->cameraFrustum.SetWorldMatrix(go.camera_matrix);
 			cam->GetCamera()->SetFOV(math::RadToDeg(go.fov));
 			cam->GetCamera()->SetRange(go.camera_range);
+			break;
+		case 5: // Blueprint
+			bp = dynamic_cast<C_Blueprint*>(AddComponent(Component::TYPE::BLUEPRINT))->GetBluePrint();
+			bp->unique_id = go.unique_id;
+			bp->name = go.bp_name;
+			for (size_t i = 0; i < go.nodes.size(); i++)
+			{
+				AddSerializedNode(go.nodes[i], bp);
+			}
+			for (size_t i = 0; i < go.links.size(); i++)
+			{
+				AddSerializedLink(go.links[i], bp);
+			}
 			break;
 		}
 	}
@@ -110,6 +124,14 @@ void GameObject::UpdateInGame(float dt)
 	}
 }
 
+void GameObject::OnLoad()
+{
+	for (auto& component : components)
+	{
+		if (component->IsEnabled()) component->OnLoad();
+	}
+}
+
 void GameObject::DeleteGameObject()
 {
 	if (app->engine_order->editor->GetSelectedGameObject() == this) app->engine_order->editor->SetSelectedGameObject(NULL);
@@ -129,6 +151,30 @@ void GameObject::DeleteGameObject()
 		children[0]->DeleteGameObject();
 	}
 	app->engine_order->id_counter--;
+}
+
+void GameObject::AddSerializedNode(SerializedNode node, BluePrint* bp)
+{
+	bp->CreateNode(node.name, node.pos, node.inputs_id, node.inputs_box, node.inputs_vector3_box0, node.inputs_vector3_box1, node.inputs_vector3_box2, node.inputs_go_ID, node.outputs_id);
+}
+
+void GameObject::AddSerializedLink(SerializedLink link, BluePrint* bp)
+{
+	bp->CreateLink(link.id, link.input_id, link.output_id, link.color);
+}
+
+void GameObject::ProcessSerializedBlueprint(SerializedGO go, BluePrint* bp)
+{
+	bp->unique_id = go.unique_id;
+	bp->name = go.bp_name;
+	for (size_t i = 0; i < go.nodes.size(); i++)
+	{
+		AddSerializedNode(go.nodes[i], bp);
+	}
+	for (size_t i = 0; i < go.links.size(); i++)
+	{
+		AddSerializedLink(go.links[i], bp);
+	}
 }
 
 bool GameObject::AddChild(GameObject* child)
@@ -166,7 +212,7 @@ bool GameObject::AddChild(GameObject* child)
 	child->parent = this;
 	GenerateAABB(); // recalculate aabb of new parent
 	child->transform->parentGlobalTransform = transform->GetGlobalTransform();
-	child->transform->FixTransform(last_parent_tranform);
+	//child->transform->FixTransform(last_parent_tranform);
 
 	return true;
 }
@@ -253,4 +299,14 @@ void GameObject::GenerateFixedAABB()
 	aabb.Enclose((float3*)v_pos, vertices_pos.size());
 
 	delete[] v_pos;
+}
+
+void GameObject::Disable()
+{
+	this->enabled = false;
+
+	for (size_t i = 0; i < children.size(); i++)
+	{
+		children[i]->Disable();
+	}
 }

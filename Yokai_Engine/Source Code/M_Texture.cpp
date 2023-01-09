@@ -53,13 +53,3 @@ void M_Texture::DeleteTextures()
 	loaded_textures.clear();
 	usedPaths.clear();
 }
-
-// For second deliver
-void M_Texture::LogLoadedTextures()
-{
-	Console::LogInConsole("Textures loaded----------");
-	for (auto& texture : usedPaths)
-	{
-		Console::LogInConsole(texture.first + " is loaded.");
-	}
-}

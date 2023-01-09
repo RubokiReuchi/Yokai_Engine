@@ -61,6 +61,42 @@
     <Filter Include="Sources\Tools\Json">
       <UniqueIdentifier>{f70546db-b6b2-431e-a987-95c87ebedd3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Tools\ImGuiNodeEditor">
+      <UniqueIdentifier>{7dc6f080-cb4f-4f93-b951-1e295e96ba8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts">
+      <UniqueIdentifier>{1578d9cf-e718-4192-9edd-ecf59d062730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tools\ImGuiNodeEditor\utilities">
+      <UniqueIdentifier>{5400a660-b7e0-4ab8-a3e5-1047aff275b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\Components">
+      <UniqueIdentifier>{7928eafd-74ae-4871-a30e-c11ab255560c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes">
+      <UniqueIdentifier>{1def8537-f021-440f-a3c1-e8a7f16bc6d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes">
+      <UniqueIdentifier>{b6a8f7ec-d7d8-46d8-8337-952cda5ee398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode">
+      <UniqueIdentifier>{b250a790-3990-4b86-ba07-accdd2f97ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode">
+      <UniqueIdentifier>{db1a9abf-272b-4035-b7d7-3dd938a94553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode">
+      <UniqueIdentifier>{19a69beb-1fc2-4dfd-824d-5dbe6ef14398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode">
+      <UniqueIdentifier>{85f8444d-30bf-4f4a-ba72-e27972d3a1ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode">
+      <UniqueIdentifier>{7b9927ba-3135-4a7a-bac4-388c7a1ac357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode">
+      <UniqueIdentifier>{d1869404-33f1-4fd9-b378-a512de9c95f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -438,6 +474,114 @@
     <ClInclude Include="Source Code\GameTimer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\crude_json.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_bezier_math.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_canvas.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_extra_math.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_internal.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\EW_Blueprint.h">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\drawing.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.h">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BP_Node.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BP_Pin.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BP_Link.h">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Blueprint.h">
+      <Filter>Sources\BlueprintScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\BlueprintHelpers.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\C_Blueprint.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_PressKey.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_String.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Includes.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Bool.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Float.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Int.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_PrintString.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Translate.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetForward.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetRight.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetUp.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GO.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Multiplication.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Multiplication3.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_GetDeltaTime.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Rotate.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_Vector3.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_MouseMotionX.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_MouseMotionY.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\TempGameObject.h">
+      <Filter>Sources\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\DN_SpawnProjectile.h">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -710,6 +854,105 @@
     <ClCompile Include="Source Code\ResourceManager.cpp">
       <Filter>Sources\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\crude_json.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_canvas.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_api.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\EW_Blueprint.cpp">
+      <Filter>Sources\EditorWindows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\drawing.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\External Libraries\ImGuiNodeEditor\utilities\widgets.cpp">
+      <Filter>Sources\Tools\ImGuiNodeEditor\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BP_Node.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BP_Pin.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BP_Link.cpp">
+      <Filter>Sources\BlueprintScripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Blueprint.cpp">
+      <Filter>Sources\BlueprintScripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\BlueprintHelpers.cpp">
+      <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\C_Blueprint.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_PressKey.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_String.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Bool.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Float.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Int.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_PrintString.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Translate.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetForward.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetRight.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetUp.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GO.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Multiplication.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Multiplication3.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\OperationNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_GetDeltaTime.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\GetValueNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Rotate.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ModifyNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_Vector3.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\VariableNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_MouseMotionX.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_MouseMotionY.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\InputNode</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\TempGameObject.cpp">
+      <Filter>Sources\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\DN_SpawnProjectile.cpp">
+      <Filter>Sources\BlueprintScripts\NodeTypes\DefinedNodes\ActionNode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Geometry\KDTree.inl">
@@ -729,6 +972,15 @@
     </None>
     <None Include="Source Code\External Libraries\MathGeoLib\include\Math\Matrix.inl">
       <Filter>Sources\Tools\MathGeoLib\Math</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_bezier_math.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_extra_math.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
+    </None>
+    <None Include="Source Code\External Libraries\ImGuiNodeEditor\imgui_node_editor_internal.inl">
+      <Filter>Sources\Tools\ImGuiNodeEditor</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

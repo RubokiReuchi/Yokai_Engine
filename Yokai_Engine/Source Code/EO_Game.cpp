@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "EO_Editor.h"
 
 #include "ModuleFile.h"
 
@@ -31,7 +32,7 @@ void EO_Game::Update()
 	// game logic
 	if (in_game)
 	{
-		if (!paused)
+		if (!paused && app->engine_order->editor->GetGameWindow()->mouse_confined)
 		{
 			timer->frameCount++;
 			timer->time += timer->realTime_dt;
@@ -134,7 +135,29 @@ void EO_Game::ReturnGameObject()
 		{
 			dynamic_cast<C_Material*>(app->engine_order->game_objects[i]->GetComponent(Component::TYPE::MATERIAL))->SetTexture(go_before_play[i].texture_path);
 		}
+
+		C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(app->engine_order->game_objects[i]->GetComponent(Component::TYPE::BLUEPRINT));
+		if (c_bp != NULL)
+		{
+			c_bp->GetBluePrint()->info_saved_in_nodes = false;
+		}
 	}
 
 	go_before_play.clear();
+
+	std::vector<GameObject*> temp_go;
+	for (auto& go : app->engine_order->game_objects)
+	{
+		if (go.second->temp_type != TempGoType::NONE)
+		{
+			temp_go.push_back(go.second);
+		}
+	}
+
+	while (!temp_go.empty())
+	{
+		temp_go[0]->DeleteGameObject();
+		std::vector<GameObject*>::iterator it = std::find(temp_go.begin(), temp_go.end(), temp_go[0]);
+		temp_go.erase(it);
+	}
 }

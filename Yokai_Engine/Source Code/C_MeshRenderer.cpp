@@ -24,6 +24,22 @@ C_MeshRenderer::~C_MeshRenderer()
 
 void C_MeshRenderer::Update()
 {
+	if (!GetGameObject()->enabled)
+	{
+		GetMesh().visible = false;
+	}
+	else if (GetGameObject()->visible)
+	{
+		GetMesh().visible = true;
+	}
+
+	float3 pos, rot, scl;
+	Quat rot_q;
+	GetGameObject()->transform->GetGlobalMatrix().Decompose(pos, rot_q, scl);
+	rot = rot_q.ToEulerXYZ();
+
+	GetMesh().SetTransform(pos, scl, float3(rot.x * RADTODEG, rot.y * RADTODEG, rot.z * RADTODEG));
+
 	if (show_aabb)
 	{
 		float3 points[8];
@@ -103,26 +119,6 @@ void C_MeshRenderer::InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vecto
 	manager->mesh_indices = indices;
 
 	instance_id = manager->InitManageRender(newMesh);
-}
-
-void C_MeshRenderer::OnPositionUpdate(float3 position)
-{
-	GetMesh().SetPosition(position);
-}
-
-void C_MeshRenderer::OnScaleUpdate(float3 scale)
-{
-	GetMesh().SetScale(scale);
-}
-
-void C_MeshRenderer::OnRotationUpdate(float3 rotation)
-{
-	GetMesh().SetRotation(rotation);
-}
-
-void C_MeshRenderer::OnTransformUpdate(float3 position, float3 scale, float3 rotation)
-{
-	GetMesh().SetTransform(position, scale, rotation);
 }
 
 Re_Mesh& C_MeshRenderer::GetMesh()

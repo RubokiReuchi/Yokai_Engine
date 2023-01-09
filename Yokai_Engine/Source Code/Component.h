@@ -22,6 +22,7 @@ public:
 		MESH_RENDERER,
 		MATERIAL,
 		CAMERA,
+		BLUEPRINT,
 		NUM_OF_COMPS,
 	};
 
@@ -30,7 +31,7 @@ public:
 
 	virtual void Update() {}
 	virtual void UpdateInGame(float dt) {}
-	virtual void PostUpdate() {}
+	virtual void OnLoad() {}
 
 	bool IsEnabled() { return enabled; }
 	GameObject* GetGameObject() { return go; }

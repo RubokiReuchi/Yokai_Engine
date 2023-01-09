@@ -14,6 +14,28 @@ C_Transform::~C_Transform()
 {
 }
 
+void C_Transform::Update()
+{
+	Quat quatRot = Quat::FromEulerXYZ(localTransform.rotation.x * DEGTORAD, localTransform.rotation.y * DEGTORAD, localTransform.rotation.z * DEGTORAD);
+	quatRot.Normalize();
+
+	float4x4 local_mat = float4x4::FromTRS(localTransform.position, quatRot, localTransform.scale);
+
+	if (GetGameObject()->parent != nullptr)
+	{
+		if (GetGameObject()->parent->transform != nullptr)
+		{
+			globalMatrix = GetGameObject()->parent->transform->GetGlobalMatrix() * local_mat;
+		}
+	}
+	else
+	{
+		globalMatrix = local_mat;
+	}
+
+	UpdateBB();
+}
+
 void C_Transform::OnEditor()
 {
 	float3 temp_pos = localTransform.position;
@@ -60,19 +82,16 @@ void C_Transform::OnEditor()
 void C_Transform::SetPosition(float3 pos)
 {
 	this->localTransform.position = pos;
-	UpdatePosition();
 }
 
 void C_Transform::SetRotation(float3 rot)
 {
 	this->localTransform.rotation = rot;
-	UpdateRotation();
 }
 
 void C_Transform::SetScale(float3 scl)
 {
 	this->localTransform.scale = scl;
-	UpdateScale();
 }
 
 void C_Transform::SetTransform(float3 pos, float3 scl, float3 rot)
@@ -80,7 +99,6 @@ void C_Transform::SetTransform(float3 pos, float3 scl, float3 rot)
 	this->localTransform.position = pos;
 	this->localTransform.rotation = rot;
 	this->localTransform.scale = scl;
-	UpdateTransform();
 }
 
 void C_Transform::SetTransform(float4x4 matrix)
@@ -95,38 +113,12 @@ void C_Transform::SetTransform(float4x4 matrix)
 	euler_rot.y = math::RadToDeg(euler_rot.y);
 	euler_rot.z = math::RadToDeg(euler_rot.z);
 
+	parentGlobalTransform = GetGameObject()->parent->transform->GetGlobalTransform();
 	this->localTransform.position = pos - parentGlobalTransform.position;
 	this->localTransform.scale.x = scl.x / parentGlobalTransform.scale.x;
 	this->localTransform.scale.y = scl.y / parentGlobalTransform.scale.y;
 	this->localTransform.scale.z = scl.z / parentGlobalTransform.scale.z;
 	this->localTransform.rotation = euler_rot - parentGlobalTransform.rotation;
-	UpdateTransform();
-}
-
-void C_Transform::OnPositionUpdate(float3 pos)
-{
-	parentGlobalTransform.position = pos;
-	UpdatePosition();
-}
-
-void C_Transform::OnRotationUpdate(float3 rot)
-{
-	parentGlobalTransform.rotation = rot;
-	UpdateRotation();
-}
-
-void C_Transform::OnScaleUpdate(float3 scale)
-{
-	parentGlobalTransform.scale = scale;
-	UpdateScale();
-}
-
-void C_Transform::OnTransformUpdate(float3 pos, float3 scale, float3 rot)
-{
-	parentGlobalTransform.position = pos;
-	parentGlobalTransform.rotation = rot;
-	parentGlobalTransform.scale = scale;
-	UpdateTransform();
 }
 
 Transform C_Transform::GetGlobalTransform()
@@ -137,11 +129,12 @@ Transform C_Transform::GetGlobalTransform()
 	}
 
 	Transform global_transform;
-	global_transform.position = parentGlobalTransform.position + localTransform.position;
-	global_transform.rotation = parentGlobalTransform.rotation + localTransform.rotation;
-	global_transform.scale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
-	global_transform.scale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
-	global_transform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
+	float3 pos, rot, scl;
+	Quat rot_q;
+	GetGlobalMatrix().Decompose(global_transform.position, rot_q, global_transform.scale);
+	rot = rot_q.ToEulerXYZ();
+
+	global_transform.rotation =  float3(rot.x * RADTODEG, rot.y * RADTODEG, rot.z * RADTODEG);
 
 	return global_transform;
 }
@@ -151,7 +144,7 @@ void C_Transform::UpdateBB()
 	GameObject* go = GetGameObject();
 	if (!go->aabb_init) return;
 
-	CalculateGlobalMatrix();
+	//CalculateGlobalMatrix();
 
 	go->global_obb = go->aabb;
 	go->global_obb.Transform(globalMatrix);
@@ -160,118 +153,40 @@ void C_Transform::UpdateBB()
 	go->global_aabb.Enclose(go->global_obb);
 }
 
-void C_Transform::UpdatePosition()
+void C_Transform::Translate(float3 translation)
 {
-	float3 globalPosition = parentGlobalTransform.position + localTransform.position;
-
-	// For each child
-	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
-	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnPositionUpdate(globalPosition);
-	}
-
-	// For each component, exclude transform component
-	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
-	{
-		GetGameObject()->GetComponentList().at(i)->OnPositionUpdate(globalPosition);
-	}
-
-	UpdateBB();
+	this->localTransform.position += translation;
 }
 
-void C_Transform::UpdateRotation()
+void C_Transform::Scale(float3 scale)
 {
-	float3 globalRotation = parentGlobalTransform.rotation + localTransform.rotation;
-
-	// For each child
-	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
-	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(this->GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnRotationUpdate(globalRotation);
-	}
-
-	// For each component, exclude transform component
-	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
-	{
-		GetGameObject()->GetComponentList().at(i)->OnRotationUpdate(globalRotation);
-	}
-
-	UpdateBB();
+	this->localTransform.scale += scale;
 }
 
-void C_Transform::UpdateScale()
+void C_Transform::Rotate(float3 rotate)
 {
-	float3 globalScale;
-	globalScale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
-	globalScale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
-	globalScale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
-
-	// For each child
-	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
-	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnScaleUpdate(globalScale);
-	}
-
-	// For each component, exclude transform component
-	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
-	{
-		GetGameObject()->GetComponentList().at(i)->OnScaleUpdate(globalScale);
-	}
-
-	UpdateBB();
+	this->localTransform.rotation += rotate;
+	if (this->localTransform.rotation.x > 360.0f) this->localTransform.rotation.x -= 360.0f;
+	if (this->localTransform.rotation.y > 360.0f) this->localTransform.rotation.y -= 360.0f;
+	if (this->localTransform.rotation.z > 360.0f) this->localTransform.rotation.z -= 360.0f;
 }
 
-void C_Transform::UpdateTransform()
+float3 C_Transform::GetForward()
 {
-	Transform globalTransform = GetGlobalTransform();
-
-	// For each child
-	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
-	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
-	}
-
-	// For each component, exclude transform component
-	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
-	{
-		GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
-	}
-
-	UpdateBB();
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(2).Normalized();
 }
 
-void C_Transform::FixTransform(Transform last_parent_tranform)
+float3 C_Transform::GetRight()
 {
-	localTransform.position = localTransform.position - parentGlobalTransform.position + last_parent_tranform.position;
-	localTransform.rotation = localTransform.rotation - parentGlobalTransform.rotation + last_parent_tranform.rotation;
-	localTransform.scale.x = localTransform.scale.x / parentGlobalTransform.scale.x * last_parent_tranform.scale.x;
-	localTransform.scale.y = localTransform.scale.y / parentGlobalTransform.scale.y * last_parent_tranform.scale.y;
-	localTransform.scale.z = localTransform.scale.z / parentGlobalTransform.scale.z * last_parent_tranform.scale.z;
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(0).Normalized();
+}
 
-	Transform globalTransform;
-	globalTransform.position = parentGlobalTransform.position + localTransform.position;
-	globalTransform.rotation = parentGlobalTransform.rotation + localTransform.rotation;
-	globalTransform.scale.x = parentGlobalTransform.scale.x * localTransform.scale.x;
-	globalTransform.scale.y = parentGlobalTransform.scale.y * localTransform.scale.y;
-	globalTransform.scale.z = parentGlobalTransform.scale.z * localTransform.scale.z;
-
-	// For each child
-	for (size_t i = 0; i < GetGameObject()->GetChilds().size(); i++)
-	{
-		C_Transform* child_transform = dynamic_cast<C_Transform*>(GetGameObject()->GetChilds().at(i)->GetComponent(Component::TYPE::TRANSFORM));
-		child_transform->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
-	}
-
-	// For each component, exclude transform component
-	for (size_t i = 1; i < GetGameObject()->GetComponentList().size(); i++)
-	{
-		GetGameObject()->GetComponentList().at(i)->OnTransformUpdate(globalTransform.position, globalTransform.scale, globalTransform.rotation);
-	}
-
-	UpdateBB();
+float3 C_Transform::GetUp()
+{
+	CalculateGlobalMatrix();
+	return globalMatrix.RotatePart().Col(1).Normalized();
 }
 
 void C_Transform::CalculateGlobalMatrix()

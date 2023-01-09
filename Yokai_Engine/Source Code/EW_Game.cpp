@@ -20,10 +20,8 @@ void EW_Game::Update()
 	// Screen
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
-	window_rect.top = (LONG)(ImGui::GetWindowPos().y + ImGui::GetFrameHeight() + 4);
-	window_rect.bottom = (LONG)(ImGui::GetWindowPos().y + ImGui::GetWindowHeight() - 4);
-	window_rect.left = (LONG)(ImGui::GetWindowPos().x + 4);
-	window_rect.right = (LONG)(ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - 4);
+
+	window_hovered = ImGui::IsWindowHovered();
 	
 	currentGameCamera->active = true;
 	app->camera->updateGameCamera = (bool)ImGui::IsWindowHovered();
@@ -43,11 +41,33 @@ void EW_Game::Update()
 
 	if (ImGui::IsWindowHovered() && game->in_game && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
 	{
-		ClipCursor(&window_rect);
+		mouse_confined = true;
 	}
 	else if (ImGui::IsWindowHovered() && game->in_game && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_UP)
 	{
-		ClipCursor(NULL);
+		mouse_confined = false;
+	}
+
+	if (mouse_confined)
+	{
+		uint dx = math::Abs(app->input->GetMouseXMotion());
+		uint dy = math::Abs(app->input->GetMouseYMotion());
+		if (ImGui::GetMousePos().x - 2 - dx < ImGui::GetWindowPos().x)
+		{
+			app->input->SetMousePos(ImGui::GetWindowPos().x + ImGui::GetWindowWidth() - 5, ImGui::GetMousePos().y);
+		}
+		else if (ImGui::GetMousePos().x + 4 + dx > ImGui::GetWindowPos().x + ImGui::GetWindowWidth())
+		{
+			app->input->SetMousePos(ImGui::GetWindowPos().x + 3, ImGui::GetMousePos().y);
+		}
+		else if (ImGui::GetMousePos().y - 22 - dy < ImGui::GetWindowPos().y)
+		{
+			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + ImGui::GetWindowHeight() - 12);
+		}
+		else if (ImGui::GetMousePos().y + 11 + dy > ImGui::GetWindowPos().y + ImGui::GetWindowHeight())
+		{
+			app->input->SetMousePos(ImGui::GetMousePos().x, ImGui::GetWindowPos().y + 23);
+		}
 	}
 
 	ImGui::Image((ImTextureID)currentGameCamera->frameBuffer.GetTexture(), ImVec2(game_width, game_height), ImVec2(0, 1), ImVec2(1, 0));
@@ -63,7 +83,7 @@ void EW_Game::Update()
 	if (ImGui::Button((button1.c_str()), ImVec2(25, 25)))
 	{
 		if (!game->in_game) game->PlayGame();
-		else game->StopGame();
+		else { game->StopGame(); mouse_confined = false; }
 	}
 	ImGui::SameLine();
 	std::string button2 = ICON_FA_PAUSE"##2";

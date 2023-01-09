@@ -20,6 +20,23 @@ C_Camera::~C_Camera()
 
 void C_Camera::Update()
 {
+	float3 pos, rot, scl;
+	Quat rot_q;
+	GetGameObject()->transform->GetGlobalMatrix().Decompose(pos, rot_q, scl);
+	rot = rot_q.ToEulerXYZ();
+
+	app->camera->game_cameras[cameraID].cameraFrustum.pos = pos;
+	app->camera->game_cameras[cameraID].CalculateViewMatrix();
+
+	rot_q.x = -rot_q.x;
+	lookingDir = original_lookingDir * rot_q;
+
+	float4x4 newWorldMatrix = app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix();
+	newWorldMatrix.SetRotatePart(lookingDir.Normalized());
+	app->camera->game_cameras[cameraID].cameraFrustum.SetWorldMatrix(newWorldMatrix.Float3x4Part());
+
+	app->camera->game_cameras[cameraID].cameraFrustum.up = float3(0, 1, 0);
+
 	float3 points[8];
 	GetGameObject()->global_obb.GetCornerPoints(points);
 
@@ -66,47 +83,6 @@ void C_Camera::OnEditor()
 	{
 		ComponentOptions();
 	}
-}
-
-void C_Camera::OnPositionUpdate(float3 pos)
-{
-	app->camera->game_cameras[cameraID].cameraFrustum.pos = pos;
-	app->camera->game_cameras[cameraID].CalculateViewMatrix();
-}
-
-void C_Camera::OnRotationUpdate(float3 rotation)
-{
-	Quat rotx = Quat::identity;
-	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(rotation.x));
-	Quat roty = Quat::identity;
-	roty.SetFromAxisAngle({ 0.0f, 1.0f, 0.0f }, math::DegToRad(rotation.y));
-	Quat rotz = Quat::identity;
-	rotz.SetFromAxisAngle({ 0.0f, 0.0f, 1.0f }, math::DegToRad(rotation.z));
-
-	lookingDir = original_lookingDir * rotx * roty * rotz;
-
-	float4x4 newWorldMatrix = app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix();
-	newWorldMatrix.SetRotatePart(lookingDir.Normalized());
-	app->camera->game_cameras[cameraID].cameraFrustum.SetWorldMatrix(newWorldMatrix.Float3x4Part());
-}
-
-void C_Camera::OnTransformUpdate(float3 pos, float3 scale, float3 rotation)
-{
-	app->camera->game_cameras[cameraID].cameraFrustum.pos = pos;
-	app->camera->game_cameras[cameraID].CalculateViewMatrix();
-
-	Quat rotx = Quat::identity;
-	rotx.SetFromAxisAngle({ 1.0f, 0.0f, 0.0f }, math::DegToRad(rotation.x));
-	Quat roty = Quat::identity;
-	roty.SetFromAxisAngle({ 0.0f, 1.0f, 0.0f }, math::DegToRad(rotation.y));
-	Quat rotz = Quat::identity;
-	rotz.SetFromAxisAngle({ 0.0f, 0.0f, 1.0f }, math::DegToRad(rotation.z));
-
-	lookingDir = original_lookingDir * rotx * roty * rotz;
-
-	float4x4 newWorldMatrix = app->camera->game_cameras[cameraID].cameraFrustum.WorldMatrix();
-	newWorldMatrix.SetRotatePart(lookingDir.Normalized());
-	app->camera->game_cameras[cameraID].cameraFrustum.SetWorldMatrix(newWorldMatrix.Float3x4Part());
 }
 
 Camera* C_Camera::GetCamera()

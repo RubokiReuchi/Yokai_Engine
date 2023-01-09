@@ -149,6 +149,14 @@ void Serialization::DeSerializeGameObject(JSON_Array* json_array, size_t it)
             go.camera_range = GetFloat(component_object, "CameraRange");
             go.camera_matrix = GetFloat3x4(component_object, "CameraMatrix");
             break;
+        case 5:
+            go.components_type.push_back(5);
+            go.components_enabled.push_back(GetBool(component_object, "Enabled"));
+            go.unique_id = GetInt(component_object, "UniqueID");
+            go.bp_name = GetString(component_object, "BlueprintName");
+            DeSerializeNodes(component_object, &go.nodes);
+            DeSerializeLinks(component_object, &go.links);
+            break;
         }
     }
 
@@ -303,6 +311,14 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
             SetFloat(component_object, "CameraRange", dynamic_cast<C_Camera*>(components[i])->GetCamera()->GetRange());
             SetFloat3x4(component_object, "CameraMatrix", dynamic_cast<C_Camera*>(components[i])->GetCamera()->cameraFrustum.WorldMatrix());
             break;
+        case Component::TYPE::BLUEPRINT:
+            SetInt(component_object, "Type", (int)components[i]->GetType());
+            SetBool(component_object, "Enabled", components[i]->IsEnabled());
+            SetInt(component_object, "UniqueID", dynamic_cast<C_Blueprint*>(components[i])->blueprint->unique_id);
+            SetString(component_object, "BlueprintName", dynamic_cast<C_Blueprint*>(components[i])->blueprint->name);
+            SerializeNodes(component_object, dynamic_cast<C_Blueprint*>(components[i])->blueprint->nodes);
+            SerializeLinks(component_object, dynamic_cast<C_Blueprint*>(components[i])->blueprint->links);
+            break;
         default:
             SetString(component_object, "ERROR", "Incorrect component type.");
             break;
@@ -312,6 +328,156 @@ void Serialization::CheckComponents(JSON_Object* json_object, std::vector<Compon
     }
 
     json_object_set_value(json_object, "Components", go_value);
+}
+
+void Serialization::SerializeNodes(JSON_Object* json_object, std::vector<BP_Node*> nodes)
+{
+    JSON_Value* nodes_value = json_value_init_array();
+    JSON_Array* nodes_array = json_value_get_array(nodes_value);
+
+    for (auto& node : nodes)
+    {
+        JSON_Value* node_value = json_value_init_object();
+        JSON_Object* node_object = json_value_get_object(node_value);
+
+        SetInt(node_object, "NodeID", node->id_as_int);
+        SetString(node_object, "NodeName", node->name);
+
+        JSON_Value* inputs_value = json_value_init_array();
+        JSON_Array* inputs_array = json_value_get_array(inputs_value);
+        for (size_t i = 0; i < node->inputs.size(); i++)
+        {
+            JSON_Value* input_value = json_value_init_object();
+            JSON_Object* input_object = json_value_get_object(input_value);
+
+            std::string aux = "InputPin" + std::to_string(i);
+            SetInt(input_object, aux, node->inputs[i].id_as_int);
+            aux = "InputPinBox" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].string_box);
+            aux = "InputPinBox0Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[0]);
+            aux = "InputPinBox1Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[1]);
+            aux = "InputPinBox2Vector3" + std::to_string(i);
+            SetString(input_object, aux, node->inputs[i].vector3_box[2]);
+            aux = "InputPinBoxGO" + std::to_string(i);
+            if (node->inputs[i].go_box != NULL)
+            {
+                SetInt(input_object, aux, node->inputs[i].go_box->id);
+            }
+            else
+            {
+                SetInt(input_object, aux, -1);
+            }
+
+            json_array_append_value(inputs_array, input_value);
+        }
+        json_object_set_value(node_object, "Inputs", inputs_value);
+
+        JSON_Value* outputs_value = json_value_init_array();
+        JSON_Array* outputs_array = json_value_get_array(outputs_value);
+        for (size_t i = 0; i < node->outputs.size(); i++)
+        {
+            JSON_Value* output_value = json_value_init_object();
+            JSON_Object* output_object = json_value_get_object(output_value);
+
+            std::string aux = "OutputPin" + std::to_string(i);
+            SetInt(output_object, aux, node->outputs[i].id_as_int);
+
+            json_array_append_value(outputs_array, output_value);
+        }
+        json_object_set_value(node_object, "Outputs", outputs_value);
+
+        SetFloat(node_object, "NodePosX", node->position.x);
+        SetFloat(node_object, "NodePosY", node->position.y);
+
+        json_array_append_value(nodes_array, node_value);
+    }
+    json_object_set_value(json_object, "Nodes", nodes_value);
+}
+
+void Serialization::SerializeLinks(JSON_Object* json_object, std::vector<BP_Link*> links)
+{
+    JSON_Value* links_value = json_value_init_array();
+    JSON_Array* links_array = json_value_get_array(links_value);
+
+    for (auto& link : links)
+    {
+        JSON_Value* link_value = json_value_init_object();
+        JSON_Object* link_object = json_value_get_object(link_value);
+
+        SetInt(link_object, "LinkID", link->id_as_int);
+        SetInt(link_object, "InputID", link->input_id_as_int);
+        SetInt(link_object, "OutputID", link->output_id_as_int);
+        SetFloat3(link_object, "Color", float3(link->color.Value.x, link->color.Value.y, link->color.Value.z));
+
+        json_array_append_value(links_array, link_value);
+    }
+    json_object_set_value(json_object, "Links", links_value);
+}
+
+void Serialization::DeSerializeNodes(JSON_Object* go_object, std::vector<SerializedNode>* nodes)
+{
+    JSON_Array* nodes_array = json_object_get_array(go_object, "Nodes");
+
+    for (size_t i = 0; i < json_array_get_count(nodes_array); i++)
+    {
+        JSON_Object* node_object = json_array_get_object(nodes_array, i);
+
+        SerializedNode node;
+        node.id = GetInt(node_object, "NodeID");
+        node.name = GetString(node_object, "NodeName");
+
+        JSON_Array* inputs_array = json_object_get_array(node_object, "Inputs");
+        for (size_t i = 0; i < json_array_get_count(inputs_array); i++)
+        {
+            JSON_Object* input_object = json_array_get_object(inputs_array, i);
+
+            std::string aux = "InputPin" + std::to_string(i);
+            node.inputs_id.push_back(GetInt(input_object, aux));
+            aux = "InputPinBox" + std::to_string(i);
+            node.inputs_box.push_back(GetString(input_object, aux));
+            aux = "InputPinBox0Vector3" + std::to_string(i);
+            node.inputs_vector3_box0.push_back(GetString(input_object, aux));
+            aux = "InputPinBox1Vector3" + std::to_string(i);
+            node.inputs_vector3_box1.push_back(GetString(input_object, aux));
+            aux = "InputPinBox2Vector3" + std::to_string(i);
+            node.inputs_vector3_box2.push_back(GetString(input_object, aux));
+            aux = "InputPinBoxGO" + std::to_string(i);
+            node.inputs_go_ID.push_back(GetInt(input_object, aux));
+        }
+
+        JSON_Array* outputs_array = json_object_get_array(node_object, "Outputs");
+        for (size_t i = 0; i < json_array_get_count(outputs_array); i++)
+        {
+            JSON_Object* output_object = json_array_get_object(outputs_array, i);
+
+            std::string aux = "OutputPin" + std::to_string(i);
+            node.outputs_id.push_back(GetInt(output_object, aux));
+        }
+
+        node.pos = ImVec2(GetFloat(node_object, "NodePosX"), GetFloat(node_object, "NodePosY"));
+
+        nodes->push_back(node);
+    }
+}
+
+void Serialization::DeSerializeLinks(JSON_Object* go_object, std::vector<SerializedLink>* links)
+{
+    JSON_Array* links_array = json_object_get_array(go_object, "Links");
+
+    for (size_t i = 0; i < json_array_get_count(links_array); i++)
+    {
+        JSON_Object* link_object = json_array_get_object(links_array, i);
+
+        SerializedLink link;
+        link.id = GetInt(link_object, "LinkID");
+        link.input_id = GetInt(link_object, "InputID");
+        link.output_id = GetInt(link_object, "OutputID");
+        link.color = GetFloat3(link_object, "Color");
+
+        links->push_back(link);
+    }
 }
 
 void Serialization::SaveSettings()
@@ -353,4 +519,43 @@ void Serialization::LoadSettings()
     SDL_GetCurrentDisplayMode(0, &DM);
     SDL_SetWindowPosition(app->window->window, (DM.w - app->window->width) / 2, (DM.h - app->window->height) / 2);
     json_value_free(settings_value);
+}
+
+void Serialization::SerializeBlueprint(BluePrint* bp, std::string save_path)
+{
+    JSON_Value* bp_value = json_value_init_object();
+    JSON_Object* bp_object = json_value_get_object(bp_value);
+
+    SetInt(bp_object, "UniqueID", bp->unique_id);
+    SetString(bp_object, "BlueprintName", bp->name);
+    SerializeNodes(bp_object, bp->nodes);
+    SerializeLinks(bp_object, bp->links);
+
+    json_serialize_to_file_pretty(bp_value, save_path.c_str());
+    json_value_free(bp_value);
+    Console::LogInConsole(bp->name + " exported.");
+}
+
+void Serialization::DeSerializeBlueprint(SerializedGO* go, std::string load_path)
+{
+    JSON_Value* bp_value = json_parse_file(load_path.c_str());
+
+    if (bp_value == NULL)
+    {
+        Console::LogInConsole("Error loading  " + load_path + " blueprint.");
+        return;
+    }
+
+    JSON_Object* bp_object = json_value_get_object(bp_value);
+
+    go->unique_id = GetInt(bp_object, "UniqueID");
+    go->bp_name = GetString(bp_object, "BlueprintName");
+    DeSerializeNodes(bp_object, &go->nodes);
+    DeSerializeLinks(bp_object, &go->links);
+
+    json_value_free(bp_value);
+
+
+
+    Console::LogInConsole(load_path + " loaded.");
 }

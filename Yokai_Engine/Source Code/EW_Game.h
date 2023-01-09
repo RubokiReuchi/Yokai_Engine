@@ -16,11 +16,16 @@ public:
 	{
 		currentGameCamera->active = active;
 	}
+	void SetCurrentGameCamera(Camera* cam)
+	{
+		currentGameCamera = cam;
+	}
+
+	bool window_hovered = false;
+	bool mouse_confined = false;
 
 private:
 
 	Camera* currentGameCamera = nullptr;
 	float game_width, game_height;
-
-	RECT window_rect;
 };

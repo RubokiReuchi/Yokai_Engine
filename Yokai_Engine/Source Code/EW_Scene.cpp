@@ -98,7 +98,7 @@ void EW_Scene::Update()
 			{
 				guizmo_operation = ImGuizmo::OPERATION::ROTATE;
 			}
-			else if (guizmo_operation == ImGuizmo::OPERATION::ROTATE_Z)
+			else if (guizmo_operation == ImGuizmo::OPERATION::ROTATE_X)
 			{
 				guizmo_operation = ImGuizmo::OPERATION::SCALE;
 			}
@@ -111,7 +111,7 @@ void EW_Scene::Update()
 			}
 			else if (guizmo_operation == ImGuizmo::OPERATION::SCALE)
 			{
-				guizmo_operation = ImGuizmo::OPERATION::ROTATE_Z;
+				guizmo_operation = ImGuizmo::OPERATION::ROTATE_X;
 			}
 		}
 		if (!ImGuizmo::IsUsing() && ImGui::IsWindowHovered() && app->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_IDLE)
@@ -135,12 +135,15 @@ void EW_Scene::Update()
 			{
 				guizmo_operation = ImGuizmo::OPERATION::SCALE;
 				guizmo_hide = false;
-				if (go->is_camera) guizmo_operation = ImGuizmo::OPERATION::ROTATE_Z;
+				if (go->is_camera) guizmo_operation = ImGuizmo::OPERATION::ROTATE_X;
 			}
 			else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			{
-				if (guizmo_mode == ImGuizmo::MODE::WORLD) guizmo_mode = ImGuizmo::MODE::LOCAL;
-				else guizmo_mode = ImGuizmo::MODE::WORLD;
+				guizmo_mode = ImGuizmo::MODE::WORLD;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			{
+				guizmo_mode = ImGuizmo::MODE::LOCAL;
 			}
 		}
 
@@ -157,9 +160,13 @@ void EW_Scene::Update()
 			{
 				aux_mode = ImGuizmo::MODE::LOCAL;
 			}
-			else if (guizmo_mode == ImGuizmo::MODE::LOCAL && go->is_camera && (guizmo_operation == ImGuizmo::OPERATION::ROTATE_Y || guizmo_operation == ImGuizmo::OPERATION::ROTATE_Z))
+			else if (guizmo_mode == ImGuizmo::MODE::LOCAL && go->is_camera && guizmo_operation == ImGuizmo::OPERATION::ROTATE_Y)
 			{
 				aux_mode = ImGuizmo::MODE::WORLD;
+			}
+			else if (guizmo_mode == ImGuizmo::MODE::WORLD && go->is_camera && guizmo_operation == ImGuizmo::OPERATION::ROTATE_X)
+			{
+				aux_mode = ImGuizmo::MODE::LOCAL;
 			}
 			else
 			{

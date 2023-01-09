@@ -16,11 +16,6 @@ public:
 	void InitAsInstanciedMesh(uint mesh_id);
 	void InitAsNewMesh(std::vector<VertexInfo>& vertices, std::vector<uint>& indices, std::string mesh_path);
 
-	void OnPositionUpdate(float3 position) override;
-	void OnScaleUpdate(float3 scale) override;
-	void OnRotationUpdate(float3 rotation) override;
-	void OnTransformUpdate(float3 position, float3 scale, float3 rotation) override;
-
 	Re_Mesh& GetMesh();
 	uint GetMeshID()
 	{
