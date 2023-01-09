@@ -16,11 +16,6 @@ C_Transform::~C_Transform()
 
 void C_Transform::Update()
 {
-	if (GetGameObject()->id == 35)
-	{
-		int y = 0;
-	}
-
 	Quat quatRot = Quat::FromEulerXYZ(localTransform.rotation.x * DEGTORAD, localTransform.rotation.y * DEGTORAD, localTransform.rotation.z * DEGTORAD);
 	quatRot.Normalize();
 
