@@ -101,7 +101,12 @@ void EO_Editor::Update()
 	{
 		for (auto& go : app->engine_order->game_objects)
 		{
-			go.second->Update();
+			if (!go.second->is_camera) go.second->Update();
+		}
+
+		for (auto& go : app->engine_order->game_objects)
+		{
+			if (go.second->is_camera) go.second->Update();
 		}
 	}
 }
