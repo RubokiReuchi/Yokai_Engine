@@ -51,6 +51,7 @@ bool ModuleEO::Start()
 
     MeshImporter::LoadMesh("Assets/Tank/Base.fbx");
     MeshImporter::LoadMesh("Assets/Tank/Canon.fbx");
+    uint texture_tank = TextureImporter::LoadTexture("Assets/Tank/militar_texture.png");
 
     for (auto& gameObject : game_objects)
     {
@@ -132,14 +133,19 @@ bool ModuleEO::Start()
             editor->SetSelectedGameObject(gameObject.second);
             gameObject.second->OnLoad();
 
+            c_mr->GetMesh().texture_id = (float)texture_tank;
+            mat->SetTexture(c_mr->GetTexture((float)texture_tank));
         }
         else if (gameObject.second->name == "Canon")
         {
-            gameObject.second->transform->Translate(float3(0, 2, 0));
+            gameObject.second->transform->SetPosition(float3(0, 2, 0));
 
             C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
             if (ModuleFile::FS_Exists("Assets/Scripts/canon.ykbp")) c_bp->LoadBlueprint("canon");
             gameObject.second->OnLoad();
+
+            c_mr->GetMesh().texture_id = (float)texture_tank;
+            mat->SetTexture(c_mr->GetTexture((float)texture_tank));
         }
     }
 
