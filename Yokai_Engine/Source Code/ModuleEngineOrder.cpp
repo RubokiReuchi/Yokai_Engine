@@ -124,6 +124,7 @@ bool ModuleEO::Start()
 
         if (gameObject.second->name == "Base")
         {
+            gameObject.second->AddChild(app->engine_order->game_objects[2]);
             gameObject.second->AddChild(app->engine_order->game_objects[gameObject.second->id + 1]);
 
             C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
@@ -135,7 +136,6 @@ bool ModuleEO::Start()
         else if (gameObject.second->name == "Canon")
         {
             gameObject.second->transform->Translate(float3(0, 2, 0));
-            gameObject.second->AddChild(app->engine_order->game_objects[2]);
 
             C_Blueprint* c_bp = dynamic_cast<C_Blueprint*>(gameObject.second->AddComponent(Component::TYPE::BLUEPRINT));
             if (ModuleFile::FS_Exists("Assets/Scripts/canon.ykbp")) c_bp->LoadBlueprint("canon");

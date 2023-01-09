@@ -35,6 +35,8 @@ void C_Camera::Update()
 	newWorldMatrix.SetRotatePart(lookingDir.Normalized());
 	app->camera->game_cameras[cameraID].cameraFrustum.SetWorldMatrix(newWorldMatrix.Float3x4Part());
 
+	app->camera->game_cameras[cameraID].cameraFrustum.up = float3(0, 1, 0);
+
 	float3 points[8];
 	GetGameObject()->global_obb.GetCornerPoints(points);
 
