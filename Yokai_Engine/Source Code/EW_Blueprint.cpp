@@ -35,7 +35,7 @@ void EW_Blueprint::Update()
         else current_blueprint = NULL;
     }
 
-    ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse/* | ImGuiWindowFlags_NoFocusOnAppearing*/);
+    ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoFocusOnAppearing);
 
     // Blueprint
     std::string bp_name, lock_icon;

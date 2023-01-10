@@ -34,13 +34,13 @@ EW_Performance::~EW_Performance()
 void EW_Performance::Update()
 {
 	// Performance
-	std::string framerate = "Framerate: " + std::to_string(ImGui::GetIO().Framerate);
+	std::string framerate = "Framerate: " + std::to_string(ImGui::GetIO().Framerate * 0.5f);
 
 	for (size_t i = 0; i < 59; i++)
 	{
 		frame_array[i] = frame_array[i + 1];
 	}
-	frame_array[59] = ImGui::GetIO().Framerate;
+	frame_array[59] = ImGui::GetIO().Framerate * 0.5f;
 	frames = &frame_array[0];
 
 	ImGui::Begin(window_name.c_str(), &enabled, ImGuiWindowFlags_NoCollapse);
