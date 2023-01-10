@@ -49,6 +49,10 @@ https://github.com/RubokiReuchi/Yokai_Engine
 - Display texture path.
 - Allow to change the texture from the default one, the texture checker one and the textures loaded.
 - Display preview of selected texture, if is not default or checkers.
+#### Bluprint Component
+- Rename BP.
+- In component options: Import BP from assets, Export BP to assets and reset BP (Clean all nodes in BP).
+- Display in Blueprint Window the BP attached to the selected GO.
 ### Window Performance
 - Set FPS limit.
 - Set window size.
@@ -64,6 +68,16 @@ https://github.com/RubokiReuchi/Yokai_Engine
 ### Window Console
 - Clean Logs
 - Save Logs
+### Window Blueprint
+- Right Click --> Open the create node pop up, with multiple node types.
+- Left Click --> Select Node or Link.
+- Delete key --> Delete selected node or link. If was a node, delete all attached links too.
+- Left Click (Drag) --> From a output pin to an input pin (other way too) to create a link between the two pins.
+- Output pins can have multiple links, but input only can have one.
+- Middle Mouse Click (Drag) --> Move in the blueprint enviroment.
+- F --> Focus the nodes in BP, use it if you can't found the nodes.
+- Click in padlock --> Toggle block current BP.
+- Drag GameObjects from hierarchy to GameObject node (variable node type) --> save in node the dragged GO.
 
 ## Drag and Drop
 ### External Drag
@@ -79,15 +93,13 @@ To drag files in scene, drag it from project window.
 - Save Scene --> save current scene.
 - Save Scene As --> save current scene as a new one or override one actualy saved.
 
-## CHECK tab (only create for show motor funtions in second deliver)
-- Frustrum culling --> enabled, makes the game camera to display only the items in scene camera frustrum. Move scene camera to watch the changes in game camera.
-- Log loaded meshes --> log in console all loaded meshes, if someone is loaded twice it should log both. (motor never loadad more than once a meshs).
-- Log loaded textures --> log in console all loaded textures, if someone is loaded twice it should log both. (motor never loadad more than once a texture).
-
-## Extra information
-- if a asset is removed or modified from Assets folder, the correspondent custom file an his metadata are deleted.
-- custom files and metadata are generated the first time an asset is loaded.
-- the metadata file are hidden in floders, make sure to make them visible in folder settings. They are created in the same folder of his correspondent custom file.
+## Scripting demo information
+- W --> move tank forward.
+- S --> move tank in back direction.
+- A --> rotate thak to left while this one move a little bit forward (simulate realistic movement).
+- D --> rotate thak to right while this one move a little bit forward (simulate realistic movement).
+- E --> Spawn and shoot a sphere in cannon aiming direction (projectile become unactive a few second after spawn).
+- Mouse X motion --> Aim the cannon roght and left.
 
 ## Members:
 - Rubén Ayora Alcañiz: https://github.com/RubokiReuchi
