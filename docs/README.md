@@ -30,13 +30,16 @@ The engine uses a Blueprint system for create the code, allowing to work in the 
 Blueprints allow to modify any game data of the attached gameobject, in order to do that they can make use of values of other gameobjects.
 
 ![](https://github.com/RubokiReuchi/Yokai_Engine/blob/main/docs/gift1.gif)
+
 As is show in the previus gift, we can quickly modify values to make the game alive.
 
 ![](https://github.com/RubokiReuchi/Yokai_Engine/blob/main/docs/gift2.gif)
+
 And saw the result inmediatly working in the game.
 
 ## Video
-![]()
+
+[![Alt text](https://img.youtube.com/vi/jrvIhYVSiKk/0.jpg)](https://www.youtube.com/watch?v=jrvIhYVSiKk)
 
 ## Licence
 MIT License
