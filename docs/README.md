@@ -9,7 +9,7 @@ The engine was make to be the most easy to be user for the users, simple but wit
 
 ## About Ruboki Reuchi
 Hi, Ruboki Reuchi is my username, but my real name is Rubén Ayora. I'm the developer of Yokai Engine, a project in which I have worked for 4 months.
-# ![](https://github.com/RubokiReuchi/Yokai_Engine/blob/main/docs/myface.png)
+# ![](/docs/myface.png)
 
 ## Core Sub-Systems
 
@@ -29,11 +29,11 @@ The user is able to move and dock all windows and the engine store the position 
 The engine uses a Blueprint system for create the code, allowing to work in the engine without knowing any coding language. The Blueprint can be exported and imported from the pc folders.
 Blueprints allow to modify any game data of the attached gameobject, in order to do that they can make use of values of other gameobjects.
 
-![](https://github.com/RubokiReuchi/Yokai_Engine/blob/main/docs/gift1.gif)
+![](/docs/gift1.gif)
 
 As is show in the previus gift, we can quickly modify values to make the game alive.
 
-![](https://github.com/RubokiReuchi/Yokai_Engine/blob/main/docs/gift2.gif)
+![](/docs/gift2.gif)
 
 And saw the result inmediatly working in the game.
 
